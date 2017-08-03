@@ -211,6 +211,11 @@ md-progress-circular:before {
   letter-spacing: 1px;
 }
 
+.text-content {
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
 #user-info .col-md-4 {
   padding: 20px 15px 35px 15px;
 }
@@ -266,6 +271,18 @@ md-progress-circular:before {
   background-color: #ccc;
   font-size: 13px;
   width: 60px;
+}
+
+.up-badge {
+  color: #009480;
+}
+
+.down-badge {
+  color: #940031;
+}
+
+.neutral-badge {
+  color: #333;
 }
 
 .badge-comment {

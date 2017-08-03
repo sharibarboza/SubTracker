@@ -22,8 +22,8 @@
         </div>
         <div class="row" id="user-counts">
           <div class="col-md-3"><div>Total Comments (max. 1000)<p>{{ comments.length }}</p></div></div>
-          <div class="col-md-3"><div>Total Submissions (max. 1000)<p>{{ submissions.length }}</p></div></div>
           <div class="col-md-3"><div>Total Comment Karma<p>{{ user.comment_karma }}</p></div></div>
+          <div class="col-md-3"><div>Total Submissions (max. 1000)<p>{{ submissions.length }}</p></div></div>
           <div class="col-md-3"><div>Total Post/Link Karma<p>{{ user.link_karma }}</p></div></div>
         </div>
       </div>
@@ -51,8 +51,8 @@
             <th class="center"><span class="badge badge-counts badge-submit">{{ subs[subreddit].submissions.length }}</span></th>
             <th class="sub-date" ng-bind="subs[subreddit].recent_comment | date:'MMMM d, yyyy'"></th>
             <th class="sub-date" ng-bind="subs[subreddit].recent_submission | date:'MMMM d, yyyy'"></th>
-            <th class="center"><span class="badge badge-count-ups badge-comment">{{ subs[subreddit].comment_ups }}</span></th>
-            <th class="center"><span class="badge badge-count-ups badge-submit">{{ subs[subreddit].submitted_ups }}</span></th>
+            <th class="center"><span class="badge badge-count-ups" ng-class="subs[subreddit].comment_ups > 0 ? 'up-badge' : subs[subreddit].comment_ups < 0 ? 'down-badge' : 'neutral-badge'">{{ subs[subreddit].comment_ups }}</span></th>
+            <th class="center"><span class="badge badge-count-ups" ng-class="subs[subreddit].submitted_ups > 0 ? 'up-badge' : subs[subreddit].submitted_ups < 0 ? 'down-badge' : 'neutral-badge'">{{ subs[subreddit].submitted_ups }}</span></th>
           </tr>
         </tbody>
       </table>
