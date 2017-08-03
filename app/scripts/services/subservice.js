@@ -13,8 +13,8 @@
     var subs = {};
 
     return {
-    	organizeComments(comments) {
-    		subs = {};
+      organizeComments(comments) {
+        subs = {};
 
         // Push comments
         for (var i = 0; i < comments.length; i++) {
@@ -70,4 +70,4 @@
         return subs;
       }
     };
-});
+  });

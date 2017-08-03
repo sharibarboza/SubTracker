@@ -8,22 +8,23 @@
     <div id="user-info">
       <div class="text-content">
         <div class="row">
-          <div class="col-md-3" id="user-block">
-            <h2>u/{{ username }}</h2>
-            <a href="http://www.reddit.com/user/{{ username }}" id="reddit-user-link">Go to reddit page <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i></a>
+          <div class="col-md-4" id="user-block">
+            <span id="reddit-name"><span class="baby-blue">u/</span>{{ username }}</span><br>
+            <span><a href="http://www.reddit.com/user/{{ username }}" class="coral" id="reddit-user-link">Go to reddit page <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i></a></span>
           </div>
-          <div class="col-md-2 col-md-offset-2 user-stats" align="center">
-            <p>Comment Karma</p>
-            <p class="karma-num badge">{{ user.comment_karma }}</p>
+          <div class="col-md-4" id="sub-count" align="center">
+            <span id="num-subs" class="badge">{{ subsArray.length }}</span><br><span class="coral">Subreddits</span>
           </div>
-          <div class="col-md-2 user-stats" align="center">
-            <p>Post Karma</p>
-            <p class="karma-num badge">{{ user.link_karma }}</p>
+          <div class="col-md-4 user-stats" align="right">
+            <span>Redditor Since</span><br>
+            <p class="coral" id="since-date" ng-bind="created | date:'MMMM d, yyyy'"></p>
           </div>
-          <div class="col-md-3 user-stats" align="right">
-            <p>Redditor Since</p> 
-            <p class="date-num" ng-bind="created | date:'MMMM d, yyyy'"></p>
-          </div>
+        </div>
+        <div class="row" id="user-counts">
+          <div class="col-md-3"><div>Total Comments (max. 1000)<p>{{ comments.length }}</p></div></div>
+          <div class="col-md-3"><div>Total Submissions (max. 1000)<p>{{ submissions.length }}</p></div></div>
+          <div class="col-md-3"><div>Total Comment Karma<p>{{ user.comment_karma }}</p></div></div>
+          <div class="col-md-3"><div>Total Post/Link Karma<p>{{ user.link_karma }}</p></div></div>
         </div>
       </div>
     </div>
@@ -43,15 +44,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="(subreddit, stats) in subs">
+          <tr ng-repeat="subreddit in subsArray | orderBy: subreddit">
             <th scope="row">{{ $index + 1 }}</th>
             <th><a href="http://www.reddit.com/r/{{ subreddit }}">r/{{ subreddit }}</a></th>
-            <th class="center"><span class="badge badge-counts badge-comment">{{ stats.comments.length }}</span></th>
-            <th class="center"><span class="badge badge-counts badge-submit">{{ stats.submissions.length }}</span></th>
-            <th class="sub-date" ng-bind="stats.recent_comment | date:'MMMM d, yyyy'"></th>
-            <th class="sub-date" ng-bind="stats.recent_submission | date:'MMMM d, yyyy'"></th>
-            <th class="center"><span class="badge badge-count-ups badge-comment">{{ stats.comment_ups }}</span></th>
-            <th class="center"><span class="badge badge-count-ups badge-submit">{{ stats.submitted_ups }}</span></th>
+            <th class="center"><span class="badge badge-counts badge-comment">{{ subs[subreddit].comments.length }}</span></th>
+            <th class="center"><span class="badge badge-counts badge-submit">{{ subs[subreddit].submissions.length }}</span></th>
+            <th class="sub-date" ng-bind="subs[subreddit].recent_comment | date:'MMMM d, yyyy'"></th>
+            <th class="sub-date" ng-bind="subs[subreddit].recent_submission | date:'MMMM d, yyyy'"></th>
+            <th class="center"><span class="badge badge-count-ups badge-comment">{{ subs[subreddit].comment_ups }}</span></th>
+            <th class="center"><span class="badge badge-count-ups badge-submit">{{ subs[subreddit].submitted_ups }}</span></th>
           </tr>
         </tbody>
       </table>

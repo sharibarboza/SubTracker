@@ -17,6 +17,18 @@ a {
   text-align: center;
 }
 
+.coral {
+  color: #FF7F50;
+}
+
+.purple {
+  color: #5552B3;
+}
+
+.baby-blue {
+  color: #12C5E0;
+}
+
 .btn:focus, .btn:active {
   outline: none !important;
 }
@@ -73,8 +85,6 @@ a {
 }
 .navbar-form .form-control {
     display: inline-block;
-    width: 100%; 
-    vertical-align: middle;
 }
 .navbar-form .form-group {
     display: inline;
@@ -104,7 +114,7 @@ a {
 }
 
 .navbar-default {
-  background-color: #3F3A99;
+  background-color: #5552B3;
   border: none;
   padding-left: 50px;
   padding-right: 50px;
@@ -119,6 +129,11 @@ a {
   color: white;
   font-weight: bold;
   font-size: 2em;
+}
+
+.navbar-default a.nav-link {
+  color: white !important;
+  font-weight: bold;
 }
 
 .navbar-default .btn-github {
@@ -146,13 +161,18 @@ a {
 
 #nav-search .input-group {
   display: table;  
-  padding: 0 100px;
+  padding-left: 140px;
+  padding-right: 20px;
 }
 
 .input-group-addon.info {
   color: rgb(255, 255, 255);
   background-color: rgb(57, 179, 215);
   border-color: rgb(38, 154, 188);
+}
+
+.btn-github {
+  margin-left: 15px;
 }
 
 #nav-search a {
@@ -188,36 +208,46 @@ md-progress-circular:before {
   color: white;
   line-height: 130%;
   font-weight: 600;
+  letter-spacing: 1px;
 }
 
-#user-block {
-  padding-bottom: 20px;
+#user-info .col-md-4 {
+  padding: 20px 15px 35px 15px;
+}
+ 
+#reddit-name {
+  font-size: 2em;
 }
 
-#user-info .user-stats {
-  padding-top: 2%;
+#since-date {
+  font-size: 1.8em;
 }
 
-#user-info a, .karma-num, .date-num {
-  color: #DB2E2E;
-}
-
-#user-info p {
-  font-size: 20px;
-}
-
-.karma-num {
-  color: #09DCEB;
-  font-size: 26px !important;
-}
-
-#user-info .date-num {
-  padding-top: 7px;
-  font-size: 20px;
-}
-
-#reddit-user-link {
+.user-stats span, #sub-count span, #reddit-user-link {
   font-size: 18px;
+}
+
+.user-stats {
+  padding-top: 2px;
+}
+
+#user-counts .col-md-3 {
+  text-align: center;
+}
+
+#user-counts .col-md-3 div {
+  padding: 10px;
+  border: 1px solid #646191;
+}
+
+#user-counts p {
+  color: #12C5E0;
+  font-size: 34px;
+  margin-top: 10px;
+}
+
+#num-subs {
+  font-size: 2em !important;
 }
 
 /* Subreddit Table */
@@ -244,6 +274,10 @@ md-progress-circular:before {
 
 .badge-submit {
   color: #DB2E2E;
+}
+
+#sub-count > .badge {
+  padding: 2px 20px;
 }
 
 #sub-table .sub-date {

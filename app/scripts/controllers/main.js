@@ -7,8 +7,8 @@
  * # MainCtrl
  * Controller of the tractApp
  */
-angular.module('tractApp')
-  .controller('MainCtrl', ['$scope', function ($scope) {
-  	$scope.main = true;
+ angular.module('tractApp')
+ .controller('MainCtrl', ['$scope', function ($scope) {
+    $scope.main = true;
     $scope.processing = false;
-  }]);
+}]);
