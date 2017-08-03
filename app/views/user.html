@@ -1,0 +1,60 @@
+<div ng-include src="'views/searchnav.html'"></div>
+
+<div class="content" layout="column" ng-cloak>
+	<div layout="row" layout-sm="column" layout-align="space-around">
+		<md-progress-circular ng-show="processing" md-mode="indeterminate"></md-progress-circular>
+	</div>
+	<div class="home-page" ng-show=ready>
+		<div id="user-info">
+			<div class="text-content">
+				<div class="row">
+					<div class="col-md-3" id="user-block">
+						<h2>u/{{ username }}</h2>
+						<a href="http://www.reddit.com/user/{{ username }}" id="reddit-user-link">Go to reddit page <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i></a>
+					</div>
+					<div class="col-md-2 col-md-offset-2 user-stats" align="center">
+						<p>Comment Karma</p>
+						<p class="karma-num badge">{{ user.comment_karma }}</p>
+					</div>
+					<div class="col-md-2 user-stats" align="center">
+						<p>Post Karma</p>
+						<p class="karma-num badge">{{ user.link_karma }}</p>
+					</div>
+					<div class="col-md-3 user-stats" align="right">
+						<p>Redditor Since</p> 
+						<p class="date-num" ng-bind="created | date:'MMMM d, yyyy'"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="sub-table">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="col-md-1">#</th>
+						<th class="col-md-1">Subreddit</th>
+						<th class="col-md-1">Comments</th>
+						<th class="col-md-1">Submissions</th>
+						<th class="col-md-2">Last commented</th>
+						<th class="col-md-2">Last submitted</th>
+						<th class="col-md-2 center">Comment Ups</th>
+						<th class="col-md-2 center">Submission Ups</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="(subreddit, stats) in subs">
+						<th scope="row">{{ $index + 1 }}</th>
+						<th><a href="http://www.reddit.com/r/{{ subreddit }}">r/{{ subreddit }}</a></th>
+						<th class="center"><span class="badge badge-counts badge-comment">{{ stats.comments.length }}</span></th>
+						<th class="center"><span class="badge badge-counts badge-submit">{{ stats.submissions.length }}</span></th>
+						<th class="sub-date" ng-bind="stats.recent_comment | date:'MMMM d, yyyy'"></th>
+						<th class="sub-date" ng-bind="stats.recent_submission | date:'MMMM d, yyyy'"></th>
+						<th class="center"><span class="badge badge-count-ups badge-comment">{{ stats.comment_ups }}</span></th>
+						<th class="center"><span class="badge badge-count-ups badge-submit">{{ stats.submitted_ups }}</span></th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
