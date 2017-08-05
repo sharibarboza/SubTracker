@@ -7,21 +7,21 @@ describe('Controller: SubsCtrl', function () {
 
   var SubsCtrl,
     scope,
-    userService,
-    subService,
+    userFactory,
+    subFactory,
     username = 'autowikibot';
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope, _userService_, _subService_) {
+  beforeEach(inject(function ($controller, $rootScope, _userFactory_, _subFactory_) {
     scope = $rootScope.$new();
-    userService = _userService_;
-    subService = _subService_;
-    userService.setUser(username);
+    userFactory = _userFactory_;
+    subFactory = _subFactory_;
+    userFactory.setUser(username);
 
     SubsCtrl = $controller('SubsCtrl', {
       $scope: scope,
-      userService: userService,
-      subService: subService
+      userFactory: userFactory,
+      subFactory: subFactory
     });
   }));
 
@@ -34,22 +34,22 @@ describe('Controller: SubsCtrl', function () {
   });
 
   it('should have sub data', function() {
-    var userPromise = userService.getUser();
+    var userPromise = userFactory.getUser();
     userPromise.then(function(response) {
-      subService.setUser(username);
-      return subService.setCommentList();
+      subFactory.setUser(username);
+      return subFactory.setCommentList();
     })
     .then(function(response) {
-      var comments = subService.getCommentList();
+      var comments = subFactory.getCommentList();
       expect(comments).not.toBe(undefined);
-      subService.setSubmitList();
+      subFactory.setSubmitList();
 
-      var submissions = subService.getSubmitList();
+      var submissions = subFactory.getSubmitList();
       expect(submissions).not.toBe(undefined);
-      subService.organizeComments(comments);
-      subService.organizeSubmitted(submissions);
+      subFactory.organizeComments(comments);
+      subFactory.organizeSubmitted(submissions);
 
-      var subs = subService.getSubs();
+      var subs = subFactory.getSubs();
       expect(subs).not.toBe(undefined);
 
     });

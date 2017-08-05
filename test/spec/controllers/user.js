@@ -8,20 +8,20 @@ describe('Controller: UserCtrl', function () {
   var UserCtrl,
     scope,
     routeParams,
-    userService,
+    userFactory,
     userPromise;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope, _$routeParams_, _userService_) {
+  beforeEach(inject(function ($controller, $rootScope, _$routeParams_, _userFactory_) {
     scope = $rootScope.$new();
     routeParams = _$routeParams_;
     routeParams.username = 'autowikibot';
-    userService = _userService_;
+    userFactory = _userFactory_;
 
     UserCtrl = $controller('UserCtrl', {
       $scope: scope,
       $routeParams: routeParams,
-      userService: userService
+      userFactory: userFactory
     });
 
   }));
@@ -35,8 +35,8 @@ describe('Controller: UserCtrl', function () {
   });
 
   it('should have user data', function() {
-    userService.setUser(routeParams.username);
-    var userPromise = userService.getUser();
+    userFactory.setUser(routeParams.username);
+    var userPromise = userFactory.getUser();
     expect(userPromise).not.toBe(undefined);
     expect(angular.isFunction(userPromise.then)).toBeTruthy();
 
