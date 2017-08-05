@@ -6,16 +6,11 @@ describe('Service: userService', function () {
   beforeEach(module('tractApp'));
 
   // instantiate service
-  var userService,
-    userPromise,
-    commentPromise,
-    submitPromise;
+  var userService;
 
   beforeEach(inject(function (_userService_) {
     userService = _userService_;
-    userPromise = userService.getAbout('autowikibot');
-    commentPromise = userService.getComments('autowikibot', 'first');
-    submitPromise = userService.getSubmitted('autowikibot', 'first');
+    userService.setUser('autowikibot');
   }));
 
   it('should do something', function () {
@@ -23,6 +18,7 @@ describe('Service: userService', function () {
   });
 
   it('should return user promise', function() {
+    var userPromise = userService.getUser();
     expect(userPromise).not.toBe(undefined);
     expect(angular.isFunction(userPromise.then)).toBeTruthy();
 
@@ -31,13 +27,4 @@ describe('Service: userService', function () {
     });
   });
 
-  it('should return comment promise', function() {
-    expect(commentPromise).not.toBe(undefined);
-    expect(angular.isFunction(commentPromise.then)).toBeTruthy();
-  });
-
-  it('should return submit promise', function() {
-    expect(submitPromise).not.toBe(undefined);
-    expect(angular.isFunction(submitPromise.then)).toBeTruthy();   
-  });
 });

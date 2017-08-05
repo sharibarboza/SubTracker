@@ -17,7 +17,7 @@ describe('Controller: MainCtrl', function () {
     });
   }));
 
-  it('should complete processing', function () {
-    expect(scope.processing).toBe(false);
+  it('should have true main', function () {
+    expect(scope.main).toBe(true);
   });
 });
