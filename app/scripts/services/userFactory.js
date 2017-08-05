@@ -1,11 +1,11 @@
 'use strict';
 
 /**
- * @ngdoc service
- * @name tractApp.userService
+ * @ngdoc factory
+ * @name tractApp.userFactory
  * @description
- * # userService
- * Service in the tractApp.
+ * # userFactory
+ * Factory in the tractApp.
  */
  angular.module('tractApp')
  .factory('userFactory', ['$http', function ($http) {
