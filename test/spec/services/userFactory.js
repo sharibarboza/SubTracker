@@ -1,24 +1,24 @@
 'use strict';
 
-describe('Service: userService', function () {
+describe('Factory: userFactory', function () {
 
-  // load the service's module
+  // load the factory's module
   beforeEach(module('tractApp'));
 
-  // instantiate service
-  var userService;
+  // instantiate factory
+  var userFactory;
 
-  beforeEach(inject(function (_userService_) {
-    userService = _userService_;
-    userService.setUser('autowikibot');
+  beforeEach(inject(function (_userFactory_) {
+    userFactory = _userFactory_;
+    userFactory.setUser('autowikibot');
   }));
 
   it('should do something', function () {
-    expect(!!userService).toBe(true);
+    expect(!!userFactory).toBe(true);
   });
 
   it('should return user promise', function() {
-    var userPromise = userService.getUser();
+    var userPromise = userFactory.getUser();
     expect(userPromise).not.toBe(undefined);
     expect(angular.isFunction(userPromise.then)).toBeTruthy();
 

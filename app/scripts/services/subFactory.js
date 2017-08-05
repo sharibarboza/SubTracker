@@ -8,7 +8,7 @@
  * Service in the tractApp.
  */
  angular.module('tractApp')
- .service('subService', ['$http', function ($http) {
+ .factory('subFactory', ['$http', function ($http) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var baseUrl = 'http://www.reddit.com/user/';
     var rawJson = 'raw_json=1';
