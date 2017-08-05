@@ -11,6 +11,7 @@
  .controller('UserCtrl', ['$scope', '$routeParams', 'userFactory', function ($scope, $routeParams, userFactory) {
   $scope.main = false;
 
+  // Get the user's username and account creation date
   userFactory.setUser($routeParams.username);
   var userPromise = userFactory.getUser();
   userPromise
