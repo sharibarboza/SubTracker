@@ -160,15 +160,15 @@ a {
 }
 
 #nav-search .input-group {
-  display: table;  
-  padding-left: 140px;
-  padding-right: 20px;
+  display: table;
+  width: 100%;
+  padding-left: 205px;
 }
 
-.input-group-addon.info {
-  color: rgb(255, 255, 255);
-  background-color: rgb(57, 179, 215);
-  border-color: rgb(38, 154, 188);
+#nav-btn {
+  border-radius: 0;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 .btn-github {
@@ -177,6 +177,7 @@ a {
 
 #nav-search a {
   color: white;
+  display: inline !important;
 }
 
 md-progress-circular {
@@ -184,20 +185,9 @@ md-progress-circular {
   overflow: show;
   margin: auto;
   top: 0;
-  left: 0;
+  left: -40px;
   bottom: 0;
   right: 0;
-}
-
-md-progress-circular:before {
-  content: '';
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.3);
 }
 
 /* User Info */

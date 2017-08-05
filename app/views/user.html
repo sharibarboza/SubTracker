@@ -1,6 +1,6 @@
 <div ng-include src="'views/searchnav.html'"></div>
 
-<div class="content" layout="column" ng-cloak>
+<div class="content" layout="column" ng-cloak ng-controller="SubsCtrl">
   <div layout="row" layout-sm="column" layout-align="space-around">
     <md-progress-circular ng-show="processing" md-mode="indeterminate"></md-progress-circular>
   </div>

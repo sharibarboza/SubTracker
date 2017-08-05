@@ -23,9 +23,12 @@
         <div ng-hide="main">
          <form class="navbar-form" id="nav-search">
           <div class="form-group">
+
             <div class="input-group">
-              <input class="form-control" name="search" ng-model="inputname" placeholder="Search for another user ..." autocomplete="off" autofocus="autofocus" type="text">
-              <span class="input-group-addon info" style="width:1%;"><a href="#/{{ inputname }}"><span class="glyphicon glyphicon-search"></span></a></span>
+              <input type="text" class="form-control" ng-model="inputname" placeholder="Search for..." autocomplete="off" autofocus="autofocus">
+              <span class="input-group-btn">
+                <a href="#/{{ inputname }}"><button class="btn btn-secondary btn-info" type="button" id="nav-btn"><i class="glyphicon glyphicon-search"></i></button></a>
+              </span>
             </div>
           </div>
         </form>
