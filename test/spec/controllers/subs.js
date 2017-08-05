@@ -20,7 +20,6 @@ describe('Controller: SubsCtrl', function () {
 
     SubsCtrl = $controller('SubsCtrl', {
       $scope: scope,
-      userFactory: userFactory,
       subFactory: subFactory
     });
   }));
@@ -34,25 +33,14 @@ describe('Controller: SubsCtrl', function () {
   });
 
   it('should have sub data', function() {
-    var userPromise = userFactory.getUser();
-    userPromise.then(function(response) {
-      subFactory.setUser(username);
-      return subFactory.setCommentList();
+    var promise = subFactory.getData();
+    expect(angular.isFunction(promise.then)).toBeTruthy();
+
+    promise.then(function() {
+      expect(subFactory.getCommentList()).not.toBe(undefined);
+      expect(subFactory.getSubmitList()).not.toBe(undefined);
+      expect(subFactory.getSubs()).not.toBe(undefined);
     })
-    .then(function(response) {
-      var comments = subFactory.getCommentList();
-      expect(comments).not.toBe(undefined);
-      subFactory.setSubmitList();
-
-      var submissions = subFactory.getSubmitList();
-      expect(submissions).not.toBe(undefined);
-      subFactory.organizeComments(comments);
-      subFactory.organizeSubmitted(submissions);
-
-      var subs = subFactory.getSubs();
-      expect(subs).not.toBe(undefined);
-
-    });
   });
 
 });

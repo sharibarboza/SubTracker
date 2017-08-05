@@ -19,7 +19,7 @@
     $scope.username = $scope.user.name;
     $scope.created = new Date($scope.user.created_utc*1000);
     $scope.notfound = false;
-  }, function(error) {
+  }, function() {
   	$scope.user = false;
   	$scope.notfound = true;
   });

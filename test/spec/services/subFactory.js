@@ -6,74 +6,50 @@ describe('Factory: subFactory', function () {
   beforeEach(module('tractApp'));
 
   // instantiate Factory
-  var subFactory;
+  var subFactory, userFactory;
 
-  beforeEach(inject(function (_subFactory_) {
+  beforeEach(inject(function (_subFactory_, _userFactory_) {
     subFactory = _subFactory_;
-    subFactory.setUser('autowikibot');
+    userFactory = _userFactory_;
+    userFactory.setUser('autowikibot');
   }));
 
   it('should do something', function () {
     expect(!!subFactory).toBe(true);
   });
 
-  it('should fetch comments and build list', function () {
-    var commentListPromise = subFactory.setCommentList();
-    expect(angular.isFunction(commentListPromise.then)).toBeTruthy();
-
-    var comments = subFactory.getCommentList();
-    expect(comments).not.toBe(undefined);
-    expect(comments.length).not.toBeLessThan(0);
+  it('should return a promise', function () {
+    var promise = subFactory.getData();
+    expect(angular.isFunction(promise.then)).toBeTruthy();
   });
 
-  it('should fetch submissions and build list', function () {
-    var submistListPromise = subFactory.setSubmitList();
-    expect(angular.isFunction(submistListPromise.then)).toBeTruthy();
-
-    var submissions = subFactory.getSubmitList();
-    expect(submissions).not.toBe(undefined);
-    expect(submissions.length).not.toBeLessThan(0);
+  it('should return comment list', function () {
+    subFactory.getData().then(function() {
+      expect(subFactory.getCommentList().length).not.toBeLessThan(0);
+    });
   });
 
-  it('should create comments list in subs dictionary', function () {
-    subFactory.setCommentList();
-    var comments = subFactory.getCommentList();
-    subFactory.organizeComments(comments);
-
-    var subs = subFactory.getSubs();
-    expect(subs).not.toBe(undefined);
-
-    for (var i = 0; i < subs.length; i++) {
-      var comments = subs[i].comments;
-      expect(comments.length).not.toBeLessThan(0);
-    }
+  it('should return submit list', function () {
+    subFactory.getData().then(function() {
+      expect(subFactory.getSubmitList().length).not.toBeLessThan(0);
+    });
   });
 
-  it('should create submit list in subs dictionary', function () {
-    subFactory.setSubmitList();
-    var submissions = subFactory.getSubmitList();
-    subFactory.organizeSubmitted(submissions);
+  it('should have sub data', function () {
+    subFactory.getData().then(function() {
+      var subs = subFactory.getSubs();
+      expect(subs.length).not.toBeLessThan(0); 
 
-    var subs = subFactory.getSubs();
-    expect(subs).not.toBe(undefined);
+      for (var i = 0; i < subs.length; i++) {
+        var sub = subs[i];
+        expect(sub.comment_ups).not.toBe(undefined);
+        expect(sub.submitted_ups).not.toBe(undefined);
+        expect(sub.comments.length).not.toBeLessThan(0);
+        expect(sub.submissions.length).not.toBeLessThan(0);
+        expect(sub.recent_comment).not.toBe(undefined);
+        expect(sub.recent_submission).not.toBe(undefined);
+      }
 
-    for (var i = 0; i < subs.length; i++) {
-      var submissions = subs[i].submissions;
-      expect(submissions.length).not.toBeLessThan(0);
-    }
+    })
   });
-
-  it('should reset data when setting user', function () {
-    subFactory.setCommentList();
-    subFactory.setSubmitList();
-
-    subFactory.organizeComments(subFactory.getCommentList());
-    subFactory.organizeSubmitted(subFactory.getSubmitList());
-
-    subFactory.setUser('autowikibot');
-    expect(subFactory.getCommentList().length).toBe(0);
-    expect(subFactory.getSubmitList().length).toBe(0);
-    expect(Object.keys(subFactory.getSubs()).length).toBe(0);
-  });
-
 });
