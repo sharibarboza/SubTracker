@@ -8,16 +8,20 @@
  * Controller of the tractApp
  */
  angular.module('tractApp')
- .controller('UserCtrl', ['$scope', '$routeParams', 'userService', function ($scope, $routeParams, userService) {
+ .controller('UserCtrl', ['$scope', '$routeParams', 'userFactory', function ($scope, $routeParams, userFactory) {
   $scope.main = false;
 
-  userService.setUser($routeParams.username);
-  var userPromise = userService.getUser();
+  userFactory.setUser($routeParams.username);
+  var userPromise = userFactory.getUser();
   userPromise
   .then(function(response) {
     $scope.user = response.data.data;
     $scope.username = $scope.user.name;
     $scope.created = new Date($scope.user.created_utc*1000);
+    $scope.notfound = false;
+  }, function(error) {
+  	$scope.user = false;
+  	$scope.notfound = true;
   });
 
 }]);

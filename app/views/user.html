@@ -1,6 +1,10 @@
 <div ng-include src="'views/searchnav.html'"></div>
+  
+<div ng-if="notfound">
+   <h2 align="center">Sorry, that user could not be found.</h2>
+</div>
 
-<div class="content" layout="column" ng-cloak ng-controller="SubsCtrl">
+<div ng-if="user" class="content" layout="column" ng-cloak ng-controller="SubsCtrl">
   <div layout="row" layout-sm="column" layout-align="space-around">
     <md-progress-circular ng-show="processing" md-mode="indeterminate"></md-progress-circular>
   </div>
@@ -46,7 +50,7 @@
         <tbody>
           <tr ng-repeat="subreddit in subsArray | orderBy: subreddit">
             <th scope="row">{{ $index + 1 }}</th>
-            <th><a href="http://www.reddit.com/r/{{ subreddit }}">r/{{ subreddit }}</a></th>
+            <th><a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank">r/{{ subreddit }}</a></th>
             <th class="center"><span class="badge badge-counts badge-comment">{{ subs[subreddit].comments.length }}</span></th>
             <th class="center"><span class="badge badge-counts badge-submit">{{ subs[subreddit].submissions.length }}</span></th>
             <th class="sub-date" ng-bind="subs[subreddit].recent_comment | date:'MMMM d, yyyy'"></th>

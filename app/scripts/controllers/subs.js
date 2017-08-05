@@ -8,30 +8,30 @@
  * Controller of the tractApp
  */
  angular.module('tractApp')
- .controller('SubsCtrl', ['$scope', 'userService', 'subService' ,function ($scope, userService, subService) {
+ .controller('SubsCtrl', ['$scope', 'userFactory', 'subFactory' ,function ($scope, userFactory, subFactory) {
   $scope.processing = true;
   $scope.ready = false;
 
-  var userPromise = userService.getUser();
+  var userPromise = userFactory.getUser();
   userPromise
   .then(function(response) {
-    subService.setUser(response.data.data.name);
-    return subService.setCommentList();
+    subFactory.setUser(response.data.data.name);
+    return subFactory.setCommentList();
   }, function(error) {
     console.log('Error fetching comments: ' + error);
   })
   .then(function() {
-    $scope.comments = subService.getCommentList();
-    return subService.setSubmitList();
+    $scope.comments = subFactory.getCommentList();
+    return subFactory.setSubmitList();
   }, function(error) {
     console.log('Error fetching submissions: ' + error);
   })
   .then(function() {
-    $scope.submissions = subService.getSubmitList();
-    subService.organizeComments($scope.comments);
-    subService.organizeSubmitted($scope.submissions);
+    $scope.submissions = subFactory.getSubmitList();
+    subFactory.organizeComments($scope.comments);
+    subFactory.organizeSubmitted($scope.submissions);
 
-    $scope.subs = subService.getSubs();
+    $scope.subs = subFactory.getSubs();
     $scope.subsArray = Object.keys($scope.subs);
     $scope.processing = false;
     $scope.ready = true;
