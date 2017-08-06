@@ -46,7 +46,6 @@ a {
   margin-top: 0;
   margin-bottom: 0;
   line-height: 40px;
-  padding-bottom: 19px;
 }
 
 /* Custom page footer */
@@ -70,6 +69,11 @@ a {
 
 .container .jumbotron, .container-fluid .jumbotron {
   border-radius: 0 !important;
+}
+
+.main-content {
+  position: relative;
+  top: 50px;
 }
 
 /* Supporting marketing content */
@@ -151,10 +155,6 @@ a {
   border-bottom-right-radius: 4px;
 }
 
-.text-content {
-  padding: 20px 50px;
-}
-
 #nav-search .form-group {
   display: inline;
 }
@@ -185,7 +185,7 @@ md-progress-circular {
   overflow: show;
   margin: auto;
   top: 0;
-  left: -40px;
+  left: -10px;
   bottom: 0;
   right: 0;
 }
@@ -202,12 +202,11 @@ md-progress-circular {
 }
 
 .text-content {
-  padding-top: 10px;
-  padding-bottom: 30px;
+  padding: 10px 50px 30px 50px;
 }
 
 #user-info .col-md-4 {
-  padding: 20px 15px 35px 15px;
+  padding: 20px 15px 5px 15px;
 }
  
 #reddit-name {
@@ -215,11 +214,11 @@ md-progress-circular {
 }
 
 #since-date {
-  font-size: 1.8em;
+  font-size: 24px;
 }
 
-.user-stats span, #sub-count span, #reddit-user-link {
-  font-size: 18px;
+.user-stats p, #sub-count p, #reddit-user-link {
+  font-size: 20px;
 }
 
 .user-stats {
@@ -241,46 +240,68 @@ md-progress-circular {
   margin-top: 10px;
 }
 
+#subreddits {
+  font-size: 30px !important;
+}
+
 #num-subs {
-  font-size: 2em !important;
+  font-size: 34px !important;
 }
 
 /* Subreddit Table */
 
 #sub-table {
-  padding: 60px;
+  font-weight: 500;
+  padding: 10px 65px 50px 65px;
 }
 
-.badge-counts {
-  background-color: #ccc;
-  font-size: 13px;
+.sub-row {
+  padding: 5px;
+  border: 1px solid #646191;
+  margin-bottom: 6px;
+}
+
+.sub-row:hover {
+  background-color: #CEE9F2;
+}
+
+.sub-stat {
+  padding-top: 2px;
+}
+
+#sub-table .badge {
   width: 50px;
-}
-
-.badge-count-ups {
-  background-color: #ccc;
-  font-size: 13px;
-  width: 60px;
-}
-
-.up-badge {
-  color: #009480;
-}
-
-.down-badge {
-  color: #940031;
-}
-
-.neutral-badge {
+  background-color: #DBDBDB;
   color: #333;
+  margin-left: 5px;
 }
 
-.badge-comment {
-  color: #3F3A99;
+.label-purple{
+  background-color: #5552B3;
 }
 
-.badge-submit {
-  color: #DB2E2E;
+.label-coral {
+  background-color: #FF7F50;
+}
+
+.label-blue {
+  background-color: #0975BD;
+}
+
+#sub-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.sub-date {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.table-heading {
+  color: #323536;
+  font-weight: bold;
+  font-size: 1.3em;
 }
 
 #sub-count > .badge {
@@ -289,4 +310,14 @@ md-progress-circular {
 
 #sub-table .sub-date {
   color: gray;
+  padding-left: 4px;
+  font-size: 16px;
+}
+
+.dropdown {
+  padding-left: 50px;
+}
+
+.dropdown-menu {
+  left: 50px;
 }
