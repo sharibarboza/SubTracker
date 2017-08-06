@@ -15,6 +15,7 @@
     var comments = [];
     var submissions = [];
     var subs = {};
+    var pages = 10;
 
     var resetData = function() {
       // Reset all data to empty lists (used for getting a new user)
@@ -57,37 +58,26 @@
     var setCommentList = function() {
       // Chain promises to fetch all user's comments from reddit API
       var commentPromise = getPromise('first', 'comments');
-      var promise = commentPromise
-      .then(function(response) { return getData(response, 'comments'); })
-      .then(function(response) { return getData(response, 'comments'); })
-      .then(function(response) { return getData(response, 'comments'); })
-      .then(function(response) { return getData(response, 'comments'); })
-      .then(function(response) { return getData(response, 'comments'); })
-      .then(function(response) { return getData(response, 'comments'); })
-      .then(function(response) { return getData(response, 'comments'); })
-      .then(function(response) { return getData(response, 'comments'); })
-      .then(function(response) { return getData(response, 'comments'); })
-      .then(function(response) { return getData(response, 'comments'); })
-      .then(function(response) { return response; });
-      return promise;
+
+      for (var i = 0; i < pages; i++) {
+        commentPromise = commentPromise.then(function(response) {
+          return getData(response, 'comments');
+        });
+      }
+
+      return commentPromise;
     };
 
     var setSubmitList = function() {
       // Chain promises to fetch all user's submissions from reddit API
       var submitPromise = getPromise('first', 'submitted');
-      var promise = submitPromise
-      .then(function(response) { return getData(response, 'submitted'); })
-      .then(function(response) { return getData(response, 'submitted'); })
-      .then(function(response) { return getData(response, 'submitted'); })
-      .then(function(response) { return getData(response, 'submitted'); })
-      .then(function(response) { return getData(response, 'submitted'); })
-      .then(function(response) { return getData(response, 'submitted'); })
-      .then(function(response) { return getData(response, 'submitted'); })
-      .then(function(response) { return getData(response, 'submitted'); })
-      .then(function(response) { return getData(response, 'submitted'); })
-      .then(function(response) { return getData(response, 'submitted'); })
-      .then(function(response) { return response; });
-      return promise;
+      for (var i = 0; i < pages; i++) {
+        submitPromise = submitPromise.then(function(response) {
+          return getData(response, 'submitted');
+        })
+      }
+
+      return submitPromise;
     };
 
     var organizeComments = function(comments) {
@@ -114,6 +104,9 @@
           subs[subreddit].comment_ups = parseInt(comment.ups);
           subs[subreddit].submissions = [];
         }
+
+        subs[subreddit].total_ups = subs[subreddit].comment_ups;
+        subs[subreddit].recent_activity = subs[subreddit].recent_comment;
       }
     };
 
@@ -142,6 +135,16 @@
           subs[subreddit].submissions.push(submission);
           subs[subreddit].recent_submission = new Date(submission.created*1000);
           subs[subreddit].submitted_ups = parseInt(submission.ups);
+        }
+
+        if ('recent_comment' in subs[subreddit]) {
+          if (subs[subreddit].recent_submission > subs[subreddit].recent_comment) {
+            subs[subreddit].recent_activity = subs[subreddit].recent_submission;
+          }
+          subs[subreddit].total_ups += subs[subreddit].submitted_ups;
+        } else {
+          subs[subreddit].recent_activity = subs[subreddit].recent_submission;
+          subs[subreddit].total_ups = subs[subreddit].submitted_ups;
         }
       }
     };
