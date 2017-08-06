@@ -8,7 +8,7 @@
  * Factory in the tractApp.
  */
  angular.module('tractApp')
- .factory('subFactory', ['$http', 'userFactory', function ($http, userFactory) {
+ .factory('subFactory', ['$http', 'userFactory', '$q', function ($http, userFactory, $q) {
     var baseUrl = 'http://www.reddit.com/user/';
     var rawJson = 'raw_json=1';
     var username;
@@ -74,7 +74,7 @@
       for (var i = 0; i < pages; i++) {
         submitPromise = submitPromise.then(function(response) {
           return getData(response, 'submitted');
-        })
+        });
       }
 
       return submitPromise;
@@ -152,20 +152,16 @@
     return {
       getData: function() {
         // Must be called first before getting comments, submissions, or subs data 
-
         var userPromise = userFactory.getUser();
         var promise = userPromise
         .then(function(response) {
           username = response.data.data.name;
           resetData();
-          return setCommentList();
+          var commentPromise = setCommentList();
+          var submitPromise = setSubmitList();
+          return $q.all([commentPromise, submitPromise]);
         }, function(error) {
-          console.log('Error fetching comments: ' + error);
-        })
-        .then(function() {
-          return setSubmitList();
-        }, function(error) {
-          console.log('Error fetching submissions: ' + error);
+          console.log('Error fetching data: ' + error);
         })
         .then(function(response) {
           organizeComments(comments);
