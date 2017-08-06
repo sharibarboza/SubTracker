@@ -13,6 +13,7 @@
   $scope.ready = false; // Shows the data when it's done processing
 
   // Based on username, fetch the user's latest comments and submissions
+  subFactory.setData();
   var promise = subFactory.getData();
   promise.then(function() {
     $scope.comments = subFactory.getCommentList();

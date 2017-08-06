@@ -12,6 +12,7 @@
     var baseUrl = 'http://www.reddit.com/user/';
     var rawJson = 'raw_json=1';
     var username;
+    var promise;
     var comments = [];
     var submissions = [];
     var subs = {};
@@ -138,10 +139,10 @@
     };
 
     return {
-      getData: function() {
+      setData: function() {
         // Must be called first before getting comments, submissions, or subs data 
         var userPromise = userFactory.getUser();
-        var promise = userPromise
+        promise = userPromise
         .then(function(response) {
           username = response.data.data.name;
           resetData();
@@ -150,13 +151,14 @@
           return $q.all([commentPromise, submitPromise]);
         }, function(error) {
           console.log('Error fetching data: ' + error);
-        })
-        .then(function(response) {
-          organizeComments(comments);
-          organizeSubmitted(submissions);
-          return response;
         });
 
+        promise.then(function() {
+          organizeComments(comments);
+          organizeSubmitted(submissions);
+        });
+      },
+      getData: function() {
         return promise;
       },
       getCommentList: function() {
