@@ -214,10 +214,14 @@ md-progress-circular {
 }
 
 #since-date {
-  font-size: 24px;
+  font-size: 22px;
 }
 
-.user-stats p, #sub-count p, #reddit-user-link {
+.user-stats p {
+  font-size: 22px;
+}
+
+#sub-count p, #reddit-user-link {
   font-size: 20px;
 }
 

@@ -18,7 +18,7 @@
   .then(function(response) {
     $scope.user = response.data.data;
     $scope.username = $scope.user.name;
-    $scope.created = new Date($scope.user.created_utc*1000);
+    $scope.created = moment($scope.user.created_utc*1000).local().format('MMMM Do YYYY, h:mm a');
     $scope.notfound = false;
   }, function() {
   	$scope.user = false;

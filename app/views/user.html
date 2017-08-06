@@ -15,14 +15,14 @@
           <div class="row">
             <div class="col-md-4" id="user-block">
               <p id="reddit-name"><span class="baby-blue">u/</span>{{ username }}</p>
-              <p><a href="http://www.reddit.com/user/{{ username }}" class="coral" id="reddit-user-link">Go to reddit page <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i></a></p>
+              <p><a href="http://www.reddit.com/user/{{ username }}" class="coral" id="reddit-user-link">Go to user's reddit page <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i></a></p>
             </div>
             <div class="col-md-4" id="sub-count" align="center">
               <p id="subreddits" class="badge"><span class="purples" id="num-subs">{{ subsArray.length }}</span> subreddits</p>
             </div>
             <div class="col-md-4 user-stats" align="right">
               <p>Redditor Since</p>
-              <p class="coral" id="since-date" ng-bind="created | date:'yyyy / MMMM d'"></p>
+              <p class="coral" id="since-date">{{ created }}</p>
             </div>
           </div>
           <div class="row" id="user-counts">
