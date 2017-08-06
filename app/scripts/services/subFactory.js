@@ -55,29 +55,17 @@
       return null;
     };
 
-    var setCommentList = function() {
+    var chainPromises = function(where) {
       // Chain promises to fetch all user's comments from reddit API
-      var commentPromise = getPromise('first', 'comments');
+      var promise = getPromise('first', where);
 
       for (var i = 0; i < pages; i++) {
-        commentPromise = commentPromise.then(function(response) {
-          return getData(response, 'comments');
+        promise = promise.then(function(response) {
+          return getData(response, where);
         });
       }
 
-      return commentPromise;
-    };
-
-    var setSubmitList = function() {
-      // Chain promises to fetch all user's submissions from reddit API
-      var submitPromise = getPromise('first', 'submitted');
-      for (var i = 0; i < pages; i++) {
-        submitPromise = submitPromise.then(function(response) {
-          return getData(response, 'submitted');
-        });
-      }
-
-      return submitPromise;
+      return promise;
     };
 
     var organizeComments = function(comments) {
@@ -157,8 +145,8 @@
         .then(function(response) {
           username = response.data.data.name;
           resetData();
-          var commentPromise = setCommentList();
-          var submitPromise = setSubmitList();
+          var commentPromise = chainPromises('comments');
+          var submitPromise = chainPromises('submitted');
           return $q.all([commentPromise, submitPromise]);
         }, function(error) {
           console.log('Error fetching data: ' + error);
