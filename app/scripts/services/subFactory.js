@@ -92,6 +92,7 @@
           subs[subreddit].recent_comment = new Date(comment.created*1000);
           subs[subreddit].comment_ups = parseInt(comment.ups);
           subs[subreddit].submissions = [];
+          subs[subreddit].submitted_ups = 0;
         }
 
         subs[subreddit].total_ups = subs[subreddit].comment_ups;
@@ -120,6 +121,7 @@
             subs[subreddit] = {};
             subs[subreddit].submissions = [];
             subs[subreddit].comments = [];
+            subs[subreddit].comment_ups = 0;
           }
           subs[subreddit].submissions.push(submission);
           subs[subreddit].recent_submission = new Date(submission.created*1000);

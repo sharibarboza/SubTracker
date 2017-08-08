@@ -14,15 +14,15 @@
         <div class="text-content">
           <div class="row">
             <div class="col-md-4" id="user-block">
-              <p id="reddit-name"><span class="baby-blue">u/</span>{{ username }}</p>
-              <p><a href="http://www.reddit.com/user/{{ username }}" class="coral" id="reddit-user-link">Go to user's reddit page <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i></a></p>
+              <p id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</p>
+              <p><a href="http://www.reddit.com/user/{{ username }}" class="green" id="reddit-user-link">Go to user's reddit page <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i></a></p>
             </div>
             <div class="col-md-4" id="sub-count" align="center">
               <p id="subreddits" class="badge"><span class="purples" id="num-subs">{{ subsArray.length }}</span> subreddits</p>
             </div>
             <div class="col-md-4 user-stats" align="right">
               <p>Redditor Since</p>
-              <p class="coral" id="since-date">{{ created }}</p>
+              <p class="green" id="since-date">{{ created }}</p>
             </div>
           </div>
           <div class="row" id="user-counts">
@@ -35,39 +35,27 @@
       </div>
 
       <div class="alert alert-info" role="alert" align="center">Click a subreddit below to view its comments and submissions in detail.</div>
-
-      <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Sort subreddits by
-        <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-          <li><a href="#">Subreddit name</a></li>
-          <li><a href="#">Number of comments</a></li>
-          <li><a href="#">Number of submissions</a></li>
-          <li><a href="#">Total upvotes</a></li>
-          <li><a href="#">Total comment upvotes</a></li>
-          <li><a href="#">Total submission upvotes</a></li>
-          <li><a href="#">Average upvotes per comment</a></li>
-          <li><a href="#">Average upvotes per submission</a></li>
-          <li><a href="#">Most activity</a></li>
-          <li><a href="#">Most recent activity</a></li>
-          <li><a href="#">Most recent comments</a></li>
-          <li><a href="#">Most recent submissions</a></li>
-        </ul>
-      </div>
+      
+      <form name="myForm" id="subsort">
+        <label for="mySelect">Sort subreddits by:</label>
+        <select name="mySelect" id="mySelect"
+          ng-options="option.name for option in data.availableOptions track by option.value"
+          ng-model="data.selectedOption"></select>
+      </form>
 
       <div id="sub-table">
-        <div class="row sub-row" ng-repeat="subreddit in subsArray | orderBy: subreddit">
+        <div class="row sub-row" ng-repeat="subreddit in subsArray | orderSubs: data.selectedOption.value:subs">
           <div class="col-md-3">
-            <a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank" id="sub-name">r/{{ subreddit }}</a>
+            <a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank" id="sub-name">/r/{{ subreddit }}</a>
           </div>
           <div class="col-md-2 sub-stat">
             <span class="label label-purple">Comments</span> <span class="badge">{{ subs[subreddit].comments.length }}</span>
           </div>
           <div class="col-md-2 sub-stat">
-            <span class="label label-coral">Submitted</span> <span class="badge">{{ subs[subreddit].submissions.length }}</span>
+            <span class="label label-green">Submitted</span> <span class="badge">{{ subs[subreddit].submissions.length }}</span>
           </div>
           <div class="col-md-2 sub-stat">
-            <span class="label label-blue">Total Upvotes</span> <span class="badge">{{ subs[subreddit].total_ups }}</span>
+            <span class="label label-blue">Total Upvotes</span> <span class="badge long-badge" ng-class="subs[subreddit].total_ups > 0 ? 'up-badge' : 'down-badge'">{{ subs[subreddit].total_ups }}</span>
           </div>
           <div class="col-md-3 sub-stat">
             <span class="label label-default">Last Seen</span> <span class="sub-date" ng-bind="subs[subreddit].recent_activity | date:'MMMM d, yyyy'"></span>

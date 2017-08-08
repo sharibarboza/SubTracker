@@ -17,8 +17,8 @@ a {
   text-align: center;
 }
 
-.coral {
-  color: #FF7F50;
+.green {
+  color: #1DB3B0;
 }
 
 .purple {
@@ -260,7 +260,7 @@ md-progress-circular {
 }
 
 .sub-row {
-  padding: 5px;
+  padding: 5px 0;
   border: 1px solid #646191;
   margin-bottom: 6px;
 }
@@ -284,8 +284,8 @@ md-progress-circular {
   background-color: #5552B3;
 }
 
-.label-coral {
-  background-color: #FF7F50;
+.label-green {
+  background-color: #1DB3B0;
 }
 
 .label-blue {
@@ -312,16 +312,24 @@ md-progress-circular {
   padding: 2px 20px;
 }
 
+#sub-table .up-badge {
+  color: #008273;
+}
+
+#sub-table .down-badge {
+  color: #E33900;
+}
+
+#sub-table .long-badge {
+  width: 60px;
+}
+
 #sub-table .sub-date {
   color: gray;
   padding-left: 4px;
   font-size: 16px;
 }
 
-.dropdown {
+form#subsort {
   padding-left: 50px;
-}
-
-.dropdown-menu {
-  left: 50px;
 }

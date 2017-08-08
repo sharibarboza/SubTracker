@@ -21,8 +21,8 @@
     $scope.created = moment($scope.user.created_utc*1000).local().format('MMMM Do YYYY, h:mm a');
     $scope.notfound = false;
   }, function() {
-  	$scope.user = false;
-  	$scope.notfound = true;
+    $scope.user = false;
+    $scope.notfound = true;
   });
 
 }]);
