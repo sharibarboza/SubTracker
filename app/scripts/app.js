@@ -13,6 +13,7 @@ angular
     'ngAnimate',
     'ngRoute',
     'ngMaterial',
+    'angularMoment'
   ])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider

@@ -79,7 +79,7 @@
         
         if (subreddit in subs) {
           var comment_list = subs[subreddit].comments;
-          var date = new Date(comment.created*1000);
+          var date = moment(comment.created_utc*1000);
 
           subs[subreddit].comment_ups += parseInt(comment.ups);
           comment_list.push(comment);
@@ -89,7 +89,7 @@
         } else {
           subs[subreddit] = {};
           subs[subreddit].comments = new Array(comment);
-          subs[subreddit].recent_comment = new Date(comment.created*1000);
+          subs[subreddit].recent_comment = moment(comment.created_utc*1000);
           subs[subreddit].comment_ups = parseInt(comment.ups);
           subs[subreddit].submissions = [];
           subs[subreddit].submitted_ups = 0;
@@ -108,7 +108,7 @@
 
         if (subreddit in subs && subs[subreddit].submissions.length > 0) {
           var submission_list = subs[subreddit].submissions;
-          var date = new Date(submission.created*1000);
+          var date = moment(submission.created_utc*1000);
           var recent_submission = subs[subreddit].recent_submission;
 
           subs[subreddit].submitted_ups += parseInt(submission.ups);
@@ -124,7 +124,7 @@
             subs[subreddit].comment_ups = 0;
           }
           subs[subreddit].submissions.push(submission);
-          subs[subreddit].recent_submission = new Date(submission.created*1000);
+          subs[subreddit].recent_submission = moment(submission.created_utc*1000);
           subs[subreddit].submitted_ups = parseInt(submission.ups);
         }
 

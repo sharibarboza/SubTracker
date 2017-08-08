@@ -35,7 +35,7 @@
       </div>
 
       <div class="alert alert-info" role="alert" align="center">Click a subreddit below to view its comments and submissions in detail.</div>
-      
+
       <form name="myForm" id="subsort">
         <label for="mySelect">Sort subreddits by:</label>
         <select name="mySelect" id="mySelect"
@@ -58,7 +58,7 @@
             <span class="label label-blue">Total Upvotes</span> <span class="badge long-badge" ng-class="subs[subreddit].total_ups > 0 ? 'up-badge' : 'down-badge'">{{ subs[subreddit].total_ups }}</span>
           </div>
           <div class="col-md-3 sub-stat">
-            <span class="label label-default">Last Seen</span> <span class="sub-date" ng-bind="subs[subreddit].recent_activity | date:'MMMM d, yyyy'"></span>
+            <span class="label label-default">Last Seen</span> <span class="sub-date" ng-bind="subs[subreddit].recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></span>
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@
  * Controller of the tractApp
  */
  angular.module('tractApp')
- .controller('SubsCtrl', ['$scope', 'subFactory' ,function ($scope, subFactory) {
+ .controller('SubsCtrl', ['$scope', 'amMoment', 'subFactory' ,function ($scope, amMoment, subFactory) {
   $scope.processing = true; // Shows the loading progression
   $scope.ready = false; // Shows the data when it's done processing
 
