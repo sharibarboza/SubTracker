@@ -2,82 +2,81 @@
 
 <div class="main-content">
   <div ng-if="notfound">
-   <h2 align="center">Sorry, that user could not be found.</h2>
- </div>
-
- <div ng-if="user" class="content" layout="column" ng-cloak ng-controller="SubsCtrl">
-  <div layout="row" layout-sm="column" layout-align="space-around">
-    <md-progress-circular ng-show="processing" md-mode="indeterminate"></md-progress-circular>
+     <h2 align="center">Sorry, that user could not be found.</h2>
   </div>
-  <div class="home-page" ng-show=ready>
-    <div id="user-info">
-      <div class="text-content">
+
+  <div ng-if="user" class="content" layout="column" ng-cloak ng-controller="SubsCtrl">
+    <div layout="row" layout-sm="column" layout-align="space-around">
+      <md-progress-circular ng-show="processing" md-mode="indeterminate"></md-progress-circular>
+    </div>
+    <div class="home-page" ng-show=ready>
+      <div id="user-info">
+        <div class="text-content">
+          <div class="row">
+            <div class="col-md-4" id="user-block">
+              <p id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</p>
+              <p><a href="http://www.reddit.com/user/{{ username }}" class="green" id="reddit-user-link">Go to user's reddit page <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i></a></p>
+            </div>
+            <div class="col-md-4" id="sub-count" align="center">
+              <p id="subreddits" class="badge"><span class="purples" id="num-subs">{{ subLength }}</span> subreddits</p>
+            </div>
+            <div class="col-md-4 user-stats" align="right">
+              <p>Redditor Since</p>
+              <p class="green" id="since-date">{{ created }}</p>
+            </div>
+          </div>
+          <div class="row" id="user-counts">
+            <div class="col-md-3"><div>Total Comments (last 1000)<p>{{ comments.length }}</p></div></div>
+            <div class="col-md-3"><div>Total Comment Karma<p>{{ user.comment_karma }}</p></div></div>
+            <div class="col-md-3"><div>Total Submissions (last 1000)<p>{{ submissions.length }}</p></div></div>
+            <div class="col-md-3"><div>Total Post/Link Karma<p>{{ user.link_karma }}</p></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-info" role="alert" align="center">Click a subreddit below to view its comments and submissions in detail.</div>
+
+      <div class="table-options">
         <div class="row">
-          <div class="col-md-4" id="user-block">
-            <p id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</p>
-            <p><a href="http://www.reddit.com/user/{{ username }}" class="green" id="reddit-user-link">Go to user's reddit page <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i></a></p>
+          <div class="col-md-6">
+            <form name="myForm">
+              <label for="mySelect">Sort by:</label>
+              <select name="mySelect" id="mySelect"
+                ng-options="option.name for option in data.availableOptions track by option.value"
+                ng-model="data.selectedOption" ng-change="resetPage()"></select>
+            </form>
           </div>
-          <div class="col-md-4" id="sub-count" align="center">
-            <p id="subreddits" class="badge"><span class="purples" id="num-subs">{{ subLength }}</span> subreddits</p>
-          </div>
-          <div class="col-md-4 user-stats" align="right">
-            <p>Redditor Since</p>
-            <p class="green" id="since-date">{{ created }}</p>
+
+          <div align="right" class="col-md-6">
+            View <select ng-change="setItemsPerPage(viewby)" ng-model="viewby"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="{{ subLength }}">All</option></select> subreddits at a time
           </div>
         </div>
-        <div class="row" id="user-counts">
-          <div class="col-md-3"><div>Total Comments (last 1000)<p>{{ comments.length }}</p></div></div>
-          <div class="col-md-3"><div>Total Comment Karma<p>{{ user.comment_karma }}</p></div></div>
-          <div class="col-md-3"><div>Total Submissions (last 1000)<p>{{ submissions.length }}</p></div></div>
-          <div class="col-md-3"><div>Total Post/Link Karma<p>{{ user.link_karma }}</p></div></div>
+      </div>
+
+      <div id="sub-table" class="table-pad">
+        <div class="row sub-row" ng-repeat="subreddit in getArray().slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+          <div class="col-md-3">
+            <a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank" id="sub-name">/r/{{ subreddit }}</a>
+          </div>
+          <div class="col-md-2 sub-stat">
+            <span class="label label-purple">Comments</span> <span class="badge">{{ subs[subreddit].comments.length }}</span>
+          </div>
+          <div class="col-md-2 sub-stat">
+            <span class="label label-green">Submitted</span> <span class="badge">{{ subs[subreddit].submissions.length }}</span>
+          </div>
+          <div class="col-md-2 sub-stat">
+            <span class="label label-blue">Total Upvotes</span> <span class="badge long-badge" ng-class="subs[subreddit].total_ups > 0 ? 'up-badge' : 'down-badge'">{{ subs[subreddit].total_ups }}</span>
+          </div>
+          <div class="col-md-3 sub-stat">
+            <span class="label label-default">Last Seen</span> <span class="sub-date" ng-bind="subs[subreddit].recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></span>
+          </div>
+        </div>
+
+        <div align="center" ng-show="paginate">
+          <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></pagination>
         </div>
       </div>
+
     </div>
-
-    <div class="alert alert-info" role="alert" align="center">Click a subreddit below to view its comments and submissions in detail.</div>
-
-    <div class="table-options">
-      <div class="row">
-        <div class="col-md-6">
-          <form name="myForm">
-            <label for="mySelect">Sort subreddits by:</label>
-            <select name="mySelect" id="mySelect"
-            ng-options="option.name for option in data.availableOptions track by option.value"
-            ng-model="data.selectedOption" ng-change="resetPage()"></select>
-          </form>
-        </div>
-
-        <div align="right" class="col-md-6">
-          View <select ng-change="setItemsPerPage(viewby)" ng-model="viewby"><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> subreddits at a time.
-        </div>
-      </div>
-    </div>
-
-
-    <div id="sub-table" class="table-pad">
-      <div class="row sub-row" ng-repeat="subreddit in getArray().slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
-        <div class="col-md-3">
-          <a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank" id="sub-name">/r/{{ subreddit }}</a>
-        </div>
-        <div class="col-md-2 sub-stat">
-          <span class="label label-purple">Comments</span> <span class="badge">{{ subs[subreddit].comments.length }}</span>
-        </div>
-        <div class="col-md-2 sub-stat">
-          <span class="label label-green">Submitted</span> <span class="badge">{{ subs[subreddit].submissions.length }}</span>
-        </div>
-        <div class="col-md-2 sub-stat">
-          <span class="label label-blue">Total Upvotes</span> <span class="badge long-badge" ng-class="subs[subreddit].total_ups > 0 ? 'up-badge' : 'down-badge'">{{ subs[subreddit].total_ups }}</span>
-        </div>
-        <div class="col-md-3 sub-stat">
-          <span class="label label-default">Last Seen</span> <span class="sub-date" ng-bind="subs[subreddit].recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></span>
-        </div>
-      </div>
-
-      <div align="center" ng-show="paginate">
-        <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></pagination>
-      </div>
-    </div>
-
   </div>
-</div>
 </div>

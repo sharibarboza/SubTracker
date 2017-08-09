@@ -8,15 +8,15 @@
  * Controller of the tractApp
  */
  angular.module('tractApp')
- .controller('SubsCtrl', ['$scope', 'amMoment', 'subFactory', '$filter', function ($scope, amMoment, subFactory, $filter) {
+ .controller('SubsCtrl', ['$scope', 'amMoment', 'subFactory', '$filter', '$window', function ($scope, amMoment, subFactory, $filter, $window) {
 
-  $scope.setPage = function (pageNo) {
+  $scope.setPage = function(pageNo) {
     $scope.currentPage = pageNo;
   };
 
   $scope.pageChanged = function() {
-    console.log('Page changed to: ' + $scope.currentPage);
-  };
+    $window.scrollTo(0, 200);
+  }
 
   $scope.setItemsPerPage = function(num) {
     $scope.itemsPerPage = num;
@@ -62,7 +62,7 @@
     $scope.viewby = "25";
     $scope.totalItems = $scope.subLength;
     $scope.currentPage = 1;
-    $scope.itemsPerPage = $scope.viewby;
+    $scope.itemsPerPage = parseInt($scope.viewby);
     $scope.maxSize = 10;
     $scope.paginate = $scope.subLength > $scope.itemsPerPage;
 
