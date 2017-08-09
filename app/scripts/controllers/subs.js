@@ -8,7 +8,29 @@
  * Controller of the tractApp
  */
  angular.module('tractApp')
- .controller('SubsCtrl', ['$scope', 'amMoment', 'subFactory' ,function ($scope, amMoment, subFactory) {
+ .controller('SubsCtrl', ['$scope', 'amMoment', 'subFactory', '$filter', function ($scope, amMoment, subFactory, $filter) {
+
+  $scope.setPage = function (pageNo) {
+    $scope.currentPage = pageNo;
+  };
+
+  $scope.pageChanged = function() {
+    console.log('Page changed to: ' + $scope.currentPage);
+  };
+
+  $scope.setItemsPerPage = function(num) {
+    $scope.itemsPerPage = num;
+    $scope.resetPage();
+  };
+
+  $scope.resetPage = function() {
+    $scope.currentPage = 1;
+  }
+
+  $scope.getArray = function() {
+    return $filter('orderSubs')($scope.subsArray, $scope.data.selectedOption.value, $scope.subs);
+  };
+
   $scope.processing = true; // Shows the loading progression
   $scope.ready = false; // Shows the data when it's done processing
 
@@ -34,7 +56,15 @@
     $scope.comments = subFactory.getCommentList();
     $scope.submissions = subFactory.getSubmitList();
     $scope.subs = subFactory.getSubs();
-    $scope.subsArray = Object.keys($scope.subs);
+    $scope.subsArray = $filter('orderSubs')(Object.keys($scope.subs), 'subName', $scope.subs);
+    $scope.subLength = $scope.subsArray.length;
+
+    $scope.viewby = "25";
+    $scope.totalItems = $scope.subLength;
+    $scope.currentPage = 1;
+    $scope.itemsPerPage = $scope.viewby;
+    $scope.maxSize = 10;
+    $scope.paginate = $scope.subLength > $scope.itemsPerPage;
 
     $scope.processing = false;
     $scope.ready = true;

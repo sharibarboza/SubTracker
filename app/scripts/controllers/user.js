@@ -8,7 +8,7 @@
  * Controller of the tractApp
  */
  angular.module('tractApp')
- .controller('UserCtrl', ['$scope', '$routeParams', 'userFactory', function ($scope, $routeParams, userFactory) {
+ .controller('UserCtrl', ['$scope', '$routeParams', 'userFactory', 'moment', function ($scope, $routeParams, userFactory, moment) {
   $scope.main = false;
 
   // Get the user's username and account creation date

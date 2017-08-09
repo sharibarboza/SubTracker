@@ -8,7 +8,7 @@
  * Factory in the tractApp.
  */
  angular.module('tractApp')
- .factory('subFactory', ['$http', 'userFactory', '$q', function ($http, userFactory, $q) {
+ .factory('subFactory', ['$http', 'userFactory', '$q', 'moment', function ($http, userFactory, $q, moment) {
     var baseUrl = 'http://www.reddit.com/user/';
     var rawJson = 'raw_json=1';
     var username;

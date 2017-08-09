@@ -57,7 +57,7 @@ angular.module('tractApp')
       } else {
         return (num1 / num2);
       }
-    }
+    };
 
     var sortAverage = function(keys, data, where) {
       keys.sort(function(a, b) {
@@ -72,7 +72,7 @@ angular.module('tractApp')
         return sortNum(num1, num2, a, b, false);
       });
       return keys;
-    }
+    };
 
     var sort = function(keys, data, where, reverse) {
       keys.sort(function(a, b) {

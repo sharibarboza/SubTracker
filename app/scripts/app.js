@@ -13,7 +13,8 @@ angular
     'ngAnimate',
     'ngRoute',
     'ngMaterial',
-    'angularMoment'
+    'angularMoment',
+    'ui.bootstrap'
   ])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider

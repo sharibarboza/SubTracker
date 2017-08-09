@@ -256,7 +256,14 @@ md-progress-circular {
 
 #sub-table {
   font-weight: 500;
-  padding: 10px 65px 50px 65px;
+}
+
+.table-pad {
+  padding: 0 65px 50px 65px;
+}
+
+.table-options {
+  padding: 10px 50px;
 }
 
 .sub-row {
@@ -330,6 +337,3 @@ md-progress-circular {
   font-size: 14px;
 }
 
-form#subsort {
-  padding-left: 50px;
-}
