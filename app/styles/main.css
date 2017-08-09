@@ -117,11 +117,16 @@ a {
   }
 }
 
+.width-pad {
+  padding-left: 50px;
+  padding-right: 65px;
+}
+
 .navbar-default {
   background-color: #5552B3;
   border: none;
   padding-left: 50px;
-  padding-right: 50px;
+  padding-right: 65px;
 }
 
 .navbar {
@@ -214,7 +219,7 @@ md-progress-circular {
 }
 
 #since-date {
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .user-stats p {
@@ -222,7 +227,7 @@ md-progress-circular {
 }
 
 #sub-count p, #reddit-user-link {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .user-stats {
@@ -335,5 +340,12 @@ md-progress-circular {
   color: gray;
   padding-left: 4px;
   font-size: 14px;
+}
+
+.footer {
+  margin-top: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
 }
 
