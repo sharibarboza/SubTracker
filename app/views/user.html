@@ -18,7 +18,7 @@
               <p><a href="http://www.reddit.com/user/{{ username }}" class="green" id="reddit-user-link">Go to user's reddit page <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i></a></p>
             </div>
             <div class="col-md-4" id="sub-count" align="center">
-              <p id="subreddits" class="badge"><span class="purples" id="num-subs">{{ subLength }}</span> subreddits</p>
+              <p id="subreddits"><span class="baby-blue badge" id="num-subs">{{ subLength }}</span> subreddits</p>
             </div>
             <div class="col-md-4 user-stats" align="right">
               <p>Redditor Since</p>
@@ -34,29 +34,30 @@
         </div>
       </div>
 
-      <div class="alert alert-info" role="alert" align="center">Click a subreddit below to view its comments and submissions in detail.</div>
+      <div class="alert" role="alert" align="center">Click a subreddit below to view its comments and submissions in detail.</div>
 
       <div class="table-options">
         <div class="row">
           <div class="col-md-6">
             <form name="myForm">
-              <label for="mySelect">Sort by:</label>
+              <label for="mySelect">Sort by:
               <select name="mySelect" id="mySelect"
                 ng-options="option.name for option in data.availableOptions track by option.value"
-                ng-model="data.selectedOption" ng-change="resetPage()"></select>
+                ng-model="data.selectedOption" ng-change="resetPage()"></select></label>
             </form>
           </div>
 
           <div align="right" class="col-md-6">
-            View <select ng-change="setItemsPerPage(viewby)" ng-model="viewby"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="{{ subLength }}">All</option></select> subreddits at a time
+            <label>View <select ng-change="setItemsPerPage(viewby)" ng-model="viewby"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="{{ subLength }}">All</option></select> subreddits at a time</label>
           </div>
         </div>
       </div>
 
       <div id="sub-table" class="table-pad">
         <div class="row sub-row" ng-repeat="subreddit in getArray().slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
-          <div class="col-md-3">
-            <a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank" id="sub-name">/r/{{ subreddit }}</a>
+          <div class="col-md-3" id="sub-rank">
+            <div class="col-md-2"><span class="gray"><strong>{{ ((currentPage-1)*itemsPerPage) + 1 + $index }}</strong></span></div>
+            <div class="col-md-10"><a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank" id="sub-name"> /r/{{ subreddit }}</a></div>
           </div>
           <div class="col-md-2 sub-stat">
             <span class="label label-purple">Comments</span> <span class="badge">{{ subs[subreddit].comments.length }}</span>

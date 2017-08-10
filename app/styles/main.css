@@ -29,8 +29,18 @@ a {
   color: #12C5E0;
 }
 
+.gray {
+  color: #333;
+}
+
 .btn:focus, .btn:active {
   outline: none !important;
+}
+
+.alert {
+  border: none;
+  background-color: #EDEDED;
+  font-weight: 500;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -57,7 +67,7 @@ a {
 
 /* Main marketing message and sign up button */
 .jumbotron {
-  background-color: #323536;
+  background-color: #292929;
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
   color: white;
@@ -199,7 +209,7 @@ md-progress-circular {
 
 #user-info {
   padding: 0;
-  background-color: #323536;
+  background-color: #292929;
   color: white;
   line-height: 130%;
   font-weight: 600;
@@ -207,7 +217,7 @@ md-progress-circular {
 }
 
 .text-content {
-  padding: 10px 50px 30px 50px;
+  padding: 20px 50px 40px 50px;
 }
 
 #user-info .col-md-4 {
@@ -239,8 +249,9 @@ md-progress-circular {
 }
 
 #user-counts .col-md-3 div {
-  padding: 10px;
+  padding: 5px 10px;
   border: 1px solid #646191;
+  border-radius: 5px;
 }
 
 #user-counts p {
@@ -250,11 +261,11 @@ md-progress-circular {
 }
 
 #subreddits {
-  font-size: 30px !important;
+  font-size: 25px !important;
 }
 
 #num-subs {
-  font-size: 34px !important;
+  font-size: 28px !important;
 }
 
 /* Subreddit Table */
@@ -274,11 +285,17 @@ md-progress-circular {
 .sub-row {
   padding: 5px 0;
   border: 1px solid #646191;
+  border-radius: 5px;
   margin-bottom: 6px;
 }
 
 .sub-row:hover {
   background-color: #CEE9F2;
+}
+
+#sub-rank [class*='col-'] {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .sub-stat {
@@ -320,8 +337,10 @@ md-progress-circular {
   font-size: 1.3em;
 }
 
-#sub-count > .badge {
+#sub-count .badge {
+  color: white;
   padding: 2px 20px;
+  background-color: #646191;
 }
 
 #sub-table .up-badge {
@@ -337,7 +356,7 @@ md-progress-circular {
 }
 
 #sub-table .sub-date {
-  color: gray;
+  color: #333;
   padding-left: 4px;
   font-size: 14px;
 }
