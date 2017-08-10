@@ -62,10 +62,10 @@
 
       for (var i = 0; i < pages; i++) {
         promise = promise.then(function(response) {
+          console.log(response);
           return getData(response, where);
         });
       }
-
       return promise;
     };
 

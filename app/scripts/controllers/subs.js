@@ -16,7 +16,7 @@
 
   $scope.pageChanged = function() {
     $window.scrollTo(0, 200);
-  }
+  };
 
   $scope.setItemsPerPage = function(num) {
     $scope.itemsPerPage = num;
@@ -25,7 +25,7 @@
 
   $scope.resetPage = function() {
     $scope.currentPage = 1;
-  }
+  };
 
   $scope.getArray = function() {
     return $filter('orderSubs')($scope.subsArray, $scope.data.selectedOption.value, $scope.subs);
