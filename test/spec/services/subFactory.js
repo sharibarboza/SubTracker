@@ -11,7 +11,8 @@ describe('Factory: subFactory', function () {
   beforeEach(inject(function (_subFactory_, _userFactory_) {
     subFactory = _subFactory_;
     userFactory = _userFactory_;
-    userFactory.setUser('autowikibot');
+    userFactory.setUser('BadLinguisticsBot');
+    subFactory.setData();
   }));
 
   it('should do something', function () {

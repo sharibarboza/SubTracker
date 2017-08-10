@@ -16,6 +16,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
         '../app/bower_components/angular/angular.js',
+        '../app/bower_components/moment/moment.js',
         '../app/scripts/app.js',
         '../app/bower_components/*/*.js',
         '../app/bower_components/*/*.css',
@@ -25,8 +26,7 @@ module.exports = function(config) {
         '../app/bower_components/font-awesome/css/font-awesome.css',
         '../app/scripts/controllers/*.js',
         '../app/scripts/services/*.js',
-        'spec/controllers/*.js',
-        'spec/services/*.js'
+        'spec/*/*.js',
     ],
 
 
@@ -36,7 +36,8 @@ module.exports = function(config) {
         '../app/bower_components/angular-mocks/ngAnimateMock.js',
         '../app/bower_components/angular-mocks/ngMock.js',
         '../app/bower_components/angular-mocks/ngMockE2E.js',
-        '../app/bower_components/bootstrap/package.js'
+        '../app/bower_components/bootstrap/package.js',
+        '../app/bower_components/angular-moment/tests.js',
     ],
 
 

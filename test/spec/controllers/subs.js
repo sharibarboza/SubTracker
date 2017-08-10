@@ -7,20 +7,27 @@ describe('Controller: SubsCtrl', function () {
 
   var SubsCtrl,
     scope,
-    userFactory,
+    amMoment,
+    $window,
     subFactory,
-    username = 'autowikibot';
+    $filter,
+    username = 'BadLinguisticsBot';
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope, _userFactory_, _subFactory_) {
+  beforeEach(inject(function ($controller, $rootScope, userFactory, _subFactory_, _amMoment_, _$filter_, _$window_) {
     scope = $rootScope.$new();
-    userFactory = _userFactory_;
+    amMoment = _amMoment_;
+    $filter = _$filter_;
+    $window = _$window_;
     subFactory = _subFactory_;
     userFactory.setUser(username);
 
     SubsCtrl = $controller('SubsCtrl', {
       $scope: scope,
-      subFactory: subFactory
+      subFactory: subFactory,
+      amMoment: amMoment,
+      $filter: $filter,
+      $window, $window
     });
   }));
 

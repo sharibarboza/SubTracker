@@ -10,7 +10,7 @@ describe('Factory: userFactory', function () {
 
   beforeEach(inject(function (_userFactory_) {
     userFactory = _userFactory_;
-    userFactory.setUser('autowikibot');
+    userFactory.setUser('BadLinguisticsBot');
   }));
 
   it('should do something', function () {
@@ -23,7 +23,7 @@ describe('Factory: userFactory', function () {
     expect(angular.isFunction(userPromise.then)).toBeTruthy();
 
     userPromise.then(function(response) {
-      expect(response.data.data.name).toBe('autowikibot');
+      expect(response.data.data.name).toBe('BadLinguisticsBot');
     });
   });
 

@@ -9,19 +9,22 @@ describe('Controller: UserCtrl', function () {
     scope,
     routeParams,
     userFactory,
-    userPromise;
+    userPromise
+    moment;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $rootScope, _$routeParams_, _userFactory_) {
+  beforeEach(inject(function ($controller, $rootScope, _$routeParams_, _userFactory_, _moment_) {
     scope = $rootScope.$new();
     routeParams = _$routeParams_;
-    routeParams.username = 'autowikibot';
+    routeParams.username = 'BadLinguisticsBot';
     userFactory = _userFactory_;
+    moment = _moment_;
 
     UserCtrl = $controller('UserCtrl', {
       $scope: scope,
       $routeParams: routeParams,
-      userFactory: userFactory
+      userFactory: userFactory,
+      moment: moment
     });
 
   }));
@@ -31,7 +34,7 @@ describe('Controller: UserCtrl', function () {
   });
 
   it('should have username param', function() {
-    expect(routeParams.username).toBe('autowikibot');
+    expect(routeParams.username).toBe('BadLinguisticsBot');
   });
 
   it('should have user data', function() {
