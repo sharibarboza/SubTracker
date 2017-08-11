@@ -52,15 +52,16 @@
       $scope.comments = response.comments;
       $scope.submissions = response.submissions;
       $scope.subs = response.subs;
+      $scope.dataAvailable = response.firstDate;
     } else {
       $scope.comments = subFactory.getCommentList().length;
       $scope.submissions = subFactory.getSubmitList().length;
       $scope.subs = subFactory.getSubs();
+      $scope.dataAvailable = subFactory.getDataAvailable();
     }
 
     $scope.subsArray = $filter('orderSubs')(Object.keys($scope.subs), 'subName', $scope.subs);
     $scope.subLength = $scope.subsArray.length;
-
     $scope.totalItems = $scope.subLength;
     $scope.paginate = $scope.subLength > $scope.itemsPerPage;
 
@@ -72,9 +73,12 @@
     return 'user' in sessionStorage && sessionStorage.user === username;
   };
 
+
   var defaultSort = {value: 'subName', name: 'Subreddit name'};
   var defaultView = "25";
   var sort;
+  var username = $routeParams.username;
+  var processUser = true;
 
   $scope.main = false;
   $scope.processing = true; // Shows the loading progression
@@ -83,14 +87,10 @@
   $scope.maxSize = 10;
   $scope.currentPage = 1;
 
-  var username = $routeParams.username;
-  var processUser = true;
-
   // Get the user's username and account creation date
   if (cachedData()) {
     configUserData(JSON.parse(sessionStorage.userData));
     configSubData(JSON.parse(sessionStorage.subData));
-
     processUser = false;
   }
 
@@ -123,6 +123,7 @@
 
   if (processUser) {
     userFactory.setUser(username);
+
     userFactory.getUser().then(function(response) {
       configUserData(response);
       sessionStorage.user = username;
@@ -132,8 +133,9 @@
       subFactory.getData().then(function() {
         configSubData(null);
       });
-    sessionStorage.sort = JSON.stringify(defaultSort);
-    sessionStorage.view = defaultView;
+
+      sessionStorage.sort = JSON.stringify(defaultSort);
+      sessionStorage.view = defaultView;
     }, function() {
       $scope.user = false;
       $scope.notfound = true;

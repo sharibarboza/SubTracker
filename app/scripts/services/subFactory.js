@@ -17,6 +17,7 @@
     var submissions = [];
     var subs = {};
     var pages = 10;
+    var dataAvailable;
 
     var resetData = function() {
       // Reset all data to empty lists (used for getting a new user)
@@ -81,6 +82,8 @@
           var date = moment(comment.created_utc*1000);
 
           subs[subreddit].comment_ups += parseInt(comment.ups);
+          subs[subreddit].gilded_comments += parseInt(comment.gilded);
+
           comment_list.push(comment);
           if (date > subs[subreddit].recent_comment) {
             subs[subreddit].recent_comment = date;
@@ -92,6 +95,8 @@
           subs[subreddit].comment_ups = parseInt(comment.ups);
           subs[subreddit].submissions = [];
           subs[subreddit].submitted_ups = 0;
+          subs[subreddit].gilded_comments = 0;
+          subs[subreddit].gilded_submits = 0;
         }
 
         subs[subreddit].total_ups = subs[subreddit].comment_ups;
@@ -111,6 +116,8 @@
           var recent_submission = subs[subreddit].recent_submission;
 
           subs[subreddit].submitted_ups += parseInt(submission.ups);
+          subs[subreddit].gilded_submits += parseInt(submission.gilded);
+
           submission_list.push(submission);
           if (date > recent_submission) {
             subs[subreddit].recent_submission = date;
@@ -121,6 +128,8 @@
             subs[subreddit].submissions = [];
             subs[subreddit].comments = [];
             subs[subreddit].comment_ups = 0;
+            subs[subreddit].gilded_comments = 0;
+            subs[subreddit].gilded_submits = 0;
           }
           subs[subreddit].submissions.push(submission);
           subs[subreddit].recent_submission = moment(submission.created_utc*1000);
@@ -139,6 +148,28 @@
       }
     };
 
+    var getFirstDate = function() {
+      var lastComment, lastSubmit, commentDate, submitDate;
+
+      if (comments.length > 0) {
+        lastComment = comments[comments.length-1].data;
+        commentDate = moment(lastComment.created_utc*1000);
+      }
+
+      if (submissions.length > 0) {
+        lastSubmit = submissions[submissions.length-1].data;
+        submitDate = moment(lastSubmit.created_utc*1000);
+      }
+
+      if (commentDate && submitDate) {
+        dataAvailable = (commentDate < submitDate) ? commentDate : submitDate;
+      } else if (commentDate) {
+        dataAvailable = commentDate;
+      } else if (submitDate) {
+        dataAvailable = submitDate;
+      } 
+    };
+
     return {
       setData: function(user) {
         // Must be called first before getting comments, submissions, or subs data
@@ -151,12 +182,14 @@
           organizeComments(comments);
           organizeSubmitted(submissions);
 
+          getFirstDate();
           sessionStorage.subUser = username;
           var subData = {
             'user': username,
             'comments' : comments.length,
             'submissions' : submissions.length,
-            'subs' : subs
+            'subs' : subs,
+            'firstDate' : dataAvailable
           };
           sessionStorage.subData = JSON.stringify(subData);
         });
@@ -171,6 +204,9 @@
       getSubmitList: function() {
         // Returns submissions list (getData must be called first to return promise)
         return submissions;
+      },
+      getDataAvailable: function() {
+        return dataAvailable;
       },
       getSubs: function() {
         // Returns subreddits dictionary (getData must be called first to return promise)

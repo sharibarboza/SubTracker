@@ -220,7 +220,7 @@ md-progress-circular {
   padding: 20px 50px 40px 50px;
 }
 
-#user-info .col-md-4 {
+#user-info [class*='col-'] {
   padding: 20px 15px 5px 15px;
 }
  
@@ -339,7 +339,7 @@ md-progress-circular {
 
 #sub-count .badge {
   color: white;
-  padding: 2px 20px;
+  padding: 2px 14px;
   background-color: #646191;
 }
 
@@ -359,6 +359,27 @@ md-progress-circular {
   color: #333;
   padding-left: 4px;
   font-size: 14px;
+}
+
+.breadcrumb {
+  padding: 12px 50px;
+}
+
+.nav-tabs {
+  padding: 10px 50px 0 50px;
+}
+
+.tab-badge {
+  background-color: #5552B3;
+  width: 40px;
+}
+
+#alert-bar .col-md-6:first-child {
+  padding-right: 0;
+}
+
+#alert-bar .col-md-6:last-child {
+  padding-left: 0;
 }
 
 .footer {

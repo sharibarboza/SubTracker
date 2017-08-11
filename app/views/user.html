@@ -18,7 +18,7 @@
               <p><a href="http://www.reddit.com/user/{{ username }}" class="green" id="reddit-user-link">Go to user's reddit page <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i></a></p>
             </div>
             <div class="col-md-4" id="sub-count" align="center">
-              <p id="subreddits"><span class="baby-blue badge" id="num-subs">{{ subLength }}</span> subreddits</p>
+              <p id="subreddits"><span class="badge" id="num-subs">{{ subLength }} subreddits</span></p>
             </div>
             <div class="col-md-4 user-stats" align="right">
               <p>Redditor Since</p>
@@ -34,11 +34,23 @@
         </div>
       </div>
 
-      <div class="alert" role="alert" align="center">Click a subreddit below to view its comments and submissions in detail.</div>
+      <div class="row" id="alert-bar">
+        <div class="col-md-6">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">{{ username }}'s subreddits</li>
+          </ol>
+        </div>
+        <div class="col-md-6" align="right">
+          <ol class="breadcrumb">
+            <li class="breadcrum-item active">Data available since: <strong ng-bind="dataAvailable | amDateFormat:'MMMM Do, YYYY'"></strong></li>
+          </ol>
+        </div>
+      </div>
 
       <div class="table-options">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-4">
             <form name="myForm">
               <label for="mySelect">Sort by:
               <select name="mySelect" id="mySelect"
@@ -46,8 +58,8 @@
                 ng-model="data.selectedOption" ng-change="setOption()"></select></label>
             </form>
           </div>
-
-          <div align="right" class="col-md-6">
+          <div class="col-md-4" align="center">Click on a subreddit.</div>
+          <div class="col-md-4" align="right">
             <label>View <select ng-change="setItemsPerPage(itemsPerPage)" ng-model="itemsPerPage"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="{{ subLength }}">All</option></select> subreddits at a time</label>
           </div>
         </div>
