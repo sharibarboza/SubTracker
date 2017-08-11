@@ -21,6 +21,12 @@
 
   $scope.setItemsPerPage = function(num) {
     $scope.itemsPerPage = num;
+    sessionStorage.view = num;
+    $scope.resetPage();
+  };
+
+  $scope.setOption = function() {
+    sessionStorage.sort = JSON.stringify($scope.data.selectedOption);
     $scope.resetPage();
   };
 
@@ -31,30 +37,6 @@
   $scope.getArray = function() {
     return $filter('orderSubs')($scope.subsArray, $scope.data.selectedOption.value, $scope.subs);
   };
-
-  $scope.data = {
-    availableOptions: [
-      {value: 'subName', name: 'Subreddit name'},
-      {value: 'totalComments', name: 'Total comments'},
-      {value: 'totalSubmits', name: 'Total submissions'},
-      {value: 'totalUps', name: 'Total upvotes'},
-      {value: 'lastSeen', name: 'Most recent activity'},
-      {value: 'mostActive', name: 'Most activity'},
-      {value: 'avgComment', name: 'Average upvotes per comment'},
-      {value: 'avgSubmit', name: 'Average upvotes per submission'},
-      {value: 'mostDown', name: 'Most controversial'},
-    ],
-    selectedOption: {value: 'subName', name: 'Subreddit name'}
-  };
-
-  $scope.main = false;
-  $scope.processing = true; // Shows the loading progression
-  $scope.ready = false; // Shows the data when it's done processing
-
-  var username = $routeParams.username;
-  var processUser = true;
-
-  // Get the user's username and account creation date
 
   var configUserData = function(response) {
     $scope.user = response.data.data;
@@ -79,23 +61,65 @@
     $scope.subsArray = $filter('orderSubs')(Object.keys($scope.subs), 'subName', $scope.subs);
     $scope.subLength = $scope.subsArray.length;
 
-    $scope.viewby = "25";
     $scope.totalItems = $scope.subLength;
-    $scope.currentPage = 1;
-    $scope.itemsPerPage = parseInt($scope.viewby);
-    $scope.maxSize = 10;
     $scope.paginate = $scope.subLength > $scope.itemsPerPage;
 
     $scope.processing = false;
     $scope.ready = true;
   };
 
-  if ('user' in sessionStorage && sessionStorage.user === username) {
+  var cachedData = function() {
+    return 'user' in sessionStorage && sessionStorage.user === username;
+  }
+
+  var defaultSort = {value: 'subName', name: 'Subreddit name'};
+  var defaultView = "25";
+  var sort, view;
+
+  $scope.main = false;
+  $scope.processing = true; // Shows the loading progression
+  $scope.ready = false; // Shows the data when it's done processing
+  $scope.itemsPerPage = defaultView;
+  $scope.maxSize = 10;
+  $scope.currentPage = 1;
+
+  var username = $routeParams.username;
+  var processUser = true;
+
+  // Get the user's username and account creation date
+  if (cachedData()) {
     configUserData(JSON.parse(sessionStorage.userData));
     configSubData(JSON.parse(sessionStorage.subData));
 
     processUser = false;
   }
+
+  if (cachedData()) {
+    sort = JSON.parse(sessionStorage.sort);
+  } else {
+    sort = defaultSort;
+  }
+  if (cachedData()) {
+    $scope.itemsPerPage = sessionStorage.view;
+
+  } else {
+    $scope.itemsPerPage = defaultView;
+  }
+
+  $scope.data = {
+    availableOptions: [
+      {value: 'subName', name: 'Subreddit name'},
+      {value: 'totalComments', name: 'Total comments'},
+      {value: 'totalSubmits', name: 'Total submissions'},
+      {value: 'totalUps', name: 'Total upvotes'},
+      {value: 'lastSeen', name: 'Most recent activity'},
+      {value: 'mostActive', name: 'Most activity'},
+      {value: 'avgComment', name: 'Average upvotes per comment'},
+      {value: 'avgSubmit', name: 'Average upvotes per submission'},
+      {value: 'mostDown', name: 'Most controversial'},
+    ],
+    selectedOption: sort
+  };
 
   if (processUser) {
     userFactory.setUser(username);
@@ -108,6 +132,8 @@
       subFactory.getData().then(function() {
         configSubData(null);
       });
+    sessionStorage.sort = JSON.stringify(defaultSort);
+    sessionStorage.view = defaultView;
     }, function() {
       $scope.user = false;
       $scope.notfound = true;

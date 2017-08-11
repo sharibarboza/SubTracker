@@ -43,12 +43,12 @@
               <label for="mySelect">Sort by:
               <select name="mySelect" id="mySelect"
                 ng-options="option.name for option in data.availableOptions track by option.value"
-                ng-model="data.selectedOption" ng-change="resetPage()"></select></label>
+                ng-model="data.selectedOption" ng-change="setOption()"></select></label>
             </form>
           </div>
 
           <div align="right" class="col-md-6">
-            <label>View <select ng-change="setItemsPerPage(viewby)" ng-model="viewby"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="{{ subLength }}">All</option></select> subreddits at a time</label>
+            <label>View <select ng-change="setItemsPerPage(itemsPerPage)" ng-model="itemsPerPage"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="{{ subLength }}">All</option></select> subreddits at a time</label>
           </div>
         </div>
       </div>

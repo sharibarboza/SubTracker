@@ -157,7 +157,7 @@
             'comments' : comments.length,
             'submissions' : submissions.length,
             'subs' : subs
-          }
+          };
           sessionStorage.subData = JSON.stringify(subData);
         });
       },
