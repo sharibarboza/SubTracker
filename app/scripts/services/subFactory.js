@@ -62,7 +62,6 @@
 
       for (var i = 0; i < pages; i++) {
         promise = promise.then(function(response) {
-          console.log(response);
           return getData(response, where);
         });
       }
@@ -141,23 +140,25 @@
     };
 
     return {
-      setData: function() {
-        // Must be called first before getting comments, submissions, or subs data 
-        var userPromise = userFactory.getUser();
-        promise = userPromise
-        .then(function(response) {
-          username = response.data.data.name;
-          resetData();
-          var commentPromise = chainPromises('comments');
-          var submitPromise = chainPromises('submitted');
-          return $q.all([commentPromise, submitPromise]);
-        }, function(error) {
-          console.log('Error fetching data: ' + error);
-        });
-
+      setData: function(user) {
+        // Must be called first before getting comments, submissions, or subs data
+        username = user;
+        resetData();
+        var commentPromise = chainPromises('comments');
+        var submitPromise = chainPromises('submitted');
+        promise = $q.all([commentPromise, submitPromise]);
         promise.then(function() {
           organizeComments(comments);
           organizeSubmitted(submissions);
+
+          sessionStorage.subUser = username;
+          var subData = {
+            'user': username,
+            'comments' : comments.length,
+            'submissions' : submissions.length,
+            'subs' : subs
+          }
+          sessionStorage.subData = JSON.stringify(subData);
         });
       },
       getData: function() {

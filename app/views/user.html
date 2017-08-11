@@ -5,7 +5,7 @@
      <h2 align="center">Sorry, that user could not be found.</h2>
   </div>
 
-  <div ng-if="user" class="content" layout="column" ng-cloak ng-controller="SubsCtrl">
+  <div ng-if="user" class="content" layout="column" ng-cloak>
     <div layout="row" layout-sm="column" layout-align="space-around">
       <md-progress-circular ng-show="processing" md-mode="indeterminate"></md-progress-circular>
     </div>
@@ -26,10 +26,10 @@
             </div>
           </div>
           <div class="row" id="user-counts">
-            <div class="col-md-3"><div>Total Comments (last 1000)<p>{{ comments.length }}</p></div></div>
-            <div class="col-md-3"><div>Total Comment Karma<p>{{ user.comment_karma }}</p></div></div>
-            <div class="col-md-3"><div>Total Submissions (last 1000)<p>{{ submissions.length }}</p></div></div>
-            <div class="col-md-3"><div>Total Post/Link Karma<p>{{ user.link_karma }}</p></div></div>
+            <div class="col-md-3"><div>Total Comments (last 1000)<p>{{ comments }}</p></div></div>
+            <div class="col-md-3"><div>Total Comment Karma<p>{{ commentKarma }}</p></div></div>
+            <div class="col-md-3"><div>Total Submissions (last 1000)<p>{{ submissions }}</p></div></div>
+            <div class="col-md-3"><div>Total Post/Link Karma<p>{{ submitKarma }}</p></div></div>
           </div>
         </div>
       </div>
@@ -55,9 +55,10 @@
 
       <div id="sub-table" class="table-pad">
         <div class="row sub-row" ng-repeat="subreddit in getArray().slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+          <a href="#/{{ username }}/{{ subreddit }}">
           <div class="col-md-3" id="sub-rank">
             <div class="col-md-2"><span class="gray"><strong>{{ ((currentPage-1)*itemsPerPage) + 1 + $index }}</strong></span></div>
-            <div class="col-md-10"><a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank" id="sub-name"> /r/{{ subreddit }}</a></div>
+            <div class="col-md-10"><span id="sub-name"> /r/{{ subreddit }}</span></div>
           </div>
           <div class="col-md-2 sub-stat">
             <span class="label label-purple">Comments</span> <span class="badge">{{ subs[subreddit].comments.length }}</span>
@@ -71,6 +72,7 @@
           <div class="col-md-3 sub-stat">
             <span class="label label-default">Last Seen</span> <span class="sub-date" ng-bind="subs[subreddit].recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></span>
           </div>
+          </a>
         </div>
 
         <div align="center" ng-show="paginate">

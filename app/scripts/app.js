@@ -28,6 +28,11 @@ angular
         controller: 'UserCtrl',
         controllerAs: 'user'
       })
+      .when('/:username/:subreddit', {
+        templateUrl: 'views/sub.html',
+        controller: 'UsersubCtrl',
+        controllerAs: 'sub'
+      })
       .otherwise({
         redirectTo: '/'
       });
