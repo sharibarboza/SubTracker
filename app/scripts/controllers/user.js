@@ -8,8 +8,8 @@
  * Controller of the tractApp
  */
  angular.module('tractApp')
- .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 'amMoment', 
-  function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment, amMoment) {
+ .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 
+  function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment) {
 
   $scope.setPage = function(pageNo) {
     $scope.currentPage = pageNo;
@@ -70,11 +70,11 @@
 
   var cachedData = function() {
     return 'user' in sessionStorage && sessionStorage.user === username;
-  }
+  };
 
   var defaultSort = {value: 'subName', name: 'Subreddit name'};
   var defaultView = "25";
-  var sort, view;
+  var sort;
 
   $scope.main = false;
   $scope.processing = true; // Shows the loading progression
