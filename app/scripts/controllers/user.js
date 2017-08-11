@@ -11,27 +11,31 @@
  .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 
   function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment) {
 
-  $scope.setPage = function(pageNo) {
-    $scope.currentPage = pageNo;
-  };
+  var defaultSort = {value: 'subName', name: 'Subreddit name'};
+  var defaultView = "25";
+  var sort;
+  var username = $routeParams.username;
+  var processUser = true;
+
+  $scope.page = {};
+  $scope.page.viewby = defaultView;
+  $scope.page.items = parseInt(defaultView);
+  $scope.page.max = 10;
+  $scope.page.current = 1;
 
   $scope.pageChanged = function() {
     $window.scrollTo(0, 200);
   };
 
   $scope.setItemsPerPage = function(num) {
-    $scope.itemsPerPage = num;
+    $scope.page.current = 1;
+    $scope.page.items = num;
     sessionStorage.view = num;
-    $scope.resetPage();
   };
 
   $scope.setOption = function() {
+    $scope.page.current = 1;
     sessionStorage.sort = JSON.stringify($scope.data.selectedOption);
-    $scope.resetPage();
-  };
-
-  $scope.resetPage = function() {
-    $scope.currentPage = 1;
   };
 
   $scope.getArray = function() {
@@ -73,36 +77,20 @@
     return 'user' in sessionStorage && sessionStorage.user === username;
   };
 
-
-  var defaultSort = {value: 'subName', name: 'Subreddit name'};
-  var defaultView = "25";
-  var sort;
-  var username = $routeParams.username;
-  var processUser = true;
-
   $scope.main = false;
   $scope.processing = true; // Shows the loading progression
   $scope.ready = false; // Shows the data when it's done processing
-  $scope.itemsPerPage = defaultView;
-  $scope.maxSize = 10;
-  $scope.currentPage = 1;
 
   // Get the user's username and account creation date
   if (cachedData()) {
     configUserData(JSON.parse(sessionStorage.userData));
     configSubData(JSON.parse(sessionStorage.subData));
     processUser = false;
-  }
 
-  if (cachedData()) {
     sort = JSON.parse(sessionStorage.sort);
+    $scope.itemsPerPage = sessionStorage.view;
   } else {
     sort = defaultSort;
-  }
-  if (cachedData()) {
-    $scope.itemsPerPage = sessionStorage.view;
-
-  } else {
     $scope.itemsPerPage = defaultView;
   }
 

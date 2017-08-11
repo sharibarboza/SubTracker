@@ -43,7 +43,7 @@
         </div>
         <div class="col-md-6" align="right">
           <ol class="breadcrumb">
-            <li class="breadcrum-item active">Data available since: <strong ng-bind="dataAvailable | amDateFormat:'MMMM Do, YYYY'"></strong></li>
+            <li class="breadcrum-item active">Data available from: <strong ng-bind="dataAvailable | amDateFormat:'MMMM Do, YYYY'"></strong></li>
           </ol>
         </div>
       </div>
@@ -60,16 +60,15 @@
           </div>
           <div class="col-md-4" align="center">Click on a subreddit.</div>
           <div class="col-md-4" align="right">
-            <label>View <select ng-change="setItemsPerPage(itemsPerPage)" ng-model="itemsPerPage"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="{{ subLength }}">All</option></select> subreddits at a time</label>
+            <label>View <select ng-change="setItemsPerPage(page.viewby)" ng-model="page.viewby"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="{{ subLength }}">All</option></select> subreddits at a time</label>
           </div>
         </div>
       </div>
-
       <div id="sub-table" class="table-pad">
-        <div class="row sub-row" ng-repeat="subreddit in getArray().slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+        <div class="row sub-row" ng-repeat="subreddit in getArray().slice(((page.current-1)*page.items), ((page.current)*page.items))">
           <a href="#/{{ username }}/{{ subreddit }}">
           <div class="col-md-3" id="sub-rank">
-            <div class="col-md-2"><span class="gray"><strong>{{ ((currentPage-1)*itemsPerPage) + 1 + $index }}</strong></span></div>
+            <div class="col-md-2"><span class="gray"><strong>{{ ((page.current-1)*page.items) + 1 + $index }}</strong></span></div>
             <div class="col-md-10"><span id="sub-name"> /r/{{ subreddit }}</span></div>
           </div>
           <div class="col-md-2 sub-stat">
@@ -88,7 +87,7 @@
         </div>
 
         <div align="center" ng-show="paginate">
-          <pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></pagination>
+          <pagination total-items="totalItems" ng-model="page.current" ng-change="pageChanged()" class="pagination-sm" items-per-page="page.items" max-size="page.max"></pagination>
         </div>
       </div>
 
