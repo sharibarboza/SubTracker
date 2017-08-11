@@ -9,8 +9,9 @@
  * Filter in the tractApp.
  */
 angular.module('tractApp')
-  .filter('sanitize', ['$sanitize', function ($sanitize) {
+  .filter('sanitize', ['$sanitize', '$filter', function ($sanitize, $filter) {
     return function (input) {
+     	input = $filter('redditlink')(input);
       return $sanitize(input);
     };
   }]);
