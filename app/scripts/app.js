@@ -12,6 +12,7 @@ angular
   .module('tractApp', [
     'ngAnimate',
     'ngRoute',
+    'ngSanitize',
     'ngMaterial',
     'angularMoment',
     'ui.bootstrap'

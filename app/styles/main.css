@@ -21,6 +21,10 @@ a {
   color: #1DB3B0;
 }
 
+.orange {
+  color: #E33900;
+}
+
 .purple {
   color: #5552B3;
 }
@@ -309,6 +313,10 @@ md-progress-circular {
   margin-left: 5px;
 }
 
+.label a {
+  color: white !important;
+}
+
 .label-purple {
   background-color: #5552B3;
 }
@@ -375,11 +383,40 @@ md-progress-circular {
 }
 
 #alert-bar .col-md-6:first-child {
+  padding-left: 0;
   padding-right: 0;
 }
 
 #alert-bar .col-md-6:last-child {
+  padding-right: 0;
   padding-left: 0;
+}
+
+#comment-table {
+  padding: 10px 50px;
+}
+
+.user-post {
+  padding: 10px;
+}
+
+.post-links a {
+  font-weight: 600;
+  color: gray;
+  padding-right: 10px;
+}
+
+.post-body {
+  padding-top: 10px;
+}
+
+.post-date {
+  font-weight: 600;
+  color: #4A4A4A;
+}
+
+.post-points, .post-date {
+  font-size: 13px;
 }
 
 .footer {

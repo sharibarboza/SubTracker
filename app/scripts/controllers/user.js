@@ -67,7 +67,6 @@
     $scope.subsArray = $filter('orderSubs')(Object.keys($scope.subs), 'subName', $scope.subs);
     $scope.subLength = $scope.subsArray.length;
     $scope.totalItems = $scope.subLength;
-    $scope.paginate = $scope.subLength > $scope.itemsPerPage;
 
     $scope.processing = false;
     $scope.ready = true;

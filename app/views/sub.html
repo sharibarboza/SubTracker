@@ -1,12 +1,51 @@
 <div ng-include src="'views/searchnav.html'"></div>
 
-<div class="main-content">
+<div class="main-content" ng-controller="UsersubCtrl">
   <div id="user-info">
     <div class="text-content">
       <div class="row">
         <div class="col-md-4" id="user-block">
-          <p id="reddit-name"><span class="baby-blue">/u/</span>{{ subreddit }}</p>
+          <p id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</p>
+          <p><a href="http://www.reddit.com/user/{{ username }}" class="green" id="reddit-user-link" target="_blank">Go to user's reddit page <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i></a></p>
         </div>
+        <div class="col-md-4" id="sub-count" align="center">
+          <a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank"><p id="subreddits"><span class="baby-blue badge" id="num-subs">/r/{{ subreddit }}</span></p></a>
+        </div>
+        <div class="col-md-4 user-stats" align="right">
+          <p>Last Seen</p>
+          <p class="green" id="since-date" ng-bind="sub.recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></p>
+        </div>
+      </div>
+      <div class="row" id="user-counts">
+        <div class="col-md-3"><div>Total Comment Upvotes<p>{{ sub.comment_ups }}</p></div></div>
+        <div class="col-md-3"><div>Avg. upvotes per comment<p>{{ averageComment }}</p></div></div>
+        <div class="col-md-3"><div>Total Submitted Upvotes<p>{{ sub.submitted_ups }}</p></div></div>
+        <div class="col-md-3"><div>Avg. upvotes per submit<p>{{ averageSubmit }}</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item"><a href="#/{{ username }}">{{ username }}'s subreddits</a></li>
+    <li class="breadcrumb-item active">{{ subreddit }} comments</li>
+  </ol>
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#">Comments <span class="badge tab-badge">{{ sub.comments.length }}</span></a></li>
+    <li><a href="#">Submitted <span class="badge tab-badge">{{ sub.submissions.length }}</span></a></li>
+    <li><a href="#">Gilded <span class="badge tab-badge">{{ gilded }}</span></a></li>
+  </ul>
+  <br>
+  <div id="comment-table">
+    <div ng-repeat="comment in sub.comments" class="sub-row user-post">
+      <a href="{{ comment.link_url }}" target="_blank" class="post-title"><strong>{{ comment.link_title }}</strong></a> by <a href="http://www.reddit.com/user/{{ comment.link_author }}" target="_blank">{{ comment.link_author }}</a> in <a href="http://www.reddit.com/r/{{ comment.subreddit }}" target="_blank">{{ comment.subreddit }}</a>
+      <br>
+      <span><strong class="post-points" ng-class="comment.ups > 0 ? 'green' : 'orange'">{{ comment.ups }} points</strong> &middot <span ng-bind="comment.created_utc * 1000 | amDateFormat: 'MMM Do YYYY, h:mm a'" class="post-date"></span></span>
+      <p class="post-body" ng-bind-html="comment.body_html | sanitize"></p>
+      <span class="post-links"><a href="{{ comment.link_permalink }}{{ comment.id }}" target="_blank">permalink</a></span>
+      <span class="post-links"><a href="{{ comment.link_permalink }}{{ comment.id }}?context=3" target="_blank">context</a></span> 
+      <span class="post-links"><a href="{{ comment.link_url }}" target="_blank">full comments ({{ comment.num_comments }})</a></span>
     </div>
   </div>
 </div>
