@@ -25,19 +25,19 @@ angular.module('tractApp')
       if (num1 < num2) { return val1; } 
       else if (num1 > num2) { return val2; } 
       else { 
-      	if (secondary === 'alpha') { return sortAlpha.get(a, b); }
-      	else if (secondary === 'date') { 
-      		num1 = moment(a.created_utc*1000);
-      		num2 = moment(b.created_utc*1000);
-      		return sort(num1, num2, a, b, true, null); 
-      	} 
+        if (secondary === 'alpha') { return sortAlpha.get(a, b); }
+        else if (secondary === 'date') { 
+          num1 = moment(a.created_utc*1000);
+          num2 = moment(b.created_utc*1000);
+          return sort(num1, num2, a, b, true, null); 
+        } 
       }
     };
 
     return {
-	    get: function(num1, num2, a, b, reverse, secondary) {
-	    	return sort(num1, num2, a, b, reverse, secondary);
-	    }
+      get: function(num1, num2, a, b, reverse, secondary) {
+        return sort(num1, num2, a, b, reverse, secondary);
+      }
     };
 
   }]);

@@ -1,0 +1,9 @@
+<div ng-repeat="comment in getArray().slice(((page.current-1)*page.items), ((page.current)*page.items))" class="sub-row user-post">
+  <a href="{{ comment.link_url }}" target="_blank" class="post-title"><strong>{{ comment.link_title }}</strong></a> by <a href="http://www.reddit.com/user/{{ comment.link_author }}" target="_blank">{{ comment.link_author }}</a> in <a href="http://www.reddit.com/r/{{ comment.subreddit }}" target="_blank">{{ comment.subreddit }}</a>
+  <br>
+  <span><strong class="post-points" ng-class="comment.ups > 0 ? 'green' : 'orange'">{{ comment.ups }} {{ comment.ups == 1 || comment.ups == -1 ? "point" : "points" }}</strong> &middot <span ng-bind="comment.created_utc * 1000 | amDateFormat: 'MMM Do YYYY, h:mm a'" class="post-date"></span></span>
+  <p class="post-body" ng-bind-html="comment.body_html | sanitize"></p>
+  <span class="post-links"><a href="{{ comment.link_permalink }}{{ comment.id }}" target="_blank">permalink</a></span>
+  <span class="post-links"><a href="{{ comment.link_permalink }}{{ comment.id }}?context=3" target="_blank">context</a></span> 
+  <span class="post-links"><a href="{{ comment.link_permalink }}" target="_blank">full comments ({{ comment.num_comments }})</a></span>
+</div>

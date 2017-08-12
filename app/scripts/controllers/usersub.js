@@ -12,11 +12,21 @@ angular.module('tractApp')
     $window.scrollTo(0, 0);
     var defaultView = "25";
 
+    $scope.tab = 0;
+    $scope.tabOptions = ['comments', 'submitted', 'gilded'];
     $scope.page = {};
     $scope.page.viewby = defaultView;
     $scope.page.items = parseInt(defaultView);
     $scope.page.max = 10;
     $scope.page.current = 1;
+
+    $scope.setTab = function(num) {
+      $scope.tab = parseInt(num);
+    };
+
+    $scope.isSet = function(num) {
+      return $scope.tab === parseInt(num);
+    };
 
     $scope.pageChanged = function() {
       $window.scrollTo(0, 200);
@@ -36,23 +46,23 @@ angular.module('tractApp')
     };
 
     $scope.subreddit = $routeParams.subreddit;
-  	$scope.username = $routeParams.username;
+    $scope.username = $routeParams.username;
 
-  	var data = JSON.parse(sessionStorage.subData);
-  	$scope.sub = data.subs[$scope.subreddit];
-  	$scope.gilded = $scope.sub.gilded_comments + $scope.sub.gilded_submits;
+    var data = JSON.parse(sessionStorage.subData);
+    $scope.sub = data.subs[$scope.subreddit];
+    $scope.gilded = $scope.sub.gilded_comments + $scope.sub.gilded_submits;
 
-  	if ($scope.sub.comments.length > 0) {
-  		$scope.averageComment = ($scope.sub.comment_ups / $scope.sub.comments.length).toFixed(0);
-  	} else {
-  		$scope.averageComment = 0;
-  	}
+    if ($scope.sub.comments.length > 0) {
+      $scope.averageComment = ($scope.sub.comment_ups / $scope.sub.comments.length).toFixed(0);
+    } else {
+      $scope.averageComment = 0;
+    }
 
-  	if ($scope.sub.submissions.length > 0) {
-   		$scope.averageSubmit = ($scope.sub.submitted_ups / $scope.sub.submissions.length).toFixed(0);
-  	} else {
-  		$scope.averageSubmit = 0;
-  	}
+    if ($scope.sub.submissions.length > 0) {
+      $scope.averageSubmit = ($scope.sub.submitted_ups / $scope.sub.submissions.length).toFixed(0);
+    } else {
+      $scope.averageSubmit = 0;
+    }
 
     $scope.data = {
       sortOptions: [

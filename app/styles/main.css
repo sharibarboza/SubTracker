@@ -377,6 +377,11 @@ md-progress-circular {
   padding: 10px 50px 0 50px;
 }
 
+.nav-tabs li {
+  text-decoration: none;
+  outline: none;
+}
+
 .tab-badge {
   background-color: #5552B3;
   width: 40px;
@@ -392,7 +397,7 @@ md-progress-circular {
   padding-left: 0;
 }
 
-#comment-table {
+#post-table {
   padding: 10px 50px;
 }
 
