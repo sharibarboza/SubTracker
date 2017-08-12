@@ -54,8 +54,8 @@
             <form name="myForm">
               <label for="mySelect">Sort by:
               <select name="mySelect" id="mySelect"
-                ng-options="option.name for option in data.availableOptions track by option.value"
-                ng-model="data.selectedOption" ng-change="setOption()"></select></label>
+                ng-options="option.name for option in subData.sortOptions track by option.value"
+                ng-model="subData.selectedSort" ng-change="setSortOption()"></select></label>
             </form>
           </div>
           <div class="col-md-4" align="center">Click on a subreddit.</div>
@@ -64,6 +64,7 @@
           </div>
         </div>
       </div>
+
       <div id="sub-table" class="table-pad">
         <div class="row sub-row" ng-repeat="subreddit in getArray().slice(((page.current-1)*page.items), ((page.current)*page.items))">
           <a href="#/{{ username }}/{{ subreddit }}">

@@ -33,13 +33,13 @@
     sessionStorage.view = num;
   };
 
-  $scope.setOption = function() {
+  $scope.setSortOption = function() {
     $scope.page.current = 1;
-    sessionStorage.sort = JSON.stringify($scope.data.selectedOption);
+    sessionStorage.sort = JSON.stringify($scope.subData.selectedSort);
   };
 
   $scope.getArray = function() {
-    return $filter('orderSubs')($scope.subsArray, $scope.data.selectedOption.value, $scope.subs);
+    return $filter('sortSubs')($scope.subsArray, $scope.subData.selectedSort.value, $scope.subs);
   };
 
   var configUserData = function(response) {
@@ -64,7 +64,7 @@
       $scope.dataAvailable = subFactory.getDataAvailable();
     }
 
-    $scope.subsArray = $filter('orderSubs')(Object.keys($scope.subs), 'subName', $scope.subs);
+    $scope.subsArray = $filter('sortSubs')(Object.keys($scope.subs), 'subName', $scope.subs);
     $scope.subLength = $scope.subsArray.length;
     $scope.totalItems = $scope.subLength;
 
@@ -93,8 +93,8 @@
     $scope.itemsPerPage = defaultView;
   }
 
-  $scope.data = {
-    availableOptions: [
+  $scope.subData = {
+    sortOptions: [
       {value: 'subName', name: 'Subreddit name'},
       {value: 'totalComments', name: 'Total comments'},
       {value: 'totalSubmits', name: 'Total submissions'},
@@ -105,7 +105,7 @@
       {value: 'avgSubmit', name: 'Average upvotes per submission'},
       {value: 'mostDown', name: 'Most controversial'},
     ],
-    selectedOption: sort
+    selectedSort: sort
   };
 
   if (processUser) {

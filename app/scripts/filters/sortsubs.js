@@ -9,35 +9,11 @@
  * Filter in the tractApp.
  */
 angular.module('tractApp')
-  .filter('orderSubs', function () {
-
-    var sortAlpha = function(a, b) {
-      a = a.toLowerCase();
-      b = b.toLowerCase();
-      if (a < b) { return -1; } 
-      else if (a > b) { return 1; } 
-      else { return 0; }    
-    };
-
-    var sortNum = function(num1, num2, a, b, reverse) {
-      var val1, val2;
-
-      if (reverse) {
-        val1 = -1;
-        val2 = 1;
-      } else {
-        val1 = 1;
-        val2 = -1;
-      }
-
-      if (num1 < num2) { return val1; } 
-      else if (num1 > num2) { return val2; } 
-      else { return sortAlpha(a, b); }
-    };
+  .filter('sortSubs', ['sortAlpha', 'sortNum', function (sortAlpha, sortNum) {
 
     var sortName = function(keys) {
       keys.sort(function(a, b) {
-        return sortAlpha(a, b);
+        return sortAlpha.get(a, b);
       });
       return keys;
     };
@@ -46,7 +22,7 @@ angular.module('tractApp')
       keys.sort(function(a, b) {
         var num1 = data[a].comments.length + data[a].submissions.length;
         var num2 = data[b].comments.length + data[b].submissions.length;
-        return sortNum(num1, num2, a, b, false);
+        return sortNum.get(num1, num2, a, b, true, 'alpha');
       });
       return keys;
     };
@@ -69,7 +45,7 @@ angular.module('tractApp')
           num1 = getAverage(data[a].submitted_ups, data[a].submissions.length);
           num2 = getAverage(data[b].submitted_ups, data[b].submissions.length);
         }
-        return sortNum(num1, num2, a, b, false);
+        return sortNum.get(num1, num2, a, b, true, 'alpha');
       });
       return keys;
     };
@@ -78,7 +54,7 @@ angular.module('tractApp')
       keys.sort(function(a, b) {
         var num1 = data[a][where];
         var num2 = data[b][where];
-        return sortNum(num1, num2, a, b, reverse);
+        return sortNum.get(num1, num2, a, b, reverse, 'alpha');
       });
       return keys;
     };
@@ -90,13 +66,13 @@ angular.module('tractApp')
         if (attribute === 'subName') {
           sortedData = sortName(input);
         } else if (attribute === 'totalComments') {
-          sortedData = sort(input, subs, 'comments', false);
+          sortedData = sort(input, subs, 'comments', true);
         } else if (attribute === 'totalSubmits') {
-          sortedData = sort(input, subs, 'submissions', false);
+          sortedData = sort(input, subs, 'submissions', true);
         } else if (attribute === 'totalUps') {
-          sortedData = sort(input, subs, 'total_ups', false);
+          sortedData = sort(input, subs, 'total_ups', true);
         } else if (attribute === 'lastSeen') {
-          sortedData = sort(input, subs, 'recent_activity', false);
+          sortedData = sort(input, subs, 'recent_activity', true);
         } else if (attribute === 'mostActive') {
           sortedData = sortActivity(input, subs);
         } else if (attribute === 'avgComment') {
@@ -104,9 +80,9 @@ angular.module('tractApp')
         } else if (attribute === 'avgSubmit') {
           sortedData = sortAverage(input, subs, 'submitted');
         } else if (attribute === 'mostDown') {
-          sortedData = sort(input, subs, 'total_ups', true);
+          sortedData = sort(input, subs, 'total_ups', false);
         }
       }
       return sortedData;
     };
-  });
+  }]);
