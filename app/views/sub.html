@@ -1,66 +1,51 @@
 <div ng-include src="'views/searchnav.html'"></div>
 
-<div class="main-content" ng-controller="UsersubCtrl">
-  <div id="user-info">
-    <div class="text-content">
+<div class="main-content" ng-controller="UserSubCtrl">
+  <div class="col-md-9">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/"><strong>Home</strong></a></li>
+          <li class="breadcrumb-item"><a href="#/{{ username }}"><strong>{{ username }} subreddit activity</strong></a></li>
+          <li class="breadcrumb-item active"><strong>{{ tabOptions[tab] }} in r/{{ subreddit }}</strong></li>
+        </ol>
+      </div>
+    </div>
+
+    <ul class="nav nav-tabs">
+      <li ng-if="sub.comments.length > 0" ng-class="getActive(0)"><a href ng-click="setTab(0)">Comments <span class="badge tab-badge">{{ sub.comments.length }}</span></a></li>
+      <li ng-if="sub.submissions.length > 0" ng-class="getActive(1)"><a href ng-click="setTab(1)">Submitted <span class="badge tab-badge">{{ sub.submissions.length }}</span></a></li>
+      <li ng-if="gilded > 0" ><a href="#">Gilded <span class="badge tab-badge">{{ gilded }}</span></a></li>
+    </ul>
+    <br>
+
+    <div class="table-options">
       <div class="row">
-        <div class="col-md-4" id="user-block">
-          <p id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</p>
-          <p><a href="http://www.reddit.com/user/{{ username }}" class="green" id="reddit-user-link" target="_blank">Go to user's reddit page <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i></a></p>
+        <div class="col-md-4">
+          <form name="myForm">
+            <label for="mySelect">Sort by: <select name="mySelect" id="mySelect"
+              ng-options="option.name for option in data.sortOptions track by option.value"
+              ng-model="data.selectedSort" ng-change="setSortOption()"></select></label>
+          </form>
         </div>
-        <div class="col-md-4" id="sub-count" align="center">
-          <a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank"><p id="subreddits"><span class="baby-blue badge" id="num-subs">/r/{{ subreddit }}</span></p></a>
+        <div class="col-md-4" align="center">
+          <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" style="margin: -5px;"></pagination>
         </div>
-        <div class="col-md-4 user-stats" align="right">
-          <p>Last Seen</p>
-          <p class="green" id="since-date" ng-bind="sub.recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></p>
+        <div class="col-md-4" align="right">
+          <label>View <select ng-change="setItemsPerPage(subPage.viewby)" ng-model="subPage.viewby"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="{{ sub.comments.length }}">All</option></select> {{ tabOptions[tab] }} at a time</label>
         </div>
       </div>
-      <div class="row" id="user-counts">
-        <div class="col-md-3"><div>Total Comment Upvotes<p>{{ sub.comment_ups }}</p></div></div>
-        <div class="col-md-3"><div>Avg. upvotes per comment<p>{{ averageComment }}</p></div></div>
-        <div class="col-md-3"><div>Total Submitted Upvotes<p>{{ sub.submitted_ups }}</p></div></div>
-        <div class="col-md-3"><div>Avg. upvotes per submit<p>{{ averageSubmit }}</p></div></div>
+    </div>
+
+    <div id="post-table">
+      <div ng-if="tab == 0" ng-include src="'views/comments.html'"></div>
+      <div ng-if="tab == 1" ng-include src="'views/submitted.html'"></div>
+      <div align="center">
+        <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" ng-change="pageChange()" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max"></pagination>
       </div>
     </div>
   </div>
 
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/">Home</a></li>
-    <li class="breadcrumb-item"><a href="#/{{ username }}">{{ username }}'s subreddits</a></li>
-    <li class="breadcrumb-item active">{{ subreddit }} {{ tabOptions[tab] }}</li>
-  </ol>
-
-  <ul class="nav nav-tabs">
-    <li ng-class="{ active: isSet(0) }"><a href ng-click="setTab(0)">Comments <span class="badge tab-badge">{{ sub.comments.length }}</span></a></li>
-    <li><a href="#">Submitted <span class="badge tab-badge">{{ sub.submissions.length }}</span></a></li>
-    <li><a href="#">Gilded <span class="badge tab-badge">{{ gilded }}</span></a></li>
-  </ul>
-  <br>
-
-  <div class="table-options">
-    <div class="row">
-      <div class="col-md-4">
-        <form name="myForm">
-          <label for="mySelect">Sort by: <select name="mySelect" id="mySelect"
-            ng-options="option.name for option in data.sortOptions track by option.value"
-            ng-model="data.selectedSort" ng-change="setOption()"></select></label>
-        </form>
-      </div>
-      <div class="col-md-4" align="center">
-        <strong>{{ username }}'s {{ tabOptions[tab] }}</strong>
-      </div>
-      <div class="col-md-4" align="right">
-        <label>View <select ng-change="setItemsPerPage(page.viewby)" ng-model="page.viewby"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="{{ sub.comments.length }}">All</option></select> subreddits at a time</label>
-      </div>
-    </div>
-  </div>
-
-  <div id="post-table">
-    <div ng-if="tab == 0" ng-include src="'views/comments.html'"></div>
-    <div align="center">
-      <pagination total-items="sub.comments.length" ng-model="page.current" ng-change="pageChanged()" class="pagination-sm" items-per-page="page.items" max-size="page.max"></pagination>
-    </div>
-  </div>
+  <div ng-include src="'views/sidebar.html'">
 </div>
 

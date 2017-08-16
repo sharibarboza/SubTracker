@@ -7,6 +7,7 @@
 
 body {
   padding: 0;
+  background-color: inherit !important;
 }
 
 a {
@@ -88,6 +89,7 @@ a {
 .main-content {
   position: relative;
   top: 50px;
+  padding: 20px 45px 20px 35px;
 }
 
 /* Supporting marketing content */
@@ -211,21 +213,23 @@ md-progress-circular {
 
 /* User Info */
 
+.panel-heading {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
 #user-info {
   padding: 0;
-  background-color: #292929;
-  color: white;
   line-height: 130%;
-  font-weight: 600;
-  letter-spacing: 1px;
+}
+
+#user-info .panel-body {
+  color: gray;
+  font-weight: 500;
 }
 
 .text-content {
   padding: 20px 50px 40px 50px;
-}
-
-#user-info [class*='col-'] {
-  padding: 20px 15px 5px 15px;
 }
  
 #reddit-name {
@@ -283,14 +287,8 @@ md-progress-circular {
 }
 
 .table-options {
-  padding: 10px 50px;
-}
-
-.sub-row {
-  padding: 5px 0;
-  border: 1px solid #646191;
-  border-radius: 5px;
-  margin-bottom: 6px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .sub-row:hover {
@@ -370,11 +368,9 @@ md-progress-circular {
 }
 
 .breadcrumb {
-  padding: 12px 50px;
-}
-
-.nav-tabs {
-  padding: 10px 50px 0 50px;
+  background: none;
+  padding: 0;
+  margin: 0;
 }
 
 .nav-tabs li {
@@ -398,17 +394,20 @@ md-progress-circular {
 }
 
 #post-table {
-  padding: 10px 50px;
+  padding-top: 10px;
 }
 
-.user-post {
-  padding: 10px;
+.post-links {
+  margin-top: 6px;
+}
+
+.post-links {
+  font-weight: 600;
+  padding-right: 10px;
 }
 
 .post-links a {
-  font-weight: 600;
   color: gray;
-  padding-right: 10px;
 }
 
 .post-body {
@@ -422,6 +421,107 @@ md-progress-circular {
 
 .post-points, .post-date {
   font-size: 13px;
+  font-weight: 600;
+}
+
+#submit-row {
+  padding-left: 30px;
+}
+
+.post-thumbnail {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.post-thumbnail img {
+  width: 55px;
+  margin-left: 0px;
+}
+
+#post-table i.glyphicon {
+  margin-top: 5px;
+  font-size: 20px;
+  color: gray;
+}
+
+.side-comment-num {
+  font-size: 16px;
+}
+
+.small-font {
+  font-size: 12px;
+}
+
+.side-post {
+  color: #333;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+.side-stats .col-xs-8, .side-stats .col-xs-9 {
+  font-size: 13px;
+}
+
+.thumb {
+  float: left;
+  font-size: 0;
+  margin-bottom: 2px;
+  margin-right: 5px;
+  margin-top: 0;
+  margin-left: -8px;
+  overflow: hidden;
+  width: 70px;
+}
+
+.thumb-default {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 0px -1099px;
+  background-repeat: no-repeat;
+  background-repeat-x: no-repeat;
+  background-repeat-y: no-repeat;
+  height: 50px;
+}
+
+.thumb-self {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 0px -1267px;
+  background-repeat: no-repeat;
+  height: 50px;
+}
+
+.thumb-image {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 0px -1043px;
+  background-repeat: no-repeat;
+  height: 50px;
+}
+
+.thumb-nsfw {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 0px -1155px;
+  background-repeat: no-repeat;
+  height: 50px;
+}
+
+.thumb-spoiler {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 0px -1211px;
+  background-repeat: no-repeat;
+  height: 50px;
+}
+
+#accordion .panel-default {
+  margin-top: 5px;
+  margin-bottom: -10px;
+}
+
+#accordion .panel-default > .panel-heading {
+  padding: 2px 5px;
+  cursor: pointer;
+}
+
+.submit-pic {
+  max-width: 500px;
 }
 
 .footer {
