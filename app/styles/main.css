@@ -415,6 +415,10 @@ md-progress-circular {
   font-size: 13px;
 }
 
+.post-links a:hover {
+  color: #5552B3;
+}
+
 .post-body {
   padding-top: 10px;
   word-wrap: break-word;
