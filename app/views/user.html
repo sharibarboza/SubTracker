@@ -70,7 +70,7 @@
         <div class="row sub-row" ng-repeat="subreddit in getArray().slice(((page.current-1)*page.items), ((page.current)*page.items))">
           <a href="#/{{ username }}/{{ subreddit }}">
           <div class="col-md-3" id="sub-rank">
-            <div class="col-md-2"><span class="gray"><strong>{{ ((page.current-1)*page.items) + 1 + $index }}</strong></span></div>
+            <div class="col-md-2"><span class="dark-gray"><strong>{{ ((page.current-1)*page.items) + 1 + $index }}</strong></span></div>
             <div class="col-md-10"><span id="sub-name"> /r/{{ subreddit }}</span></div>
           </div>
           <div class="col-md-2 sub-stat">

@@ -21,9 +21,6 @@ angular.module('tractApp')
 
     return {
       restrict: 'E',
-      scope: {
-        data: '@'
-      },
       link: function postLink(scope, element, attrs) {
         scope.data = JSON.parse(attrs.data);
         scope.type = scope.data.thumbnail;

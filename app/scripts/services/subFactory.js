@@ -71,6 +71,8 @@
 
     var buildComment = function(comment) {
       var data = {};
+
+      data.type = 'comment';
       data.id = comment.id;
       data.subreddit = comment.subreddit;
       data.created_utc = comment.created_utc;
@@ -88,6 +90,8 @@
 
     var buildSubmit = function(submit) {
       var data = {};
+
+      data.type = 'submit';
       data.id = submit.id;
       data.subreddit = submit.subreddit;
       data.created_utc = submit.created_utc;
@@ -121,11 +125,14 @@
           var date = moment(comment.created_utc*1000);
 
           subs[subreddit].comment_ups += parseInt(comment.ups);
-          subs[subreddit].gilded_comments += parseInt(comment.gilded);
 
           comment_list.push(comment);
           if (date > subs[subreddit].recent_comment) {
             subs[subreddit].recent_comment = date;
+          }
+
+          if (comment.gilded > 0) {
+            subs[subreddit].gilded.push(comment);
           }
         } else {
           subs[subreddit] = {};
@@ -134,8 +141,7 @@
           subs[subreddit].comment_ups = parseInt(comment.ups);
           subs[subreddit].submissions = [];
           subs[subreddit].submission_ups = 0;
-          subs[subreddit].gilded_comments = 0;
-          subs[subreddit].gilded_submits = 0;
+          subs[subreddit].gilded = [];
         }
 
         subs[subreddit].total_ups = subs[subreddit].comment_ups;
@@ -161,14 +167,17 @@
           if (date > recent_submission) {
             subs[subreddit].recent_submission = date;
           }
+
+          if (submission.gilded > 0) {
+            subs[subreddit].gilded.push(submission);
+          }
         } else {
           if (!(subreddit in subs)) {
             subs[subreddit] = {};
             subs[subreddit].submissions = [];
             subs[subreddit].comments = [];
             subs[subreddit].comment_ups = 0;
-            subs[subreddit].gilded_comments = 0;
-            subs[subreddit].gilded_submits = 0;
+            subs[subreddit].gilded = [];
           }
           subs[subreddit].submissions.push(submission);
           subs[subreddit].recent_submission = moment(submission.created_utc*1000);

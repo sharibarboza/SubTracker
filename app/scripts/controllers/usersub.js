@@ -8,8 +8,8 @@
  * Controller of the tractApp
  */
 angular.module('tractApp')
-  .controller('UserSubCtrl', ['$scope', '$routeParams', '$window', '$filter', 'rank', 'moment', 
-    function ($scope, $routeParams, $window, $filter, rank, moment) {
+  .controller('UserSubCtrl', ['$scope', '$routeParams', '$window', '$filter', 'rank', 
+    function ($scope, $routeParams, $window, $filter, rank) {
 
     $window.scrollTo(0, 0);
     var defaultView = "25";
@@ -19,7 +19,7 @@ angular.module('tractApp')
 
     var data = JSON.parse(sessionStorage.subData);
     $scope.sub = data.subs[$scope.subreddit];
-    $scope.gilded = $scope.sub.gilded_comments + $scope.sub.gilded_submits;
+    $scope.gilded = $scope.sub.gilded.length;
 
     $scope.data = {
       sortOptions: [
@@ -36,7 +36,7 @@ angular.module('tractApp')
     } else {
       $scope.tab = 1;
     }
-    $scope.tabOptions = ['comments', 'submissions', 'gilded'];
+    $scope.tabOptions = ['comments', 'submissions'];
     
     $scope.subPage = {};
     $scope.subPage.viewby = defaultView;

@@ -15,7 +15,6 @@
     <ul class="nav nav-tabs">
       <li ng-if="sub.comments.length > 0" ng-class="getActive(0)"><a href ng-click="setTab(0)">Comments <span class="badge tab-badge">{{ sub.comments.length }}</span></a></li>
       <li ng-if="sub.submissions.length > 0" ng-class="getActive(1)"><a href ng-click="setTab(1)">Submitted <span class="badge tab-badge">{{ sub.submissions.length }}</span></a></li>
-      <li ng-if="gilded > 0" ><a href="#">Gilded <span class="badge tab-badge">{{ gilded }}</span></a></li>
     </ul>
     <br>
 
@@ -38,8 +37,14 @@
     </div>
 
     <div id="post-table">
-      <div ng-if="tab == 0" ng-include src="'views/comments.html'"></div>
-      <div ng-if="tab == 1" ng-include src="'views/submitted.html'"></div>
+      <div ng-repeat="element in getArray().slice(((subPage.current-1)*subPage.items), ((subPage.current)*subPage.items))">
+        <div ng-if="element.type == 'comment'">
+          <div ng-include src="'views/comment.html'"></div>
+        </div>
+        <div ng-if="element.type == 'submit'">
+          <div ng-include src="'views/submission.html'"></div>
+        </div>
+      </div>
       <div align="center">
         <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" ng-change="pageChange()" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max"></pagination>
       </div>

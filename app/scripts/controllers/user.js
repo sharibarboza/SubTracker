@@ -32,21 +32,6 @@
     $scope.page.current = 1;
   }
 
-  $scope.subData = {
-    sortOptions: [
-      {value: 'subName', name: 'Subreddit name'},
-      {value: 'totalComments', name: 'Total comments'},
-      {value: 'totalSubmits', name: 'Total submissions'},
-      {value: 'totalUps', name: 'Total upvotes'},
-      {value: 'lastSeen', name: 'Most recent activity'},
-      {value: 'mostActive', name: 'Most activity'},
-      {value: 'avgComment', name: 'Average upvotes per comment'},
-      {value: 'avgSubmit', name: 'Average upvotes per submission'},
-      {value: 'mostDown', name: 'Most controversial'},
-    ],
-    selectedSort: sort
-  };
-
   $scope.setItemsPerPage = function(num) {
     $scope.changePage(1);
     $scope.page.items = num;
@@ -134,5 +119,20 @@
       $scope.notfound = true;
     });
   }
+
+  $scope.subData = {
+    sortOptions: [
+      {value: 'subName', name: 'Subreddit name'},
+      {value: 'totalComments', name: 'Total comments'},
+      {value: 'totalSubmits', name: 'Total submissions'},
+      {value: 'totalUps', name: 'Total upvotes'},
+      {value: 'lastSeen', name: 'Most recent activity'},
+      {value: 'mostActive', name: 'Most activity'},
+      {value: 'avgComment', name: 'Average upvotes per comment'},
+      {value: 'avgSubmit', name: 'Average upvotes per submission'},
+      {value: 'mostDown', name: 'Most controversial'},
+    ],
+    selectedSort: sort
+  };
 
 }]);

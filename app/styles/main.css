@@ -34,8 +34,12 @@ a {
   color: #12C5E0;
 }
 
-.gray {
+.dark-gray {
   color: #333;
+}
+
+.gray {
+  color: gray;
 }
 
 .btn:focus, .btn:active {
@@ -408,15 +412,16 @@ md-progress-circular {
 
 .post-links a {
   color: gray;
+  font-size: 13px;
 }
 
 .post-body {
   padding-top: 10px;
+  word-wrap: break-word;
 }
 
 .post-date {
   font-weight: 600;
-  color: #4A4A4A;
 }
 
 .post-points, .post-date {
@@ -510,6 +515,28 @@ md-progress-circular {
   height: 50px;
 }
 
+.gilded-icon {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 -15px 8px;
+  top: -8px;
+  color: #99895F;
+  font-size: .9em;
+  vertical-align: middle;
+}
+
+.gilded-icon:before {
+  display: inline-block;
+  content: '';
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 0px -1639px;
+  background-repeat: no-repeat;
+  height: 14px;
+  width: 13px;
+  margin-right: 2px;
+  vertical-align: -3px;
+}
+
 #accordion .panel-default {
   margin-top: 5px;
   margin-bottom: -10px;
@@ -518,6 +545,10 @@ md-progress-circular {
 #accordion .panel-default > .panel-heading {
   padding: 2px 5px;
   cursor: pointer;
+}
+
+submit-content {
+  word-wrap: break-word; 
 }
 
 .submit-pic {

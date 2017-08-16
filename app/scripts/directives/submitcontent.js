@@ -7,7 +7,7 @@
  * # submitContent
  */
 angular.module('tractApp')
-  .directive('submitContent', ['$compile', '$filter', '$sce', function ($compile, $filter, $sce) {
+  .directive('submitContent', ['$compile', '$filter', function ($compile, $filter) {
 
     var isLinkedImage = function(submit) {
       return isImage(submit) && !submit.preview;
@@ -35,9 +35,6 @@ angular.module('tractApp')
 
     return {
       restrict: 'E',
-      scope: {
-        data: '@'
-      },
       link: function postLink(scope, element, attrs) {
         var data = JSON.parse(attrs.data);
 
