@@ -8,7 +8,7 @@
  * Factory in the tractApp.
  */
 angular.module('tractApp')
-  .factory('rank', ['$filter' ,function ($filter) {
+  .factory('rank', ['$filter', function ($filter) {
     // Service logic
     // ...
     var subData;

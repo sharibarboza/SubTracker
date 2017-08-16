@@ -17,6 +17,10 @@
   var username = $routeParams.username;
   var processUser = true;
 
+  $scope.main = false;
+  $scope.processing = true; // Shows the loading progression
+  $scope.ready = false; // Shows the data when it's done processing
+
   $scope.page = {};
   $scope.page.viewby = defaultView;
   $scope.page.items = parseInt(defaultView);
@@ -27,6 +31,21 @@
   } else {
     $scope.page.current = 1;
   }
+
+  $scope.subData = {
+    sortOptions: [
+      {value: 'subName', name: 'Subreddit name'},
+      {value: 'totalComments', name: 'Total comments'},
+      {value: 'totalSubmits', name: 'Total submissions'},
+      {value: 'totalUps', name: 'Total upvotes'},
+      {value: 'lastSeen', name: 'Most recent activity'},
+      {value: 'mostActive', name: 'Most activity'},
+      {value: 'avgComment', name: 'Average upvotes per comment'},
+      {value: 'avgSubmit', name: 'Average upvotes per submission'},
+      {value: 'mostDown', name: 'Most controversial'},
+    ],
+    selectedSort: sort
+  };
 
   $scope.setItemsPerPage = function(num) {
     $scope.changePage(1);
@@ -83,36 +102,16 @@
     return 'user' in sessionStorage && sessionStorage.user === username;
   };
 
-  $scope.main = false;
-  $scope.processing = true; // Shows the loading progression
-  $scope.ready = false; // Shows the data when it's done processing
-  // Get the user's username and account creation date
   if (cachedData()) {
+    processUser = false;
     configUserData(JSON.parse(sessionStorage.userData));
     configSubData(JSON.parse(sessionStorage.subData));
-    processUser = false;
-
     sort = JSON.parse(sessionStorage.sort);
     $scope.itemsPerPage = sessionStorage.view;
   } else {
     sort = defaultSort;
     $scope.itemsPerPage = defaultView;
   }
-
-  $scope.subData = {
-    sortOptions: [
-      {value: 'subName', name: 'Subreddit name'},
-      {value: 'totalComments', name: 'Total comments'},
-      {value: 'totalSubmits', name: 'Total submissions'},
-      {value: 'totalUps', name: 'Total upvotes'},
-      {value: 'lastSeen', name: 'Most recent activity'},
-      {value: 'mostActive', name: 'Most activity'},
-      {value: 'avgComment', name: 'Average upvotes per comment'},
-      {value: 'avgSubmit', name: 'Average upvotes per submission'},
-      {value: 'mostDown', name: 'Most controversial'},
-    ],
-    selectedSort: sort
-  };
 
   if (processUser) {
     userFactory.setUser(username);
