@@ -69,12 +69,51 @@
       return promise;
     };
 
+    var buildComment = function(comment) {
+      var data = {};
+      data.id = comment.id;
+      data.subreddit = comment.subreddit;
+      data.created_utc = comment.created_utc;
+      data.ups = comment.ups;
+      data.link_title = comment.link_title;
+      data.link_author = comment.link_author;
+      data.link_url = comment.link_url;
+      data.body_html = comment.body_html;
+      data.link_permalink = comment.link_permalink;
+      data.gilded = comment.gilded;
+      data.num_comments = comment.num_comments;
+
+      return data;
+    };
+
+    var buildSubmit = function(submit) {
+      var data = {};
+      data.id = submit.id;
+      data.subreddit = submit.subreddit;
+      data.created_utc = submit.created_utc;
+      data.url = submit.url;
+      data.title = submit.title;
+      data.link_flair_text = submit.link_flair_text;
+      data.html = submit.html;
+      data.ups = submit.ups;
+      data.num_comments = submit.num_comments;
+      data.selftext_html = submit.selftext_html;
+      data.thumbnail = submit.thumbnail;
+      data.thumbnail_width = submit.thumbnail_width;
+      data.media = submit.media;
+      data.preview = submit.preview;
+      data.permalink = submit.permalink;
+      data.gilded = submit.gilded;
+
+      return data;
+    };
+
     var organizeComments = function(comments) {
       // Organize comments into the subreddits dictionary
       subs = {};
       // Push comments
       for (var i = 0; i < comments.length; i++) {
-        var comment = comments[i].data;
+        var comment = buildComment(comments[i].data);
         var subreddit = comment.subreddit;
         
         if (subreddit in subs) {
@@ -94,7 +133,7 @@
           subs[subreddit].recent_comment = moment(comment.created_utc*1000);
           subs[subreddit].comment_ups = parseInt(comment.ups);
           subs[subreddit].submissions = [];
-          subs[subreddit].submitted_ups = 0;
+          subs[subreddit].submission_ups = 0;
           subs[subreddit].gilded_comments = 0;
           subs[subreddit].gilded_submits = 0;
         }
@@ -107,7 +146,7 @@
     var organizeSubmitted = function(submissions) {
       // Organize submissions into the subreddits dictionary
       for (var i = 0; i < submissions.length; i++) {
-        var submission = submissions[i].data;
+        var submission = buildSubmit(submissions[i].data);
         var subreddit = submission.subreddit;
 
         if (subreddit in subs && subs[subreddit].submissions.length > 0) {
@@ -115,7 +154,7 @@
           var date = moment(submission.created_utc*1000);
           var recent_submission = subs[subreddit].recent_submission;
 
-          subs[subreddit].submitted_ups += parseInt(submission.ups);
+          subs[subreddit].submission_ups += parseInt(submission.ups);
           subs[subreddit].gilded_submits += parseInt(submission.gilded);
 
           submission_list.push(submission);
@@ -133,17 +172,17 @@
           }
           subs[subreddit].submissions.push(submission);
           subs[subreddit].recent_submission = moment(submission.created_utc*1000);
-          subs[subreddit].submitted_ups = parseInt(submission.ups);
+          subs[subreddit].submission_ups = parseInt(submission.ups);
         }
 
         if ('recent_comment' in subs[subreddit]) {
           if (subs[subreddit].recent_submission > subs[subreddit].recent_comment) {
             subs[subreddit].recent_activity = subs[subreddit].recent_submission;
           }
-          subs[subreddit].total_ups += subs[subreddit].submitted_ups;
+          subs[subreddit].total_ups += subs[subreddit].submission_ups;
         } else {
           subs[subreddit].recent_activity = subs[subreddit].recent_submission;
-          subs[subreddit].total_ups = subs[subreddit].submitted_ups;
+          subs[subreddit].total_ups = subs[subreddit].submission_ups;
         }
       }
     };

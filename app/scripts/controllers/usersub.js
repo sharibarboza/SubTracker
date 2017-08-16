@@ -8,42 +8,11 @@
  * Controller of the tractApp
  */
 angular.module('tractApp')
-  .controller('UsersubCtrl', ['$scope', '$routeParams', '$window', '$filter', function ($scope, $routeParams, $window, $filter) {
+  .controller('UserSubCtrl', ['$scope', '$routeParams', '$window', '$filter', 'rank', 'moment', 
+    function ($scope, $routeParams, $window, $filter, rank, moment) {
+
     $window.scrollTo(0, 0);
     var defaultView = "25";
-
-    $scope.tab = 0;
-    $scope.tabOptions = ['comments', 'submitted', 'gilded'];
-    $scope.page = {};
-    $scope.page.viewby = defaultView;
-    $scope.page.items = parseInt(defaultView);
-    $scope.page.max = 10;
-    $scope.page.current = 1;
-
-    $scope.setTab = function(num) {
-      $scope.tab = parseInt(num);
-    };
-
-    $scope.isSet = function(num) {
-      return $scope.tab === parseInt(num);
-    };
-
-    $scope.pageChanged = function() {
-      $window.scrollTo(0, 200);
-    };
-
-    $scope.setItemsPerPage = function(num) {
-      $scope.page.current = 1;
-      $scope.page.items = num;
-    };
-
-    $scope.setSortOption = function() {
-      $scope.page.current = 1;
-    };
-
-    $scope.getArray = function() {
-      return $filter('sortPosts')($scope.sub.comments, $scope.data.selectedSort.value);
-    };
 
     $scope.subreddit = $routeParams.subreddit;
     $scope.username = $routeParams.username;
@@ -51,18 +20,6 @@ angular.module('tractApp')
     var data = JSON.parse(sessionStorage.subData);
     $scope.sub = data.subs[$scope.subreddit];
     $scope.gilded = $scope.sub.gilded_comments + $scope.sub.gilded_submits;
-
-    if ($scope.sub.comments.length > 0) {
-      $scope.averageComment = ($scope.sub.comment_ups / $scope.sub.comments.length).toFixed(0);
-    } else {
-      $scope.averageComment = 0;
-    }
-
-    if ($scope.sub.submissions.length > 0) {
-      $scope.averageSubmit = ($scope.sub.submitted_ups / $scope.sub.submissions.length).toFixed(0);
-    } else {
-      $scope.averageSubmit = 0;
-    }
 
     $scope.data = {
       sortOptions: [
@@ -73,4 +30,64 @@ angular.module('tractApp')
       ],
       selectedSort: {value: 'newest', name: 'Newest'}
     };
+
+    if ($scope.sub.comments.length > 0) {
+      $scope.tab = 0;
+    } else {
+      $scope.tab = 1;
+    }
+    $scope.tabOptions = ['comments', 'submissions', 'gilded'];
+    
+    $scope.subPage = {};
+    $scope.subPage.viewby = defaultView;
+    $scope.subPage.items = parseInt(defaultView);
+    $scope.subPage.max = 5;
+    $scope.subPage.current = 1;
+
+    rank.setData(JSON.parse(sessionStorage.subData).subs);
+    $scope.subLength = rank.getSubLength();
+    $scope.mostActiveRank = rank.getSubRank($scope.subreddit, 'mostActive');
+    $scope.mostUpsRank = rank.getSubRank($scope.subreddit, 'totalUps');
+
+    if ($scope.sub.comments.length > 0) {
+      $scope.topPost = rank.getTopPost($scope.sub.comments, 'mostUps');
+    }
+
+    if ($scope.sub.submissions.length > 0) {
+      $scope.topSubmit = rank.getTopPost($scope.sub.submissions, 'mostUps');
+    }
+
+    $scope.setTab = function(num) {
+      $scope.tab = parseInt(num);
+      $scope.subPage.current = 1;
+    };
+
+    $scope.isSet = function(num) {
+      return $scope.tab === parseInt(num);
+    };
+
+    $scope.setItemsPerPage = function(num) {
+      $scope.subPage.current = 1;
+      $scope.subPage.items = num;
+    };
+
+    $scope.pageChange = function() {
+      $window.scrollTo(0, 0);
+    };
+
+    $scope.setSortOption = function() {
+      $scope.subPage.current = 1;
+    };
+
+    $scope.getArray = function() {
+      var dataArray = $scope.sub[$scope.tabOptions[$scope.tab]];
+      return $filter('sortPosts')(dataArray, $scope.data.selectedSort.value);
+    };
+
+    $scope.getActive = function(num) {
+      if ($scope.isSet(num)) {
+        return { 'active': true };
+      }
+    };
+
   }]);

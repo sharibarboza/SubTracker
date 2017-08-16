@@ -31,7 +31,7 @@ angular
       })
       .when('/:username/:subreddit', {
         templateUrl: 'views/sub.html',
-        controller: 'UsersubCtrl',
+        controller: 'UserSubCtrl',
         controllerAs: 'sub'
       })
       .otherwise({

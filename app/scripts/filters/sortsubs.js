@@ -42,8 +42,8 @@ angular.module('tractApp')
           num1 = getAverage(data[a].comment_ups, data[a].comments.length);
           num2 = getAverage(data[b].comment_ups, data[b].comments.length);
         } else {
-          num1 = getAverage(data[a].submitted_ups, data[a].submissions.length);
-          num2 = getAverage(data[b].submitted_ups, data[b].submissions.length);
+          num1 = getAverage(data[a].submission_ups, data[a].submissions.length);
+          num2 = getAverage(data[b].submission_ups, data[b].submissions.length);
         }
         return sortNum.get(num1, num2, a, b, true, 'alpha');
       });
@@ -61,7 +61,7 @@ angular.module('tractApp')
 
     return function (input, attribute, subs) {
       var sortedData = {};
-
+      
       if (input) {
         if (attribute === 'subName') {
           sortedData = sortName(input);
@@ -85,4 +85,5 @@ angular.module('tractApp')
       }
       return sortedData;
     };
+
   }]);

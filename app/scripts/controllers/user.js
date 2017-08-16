@@ -21,21 +21,28 @@
   $scope.page.viewby = defaultView;
   $scope.page.items = parseInt(defaultView);
   $scope.page.max = 10;
-  $scope.page.current = 1;
 
-  $scope.pageChanged = function() {
-    $window.scrollTo(0, 200);
-  };
+  if ("page" in sessionStorage) {
+    $scope.page.current = sessionStorage.page;
+  } else {
+    $scope.page.current = 1;
+  }
 
   $scope.setItemsPerPage = function(num) {
-    $scope.page.current = 1;
+    $scope.changePage(1);
     $scope.page.items = num;
     sessionStorage.view = num;
   };
 
   $scope.setSortOption = function() {
-    $scope.page.current = 1;
+    $scope.changePage(1);
     sessionStorage.sort = JSON.stringify($scope.subData.selectedSort);
+  };
+
+  $scope.changePage = function(num) {
+    $window.scrollTo(0, 200);
+    $scope.page.current = num;
+    sessionStorage.page = num;
   };
 
   $scope.getArray = function() {
@@ -79,7 +86,6 @@
   $scope.main = false;
   $scope.processing = true; // Shows the loading progression
   $scope.ready = false; // Shows the data when it's done processing
-
   // Get the user's username and account creation date
   if (cachedData()) {
     configUserData(JSON.parse(sessionStorage.userData));
@@ -123,6 +129,7 @@
 
       sessionStorage.sort = JSON.stringify(defaultSort);
       sessionStorage.view = defaultView;
+      sessionStorage.page = $scope.page.current;
     }, function() {
       $scope.user = false;
       $scope.notfound = true;
