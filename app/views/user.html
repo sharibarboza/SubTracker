@@ -10,6 +10,7 @@
       <md-progress-circular ng-show="processing" md-mode="indeterminate"></md-progress-circular>
     </div>
     <div class="home-page" ng-show=ready>
+    
       <div id="user-info">
         <div class="text-content">
           <div class="row">
@@ -64,7 +65,7 @@
           </div>
         </div>
       </div>
-
+      
       <div id="sub-table" class="table-pad">
         <div class="row sub-row" ng-repeat="subreddit in getArray().slice(((page.current-1)*page.items), ((page.current)*page.items))">
           <a href="#/{{ username }}/{{ subreddit }}">
@@ -88,7 +89,7 @@
         </div>
 
         <div align="center">
-          <pagination total-items="totalItems" ng-model="page.current" ng-change="pageChanged()" class="pagination-sm" items-per-page="page.items" max-size="page.max"></pagination>
+          <pagination total-items="totalItems" ng-model="page.current" ng-change="changePage(page.current)" class="pagination-sm" items-per-page="page.items" max-size="page.max"></pagination>
         </div>
       </div>
 

@@ -1,0 +1,38 @@
+<div ng-repeat="submit in getArray().slice(((subPage.current-1)*subPage.items), ((subPage.current)*subPage.items))">
+  <div class="panel panel-default">
+    <div class="panel-body row" id="submit-row">
+
+      <div class="col-md-1 post-thumbnail">
+        <thumbnail data="{{ submit }}"></thumbnail>
+      </div>
+      <div class="col-md-11" id="accordion">
+  			<a href="{{ submit.url }}" target="_blank"><strong>{{ submit.title }}</strong></a> <span ng-if="submit.link_flair_text" class="label label-default">{{ submit.link_flair_text }}</span>
+  		  <br>
+        <accordion>
+          <accordion-group ng-init="status = {isOpen: false}" is-open="status.isOpen">
+            <accordion-heading>
+              <div class="row">
+          		  <div class="col-xs-1">
+                  <i class="glyphicon" ng-class="status.isOpen ? 'glyphicon-minus-sign' : 'glyphicon-plus-sign'" aria-hidden="true"></i> 
+                  {{ submit.html }}
+                </div>
+                <div class="col-xs-6">
+                  <p class="post-links">
+                  <strong class="post-points" ng-class="submit.ups > 0 ? 'green' : 'orange'">{{ submit.ups }} {{ submit.ups == 1 || submit.ups == -1 ? "point" : "points" }}</strong> &middot <span ng-bind="submit.created_utc * 1000 | amDateFormat: 'MMM Do YYYY, h:mm a'" class="post-date"></span>
+                  </p>
+                </div>
+                <div class="col-xs-5" align="right">
+                  <p class="post-links">
+                  <ng-pluralize class="small-font" count="submit.num_comments" when="{'1': '1 comment', 'other': '{{ submit.num_comments }} comments'}"></ng-pluralize></a>
+                  </p>
+                </div>
+              </div>
+            </accordion-heading>
+            <submit-content data="{{ submit }}"></submit-content>
+          </accordion-group>
+        </accordion>
+        <a href="http://www.reddit.com{{ submit.permalink }}" class="small-font" target="_blank">permalink</a>
+      </div>
+    </div>
+  </div>
+</div>

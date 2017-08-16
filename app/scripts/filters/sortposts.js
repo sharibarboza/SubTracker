@@ -31,7 +31,6 @@ angular.module('tractApp')
 
     return function (input, attribute) {
       var sortedData = [];
-
       if (input) {
         if (attribute === 'newest') {
           sortedData = sortDate(input, true);
@@ -43,7 +42,7 @@ angular.module('tractApp')
           sortedData = sortPoints(input, false);
         }
       }
-
       return sortedData;
     };
+
   }]);
