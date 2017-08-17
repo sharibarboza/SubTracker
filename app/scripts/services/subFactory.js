@@ -130,10 +130,6 @@
           if (date > subs[subreddit].recent_comment) {
             subs[subreddit].recent_comment = date;
           }
-
-          if (comment.gilded > 0) {
-            subs[subreddit].gilded.push(comment);
-          }
         } else {
           subs[subreddit] = {};
           subs[subreddit].comments = new Array(comment);
@@ -141,7 +137,12 @@
           subs[subreddit].comment_ups = parseInt(comment.ups);
           subs[subreddit].submissions = [];
           subs[subreddit].submission_ups = 0;
-          subs[subreddit].gilded = [];
+          subs[subreddit].gilded_comments = 0;
+          subs[subreddit].gilded_submissions = 0;
+        }
+
+        if (comment.gilded > 0) {
+          subs[subreddit].gilded_comments += 1;
         }
 
         subs[subreddit].total_ups = subs[subreddit].comment_ups;
@@ -161,15 +162,10 @@
           var recent_submission = subs[subreddit].recent_submission;
 
           subs[subreddit].submission_ups += parseInt(submission.ups);
-          subs[subreddit].gilded_submits += parseInt(submission.gilded);
 
           submission_list.push(submission);
           if (date > recent_submission) {
             subs[subreddit].recent_submission = date;
-          }
-
-          if (submission.gilded > 0) {
-            subs[subreddit].gilded.push(submission);
           }
         } else {
           if (!(subreddit in subs)) {
@@ -177,12 +173,16 @@
             subs[subreddit].submissions = [];
             subs[subreddit].comments = [];
             subs[subreddit].comment_ups = 0;
-            subs[subreddit].gilded = [];
+            subs[subreddit].gilded_submissions = 0;
           }
           subs[subreddit].submissions.push(submission);
           subs[subreddit].recent_submission = moment(submission.created_utc*1000);
           subs[subreddit].submission_ups = parseInt(submission.ups);
         }
+
+          if (submission.gilded > 0) {
+            subs[subreddit].gilded_submissions += 1;
+          }
 
         if ('recent_comment' in subs[subreddit]) {
           if (subs[subreddit].recent_submission > subs[subreddit].recent_comment) {

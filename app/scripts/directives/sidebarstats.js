@@ -24,7 +24,8 @@ angular.module('tractApp')
           if (total === 0) {
             return 0;
           } else {
-            return (points/total).toFixed(0);
+            var average = (points/total).toFixed(0);
+            return average !== '-0' ? average : 0;
           }
         };
       }],
@@ -34,6 +35,8 @@ angular.module('tractApp')
         scope.date = scope.getOldestDate(scope.data[attrs.type]);
         scope.total = scope.data[attrs.type].length;
         scope.points = scope.data[scope.singleType + '_ups'];
+        scope.gilded = scope.data['gilded_' + attrs.type];
+        console.log(scope.data);
         scope.average = scope.getAverage(scope.points, scope.total);
         scope.averageType = attrs.type === 'comments' ? 'comment' : 'submit';
       }

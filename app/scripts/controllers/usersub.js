@@ -19,7 +19,6 @@ angular.module('tractApp')
 
     var data = JSON.parse(sessionStorage.subData);
     $scope.sub = data.subs[$scope.subreddit];
-    $scope.gilded = $scope.sub.gilded.length;
 
     $scope.data = {
       sortOptions: [
