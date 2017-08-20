@@ -122,12 +122,13 @@
       for (var i = 0; i < comments.length; i++) {
         var comment = comments[i];
         var subreddit = comment.subreddit;
+        var ups = parseInt(comment.ups);
         
         if (subreddit in subs) {
           var comment_list = subs[subreddit].comments;
           var date = moment(comment.created_utc*1000);
 
-          subs[subreddit].comment_ups += parseInt(comment.ups);
+          subs[subreddit].comment_ups += ups;
 
           comment_list.push(comment);
           if (date > subs[subreddit].recent_comment) {
@@ -137,7 +138,7 @@
           subs[subreddit] = {};
           subs[subreddit].comments = new Array(comment);
           subs[subreddit].recent_comment = moment(comment.created_utc*1000);
-          subs[subreddit].comment_ups = parseInt(comment.ups);
+          subs[subreddit].comment_ups = ups;
           subs[subreddit].submissions = [];
           subs[subreddit].submission_ups = 0;
           subs[subreddit].gilded_comments = 0;
@@ -148,7 +149,6 @@
           subs[subreddit].gilded_comments += 1;
         }
 
-        subs[subreddit].total_ups = subs[subreddit].comment_ups;
         subs[subreddit].recent_activity = subs[subreddit].recent_comment;
       }
     };
@@ -158,13 +158,14 @@
       for (var i = 0; i < submissions.length; i++) {
         var submission = submissions[i];
         var subreddit = submission.subreddit;
+        var ups = parseInt(submission.ups);
 
         if (subreddit in subs && subs[subreddit].submissions.length > 0) {
           var submission_list = subs[subreddit].submissions;
           var date = moment(submission.created_utc*1000);
           var recent_submission = subs[subreddit].recent_submission;
 
-          subs[subreddit].submission_ups += parseInt(submission.ups);
+          subs[subreddit].submission_ups += ups;
 
           submission_list.push(submission);
           if (date > recent_submission) {
@@ -177,10 +178,10 @@
             subs[subreddit].comments = [];
             subs[subreddit].comment_ups = 0;
             subs[subreddit].gilded_submissions = 0;
-          }
+          } 
           subs[subreddit].submissions.push(submission);
           subs[subreddit].recent_submission = moment(submission.created_utc*1000);
-          subs[subreddit].submission_ups = parseInt(submission.ups);
+          subs[subreddit].submission_ups = ups;
         }
 
         if (submission.gilded > 0) {
@@ -191,11 +192,15 @@
           if (subs[subreddit].recent_submission > subs[subreddit].recent_comment) {
             subs[subreddit].recent_activity = subs[subreddit].recent_submission;
           }
-          subs[subreddit].total_ups += subs[subreddit].submission_ups;
         } else {
           subs[subreddit].recent_activity = subs[subreddit].recent_submission;
-          subs[subreddit].total_ups = subs[subreddit].submission_ups;
         }
+      }
+    };
+
+    var setTotalUps = function() {
+      for (var sub in subs) {
+        subs[sub].total_ups = subs[sub].comment_ups + subs[sub].submission_ups;
       }
     };
 
@@ -273,6 +278,7 @@
         promise.then(function() {
           organizeComments(comments);
           organizeSubmitted(submissions);
+          setTotalUps();
 
           getFirstDate();
           sessionStorage.subUser = username;

@@ -4,7 +4,7 @@
 
   <div class="user-banner">
     <div class="table-pad">
-      <a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/r/</span>{{ subreddit }}</span></a>
+      <a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/r/</span>{{ subreddit }}</span></a> <span class="badge" id="num-subs">{{ username }}</span>
     </div>
   </div>
 
@@ -14,8 +14,8 @@
         <div class="panel-heading" id="sub-heading">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/"><strong>Home</strong></a></li>
-            <li class="breadcrumb-item"><a href="#/{{ username }}"><strong>{{ username }} subreddit activity</strong></a></li>
-            <li class="breadcrumb-item active"><strong>{{ tabOptions[tab] }} in r/{{ subreddit }}</strong></li>
+            <li class="breadcrumb-item"><a href="#/{{ username }}"><strong>{{ username }}'s subreddits</strong></a></li>
+            <li class="breadcrumb-item active"><strong>{{ subreddit }} {{ tabOptions[tab] }}</strong></li>
           </ol>
         </div>
       </div>
