@@ -1,6 +1,6 @@
 <div ng-include src="'views/searchnav.html'"></div>
 
-<div class="main-content">
+<div class="main-content" id="home-page">
   <div ng-if="notfound">
      <h2 align="center">Sorry, that user could not be found.</h2>
   </div>
@@ -9,90 +9,63 @@
     <div layout="row" layout-sm="column" layout-align="space-around">
       <md-progress-circular ng-show="processing" md-mode="indeterminate"></md-progress-circular>
     </div>
-    <div class="home-page" ng-show=ready>
+    <div ng-show=ready>
     
-      <div id="user-info">
-        <div class="text-content">
-          <div class="row">
-            <div class="col-md-4" id="user-block">
-              <p id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</p>
-              <p><a href="http://www.reddit.com/user/{{ username }}" class="green" id="reddit-user-link">Go to user's reddit page <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i></a></p>
-            </div>
-            <div class="col-md-4" id="sub-count" align="center">
-              <p id="subreddits"><span class="badge" id="num-subs">{{ subLength }} subreddits</span></p>
-            </div>
-            <div class="col-md-4 user-stats" align="right">
-              <p>Redditor Since</p>
-              <p class="green" id="since-date">{{ created }}</p>
+        <div class="user-banner">
+          <div class="table-pad">
+            <div class="row">
+              <div class="col-md-8">
+                <a href="http://www.reddit.com/user/{{ username }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span></a> <span class="badge" id="num-subs">{{ subLength }} subreddits</span>
+              </div>
             </div>
           </div>
-          <div class="row" id="user-counts">
-            <div class="col-md-3"><div>Total Comments (last 1000)<p>{{ comments }}</p></div></div>
-            <div class="col-md-3"><div>Total Comment Karma<p>{{ commentKarma }}</p></div></div>
-            <div class="col-md-3"><div>Total Submissions (last 1000)<p>{{ submissions }}</p></div></div>
-            <div class="col-md-3"><div>Total Post/Link Karma<p>{{ submitKarma }}</p></div></div>
-          </div>
-        </div>
-      </div>
-
-      <div id="alert-bar">
-        <div class="col-md-6">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active">{{ username }}'s subreddits</li>
-          </ol>
-        </div>
-        <div class="col-md-6" align="right">
-          <ol class="breadcrumb">
-            <li class="breadcrum-item active">Data available from: <strong ng-bind="dataAvailable | amDateFormat:'MMMM Do, YYYY'"></strong></li>
-          </ol>
-        </div>
-      </div>
-
-      <div class="table-options">
-        <div class="row">
-          <div class="col-md-4">
-            <form name="myForm">
-              <label for="mySelect">Sort by:
-              <select name="mySelect" id="mySelect"
-                ng-options="option.name for option in subData.sortOptions track by option.value"
-                ng-model="subData.selectedSort" ng-change="setSortOption()"></select></label>
-            </form>
-          </div>
-          <div class="col-md-4" align="center">Click on a subreddit.</div>
-          <div class="col-md-4" align="right">
-            <label>View <select ng-change="setItemsPerPage(page.viewby)" ng-model="page.viewby"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="{{ subLength }}">All</option></select> subreddits at a time</label>
-          </div>
-        </div>
-      </div>
-      
-      <div id="sub-table" class="table-pad">
-        <div class="row sub-row" ng-repeat="subreddit in getArray().slice(((page.current-1)*page.items), ((page.current)*page.items))">
-          <a href="#/{{ username }}/{{ subreddit }}">
-          <div class="col-md-3" id="sub-rank">
-            <div class="col-md-2"><span class="dark-gray"><strong>{{ ((page.current-1)*page.items) + 1 + $index }}</strong></span></div>
-            <div class="col-md-10"><span id="sub-name"> /r/{{ subreddit }}</span></div>
-          </div>
-          <div class="col-md-2 sub-stat">
-            <span class="label label-purple">Comments</span> <span class="badge">{{ subs[subreddit].comments.length }}</span>
-          </div>
-          <div class="col-md-2 sub-stat">
-            <span class="label label-green">Submitted</span> <span class="badge">{{ subs[subreddit].submissions.length }}</span>
-          </div>
-          <div class="col-md-2 sub-stat">
-            <span class="label label-blue">Total Upvotes</span> <span class="badge long-badge" ng-class="subs[subreddit].total_ups > 0 ? 'up-badge' : 'down-badge'">{{ subs[subreddit].total_ups }}</span>
-          </div>
-          <div class="col-md-3 sub-stat">
-            <span class="label label-default">Last Seen</span> <span class="sub-date" ng-bind="subs[subreddit].recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></span>
-          </div>
-          </a>
         </div>
 
-        <div align="center">
-          <pagination total-items="totalItems" ng-model="page.current" ng-change="changePage(page.current)" class="pagination-sm" items-per-page="page.items" max-size="page.max"></pagination>
-        </div>
-      </div>
+      <div class="sub-table">
+        <div class="col-md-8 sub-rows">
+          <div class="row" id="table-head">
+            <div class="col-xs-6">
+              <form name="myForm">
+                <label for="mySelect">Sort by:</label>
+                <select name="mySelect" id="mySelect"
+                  ng-options="option.name for option in subData.sortOptions track by option.value"
+                  ng-model="subData.selectedSort" ng-change="setSortOption()"></select>
+              </form>
+            </div>
+            <div class="col-xs-6 gray middle-title" align="right">Click on a subreddit below.</div>
+          </div>      
+          <br>
 
+          <div class="panel panel-default" ng-repeat="subreddit in getArray()" id="sub-row">
+            <div class="panel-body">
+              <a href="#/{{ username }}/{{ subreddit }}">
+              <div class="col-md-6" id="sub-rank">
+                <div class="col-md-2"><span class="baby-blue"><strong>{{ 1 + $index }}</strong></span></div>
+                <div class="col-md-10">
+                  <span id="sub-name"> /r/{{ subreddit }}</span><br>
+                  <span class="gray sub-text">Last Seen <span ng-bind="subs[subreddit].recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></span></span>
+                </div>
+              </div>
+              <div class="col-md-2 col-xs-4" align="center">
+                <span class="purple number">{{ subs[subreddit].comments.length }}</span><br>
+                <span class="gray sub-text">Comments</span>
+              </div>
+              <div class="col-md-2 col-xs-4" align="center">
+                <span class="purple number">{{ subs[subreddit].submissions.length }}</span><br>
+                <span class="gray sub-text">Submitted</span>
+              </div>
+              <div class="col-md-2 col-xs-4" align="center">
+                <span class="number" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'">{{ subs[subreddit].total_ups }}</span><br>
+                <span class="gray sub-text">Upvotes</span>
+              </div>
+
+              </a>
+            </div>
+          </div>
+
+        </div>
+        <div ng-include src="'views/user-sidebar.html'"></div>
+      </div>
     </div>
   </div>
 </div>

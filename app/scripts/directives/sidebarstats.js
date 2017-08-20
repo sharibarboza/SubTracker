@@ -36,7 +36,6 @@ angular.module('tractApp')
         scope.total = scope.data[attrs.type].length;
         scope.points = scope.data[scope.singleType + '_ups'];
         scope.gilded = scope.data['gilded_' + attrs.type];
-        console.log(scope.data);
         scope.average = scope.getAverage(scope.points, scope.total);
         scope.averageType = attrs.type === 'comments' ? 'comment' : 'submit';
       }

@@ -1,36 +1,35 @@
-<div id="user-info" class="col-md-3">
-  <div class="panel panel-info">
+<div id="sidebar" class="col-md-4">
+  <div class="panel panel-default">
     <div class="panel-heading"><a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank">/r/{{ subreddit }}</a></div>
       <div class="panel-body">
         <i class="glyphicon glyphicon-time" aria-hidden="true"></i> <strong class="green">Last Seen: </strong><span ng-bind="sub.recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></span>
         <br>
-        <h5 class="purple"><strong>Of {{ username }}'s <span class="baby-blue side-comment-num">{{ subLength }}</span> <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize>, /r/{{ subreddit }} is:</strong></h5>
+        <h5 class="purple"><strong>Of {{ username }}'s <span class="baby-blue number">{{ subLength }}</span> <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize>, /r/{{ subreddit }} is:</strong></h5>
         <i class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i> Ranked <span class="green">#{{ mostUpsRank }}</span> in total upvotes<br>
         <i class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i> Ranked <span class="green">#{{ mostActiveRank }}</span> in most active<br>
     </div>
   </div>
 
-  <div ng-if="tab == 0" class="panel panel-info side-stats">
+  <div ng-if="tab == 0" class="panel panel-default side-stats">
     <div class="panel-heading">Comment Stats</div>
     <div class="panel-body">
       <sidebar-stats data="{{ sub }}" type="comments"></sidebar-stats>
 
       <hr>
-      <i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i> <span class="purple"><strong>Most Upvoted Comment</strong></span>
+      <i class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true"></i> <span class="purple"><strong>Most Upvoted Comment</strong></span>
       <p class="small-font side-post" ng-bind-html="topPost.body_html | sanitize | truncate"></p>
       <strong><ng-pluralize class="small-font baby-blue" count="topPost.ups" when="{'1': '1 point', 'other': '{{ topPost.ups }} points'}"></ng-pluralize></strong> | <a class="small-font" href="{{ topPost.link_permalink }}" target="_blank">permalink</a>
     </div>
   </div>
 
-  <div ng-if="tab == 1" class="panel panel-info side-stats">
+  <div ng-if="tab == 1" class="panel panel-default side-stats">
     <div class="panel-heading">Submitted Stats</div>
     <div class="panel-body">
       <sidebar-stats data="{{ sub }}" type="submissions"></sidebar-stats>
 
       <hr>
       <i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i> <span class="purple"><strong>Most Upvoted Submission</strong></span><br>
-      <a href="{{ topSubmit.url }}" target="_blank">{{ topSubmit.title }}</a><br><br>
-      <strong><ng-pluralize class="small-font baby-blue" count="topSubmit.ups" when="{'1': '1 point', 'other': '{{ topSubmit.ups }} points'}"></ng-pluralize></strong> | <a href="http://www.reddit.com{{ topSubmit.permalink }}" target="_blank"><ng-pluralize class="small-font" count="topSubmit.num_comments" when="{'1': '1 comment', 'other': '{{ topSubmit.num_comments }} comments'}"></ng-pluralize></a>
+      <submit data="{{ topSubmit }}"></submit>
     </div>
   </div>
 </div>

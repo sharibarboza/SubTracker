@@ -40,7 +40,7 @@ angular.module('tractApp')
     $scope.subPage = {};
     $scope.subPage.viewby = defaultView;
     $scope.subPage.items = parseInt(defaultView);
-    $scope.subPage.max = 5;
+    $scope.subPage.max = 8;
     $scope.subPage.current = 1;
 
     rank.setData(JSON.parse(sessionStorage.subData).subs);
@@ -70,7 +70,7 @@ angular.module('tractApp')
       $scope.subPage.items = num;
     };
 
-    $scope.pageChange = function() {
+    $scope.backTop = function() {
       $window.scrollTo(0, 0);
     };
 

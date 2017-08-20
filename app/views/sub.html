@@ -1,56 +1,72 @@
 <div ng-include src="'views/searchnav.html'"></div>
 
 <div class="main-content" ng-controller="UserSubCtrl">
-  <div class="col-md-9">
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/"><strong>Home</strong></a></li>
-          <li class="breadcrumb-item"><a href="#/{{ username }}"><strong>{{ username }} subreddit activity</strong></a></li>
-          <li class="breadcrumb-item active"><strong>{{ tabOptions[tab] }} in r/{{ subreddit }}</strong></li>
-        </ol>
-      </div>
-    </div>
 
-    <ul class="nav nav-tabs">
-      <li ng-if="sub.comments.length > 0" ng-class="getActive(0)"><a href ng-click="setTab(0)">Comments <span class="badge tab-badge">{{ sub.comments.length }}</span></a></li>
-      <li ng-if="sub.submissions.length > 0" ng-class="getActive(1)"><a href ng-click="setTab(1)">Submitted <span class="badge tab-badge">{{ sub.submissions.length }}</span></a></li>
-    </ul>
-    <br>
-
-    <div class="table-options">
-      <div class="row">
-        <div class="col-md-4">
-          <form name="myForm">
-            <label for="mySelect">Sort by: <select name="mySelect" id="mySelect"
-              ng-options="option.name for option in data.sortOptions track by option.value"
-              ng-model="data.selectedSort" ng-change="setSortOption()"></select></label>
-          </form>
-        </div>
-        <div class="col-md-4" align="center">
-          <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" style="margin: -5px;"></pagination>
-        </div>
-        <div class="col-md-4" align="right">
-          <label>View <select ng-change="setItemsPerPage(subPage.viewby)" ng-model="subPage.viewby"><option value="25">25</option><option value="50">50</option><option value="100">100</option><option value="{{ sub.comments.length }}">All</option></select> {{ tabOptions[tab] }} at a time</label>
-        </div>
-      </div>
-    </div>
-
-    <div id="post-table">
-      <div ng-repeat="element in getArray().slice(((subPage.current-1)*subPage.items), ((subPage.current)*subPage.items))">
-        <div ng-if="element.type == 'comment'">
-          <div ng-include src="'views/comment.html'"></div>
-        </div>
-        <div ng-if="element.type == 'submit'">
-          <div ng-include src="'views/submission.html'"></div>
-        </div>
-      </div>
-      <div align="center">
-        <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" ng-change="pageChange()" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max"></pagination>
-      </div>
+  <div class="user-banner">
+    <div class="table-pad">
+      <a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/r/</span>{{ subreddit }}</span></a>
     </div>
   </div>
 
-  <div ng-include src="'views/sidebar.html'">
+  <div id="sub-content" class="sub-table">
+    <div class="col-md-8 sub-rows">
+      <div class="panel panel-default">
+        <div class="panel-heading" id="sub-heading">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/"><strong>Home</strong></a></li>
+            <li class="breadcrumb-item"><a href="#/{{ username }}"><strong>{{ username }} subreddit activity</strong></a></li>
+            <li class="breadcrumb-item active"><strong>{{ tabOptions[tab] }} in r/{{ subreddit }}</strong></li>
+          </ol>
+        </div>
+      </div>
+
+      <ul class="nav nav-tabs">
+        <li ng-if="sub.comments.length > 0" ng-class="getActive(0)"><a href ng-click="setTab(0)">Comments <span class="badge tab-badge">{{ sub.comments.length }}</span></a></li>
+        <li ng-if="sub.submissions.length > 0" ng-class="getActive(1)"><a href ng-click="setTab(1)">Submitted <span class="badge tab-badge">{{ sub.submissions.length }}</span></a></li>
+      </ul>
+      <br>
+
+      <div class="table-options">
+        <div class="row">
+          <div class="col-md-3">
+            <form name="myForm">
+              <label for="mySelect">Sort by:</label><br>
+              <select name="mySelect" id="mySelect"
+                ng-options="option.name for option in data.sortOptions track by option.value"
+                ng-model="data.selectedSort" ng-change="setSortOption()"></select>
+            </form>
+          </div>
+          <div class="col-md-3">
+            <label>View</label><br>
+            <select ng-change="setItemsPerPage(subPage.viewby)" ng-model="subPage.viewby"><option value="25">25 {{ tabOptions[tab] }}</option><option value="50">50 {{ tabOptions[tab] }}</option><option value="100">100 {{ tabOptions[tab] }}</option><option value="{{ sub.comments.length }}">All {{ tabOptions[tab] }}</option></select>
+          </div>
+          <div class="col-md-6 paginate" align="right" id="top-paginate">
+            <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" style="margin: -5px;"></pagination>
+          </div>
+        </div>
+      </div>
+
+      <div id="post-table">
+        <div ng-repeat="element in getArray().slice(((subPage.current-1)*subPage.items), ((subPage.current)*subPage.items))">
+          <div ng-if="element.type == 'comment'">
+            <div ng-include src="'views/comment.html'"></div>
+          </div>
+          <div ng-if="element.type == 'submit'">
+            <div ng-include src="'views/submission.html'"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6" id="back-up">
+            <a href ng-click="backTop()"><i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i> Back to top</a>
+          </div>
+          <div class="col-xs-6 paginate">
+            <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" ng-change="backTop()" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max"></pagination>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div ng-include src="'views/sidebar.html'">
+  </div>
 </div>
 

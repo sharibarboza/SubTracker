@@ -10,32 +10,29 @@
         </button>
         <a class="navbar-brand" href="#/">SubSnoop</a>
       </div>
-      <div class="navbar-collapse collapse" id="searchbar">
-
+      <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <a href="https://github.com/sharibarboza/reddit-tract" class="btn btn-social-icon btn-github">
             <span class="fa fa-github"></span>
           </a>
           <li ng-hide="main"><a href="#/{{ username }}" class="nav-link">subreddits</a></li>
-          <li ng-hide="main"><a href="#" class="nav-link">stats</a></li>
         </ul>
-
-        <div ng-hide="main">
-         <form class="navbar-form" id="nav-search">
-          <div class="form-group">
-
-            <div class="input-group">
-              <input type="text" class="form-control" ng-model="inputname" placeholder="Search for another user..." autocomplete="off" autofocus="autofocus">
-              <span class="input-group-btn">
-                <a href="#/{{ inputname }}"><button class="btn btn-secondary btn-info" type="submit" id="nav-btn"><i class="glyphicon glyphicon-search"></i></button></a>
-              </span>
-            </div>
-          </div>
-        </form>
       </div>
 
     </div><!--/.nav-collapse -->
   </div>
-</div>
+  <div ng-hide="main" class="navbar-default navbar-fixed-top width-pad" role="navigation" id="searchbar">
+    <div class="container">
+      <div id="search-nav" class="row">
+        <div class="col-xs-1"><i class="glyphicon glyphicon-search" aria-hidden="true"></i></div>
+        <div class="col-xs-11">
+          <form>
+            <input type="text" ng-model="inputname" placeholder="Search for another user...">
+            <a href="#/{{ inputname }}"><button style="display: none;" type="submit"></button></a>
+          </form>
+        </div>
+      </div>
+    </div><!--/.nav-collapse -->
+  </div>
 </div>
 

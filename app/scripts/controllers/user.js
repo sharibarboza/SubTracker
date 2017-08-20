@@ -12,7 +12,6 @@
   function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment) {
 
   var defaultSort = {value: 'subName', name: 'Subreddit name'};
-  var defaultView = "25";
   var sort;
   var username = $routeParams.username;
   var processUser = true;
@@ -21,32 +20,8 @@
   $scope.processing = true; // Shows the loading progression
   $scope.ready = false; // Shows the data when it's done processing
 
-  $scope.page = {};
-  $scope.page.viewby = defaultView;
-  $scope.page.items = parseInt(defaultView);
-  $scope.page.max = 10;
-
-  if ("page" in sessionStorage) {
-    $scope.page.current = sessionStorage.page;
-  } else {
-    $scope.page.current = 1;
-  }
-
-  $scope.setItemsPerPage = function(num) {
-    $scope.changePage(1);
-    $scope.page.items = num;
-    sessionStorage.view = num;
-  };
-
   $scope.setSortOption = function() {
-    $scope.changePage(1);
     sessionStorage.sort = JSON.stringify($scope.subData.selectedSort);
-  };
-
-  $scope.changePage = function(num) {
-    $window.scrollTo(0, 200);
-    $scope.page.current = num;
-    sessionStorage.page = num;
   };
 
   $scope.getArray = function() {
@@ -57,23 +32,18 @@
     $scope.user = response.data.data;
     $scope.commentKarma = $scope.user.comment_karma;
     $scope.submitKarma = $scope.user.link_karma;
+    $scope.totalKarma = $scope.commentKarma + $scope.submitKarma;
     $scope.username = $scope.user.name;
-    $scope.created = moment($scope.user.created_utc*1000).local().format('MMMM Do YYYY, h:mm a');
+    $scope.created = moment($scope.user.created_utc*1000).local().format('MMMM Do YYYY');
     $scope.notfound = false;
   };
 
   var configSubData = function(response) {
-    if (response) {
-      $scope.comments = response.comments;
-      $scope.submissions = response.submissions;
-      $scope.subs = response.subs;
-      $scope.dataAvailable = response.firstDate;
-    } else {
-      $scope.comments = subFactory.getCommentList().length;
-      $scope.submissions = subFactory.getSubmitList().length;
-      $scope.subs = subFactory.getSubs();
-      $scope.dataAvailable = subFactory.getDataAvailable();
-    }
+    $scope.comments = response.comments;
+    $scope.submissions = response.submissions;
+    $scope.subs = response.subs;
+    $scope.dataAvailable = response.firstDate;
+    $scope.latest = response.latest;
 
     $scope.subsArray = $filter('sortSubs')(Object.keys($scope.subs), 'subName', $scope.subs);
     $scope.subLength = $scope.subsArray.length;
@@ -92,10 +62,8 @@
     configUserData(JSON.parse(sessionStorage.userData));
     configSubData(JSON.parse(sessionStorage.subData));
     sort = JSON.parse(sessionStorage.sort);
-    $scope.itemsPerPage = sessionStorage.view;
   } else {
     sort = defaultSort;
-    $scope.itemsPerPage = defaultView;
   }
 
   if (processUser) {
@@ -108,12 +76,10 @@
 
       subFactory.setData($routeParams.username);
       subFactory.getData().then(function() {
-        configSubData(null);
+        configSubData(subFactory.getSubData());
       });
 
       sessionStorage.sort = JSON.stringify(defaultSort);
-      sessionStorage.view = defaultView;
-      sessionStorage.page = $scope.page.current;
     }, function() {
       $scope.user = false;
       $scope.notfound = true;
