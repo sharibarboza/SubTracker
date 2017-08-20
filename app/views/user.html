@@ -23,6 +23,7 @@
 
       <div class="sub-table">
         <div class="col-md-8 sub-rows">
+
           <div class="row" id="table-head">
             <div class="col-xs-6">
               <form name="myForm">
@@ -40,7 +41,9 @@
             <div class="panel-body">
               <a href="#/{{ username }}/{{ subreddit }}">
               <div class="col-md-6" id="sub-rank">
-                <div class="col-md-2"><span class="baby-blue"><strong>{{ 1 + $index }}</strong></span></div>
+                <div class="col-md-2">
+                  <span class="baby-blue"><strong>{{ 1 + $index }}</strong></span>
+                </div>
                 <div class="col-md-10">
                   <span id="sub-name"> /r/{{ subreddit }}</span><br>
                   <span class="gray sub-text">Last Seen <span ng-bind="subs[subreddit].recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></span></span>
@@ -58,12 +61,11 @@
                 <span class="number" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'">{{ subs[subreddit].total_ups }}</span><br>
                 <span class="gray sub-text">Upvotes</span>
               </div>
-
               </a>
             </div>
-          </div>
-
+          </div>   
         </div>
+
         <div ng-include src="'views/user-sidebar.html'"></div>
       </div>
     </div>
