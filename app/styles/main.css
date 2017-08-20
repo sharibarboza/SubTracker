@@ -1,3 +1,7 @@
+/************************
+Utility
+************************/
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -42,6 +46,10 @@ a {
   color: gray;
 }
 
+.label a {
+  color: white !important;
+}
+
 .btn:focus, .btn:active {
   outline: none !important;
 }
@@ -52,14 +60,6 @@ a {
   font-weight: 500;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
   margin-top: 0;
@@ -67,20 +67,51 @@ a {
   line-height: 40px;
 }
 
-/* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+.capitalize {
+  text-transform: capitalize;
 }
 
-/* Main marketing message and sign up button */
-.jumbotron {
-  background-color: #292929;
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-  color: white;
+blockquote {
+  font-size: 14px;
 }
+
+.panel-heading {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.sub-title {
+  margin-top: -10px;
+}
+
+.breadcrumb {
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+.number {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.small-font {
+  font-size: 12px;
+}
+
+#accordion .panel-default {
+  margin-top: 5px;
+  margin-bottom: -10px;
+}
+
+#accordion .panel-default > .panel-heading {
+  padding: 2px 5px;
+  cursor: pointer;
+}
+
+/************************
+Content
+************************/
 
 .container {
   margin: 0;
@@ -92,17 +123,60 @@ a {
 
 .main-content {
   position: relative;
-  top: 50px;
-  padding: 20px 45px 20px 35px;
+  top: 90px;
 }
 
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
+.width-pad {
+  padding-left: 50px;
+  padding-right: 65px;
 }
-.marketing p + h4 {
-  margin-top: 28px;
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  background-color: #292929;
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+  color: white;
+  margin-top: -40px;
 }
+
+.jumbotron input {
+  padding: 20px;
+}
+
+.jumbotron button {
+  padding: 10px 15px;
+  border-radius: 0;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+md-progress-circular {
+  position: fixed;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: -10px;
+  bottom: 0;
+  right: 0;
+}
+
+.user-banner {
+  color: white;
+  background-image: url('../images/icon-bg.png');
+  background-size: 70%;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  font-weight: 700;
+}
+
+submit-content {
+  word-wrap: break-word; 
+}
+
+/************************
+Navigation
+************************/
 
 .navbar-form {
     overflow: auto;
@@ -114,39 +188,11 @@ a {
     display: inline;
 }
 
-
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
-
-  .container {
-    margin: 0;
-    padding: 0;
-    width: inherit;
-  }
-}
-
-.width-pad {
-  padding-left: 50px;
-  padding-right: 65px;
-}
-
 .navbar-default {
   background-color: #5552B3;
   border: none;
   padding-left: 50px;
-  padding-right: 65px;
+  padding-right: 75px;
 }
 
 .navbar {
@@ -169,25 +215,28 @@ a {
   margin-top: 8px;
 }
 
-.jumbotron input {
-  padding: 20px;
+#searchbar {
+  margin-top: 50px;
+  background-color: white;
+  box-shadow: 0 3px 20px -10px rgba(0,0,0,0.5);
+  padding-left: 50px;
+  padding-right: 60px;
 }
 
-.jumbotron button {
-  padding: 10px 15px;
-  border-radius: 0;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
+#search-nav {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  min-height: 40px;
 }
 
-#nav-search .form-group {
-  display: inline;
-}
-
-#nav-search .input-group {
-  display: table;
+#search-nav input {
+  outline: none;
+  border: none !important;
   width: 100%;
-  padding-left: 205px;
+}
+
+#search-nav .col-xs-1 {
+  width: 35px;
 }
 
 #nav-btn {
@@ -205,98 +254,70 @@ a {
   display: inline !important;
 }
 
-md-progress-circular {
-  position: fixed;
-  overflow: show;
-  margin: auto;
-  top: 0;
-  left: -10px;
-  bottom: 0;
-  right: 0;
-}
+/************************
+User Page
+************************/
 
-/* User Info */
-
-.panel-heading {
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-
-#user-info {
+#home-page {
   padding: 0;
-  line-height: 130%;
-}
-
-#user-info .panel-body {
-  color: gray;
-  font-weight: 500;
-}
-
-.text-content {
-  padding: 20px 50px 40px 50px;
 }
  
 #reddit-name {
-  font-size: 2em;
+  color: white;
+  font-size: 34px;
 }
 
 #since-date {
+  margin-top: 50px;
   font-size: 18px;
 }
 
-.user-stats p {
-  font-size: 22px;
-}
-
-#sub-count p, #reddit-user-link {
-  font-size: 16px;
-}
-
-.user-stats {
-  padding-top: 2px;
-}
-
-#user-counts .col-md-3 {
-  text-align: center;
-}
-
-#user-counts .col-md-3 div {
-  padding: 5px 10px;
-  border: 1px solid #646191;
-  border-radius: 5px;
-}
-
-#user-counts p {
-  color: #12C5E0;
-  font-size: 34px;
-  margin-top: 10px;
-}
-
-#subreddits {
-  font-size: 25px !important;
-}
-
 #num-subs {
-  font-size: 28px !important;
+  margin-left: 10px;
+  margin-top: -16px;
+  font-size: 24px !important;
 }
 
-/* Subreddit Table */
+/************************
+User Page Side Bar
+************************/
 
-#sub-table {
-  font-weight: 500;
+.user-side {
+  margin-top: -110px;
 }
 
-.table-pad {
-  padding: 0 65px 50px 65px;
+.list-group-item, .panel-body {
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
-.table-options {
-  padding-top: 10px;
-  padding-bottom: 10px;
+/************************
+Subreddit Table
+************************/
+
+.sub-table {
+  padding: 40px 45px 40px 35px;
 }
 
-.sub-row:hover {
-  background-color: #EBF6FA;
+.sub-rows {
+  padding-right: 30px;
+  padding-bottom: 20px;
+}
+
+#sub-row {
+  margin-bottom: 10px;
+}
+
+#sub-row:hover {
+  background-color: #F5F5F5;
+}
+
+#sub-row .panel-body {
+  padding: 10px 0;
+}
+
+#sub-heading {
+  border-bottom: none !important;
 }
 
 #sub-rank [class*='col-'] {
@@ -304,78 +325,14 @@ md-progress-circular {
   padding-right: 0;
 }
 
-.sub-stat {
-  padding-top: 2px;
-}
-
-#sub-table .badge {
-  width: 50px;
-  background-color: #DBDBDB;
-  color: #333;
-  margin-left: 5px;
-}
-
-.label a {
-  color: white !important;
-}
-
-.label-purple {
-  background-color: #5552B3;
-}
-
-.label-green {
-  background-color: #1DB3B0;
-}
-
-.label-blue {
-  background-color: #0975BD;
-}
-
 #sub-name {
   font-size: 16px;
   font-weight: bold;
 }
 
-.sub-date {
-  font-size: 1.1em;
-  font-weight: bold;
-}
-
-.table-heading {
-  color: #323536;
-  font-weight: bold;
-  font-size: 1.3em;
-}
-
-#sub-count .badge {
-  color: white;
-  padding: 2px 14px;
-  background-color: #646191;
-}
-
-#sub-table .up-badge {
-  color: #008273;
-}
-
-#sub-table .down-badge {
-  color: #E33900;
-}
-
-#sub-table .long-badge {
-  width: 70px;
-}
-
-#sub-table .sub-date {
-  color: #333;
-  padding-left: 4px;
-  font-size: 14px;
-}
-
-.breadcrumb {
-  background: none;
-  padding: 0;
-  margin: 0;
-}
+/************************
+User Sub Page
+************************/
 
 .nav-tabs li {
   text-decoration: none;
@@ -385,16 +342,6 @@ md-progress-circular {
 .tab-badge {
   background-color: #5552B3;
   width: 40px;
-}
-
-#alert-bar .col-md-6:first-child {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-#alert-bar .col-md-6:last-child {
-  padding-right: 0;
-  padding-left: 0;
 }
 
 #post-table {
@@ -453,12 +400,73 @@ md-progress-circular {
   color: gray;
 }
 
-.side-comment-num {
-  font-size: 16px;
+.table-options {
+  padding-right: 5px;
 }
 
-.small-font {
-  font-size: 12px;
+.paginate {
+  text-align: right;
+}
+
+#top-paginate {
+  padding-top: 20px;
+}
+
+.gilded-icon {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 -15px 8px;
+  top: -8px;
+  color: #99895F;
+  font-size: .9em;
+  vertical-align: middle;
+}
+
+.gilded-icon:before {
+  display: inline-block;
+  content: '';
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 0px -1639px;
+  background-repeat: no-repeat;
+  height: 14px;
+  width: 13px;
+  margin-right: 2px;
+  vertical-align: -3px;
+}
+
+#back-up {
+  padding-top: 10px;
+}
+
+/************************
+Sub Page Side Bar
+************************/
+
+#sidebar {
+  font-weight: 500;
+  color: gray;
+  margin-top: -110px;
+}
+
+.sub-side-stats {
+  font-weight: 500;
+  color: gray;
+}
+
+.sub-side-stats .glyphicon {
+  color: #1DB3B0;
+}
+
+.sub-side-stats .col-xs-8 {
+  font-size: 13px;
+}
+
+.table-pad {
+  padding: 30px 50px;
+}
+
+.sub-text {
+  font-size: 13px;
 }
 
 .side-post {
@@ -470,6 +478,14 @@ md-progress-circular {
 .side-stats .col-xs-8, .side-stats .col-xs-9 {
   font-size: 13px;
 }
+
+.submit-pic {
+  max-width: 500px;
+}
+
+/************************
+Submit Post Thumbnails
+************************/
 
 .thumb {
   float: left;
@@ -519,50 +535,107 @@ md-progress-circular {
   height: 50px;
 }
 
-.gilded-icon {
-  position: relative;
-  display: inline-block;
-  margin: 0 0 -15px 8px;
-  top: -8px;
-  color: #99895F;
-  font-size: .9em;
-  vertical-align: middle;
-}
+/************************
+Footer
+************************/
 
-.gilded-icon:before {
-  display: inline-block;
-  content: '';
-  background-image: url('../images/sprite-reddit.png');
-  background-position: 0px -1639px;
-  background-repeat: no-repeat;
-  height: 14px;
-  width: 13px;
-  margin-right: 2px;
-  vertical-align: -3px;
-}
-
-#accordion .panel-default {
-  margin-top: 5px;
-  margin-bottom: -10px;
-}
-
-#accordion .panel-default > .panel-heading {
-  padding: 2px 5px;
-  cursor: pointer;
-}
-
-submit-content {
-  word-wrap: break-word; 
-}
-
-.submit-pic {
-  max-width: 500px;
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
 }
 
 .footer {
-  margin-top: 50px;
+  margin-top: 100px;
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
 }
 
+/************************
+Mobile
+************************/
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+
+  .container {
+    margin: 0;
+    padding: 0;
+    width: inherit;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .navbar-default {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  #searchbar, .user-banner {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .user-banner .row, .sub-rows .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .table-pad, .sub-table, .sub-rows, .user-side, #sidebar {
+    padding: 5px;
+  }
+
+  .container, .user-banner .col-md-8 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  #sub-row .col-xs-4 {
+    margin-top: 10px;
+  }
+
+  .user-side, #sidebar {
+    margin-top: 0;
+  }
+
+  #table-head [class*='col-'] {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  #reddit-name {
+    font-size: 25px;
+    display: block;
+  }
+
+  #num-subs {
+    margin-left: 0;
+    margin-top: 10px;
+    float: left;
+  }
+
+}
+
+@media screen and (max-width: 1000px) {
+  .paginate {
+    text-align: center;
+  }
+
+  .sub-table select {
+    width: 100%;
+  }
+}
