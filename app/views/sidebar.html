@@ -1,17 +1,19 @@
 <div id="sidebar" class="col-md-4">
   <div class="panel panel-default">
-    <div class="panel-heading"><a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank">/r/{{ subreddit }}</a></div>
+    <div class="panel-heading"><span class="purple">/r/{{ subreddit }}</div>
       <div class="panel-body">
-        <i class="glyphicon glyphicon-time" aria-hidden="true"></i> <strong class="green">Last Seen: </strong><span ng-bind="sub.recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></span>
+        <i class="glyphicon glyphicon-time" aria-hidden="true"></i> <strong class="green">Last Seen: </strong><span ng-bind="sub.recent_activity | amDateFormat:'MMMM Do YYYY, h:mm a'"></span>
+        <br>
+        <i class="glyphicon glyphicon-globe" aria-hidden="true"></i> <a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank"><strong>Visit /r/{{ subreddit }} &raquo</strong></a>
         <br>
         <h5 class="purple"><strong>Of {{ username }}'s <span class="baby-blue number">{{ subLength }}</span> <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize>, /r/{{ subreddit }} is:</strong></h5>
-        <i class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i> Ranked <span class="green">#{{ mostUpsRank }}</span> in total upvotes<br>
-        <i class="glyphicon glyphicon-chevron-right" aria-hidden="true"></i> Ranked <span class="green">#{{ mostActiveRank }}</span> in most active<br>
+        Ranked <span class="green">#{{ mostUpsRank }}</span> in total upvotes<br>
+        Ranked <span class="green">#{{ mostActiveRank }}</span> in most active
     </div>
   </div>
 
   <div ng-if="tab == 0" class="panel panel-default side-stats">
-    <div class="panel-heading">Comment Stats</div>
+    <div class="panel-heading"><span class="purple">Comment Stats</div>
     <div class="panel-body">
       <sidebar-stats data="{{ sub }}" type="comments"></sidebar-stats>
 
@@ -23,7 +25,7 @@
   </div>
 
   <div ng-if="tab == 1" class="panel panel-default side-stats">
-    <div class="panel-heading">Submitted Stats</div>
+    <div class="panel-heading"><span class="purple">Submitted Stats</div>
     <div class="panel-body">
       <sidebar-stats data="{{ sub }}" type="submissions"></sidebar-stats>
 

@@ -3,9 +3,11 @@
   <div class="panel panel-default">
     <div class="panel-heading"><span class="purple">/u/{{ username }}</span></div>
     <div class="panel-body">
-      <p class="gray"><strong><span class="green">{{ username }}</span> has been active in <span class="baby-blue number">{{ subLength }}</span> subreddits.</strong></p>
+      <i class="glyphicon glyphicon-user gray" aria-hidden="true"></i> <a href="http://www.reddit.com/user/{{ username }}" target="_blank"><strong>Go to user's reddit page &raquo</strong></a>
+      <p class="gray"><strong>Active in <span class="baby-blue number">{{ subLength }}</span> subreddits.</strong></p>
       <p><strong class="gray">Redditor since <span class="green">{{ created }}</span></strong></p>
-      <span class="gray small-font">Note: This data is based only from the user's most recent 1000 comments and submissions each. All data available is from <span ng-bind="dataAvailable | amDateFormat: 'MMMM Do YYYY'"></span>.</span>
+      <span class="gray small-font">Note: This data is based only from the user's most recent 1000 comments and submissions each. All data available is from <span ng-bind="dataAvailable | amDateFormat: 'MMMM Do YYYY'"></span>.
+      </span>
     </div>
   </div>
 
