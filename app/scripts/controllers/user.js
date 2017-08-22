@@ -11,6 +11,9 @@
  .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 'user', 'subs',
   function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment, user, subs) {
 
+  var defaultSort = {value: 'subName', name: 'Subreddit name'};
+  var sort;
+
   $scope.main = false;
 
   $scope.setSortOption = function() {
@@ -49,23 +52,19 @@
 
     if (store) {
       sessionStorage.subData = JSON.stringify(response);
+      sessionStorage.sort = JSON.stringify(defaultSort);
     }
   };
-
-  var equalUser = function(session, param) {
-    return session.toLowerCase() === param.toLowerCase();
-  };
-
-  var defaultSort = {value: 'subName', name: 'Subreddit name'};
-  var sort;
-  var processUser = true;
 
   if (user && subs) {
     configUserData(user, true);
     configSubData(subs, true);
+    sort = defaultSort;
   } else {
     user = JSON.parse(sessionStorage.userData);
     subs = JSON.parse(sessionStorage.subData);
+    sort = JSON.parse(sessionStorage.sort);
+
     configUserData(user, false);
     configSubData(subs, false);
   }
@@ -82,7 +81,7 @@
       {value: 'avgSubmit', name: 'Average upvotes per submission'},
       {value: 'mostDown', name: 'Most controversial'},
     ],
-    selectedSort: {value: 'subName', name: 'Subreddit name'}
+    selectedSort: sort
   };
 
 }]);
