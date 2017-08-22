@@ -1,25 +1,21 @@
-<div ng-include src="'views/searchnav.html'"></div>
+<div ng-include src="'views/searchnav.html'"></div> 
 
 <div class="main-content" id="home-page">
   <div ng-if="notfound">
      <h2 align="center">Sorry, that user could not be found.</h2>
   </div>
 
-  <div ng-if="user" class="content" layout="column" ng-cloak>
-    <div layout="row" layout-sm="column" layout-align="space-around">
-      <md-progress-circular ng-show="processing" md-mode="indeterminate"></md-progress-circular>
-    </div>
-    <div ng-show=ready>
-    
-        <div class="user-banner">
-          <div class="table-pad">
-            <div class="row">
-              <div class="col-md-8">
-                <a href="http://www.reddit.com/user/{{ username }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span></a> <span class="badge" id="num-subs">{{ subLength }} subreddits</span>
-              </div>
+  <div ng-if="!notfound" class="content" layout="column" ng-cloak>
+    <div>
+      <div class="user-banner">
+        <div class="table-pad">
+          <div class="row">
+            <div class="col-md-8">
+              <a href="http://www.reddit.com/user/{{ username }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span></a> <span class="badge" id="num-subs">{{ subLength }} subreddits</span>
             </div>
           </div>
         </div>
+      </div>
 
       <div class="sub-table">
         <div class="col-md-8 sub-rows">

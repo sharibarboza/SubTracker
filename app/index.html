@@ -25,6 +25,11 @@
 
       <div class="container">
         <div ng-view=""></div>
+
+        <div ng-show="loadingView">
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
+
       </div>
 
       <div class="footer width-pad">

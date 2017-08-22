@@ -8,17 +8,10 @@
  * Controller of the tractApp
  */
  angular.module('tractApp')
- .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 
-  function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment) {
-
-  var defaultSort = {value: 'subName', name: 'Subreddit name'};
-  var sort;
-  var username = $routeParams.username;
-  var processUser = true;
+ .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 'user', 'subs',
+  function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment, user, subs) {
 
   $scope.main = false;
-  $scope.processing = true; // Shows the loading progression
-  $scope.ready = false; // Shows the data when it's done processing
 
   $scope.setSortOption = function() {
     sessionStorage.sort = JSON.stringify($scope.subData.selectedSort);
@@ -28,7 +21,7 @@
     return $filter('sortSubs')($scope.subsArray, $scope.subData.selectedSort.value, $scope.subs);
   };
 
-  var configUserData = function(response) {
+  var configUserData = function(response, store) {
     $scope.user = response.data.data;
     $scope.commentKarma = $scope.user.comment_karma;
     $scope.submitKarma = $scope.user.link_karma;
@@ -36,9 +29,14 @@
     $scope.username = $scope.user.name;
     $scope.created = moment($scope.user.created_utc*1000).local().format('MMMM Do YYYY');
     $scope.notfound = false;
+
+    if (store) {
+      sessionStorage.user = $scope.username;
+      sessionStorage.userData = JSON.stringify(response);
+    }
   };
 
-  var configSubData = function(response) {
+  var configSubData = function(response, store) {
     $scope.comments = response.comments;
     $scope.submissions = response.submissions;
     $scope.subs = response.subs;
@@ -49,41 +47,27 @@
     $scope.subLength = $scope.subsArray.length;
     $scope.totalItems = $scope.subLength;
 
-    $scope.processing = false;
-    $scope.ready = true;
+    if (store) {
+      sessionStorage.subData = JSON.stringify(response);
+    }
   };
 
-  var cachedData = function() {
-    return 'user' in sessionStorage && sessionStorage.user === username;
+  var equalUser = function(session, param) {
+    return session.toLowerCase() === param.toLowerCase();
   };
 
-  if (cachedData()) {
-    processUser = false;
-    configUserData(JSON.parse(sessionStorage.userData));
-    configSubData(JSON.parse(sessionStorage.subData));
-    sort = JSON.parse(sessionStorage.sort);
+  var defaultSort = {value: 'subName', name: 'Subreddit name'};
+  var sort;
+  var processUser = true;
+
+  if (user && subs) {
+    configUserData(user, true);
+    configSubData(subs, true);
   } else {
-    sort = defaultSort;
-  }
-
-  if (processUser) {
-    userFactory.setUser(username);
-
-    userFactory.getUser().then(function(response) {
-      configUserData(response);
-      sessionStorage.user = username;
-      sessionStorage.userData = JSON.stringify(response);
-
-      subFactory.setData($routeParams.username);
-      subFactory.getData().then(function() {
-        configSubData(subFactory.getSubData());
-      });
-
-      sessionStorage.sort = JSON.stringify(defaultSort);
-    }, function() {
-      $scope.user = false;
-      $scope.notfound = true;
-    });
+    user = JSON.parse(sessionStorage.userData);
+    subs = JSON.parse(sessionStorage.subData);
+    configUserData(user, false);
+    configSubData(subs, false);
   }
 
   $scope.subData = {
@@ -98,7 +82,7 @@
       {value: 'avgSubmit', name: 'Average upvotes per submission'},
       {value: 'mostDown', name: 'Most controversial'},
     ],
-    selectedSort: sort
+    selectedSort: {value: 'subName', name: 'Subreddit name'}
   };
 
 }]);

@@ -11,22 +11,17 @@
  .factory('userFactory', ['$http', function ($http) {
     var baseUrl = 'http://www.reddit.com/user/';
     var rawJson = 'raw_json=1';
-    var userPromise;
-
-    var getUserPromise = function(username) {
-      // Make a GET request to reddit API to get user's stats
-      var url = baseUrl+username+'/about.json?'+rawJson;
-      userPromise = $http.get(url);
-    };
 
     return {
-      getUser: function() {
+      getUser: function(username) {
         // Return the promise
-        return userPromise;
-      },
-      setUser: function(username) {
-        // Get the promise to fetch data from user's about info
-        getUserPromise(username);
+        var url = baseUrl+username+'/about.json?'+rawJson;
+        var promise = $http.get(url).then(function(response) {
+          return response;
+        }, function() {
+          console.log("User not found.");
+        });
+        return promise;
       }
     };
   }]);

@@ -281,7 +281,6 @@
           setTotalUps();
 
           getFirstDate();
-          sessionStorage.subUser = username;
           subData = {
             'user': username,
             'comments' : comments.length,
@@ -290,22 +289,15 @@
             'firstDate' : dataAvailable,
             'latest' : getLatest()
           };
-          sessionStorage.subData = JSON.stringify(subData);
         });
       },
       getData: function() {
-        return promise;
-      },
-      getCommentList: function() {
-        // Returns comments list (getData must be called first to return promise)
-        return comments;
-      },
-      getSubmitList: function() {
-        // Returns submissions list (getData must be called first to return promise)
-        return submissions;
-      },
-      getSubData: function() {
-        return subData;
+        var dataPromise = promise.then(function() {
+          return subData;
+        }, function() {
+          console.log("Error in processing data for " + username);
+        });
+        return dataPromise;
       }
     };
   }]);
