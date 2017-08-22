@@ -70,10 +70,6 @@ angular.module('tractApp')
       $scope.subPage.items = num;
     };
 
-    $scope.backTop = function() {
-      $window.scrollTo(0, 0);
-    };
-
     $scope.setSortOption = function() {
       $scope.subPage.current = 1;
     };
