@@ -57,7 +57,7 @@
         </div>
         <div class="row">
           <div class="col-xs-6" id="back-up">
-            <a href ng-click="backTop()"><i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i> Back to top</a>
+            <back-top></back-top>
           </div>
           <div class="col-xs-6 paginate">
             <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" ng-change="backTop()" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max"></pagination>
