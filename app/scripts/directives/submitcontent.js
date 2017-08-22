@@ -43,15 +43,17 @@ angular.module('SubSnoopApp')
             return $filter('sanitize')(data.selftext_html);
           } else if (data.html) {
             return $filter('sanitize')(data.html);
-          } else if (isAttachedImage(data)) {
-            return '<img class="submit-pic" ng-src="' + data.preview.images[0].source.url + '">';
           } else if (isLinkedImage(data)) {
             return '<a href="' + data.url +'" target="_blank">' + data.url + '</a><br><img class="submit-pic" ng-src="' + data.url + '">';
+          } else if (isAttachedImage(data)) {
+            return '<img class="submit-pic" ng-src="' + data.preview.images[0].source.url + '">';
           } else if (data.media && data.media.oembed) {
             return data.media.oembed.html;
           } else if (isVideo(data.url)) {
             return '<img class="submit-pic" ng-src="' + getVideoUrl(data.url) + '">';
-          }
+          } else if (data.media.reddit_video.fallback_url) {
+            return '<video width="320" height="240" controls><source src="' + data.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
+          } 
         };
 
         element.html(getTemplate(data));
