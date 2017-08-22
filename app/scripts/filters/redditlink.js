@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name tractApp.filter:redditlink
+ * @name SubSnoopApp.filter:redditlink
  * @function
  * @description
  * # redditlink
- * Filter in the tractApp.
+ * Filter in the SubSnoopApp.
  */
-angular.module('tractApp')
+angular.module('SubSnoopApp')
   .filter('redditlink', function () {
     return function (input) {
       var url = 'http://www.reddit.com';

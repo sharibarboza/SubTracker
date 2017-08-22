@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name tractApp.directive:backTop
+ * @name SubSnoopApp.directive:backTop
  * @description
  * # backTop
  */
-angular.module('tractApp')
+angular.module('SubSnoopApp')
   .directive('backTop', function () {
     return {
       template: '<a href ng-click="backTop()"><i class="glyphicon glyphicon-arrow-up gray" aria-hidden="true"></i> Back to top</a>',

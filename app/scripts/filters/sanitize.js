@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name tractApp.filter:sanitize
+ * @name SubSnoopApp.filter:sanitize
  * @function
  * @description
  * # sanitize
- * Filter in the tractApp.
+ * Filter in the SubSnoopApp.
  */
-angular.module('tractApp')
+angular.module('SubSnoopApp')
   .filter('sanitize', ['$sanitize', '$filter', function ($sanitize, $filter) {
     return function (input) {
       input = $filter('redditlink')(input);

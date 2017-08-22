@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name tractApp.filter:orderSubs
+ * @name SubSnoopApp.filter:orderSubs
  * @function
  * @description
  * # orderSubs
- * Filter in the tractApp.
+ * Filter in the SubSnoopApp.
  */
-angular.module('tractApp')
+angular.module('SubSnoopApp')
   .filter('sortSubs', ['sortAlpha', 'sortNum', function (sortAlpha, sortNum) {
 
     var sortName = function(keys) {

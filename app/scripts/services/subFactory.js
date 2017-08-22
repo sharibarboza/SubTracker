@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc factory
- * @name tractApp.factory
+ * @name SubSnoopApp.factory
  * @description
  * # subFactory
- * Factory in the tractApp.
+ * Factory in the SubSnoopApp.
  */
- angular.module('tractApp')
+ angular.module('SubSnoopApp')
  .factory('subFactory', ['$http', 'userFactory', '$q', 'moment', function ($http, userFactory, $q, moment) {
     var baseUrl = 'http://www.reddit.com/user/';
     var rawJson = 'raw_json=1';

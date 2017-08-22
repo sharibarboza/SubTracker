@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name tractApp.controller:UsersubCtrl
+ * @name SubSnoopApp.controller:UsersubCtrl
  * @description
  * # UsersubCtrl
- * Controller of the tractApp
+ * Controller of the SubSnoopApp
  */
-angular.module('tractApp')
+angular.module('SubSnoopApp')
   .controller('UserSubCtrl', ['$scope', '$routeParams', '$window', '$filter', 'rank', 
     function ($scope, $routeParams, $window, $filter, rank) {
 

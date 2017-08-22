@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name tractApp.filter:truncate
+ * @name SubSnoopApp.filter:truncate
  * @function
  * @description
  * # truncate
- * Filter in the tractApp.
+ * Filter in the SubSnoopApp.
  */
-angular.module('tractApp')
+angular.module('SubSnoopApp')
   .filter('truncate', function () {
     return function (input) {
       var num = 50;

@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name tractApp.filter:average
+ * @name SubSnoopApp.filter:average
  * @function
  * @description
  * # average
- * Filter in the tractApp.
+ * Filter in the SubSnoopApp.
  */
-angular.module('tractApp')
+angular.module('SubSnoopApp')
   .filter('average', function () {
     return function (num, denom, digits) {
       if (parseInt(denom) === 0) {

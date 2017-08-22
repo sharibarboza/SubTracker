@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name tractApp
+ * @name SubSnoopApp
  * @description
- * # tractApp
+ * # SubSnoopApp
  *
  * Main module of the application.
  */
 var app = angular
-  .module('tractApp', [
+  .module('SubSnoopApp', [
     'ngAnimate',
     'ngRoute',
     'ngSanitize',

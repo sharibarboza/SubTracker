@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name tractApp.controller:MainCtrl
+ * @name SubSnoopApp.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the tractApp
+ * Controller of the SubSnoopApp
  */
- angular.module('tractApp')
+ angular.module('SubSnoopApp')
  .controller('MainCtrl', ['$scope', function ($scope) {
     // Main will determine whether to display the search bar in the nav 
     // Should not be displayed on main page

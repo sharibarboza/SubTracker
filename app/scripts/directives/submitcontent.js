@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name tractApp.directive:submitContent
+ * @name SubSnoopApp.directive:submitContent
  * @description
  * # submitContent
  */
-angular.module('tractApp')
+angular.module('SubSnoopApp')
   .directive('submitContent', ['$compile', '$filter', function ($compile, $filter) {
 
     var isLinkedImage = function(submit) {

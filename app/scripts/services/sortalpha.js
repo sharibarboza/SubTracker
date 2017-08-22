@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name tractApp.sortAlpha
+ * @name SubSnoopApp.sortAlpha
  * @description
  * # sortAlpha
- * Service in the tractApp.
+ * Service in the SubSnoopApp.
  */
-angular.module('tractApp')
+angular.module('SubSnoopApp')
   .service('sortAlpha', function () {
     // AngularJS will instantiate a singleton by calling "new" on this function
 

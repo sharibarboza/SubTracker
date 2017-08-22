@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name tractApp.rank
+ * @name SubSnoopApp.rank
  * @description
  * # rank
- * Factory in the tractApp.
+ * Factory in the SubSnoopApp.
  */
-angular.module('tractApp')
+angular.module('SubSnoopApp')
   .factory('rank', ['$filter', function ($filter) {
     // Service logic
     // ...

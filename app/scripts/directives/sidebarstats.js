@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name tractApp.directive:sidebarStats
+ * @name SubSnoopApp.directive:sidebarStats
  * @description
  * # sidebarStats
  */
-angular.module('tractApp')
+angular.module('SubSnoopApp')
   .directive('sidebarStats', function () {
     return {
       templateUrl: 'views/side-stats.html',

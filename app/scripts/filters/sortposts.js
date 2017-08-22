@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc filter
- * @name tractApp.filter:sortPosts
+ * @name SubSnoopApp.filter:sortPosts
  * @function
  * @description
  * # sortPosts
- * Filter in the tractApp.
+ * Filter in the SubSnoopApp.
  */
-angular.module('tractApp')
+angular.module('SubSnoopApp')
   .filter('sortPosts', ['moment', 'sortNum', function (moment, sortNum) {
 
     var sortDate = function(keys, reverse) {

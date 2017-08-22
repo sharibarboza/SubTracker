@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name tractApp.directive:submit
+ * @name SubSnoopApp.directive:submit
  * @description
  * # submit
  */
-angular.module('tractApp')
+angular.module('SubSnoopApp')
   .directive('submit', function () {
     return {
       templateUrl: 'views/submit.html',

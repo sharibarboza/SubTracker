@@ -2,11 +2,11 @@
 
 /**
  * @ngdoc directive
- * @name tractApp.directive:thumbnail
+ * @name SubSnoopApp.directive:thumbnail
  * @description
  * # thumbnail
  */
-angular.module('tractApp')
+angular.module('SubSnoopApp')
   .directive('thumbnail', function ($compile) {
 
     var isUrl = function(string) {
