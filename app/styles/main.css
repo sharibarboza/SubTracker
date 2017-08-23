@@ -112,6 +112,7 @@ blockquote {
 
 .fa-reddit {
   font-size: 33px;
+  padding-right: 8px;
 }
 
 /************************
@@ -138,11 +139,12 @@ Content
 
 /* Main marketing message and sign up button */
 .jumbotron {
-  background-color: #292929;
+  /*background-color: #292929;*/
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
   color: white;
   margin-top: -40px;
+  padding-bottom: 50px !important;
 }
 
 .jumbotron input {
@@ -180,10 +182,19 @@ md-progress-circular:before {
 .user-banner {
   color: white;
   background-image: url('../images/icon-bg.png');
-  background-size: 70%;
+  background-position: 0 50%;
   padding-top: 15px;
   padding-bottom: 10px;
   font-weight: 700;
+}
+
+.sub-banner {
+  color: white;
+  background-image: url('../images/icon-bg.png');
+  background-position: 0 30%;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  font-weight: 700; 
 }
 
 submit-content {
