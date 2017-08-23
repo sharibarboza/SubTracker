@@ -1,7 +1,9 @@
 <div ng-include src="'views/searchnav.html'"></div>
 
 <div class="jumbotron main-content">
-  <h4>Enter your Reddit usename to view your comments &amp submissions by subreddit.</h4>
+  <h2>Track your subreddit activity</h2>
+  <br>
+  <h4>Enter your Reddit usename to view your comments &amp submissions by <span class="green">subreddit.</span></h4>
 
   <form>
   <div>
@@ -13,4 +15,27 @@
     </div>
   </div>
   </form>
+</div>
+
+<div id="sub-panels">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading"><span class="purple">Popular Subreddits</span></div>
+      <ul class="list-group">
+        <li ng-repeat="subElement in popularSubs" class="list-group-item">
+          <div ng-include src="'views/sub-panel.html'"></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading"><span class="purple">New Subreddits</span></div>
+      <ul class="list-group">
+        <li ng-repeat="subElement in newSubs" class="list-group-item">
+          <div ng-include src="'views/sub-panel.html'"></div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>

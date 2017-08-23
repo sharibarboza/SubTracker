@@ -23,7 +23,15 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
     .when('/', {
       templateUrl: 'views/main.html',
       controller: 'MainCtrl',
-      controllerAs: 'main'
+      controllerAs: 'main',
+      resolve: {
+        popularSubs: function(popularSubs) {
+          return popularSubs.getData(25);
+        },
+        newSubs: function(newSubs) {
+          return newSubs.getData(25);
+        }
+      }
     })
     .when('/:username', {
       templateUrl: 'views/user.html',

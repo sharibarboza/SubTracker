@@ -1,0 +1,19 @@
+<div style="min-height: 100px;">
+  <div class="col-md-2"><img class="sub-icon" ng-src="{{ subElement.icon_img ? subElement.icon_img : 'https://b.thumbs.redditmedia.com/7AlpvErovtQ160o9FyIIdHCzfL2k-ejc982U6uPCuzI.png' }}"></div>
+  <div class="col-md-10 small-font">
+  	<a href="http://www.reddit.com/{{ subElement.display_name }}"><strong>/r/{{ subElement.display_name }}</strong> &middot <span class="dark-gray">{{ subElement.title }}</span></a>
+  	<p class="gray">{{ subElement.public_description | truncate:20 }}</p>
+    <div class="row">
+      <div class="col-xs-5"> 
+      	<span><i class="fa fa-group gray" aria-hidden="true"></i> Subscribers: <strong class="baby-blue">{{ subElement.subscribers | number }}</strong></span>
+        <br>
+        <span><i class="fa fa-bookmark gray" aria-hidden="true"></i> Category: <strong class="purple">{{ subElement.advertiser_category ? subElement.advertiser_category : 'N/A' }}</strong></span>
+      </div>
+      <div class="col-xs-7">
+      	<span><i class="fa fa-calendar" aria-hidden="true"></i> Created: <strong class="green" ng-bind="subElement.created_utc * 1000 | amDateFormat:'MMM Do YYYY, h:mm a' "></strong></span>
+        <br>
+        <span><i class="fa fa-bullhorn gray" aria-hidden="true"></i> Audience Target: <strong class="orange">{{ subElement.audience_target ? subElement.audience_target : 'N/A' }}</strong></span>
+      </div>
+    </div>
+  </div>
+</div>

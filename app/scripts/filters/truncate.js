@@ -10,8 +10,7 @@
  */
 angular.module('SubSnoopApp')
   .filter('truncate', function () {
-    return function (input) {
-      var num = 50;
+    return function (input, num) {
       var split = input.split(' ');
       var truncated_input = split.slice(0, num);
 
