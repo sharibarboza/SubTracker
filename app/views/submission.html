@@ -18,12 +18,12 @@
               </div>
               <div class="col-xs-6">
                 <p class="post-links">
-                  <strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong> <span class="gray">&middot</span> <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMM Do YYYY, h:mm a'" class="post-date gray"></span>
+                  <strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong> <span class="gray">&middot</span> <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMM Do YYYY, h:mm a'" class="post-date gray"></span>
                 </p>
               </div>
               <div class="col-xs-5" align="right">
                 <p class="post-links">
-                  <ng-pluralize class="small-font gray" count="element.num_comments" when="{'1': '1 comment', 'other': '{{ element.num_comments }} comments'}"></ng-pluralize></a>
+                  <ng-pluralize class="small-font gray" count="element.num_comments" when="{'1': '1 comment', 'other': '{{ element.num_comments | number }} comments'}"></ng-pluralize></a>
                 </p>
               </div>
             </div>

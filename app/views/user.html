@@ -54,7 +54,7 @@
                 <span class="gray sub-text">Submitted</span>
               </div>
               <div class="col-md-2 col-xs-4" align="center">
-                <span class="number" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'">{{ subs[subreddit].total_ups }}</span><br>
+                <span class="number" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'">{{ subs[subreddit].total_ups | number }}</span><br>
                 <span class="gray sub-text">Upvotes</span>
               </div>
               </a>

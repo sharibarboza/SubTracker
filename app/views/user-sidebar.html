@@ -25,11 +25,11 @@
         </div>
         <div class="row">
           <div class="col-xs-8">Comment karma</div>
-          <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ commentKarma }}</strong></div>
+          <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ commentKarma | number }}</strong></div>
         </div>
         <div class="row">
           <div class="col-xs-8">Post/link karma</div>
-          <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ submitKarma }}</strong></div>
+          <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ submitKarma | number }}</strong></div>
         </div>
       </li>
       <li class="list-group-item">
@@ -43,7 +43,7 @@
         </div>
         <div class="row">
           <div class="col-xs-8">Average karma per sub</div>
-          <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ totalKarma | average:subLength:0 }}</strong></div>
+          <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ totalKarma | average:subLength:0 | number }}</strong></div>
         </div>
       </li>
     </ul>
