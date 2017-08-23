@@ -1,48 +1,48 @@
 <div class="col-md-4 user-side">
 
   <div class="panel panel-default">
-    <div class="panel-heading"><span class="purple">/u/{{ username }}</span></div>
+    <div class="panel-heading"><span class="purple"><i class="fa fa-user-circle" aria-hidden="true"></i> /u/{{ username }}</span></div>
     <div class="panel-body">
-      <i class="glyphicon glyphicon-user gray" aria-hidden="true"></i> <a href="http://www.reddit.com/user/{{ username }}" target="_blank"><strong>Go to user's reddit page &raquo</strong></a>
-      <p>Active in <span class="baby-blue number">{{ subLength }}</span> subreddits.</p>
       <p>Redditor since <strong class="green">{{ created }}</strong></p>
+      <span>Active in <span class="orange number">{{ subLength }}</span> subreddits.</span><br>
+      <p><a href="http://www.reddit.com/user/{{ username }}" target="_blank"><strong>Go to user's reddit page &raquo</strong></a></p>
       <span class="gray small-font">Note: This data is based only from the user's most recent 1000 comments and submissions each. All data available is from <span ng-bind="dataAvailable | amDateFormat: 'MMMM Do YYYY'"></span>.
       </span>
     </div>
   </div>
 
   <div class="panel panel-default">
-    <div class="panel-heading"><span class="purple">Activity</span></div>
+    <div class="panel-heading"><span class="purple"><i class="fa fa-comments" aria-hidden="true"></i> Activity</span></div>
     <ul class="list-group side-stats">
       <li class="list-group-item">
         <div class="row">
-          <div class="col-xs-8">Total comments</div>
+          <div class="col-xs-8"><i class="glyphicon glyphicon-chevron-right green" aria-hidden="true"></i> Total comments</div>
           <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ comments }}</strong></div>
         </div>
         <div class="row">
-          <div class="col-xs-8">Total submitted</div>
+          <div class="col-xs-8"><i class="glyphicon glyphicon-chevron-right green" aria-hidden="true"></i> Total submitted</div>
           <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ submissions }}</strong></div>
         </div>
         <div class="row">
-          <div class="col-xs-8">Comment karma</div>
+          <div class="col-xs-8"><i class="glyphicon glyphicon-chevron-right green" aria-hidden="true"></i> Comment karma</div>
           <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ commentKarma | number }}</strong></div>
         </div>
         <div class="row">
-          <div class="col-xs-8">Post/link karma</div>
+          <div class="col-xs-8"><i class="glyphicon glyphicon-chevron-right green" aria-hidden="true"></i> Post/link karma</div>
           <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ submitKarma | number }}</strong></div>
         </div>
       </li>
       <li class="list-group-item">
         <div class="row">
-          <div class="col-xs-8">Average comments per sub</div>
+          <div class="col-xs-8"><i class="glyphicon glyphicon-chevron-right green" aria-hidden="true"></i> Average comments per sub</div>
           <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ comments | average:subLength:0 }}</strong></div>
         </div>
         <div class="row">
-          <div class="col-xs-8">Average submissions per sub</div>
+          <div class="col-xs-8"><i class="glyphicon glyphicon-chevron-right green" aria-hidden="true"></i> Average submissions per sub</div>
           <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ submissions | average:subLength:0 }}</strong></div>
         </div>
         <div class="row">
-          <div class="col-xs-8">Average karma per sub</div>
+          <div class="col-xs-8"><i class="glyphicon glyphicon-chevron-right green" aria-hidden="true"></i> Average karma per sub</div>
           <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ totalKarma | average:subLength:0 | number }}</strong></div>
         </div>
       </li>
@@ -50,7 +50,7 @@
   </div>
 
   <div class="panel panel-default">
-    <div class="panel-heading"><span class="purple">Recent Activity</span></div>
+    <div class="panel-heading"><span class="purple"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Recent Activity</span></div>
     <ul class="list-group">
       <li ng-repeat="element in latest" class="list-group-item">
         <p><strong class="green">r/{{ element.subreddit }}</strong> <span class="gray small-font">(<span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>)</span></p> 

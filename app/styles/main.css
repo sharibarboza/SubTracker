@@ -110,6 +110,10 @@ blockquote {
   cursor: pointer;
 }
 
+.fa-reddit {
+  font-size: 33px;
+}
+
 /************************
 Content
 ************************/
@@ -203,8 +207,6 @@ Navigation
 .navbar-default {
   background-color: #5552B3;
   border: none;
-  padding-left: 50px;
-  padding-right: 75px;
 }
 
 .navbar {
@@ -267,6 +269,23 @@ Navigation
 }
 
 /************************
+Main Page
+************************/
+
+#sub-panels {
+  margin-top: 90px;
+  padding: 50px 35px;
+}
+
+.sub-icon {
+  width: 75px;
+}
+
+h2 {
+  font-size: 40px;
+}
+
+/************************
 User Page
 ************************/
 
@@ -295,7 +314,7 @@ User Page Side Bar
 ************************/
 
 .user-side {
-  margin-top: -110px;
+  margin-top: -115px;
 }
 
 .list-group-item, .panel-body {
@@ -457,7 +476,6 @@ Sub Page Side Bar
 
 #sidebar {
   font-weight: 400;
-  margin-top: -110px;
 }
 
 .side-stats {
@@ -611,7 +629,7 @@ Mobile
     padding: 5px;
   }
 
-  .container, .user-banner .col-md-8 {
+  .container, .user-banner .col-md-8, #sub-panels {
     padding-left: 0;
     padding-right: 0;
   }

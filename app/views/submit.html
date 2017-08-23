@@ -3,7 +3,7 @@
 <div class="label label-default">{{ submit.type == 'comment' ? 'comment' : 'submission' }}</div>
 <br><br>
 <div ng-if="submit.type == 'comment'">
-  <p class="small-font post-body" ng-bind-html="submit.body_html | sanitize | truncate"></p>
+  <p class="small-font post-body" ng-bind-html="submit.body_html | sanitize | truncate:50"></p>
 </div>
 
 <strong><ng-pluralize class="small-font baby-blue" count="submit.ups" when="{'1': '1 point', 'other': '{{ submit.ups | number }} points'}"></ng-pluralize></strong> | <a href="http://www.reddit.com{{ submit.permalink }}" target="_blank"><ng-pluralize class="small-font" count="submit.num_comments" when="{'1': '1 comment', 'other': '{{ submit.num_comments | number }} comments'}"></ng-pluralize></a>
