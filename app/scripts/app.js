@@ -26,10 +26,10 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
       controllerAs: 'main',
       resolve: {
         popularSubs: function(popularSubs) {
-          return popularSubs.getData(25);
+          return popularSubs.getData(10);
         },
         newSubs: function(newSubs) {
-          return newSubs.getData(25);
+          return newSubs.getData(10);
         }
       }
     })
