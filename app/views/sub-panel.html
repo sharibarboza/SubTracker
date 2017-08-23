@@ -1,7 +1,7 @@
-<div style="min-height: 100px;">
+<div class="sub-panel">
   <div class="col-md-2"><img class="sub-icon" ng-src="{{ subElement.icon_img ? subElement.icon_img : '../images/sub-icon.png' }}"></div>
   <div class="col-md-10 small-font">
-  	<a href="http://www.reddit.com/{{ subElement.display_name }}"><strong>/r/{{ subElement.display_name }}</strong> &middot <span class="dark-gray">{{ subElement.title }}</span></a>
+  	<a href="http://www.reddit.com/{{ subElement.display_name }}"><strong>/r/{{ subElement.display_name }}</strong> &middot <span class="dark-gray">{{ subElement.title | truncate:20 }}</span></a>
   	<p class="gray">{{ subElement.public_description | truncate:20 }}</p>
     <div class="row">
       <div class="col-xs-5"> 

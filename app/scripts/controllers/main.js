@@ -15,5 +15,4 @@
 
     $scope.popularSubs = popularSubs;
     $scope.newSubs = newSubs;
-    console.log(newSubs);
 }]);
