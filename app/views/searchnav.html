@@ -1,18 +1,10 @@
 <div class="header">
   <div class="navbar navbar-default navbar-fixed-top width-pad" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#/">SubSnoop</a>
-      </div>
-      <div class="collapse navbar-collapse" id="js-navbar-collapse">
+    <div class="container row">
+      <div class="col-xs-2"><a class="navbar-brand" href="#/">SubSnoop</a></div>
+      <div class="col-xs-10">
         <ul class="nav navbar-nav navbar-right">
-          <a href="https://github.com/sharibarboza/sub-snoop" class="btn btn-social-icon btn-github">
+          <a href="https://github.com/sharibarboza/sub-snoop" class="btn btn-social-icon btn-github" id="github-icon">
             <span class="fa fa-github"></span>
           </a>
           <li ng-hide="main" class="nav-item"><a href="#/{{ username }}" class="nav-link">subreddits</a></li>

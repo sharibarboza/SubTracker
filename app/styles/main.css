@@ -206,13 +206,13 @@ Navigation
 ************************/
 
 .navbar-form {
-    overflow: auto;
+  overflow: auto;
 }
 .navbar-form .form-control {
-    display: inline-block;
+  display: inline-block;
 }
 .navbar-form .form-group {
-    display: inline;
+  display: inline;
 }
 
 .navbar-default {
@@ -279,6 +279,11 @@ Navigation
   display: inline !important;
 }
 
+.navbar [class*='col-'] {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 /************************
 Main Page
 ************************/
@@ -342,7 +347,7 @@ Subreddit Table
 }
 
 .sub-rows {
-  padding-right: 30px;
+  padding-right: 10px;
   padding-bottom: 20px;
 }
 
@@ -356,10 +361,6 @@ Subreddit Table
 
 #sub-row .panel-body {
   padding: 10px 0;
-}
-
-#sub-heading {
-  border-bottom: none !important;
 }
 
 #sub-rank [class*='col-'] {
@@ -504,6 +505,10 @@ Sub Page Side Bar
 
 .table-pad {
   padding: 30px 50px;
+}
+
+.table-pad .row {
+  margin-right: 0;
 }
 
 .sub-text {
@@ -663,6 +668,18 @@ Mobile
     margin-left: 0;
     margin-top: 10px;
     float: left;
+  }
+
+  #github-icon {
+    display: none;
+  }
+
+  .nav-link {
+    text-align: right;
+  }
+
+  .navbar-brand {
+    padding-left: 0;
   }
 
 }
