@@ -18,6 +18,16 @@ var app = angular
     'ui.bootstrap'
   ]);
 
+var getData = function(route, factory, storage) {
+  var username = route.current.params.username;
+  if (storage.userExists(username)) {
+    return null;
+  } else {
+    var promise = factory.getData(username);  
+    return promise;
+  }
+};
+
 app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   $routeProvider
     .when('/', {
@@ -40,31 +50,26 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
       controller: 'UserCtrl',
       controllerAs: 'user',
       resolve: {
-        userData: function($route, userFactory) {
-          var username = $route.current.params.username;
-          if ('user' in sessionStorage && sessionStorage.user.toLowerCase() === username.toLowerCase()) {
-            return null;
-          } else {
-            var promise = userFactory.getData(username);  
-            return promise;
-          }
+        userData: function($route, userFactory, checkStorage) {
+          return getData($route, userFactory, checkStorage);
         },
-        subData: function($route, subFactory) {
-          var username = $route.current.params.username;
-
-          if ('user' in sessionStorage && sessionStorage.user.toLowerCase() === username.toLowerCase()) {
-            return null;
-          } else {
-            var promise = subFactory.setSubs(username);  
-            return promise; 
-          }        
+        subsData: function($route, subFactory, checkStorage) {
+          return getData($route, subFactory, checkStorage);     
         }
       }
     })
     .when('/:username/:subreddit', {
       templateUrl: 'views/sub.html',
       controller: 'UserSubCtrl',
-      controllerAs: 'sub'
+      controllerAs: 'usersub',
+      resolve: {
+        userData: function($route, userFactory, checkStorage) {
+          return getData($route, userFactory, checkStorage);
+        },
+        subsData: function($route, subFactory, checkStorage) {
+          return getData($route, subFactory, checkStorage);     
+        }
+      }
     })
     .otherwise({
       redirectTo: '/'

@@ -8,8 +8,8 @@
  * Controller of the SubSnoopApp
  */
  angular.module('SubSnoopApp')
- .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 'userData', 'subData',
-  function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment, userData, subData) {
+ .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 'userData', 'subsData',
+  function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment, userData, subsData) {
 
   var defaultSort = {value: 'subName', name: 'Subreddit name'};
   var sort;
@@ -51,17 +51,17 @@
     }
   };
 
-  if (userData && subData) {
+  if (userData && subsData) {
     configUserData(userData, true);
-    configSubData(subData, true);
+    configSubData(subsData, true);
     sort = defaultSort;
   } else {
     userData = JSON.parse(sessionStorage.userData);
-    subData = JSON.parse(sessionStorage.subData);
+    subsData = JSON.parse(sessionStorage.subData);
     sort = JSON.parse(sessionStorage.sort);
 
-    configUserData(userData, true);
-    configSubData(subData, true);
+    configUserData(userData, false);
+    configSubData(subsData, false);
   }
 
   $scope.sortData = {

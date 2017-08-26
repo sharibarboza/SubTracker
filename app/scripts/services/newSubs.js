@@ -11,7 +11,7 @@ angular.module('SubSnoopApp')
   .factory('newSubs', ['$http', '$sce', function ($http, $sce) {
     var subreddits = [];
 
-    window.newestCallback = function(response) {
+    window.newCallback = function(response) {
       var data = response.data.children;
 
       for (var i = 0; i < data.length; i++) {
@@ -22,7 +22,7 @@ angular.module('SubSnoopApp')
     return {
       getData: function (num) {
         subreddits = [];
-        var url = 'http://www.reddit.com/subreddits/new/.json?jsonp=newestCallback';
+        var url = 'http://www.reddit.com/subreddits/new/.json?jsonp=newCallback';
         var trustedUrl =  $sce.trustAsResourceUrl(url);
         var promise = $http.jsonp(trustedUrl).then(function() {
 

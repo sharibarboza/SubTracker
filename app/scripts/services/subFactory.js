@@ -291,7 +291,7 @@
     }
 
     return {
-      setSubs: function(user) {
+      getData: function(user) {
         username = user;
         resetData();
         var commentPromise = promiseChain('comments', 'commentsCallback');

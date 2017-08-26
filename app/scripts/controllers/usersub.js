@@ -8,8 +8,8 @@
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('UserSubCtrl', ['$scope', '$routeParams', '$window', '$filter', 'rank', 
-    function ($scope, $routeParams, $window, $filter, rank) {
+  .controller('UserSubCtrl', ['$scope', '$routeParams', '$window', '$filter', 'rank', 'userData', 'subsData', 
+    function ($scope, $routeParams, $window, $filter, rank, userData, subsData) {
     
     $window.scrollTo(0, 0);
     var defaultView = "25";
@@ -17,8 +17,16 @@ angular.module('SubSnoopApp')
     $scope.subreddit = $routeParams.subreddit;
     $scope.username = $routeParams.username;
 
-    var data = JSON.parse(sessionStorage.subData);
-    $scope.sub = data.subs[$scope.subreddit];
+    if (userData && subsData) {
+      sessionStorage.user = userData.name;
+      sessionStorage.userData = JSON.stringify(userData);
+      sessionStorage.sort = JSON.stringify({value: 'subName', name: 'Subreddit name'});
+      sessionStorage.subData = JSON.stringify(subsData);
+    } else {
+      subsData = JSON.parse(sessionStorage.subData);
+    }
+    
+    $scope.sub = subsData.subs[$scope.subreddit];
 
     $scope.data = {
       sortOptions: [
@@ -43,7 +51,7 @@ angular.module('SubSnoopApp')
     $scope.subPage.max = 8;
     $scope.subPage.current = 1;
 
-    rank.setData(JSON.parse(sessionStorage.subData).subs);
+    rank.setData(subsData.subs);
     $scope.subLength = rank.getSubLength();
     $scope.mostActiveRank = rank.getSubRank($scope.subreddit, 'mostActive');
     $scope.mostUpsRank = rank.getSubRank($scope.subreddit, 'totalUps');
