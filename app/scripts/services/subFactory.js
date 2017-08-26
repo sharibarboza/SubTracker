@@ -262,56 +262,25 @@
       return where === 'comments' ? commentData : submitData;
     }
 
-    var promiseChain = function(where, callback) {
-      var promise = getJSONP(where, callback).then(function() {
-      }, function() {
-        return after ? getJSONP(where, callback) : getDataList(where);
-      })
-      .then(function() {
+    var getPromise = function(where, callback, promise, index) {
+      var promise = promise.then(function() {
         return getDataList(where);
       }, function() {
-        return after ? getJSONP(where, callback) : getDataList(where);
-      })
-      .then(function() {
-        return getDataList(where);
-      }, function() {
-        return after ? getJSONP(where, callback) : getDataList(where);
-      })
-      .then(function() {
-        return getDataList(where);
-      }, function() {
-        return after ? getJSONP(where, callback) : getDataList(where);
-      })
-      .then(function() {
-        return getDataList(where);
-      }, function() {
-        return after ? getJSONP(where, callback) : getDataList(where);
-      })
-      .then(function() {
-        return getDataList(where);
-      }, function() {
-        return after ? getJSONP(where, callback) : getDataList(where);
-      })
-      .then(function() {
-        return getDataList(where);
-      }, function() {
-        return after ? getJSONP(where, callback) : getDataList(where);
-      })
-      .then(function() {
-        return getDataList(where);
-      }, function() {
-        return after ? getJSONP(where, callback) : getDataList(where);
-      })
-      .then(function() {
-        return getDataList(where);
-      }, function() {
-        return after ? getJSONP(where, callback) : getDataList(where);     
-      })
-      .then(function() {
-        return getDataList(where);
-      }, function() {
-        return getDataList(where);
+        if (index === pages-1) {
+          return getDataList(where);
+        } else {
+          return after ? getJSONP(where, callback) : getDataList(where);
+        }
       });
+      return promise;
+    };
+
+    var promiseChain = function(where, callback) {
+      var promise = getJSONP(where, callback);
+
+      for (var i = 0; i < pages; i++) {
+        promise = getPromise(where, callback, promise, i);
+      }
       return promise;
     };
 
