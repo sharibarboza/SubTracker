@@ -34,8 +34,7 @@ angular.module('SubSnoopApp')
     };
 
     var changeSize = function(html) {
-      html = html.replace('width="500"', 'width="100%"');
-      html = html.replace('width="280"', 'width="50%"');
+      html = html.replace(/width="\d+"/g, 'width="100%"');
       return html;
     }
  
@@ -58,7 +57,7 @@ angular.module('SubSnoopApp')
           } else if (isVideo(data.url)) {
             return '<img class="submit-pic" ng-src="' + getVideoUrl(data.url) + '">';
           } else if (data.media.reddit_video.fallback_url) {
-            return '<video width="320" height="240" class="submit-pic" controls><source src="' + data.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
+            return '<video width="100%" height="240" class="submit-pic" controls><source src="' + data.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
           } 
         };
 
