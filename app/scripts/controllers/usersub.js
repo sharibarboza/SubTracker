@@ -10,7 +10,7 @@
 angular.module('SubSnoopApp')
   .controller('UserSubCtrl', ['$scope', '$routeParams', '$window', '$filter', 'rank', 
     function ($scope, $routeParams, $window, $filter, rank) {
-      
+    
     $window.scrollTo(0, 0);
     var defaultView = "25";
 
@@ -84,5 +84,4 @@ angular.module('SubSnoopApp')
         return { 'active': true };
       }
     };
-
   }]);

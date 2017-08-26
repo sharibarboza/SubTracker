@@ -12,7 +12,7 @@
           <div class="row">
             <div class="col-md-8">
               <i class="fa fa-3x fa-reddit"></i>
-              <a href="http://www.reddit.com/user/{{ username }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span></a> <span class="badge" id="num-subs">{{ subLength }} subreddits</span>
+              <a href="http://www.reddit.com/user/{{ redditor.name }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/u/</span>{{ redditor.name }}</span></a> <span class="badge" id="num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
             </div>
           </div>
         </div>
@@ -26,8 +26,8 @@
               <form name="myForm">
                 <label for="mySelect">Sort by:</label>
                 <select name="mySelect" id="mySelect"
-                  ng-options="option.name for option in subData.sortOptions track by option.value"
-                  ng-model="subData.selectedSort" ng-change="setSortOption()"></select>
+                  ng-options="option.name for option in sortData.sortOptions track by option.value"
+                  ng-model="sortData.selectedSort" ng-change="setSortOption()"></select>
               </form>
             </div>
             <div class="col-xs-6 gray middle-title" align="right">Click on a subreddit below.</div>
@@ -36,7 +36,7 @@
 
           <div class="panel panel-default" ng-repeat="subreddit in getArray()" id="sub-row">
             <div class="panel-body">
-              <a href="#/{{ username }}/{{ subreddit }}">
+              <a href="#/{{ redditor.name }}/{{ subreddit }}">
               <div class="col-md-6" id="sub-rank">
                 <div class="col-md-2">
                   <span class="baby-blue"><strong>{{ 1 + $index }}</strong></span>

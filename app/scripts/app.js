@@ -26,10 +26,12 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
       controllerAs: 'main',
       resolve: {
         popularSubs: function(popularSubs) {
-          return popularSubs.getData(10);
+          var promise = popularSubs.getData();
+          return promise;
         },
         newSubs: function(newSubs) {
-          return newSubs.getData(10);
+          var promise = newSubs.getData();
+          return promise;
         }
       }
     })
@@ -38,23 +40,23 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
       controller: 'UserCtrl',
       controllerAs: 'user',
       resolve: {
-        user: function($route, userFactory) {
+        userData: function($route, userFactory) {
+          var username = $route.current.params.username;
+          if ('user' in sessionStorage && sessionStorage.user.toLowerCase() === username.toLowerCase()) {
+            return null;
+          } else {
+            var promise = userFactory.getData(username);  
+            return promise;
+          }
+        },
+        subData: function($route, subFactory) {
           var username = $route.current.params.username;
 
           if ('user' in sessionStorage && sessionStorage.user.toLowerCase() === username.toLowerCase()) {
             return null;
           } else {
-            return userFactory.getUser(username);  
-          }      
-        }, 
-        subs: function($route, subFactory) {
-          var username = $route.current.params.username;
-
-          if ('user' in sessionStorage && sessionStorage.user.toLowerCase() === username.toLowerCase()) {
-            return null;
-          } else {
-            subFactory.setData(username);
-            return subFactory.getData();  
+            var promise = subFactory.setSubs(username);  
+            return promise; 
           }        
         }
       }

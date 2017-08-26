@@ -8,18 +8,25 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('userFactory', ['$http', function ($http) {
+ .factory('userFactory', ['$http', '$sce', function ($http, $sce) {
     var baseUrl = 'http://www.reddit.com/user/';
     var rawJson = 'raw_json=1';
+    var user = "";
+
+    window.userCallback = function(response) {
+      user = response.data;
+    };
 
     return {
-      getUser: function(username) {
+      getData: function(username) {
         // Return the promise
-        var url = baseUrl+username+'/about.json?'+rawJson;
-        var promise = $http.get(url).then(function(response) {
-          return response;
+        user = "";
+        var url = baseUrl+username+'/about.json?jsonp=userCallback';
+        var trustedUrl =  $sce.trustAsResourceUrl(url);
+        var promise = $http.jsonp(trustedUrl).then(function() {
+
         }, function() {
-          console.log("User not found.");
+          return user;
         });
         return promise;
       }

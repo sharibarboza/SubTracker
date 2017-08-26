@@ -8,7 +8,7 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('subFactory', ['$http', 'userFactory', '$q', 'moment', function ($http, userFactory, $q, moment) {
+ .factory('subFactory', ['$http', 'userFactory', '$q', 'moment', '$sce', function ($http, userFactory, $q, moment, $sce) {
     var baseUrl = 'http://www.reddit.com/user/';
     var rawJson = 'raw_json=1';
     var username;
@@ -18,58 +18,19 @@
     var subs = {};
     var pages = 10;
     var dataAvailable;
-    var subData = {};
+
+    var commentData = [];
+    var submitData = [];
+    var after = "0";
 
     var resetData = function() {
       // Reset all data to empty lists (used for getting a new user)
       comments = [];
       submissions = [];
       subs = {};
-    };
-
-    var getPromise = function(after, where) {
-      // Make a GET request to the reddit API to fetch comments or submissions
-      if (after === 'first') {
-        after = '0';
-      }
-
-      var url = baseUrl+username+'/'+where+'.json?'+rawJson+'&after='+after+'&limit=100';
-      return $http.get(url);
-    };
-
-    var getData = function(response, where) {
-      // Push the comment/submission data to their respective lists
-      if (response) {
-        var after = response.data.data.after;
-        var data = response.data.data.children;
-
-        for (var i = 0; i < data.length; i++) {
-          if (where === 'comments') {
-            var comment = buildComment(data[i].data);
-            comments.push(comment);
-          } else {
-            var submission = buildSubmit(data[i].data);
-            submissions.push(submission);
-          }
-        }
-
-        if (after) {
-          return getPromise(after, where);
-        }
-      }
-      return null;
-    };
-
-    var chainPromises = function(where) {
-      // Chain promises to fetch all user's comments from reddit API
-      var promise = getPromise('first', where);
-
-      for (var i = 0; i < pages; i++) {
-        promise = promise.then(function(response) {
-          return getData(response, where);
-        });
-      }
-      return promise;
+      commentData = [];
+      submitData = [];
+      after = '0';
     };
 
     var buildComment = function(comment) {
@@ -267,35 +228,120 @@
       return latest;
     };
 
+    window.commentsCallback = function(response) {
+      commentData.push(response.data.children);
+      after = response.data.after;
+      pushData(response.data, 'comments');
+    }
+
+    window.submitsCallback = function(response) {
+      submitData.push(response.data.children);
+      after = response.data.after;
+      pushData(response.data, 'submits');
+    }
+
+    var pushData = function(response, where) {
+      // Push the comment/submission data to their respective lists
+      if (response) {
+        var after = response.after;
+        var data = response.children;
+
+        for (var i = 0; i < data.length; i++) {
+          if (where === 'comments') {
+            var comment = buildComment(data[i].data);
+            comments.push(comment);
+          } else {
+            var submission = buildSubmit(data[i].data);
+            submissions.push(submission);
+          }
+        }
+      }
+    };
+
+    var getDataList = function(where) {
+      return where === 'comments' ? commentData : submitData;
+    }
+
+    var promiseChain = function(where, callback) {
+      var promise = getJSONP(where, callback).then(function() {
+      }, function() {
+        return after ? getJSONP(where, callback) : getDataList(where);
+      })
+      .then(function() {
+        return getDataList(where);
+      }, function() {
+        return after ? getJSONP(where, callback) : getDataList(where);
+      })
+      .then(function() {
+        return getDataList(where);
+      }, function() {
+        return after ? getJSONP(where, callback) : getDataList(where);
+      })
+      .then(function() {
+        return getDataList(where);
+      }, function() {
+        return after ? getJSONP(where, callback) : getDataList(where);
+      })
+      .then(function() {
+        return getDataList(where);
+      }, function() {
+        return after ? getJSONP(where, callback) : getDataList(where);
+      })
+      .then(function() {
+        return getDataList(where);
+      }, function() {
+        return after ? getJSONP(where, callback) : getDataList(where);
+      })
+      .then(function() {
+        return getDataList(where);
+      }, function() {
+        return after ? getJSONP(where, callback) : getDataList(where);
+      })
+      .then(function() {
+        return getDataList(where);
+      }, function() {
+        return after ? getJSONP(where, callback) : getDataList(where);
+      })
+      .then(function() {
+        return getDataList(where);
+      }, function() {
+        return after ? getJSONP(where, callback) : getDataList(where);     
+      })
+      .then(function() {
+        return getDataList(where);
+      }, function() {
+        return getDataList(where);
+      });
+      return promise;
+    };
+
+    var getJSONP = function(where, callback) {
+      var url = 'http://www.reddit.com/user/'+username+'/'+where+'.json?limit=100&after='+after+'&jsonp='+callback;
+      var trustedUrl =  $sce.trustAsResourceUrl(url);
+      return $http.jsonp(trustedUrl);
+    }
+
     return {
-      setData: function(user) {
-        // Must be called first before getting comments, submissions, or subs data
+      setSubs: function(user) {
         username = user;
         resetData();
-        var commentPromise = chainPromises('comments');
-        var submitPromise = chainPromises('submitted');
-        promise = $q.all([commentPromise, submitPromise]);
-        promise.then(function() {
+        var commentPromise = promiseChain('comments', 'commentsCallback');
+        var submitPromise = promiseChain('submitted', 'submitsCallback');
+        var dataPromise = $q.all([commentPromise, submitPromise]).then(function() {
           organizeComments(comments);
           organizeSubmitted(submissions);
           setTotalUps();
 
           getFirstDate();
-          subData = {
+          var subData = {
             'user': username,
             'comments' : comments.length,
             'submissions' : submissions.length,
             'subs' : subs,
             'firstDate' : dataAvailable,
             'latest' : getLatest()
-          };
-        });
-      },
-      getData: function() {
-        var dataPromise = promise.then(function() {
+          }
           return subData;
-        }, function() {
-          console.log("Error in processing data for " + username);
         });
         return dataPromise;
       }

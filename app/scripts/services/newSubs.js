@@ -8,19 +8,26 @@
  * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .factory('newSubs', ['$http', function ($http) {
+  .factory('newSubs', ['$http', '$sce', function ($http, $sce) {
+  	var subreddits = [];
+
+    window.newCallback = function(response) {
+      var data = response.data.children;
+
+      for (var i = 0; i < data.length; i++) {
+        subreddits.push(data[i].data);
+      }
+    };
 
     return {
       getData: function (num) {
-        var url = 'http://www.reddit.com/subreddits/new/.json?raw_json=1';
-        var promise = $http.get(url).then(function(response) {
-          var data = response.data.data.children;
-          var subreddits = [];
+        subreddits = [];
+        var url = 'http://www.reddit.com/subreddits/new/.json?jsonp=newCallback';
+        var trustedUrl =  $sce.trustAsResourceUrl(url);
+        var promise = $http.jsonp(trustedUrl).then(function() {
 
-          for (var i = 0; i < num; i++) {
-            subreddits.push(data[i].data);
-          }
-          return subreddits;
+        }, function() {
+			    return subreddits;
         });
         return promise;
       }

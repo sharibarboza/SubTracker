@@ -8,8 +8,8 @@
  * Controller of the SubSnoopApp
  */
  angular.module('SubSnoopApp')
- .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 'user', 'subs',
-  function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment, user, subs) {
+ .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 'userData', 'subData',
+  function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment, userData, subData) {
 
   var defaultSort = {value: 'subName', name: 'Subreddit name'};
   var sort;
@@ -17,24 +17,20 @@
   $scope.main = false;
 
   $scope.setSortOption = function() {
-    sessionStorage.sort = JSON.stringify($scope.subData.selectedSort);
+    sessionStorage.sort = JSON.stringify($scope.sortData.selectedSort);
   };
 
   $scope.getArray = function() {
-    return $filter('sortSubs')($scope.subsArray, $scope.subData.selectedSort.value, $scope.subs);
+    return $filter('sortSubs')($scope.subsArray, $scope.sortData.selectedSort.value, $scope.subs);
   };
 
   var configUserData = function(response, store) {
-    $scope.user = response.data.data;
-    $scope.commentKarma = $scope.user.comment_karma;
-    $scope.submitKarma = $scope.user.link_karma;
-    $scope.totalKarma = $scope.commentKarma + $scope.submitKarma;
-    $scope.username = $scope.user.name;
-    $scope.created = moment($scope.user.created_utc*1000).local().format('MMMM Do YYYY');
+    $scope.redditor = response;
+    $scope.totalKarma = $scope.redditor.comment_karma + $scope.redditor.link_karma;
     $scope.notfound = false;
 
     if (store) {
-      sessionStorage.user = $scope.username;
+      sessionStorage.user = $scope.redditor.name;
       sessionStorage.userData = JSON.stringify(response);
     }
   };
@@ -48,7 +44,6 @@
 
     $scope.subsArray = $filter('sortSubs')(Object.keys($scope.subs), 'subName', $scope.subs);
     $scope.subLength = $scope.subsArray.length;
-    $scope.totalItems = $scope.subLength;
 
     if (store) {
       sessionStorage.subData = JSON.stringify(response);
@@ -56,20 +51,20 @@
     }
   };
 
-  if (user && subs) {
-    configUserData(user, true);
-    configSubData(subs, true);
+  if (userData && subData) {
+    configUserData(userData, true);
+    configSubData(subData, true);
     sort = defaultSort;
   } else {
-    user = JSON.parse(sessionStorage.userData);
-    subs = JSON.parse(sessionStorage.subData);
+    userData = JSON.parse(sessionStorage.userData);
+    subData = JSON.parse(sessionStorage.subData);
     sort = JSON.parse(sessionStorage.sort);
 
-    configUserData(user, false);
-    configSubData(subs, false);
+    configUserData(userData, true);
+    configSubData(subData, true);
   }
 
-  $scope.subData = {
+  $scope.sortData = {
     sortOptions: [
       {value: 'subName', name: 'Subreddit name'},
       {value: 'totalComments', name: 'Total comments'},

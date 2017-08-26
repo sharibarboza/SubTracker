@@ -1,11 +1,11 @@
 <div class="col-md-4 user-side">
 
   <div class="panel panel-default">
-    <div class="panel-heading"><span class="purple"><i class="fa fa-user-circle" aria-hidden="true"></i> /u/{{ username }}</span></div>
+    <div class="panel-heading"><span class="purple"><i class="fa fa-user-circle" aria-hidden="true"></i> /u/{{ redditor.name }}</span></div>
     <div class="panel-body">
-      <p>Redditor since <strong class="green">{{ created }}</strong></p>
-      <span>Active in <span class="orange number">{{ subLength }}</span> subreddits.</span><br>
-      <p><a href="http://www.reddit.com/user/{{ username }}" target="_blank"><strong>Go to user's reddit page &raquo</strong></a></p>
+      <p>Redditor since <strong class="green" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY'"></strong></p>
+      <span>Active in <span class="orange number">{{ subLength }}</span> <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span><br>
+      <p><a href="http://www.reddit.com/user/{{ redditor.name }}" target="_blank"><strong>Go to user's reddit page &raquo</strong></a></p>
       <span class="gray small-font">Note: This data is based only from the user's most recent 1000 comments and submissions each. All data available is from <span ng-bind="dataAvailable | amDateFormat: 'MMMM Do YYYY'"></span>.
       </span>
     </div>
@@ -25,11 +25,11 @@
         </div>
         <div class="row">
           <div class="col-xs-8"><i class="glyphicon glyphicon-chevron-right green" aria-hidden="true"></i> Comment karma</div>
-          <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ commentKarma | number }}</strong></div>
+          <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ redditor.comment_karma | number }}</strong></div>
         </div>
         <div class="row">
           <div class="col-xs-8"><i class="glyphicon glyphicon-chevron-right green" aria-hidden="true"></i> Post/link karma</div>
-          <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ submitKarma | number }}</strong></div>
+          <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ redditor.link_karma | number }}</strong></div>
         </div>
       </li>
       <li class="list-group-item">
