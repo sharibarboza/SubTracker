@@ -1,10 +1,10 @@
 <div class="panel panel-default">
   <div class="panel-body row" id="submit-row">
 
-    <div class="col-md-1 post-thumbnail">
+    <div class="col-md-1 col-xs-2 post-thumbnail">
       <thumbnail data="{{ element }}"></thumbnail>
     </div>
-    <div class="col-md-11" id="accordion">
+    <div class="col-md-11 col-xs-10" id="accordion">
       <a href="{{ element.url }}" target="_blank"><strong>{{ element.title }}</strong></a> <span ng-if="element.link_flair_text" class="label label-default">{{ element.link_flair_text }}</span>
       <br>
 
@@ -12,17 +12,17 @@
         <accordion-group ng-init="status = {isOpen: false}" is-open="status.isOpen">
           <accordion-heading>
             <div class="row">
-              <div class="col-xs-1">
+              <div class="col-md-1 col-xs-2">
                 <i class="glyphicon" ng-class="status.isOpen ? 'glyphicon-minus-sign' : 'glyphicon-plus-sign'" aria-hidden="true"></i> 
                 {{ element.html }}
               </div>
-              <div class="col-xs-6">
+              <div class="col-md-6 col-xs-10">
                 <p class="post-links">
-                  <strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong> <span class="gray">&middot</span> <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMM Do YYYY, h:mm a'" class="post-date gray"></span>
+                  <strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong> <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMM Do YYYY, h:mm a'" class="post-date gray"></span>
                 </p>
               </div>
-              <div class="col-xs-5" align="right">
-                <p class="post-links">
+              <div class="col-md-5 col-xs-10">
+                <p class="post-links" id="post-comments">
                   <ng-pluralize class="small-font gray" count="element.num_comments" when="{'1': '1 comment', 'other': '{{ element.num_comments | number }} comments'}"></ng-pluralize></a>
                 </p>
               </div>

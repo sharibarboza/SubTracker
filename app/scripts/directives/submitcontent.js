@@ -33,6 +33,12 @@ angular.module('SubSnoopApp')
       return url.slice(0, url.length-1);
     };
 
+    var changeSize = function(html) {
+      html = html.replace('width="500"', 'width="100%"');
+      html = html.replace('width="280"', 'width="50%"');
+      return html;
+    }
+ 
     return {
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
@@ -48,11 +54,11 @@ angular.module('SubSnoopApp')
           } else if (isAttachedImage(data)) {
             return '<img class="submit-pic" ng-src="' + data.preview.images[0].source.url + '">';
           } else if (data.media && data.media.oembed) {
-            return $filter('escape')(data.media.oembed.html);
+            return changeSize($filter('escape')(data.media.oembed.html));
           } else if (isVideo(data.url)) {
             return '<img class="submit-pic" ng-src="' + getVideoUrl(data.url) + '">';
           } else if (data.media.reddit_video.fallback_url) {
-            return '<video width="320" height="240" controls><source src="' + data.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
+            return '<video width="320" height="240" class="submit-pic" controls><source src="' + data.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
           } 
         };
 

@@ -526,7 +526,11 @@ Sub Page Side Bar
 }
 
 .submit-pic {
-  max-width: 500px;
+  max-width: 80%;
+}
+
+#post-comments {
+  text-align: right;
 }
 
 /************************
@@ -626,7 +630,7 @@ Mobile
 }
 
 @media screen and (max-width: 768px) {
-  .navbar-default {
+  .navbar-default, #submit-row {
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -682,6 +686,9 @@ Mobile
     padding-left: 0;
   }
 
+  .post-date {
+    display: block;
+  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -695,5 +702,10 @@ Mobile
 
   .user-side, #sidebar {
     margin-top: 0;
+  }
+
+  #post-comments {
+    text-align: left;
+    padding-left: 22%;
   }
 }
