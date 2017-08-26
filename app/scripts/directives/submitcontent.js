@@ -48,7 +48,7 @@ angular.module('SubSnoopApp')
           } else if (isAttachedImage(data)) {
             return '<img class="submit-pic" ng-src="' + data.preview.images[0].source.url + '">';
           } else if (data.media && data.media.oembed) {
-            return data.media.oembed.html;
+            return $filter('escape')(data.media.oembed.html);
           } else if (isVideo(data.url)) {
             return '<img class="submit-pic" ng-src="' + getVideoUrl(data.url) + '">';
           } else if (data.media.reddit_video.fallback_url) {
