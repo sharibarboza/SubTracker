@@ -12,7 +12,7 @@ angular.module('SubSnoopApp')
   .filter('escape', function () {
 
     return function (input) {
-    	var string;
+      var string;
       string = input.replace(/&lt;/g, '<');
       string = string.replace(/&gt;/g, '>');
       string = string.replace(/&amp/g, '&');

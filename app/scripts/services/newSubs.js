@@ -9,7 +9,7 @@
  */
 angular.module('SubSnoopApp')
   .factory('newSubs', ['$http', '$sce', function ($http, $sce) {
-  	var subreddits = [];
+    var subreddits = [];
 
     window.newestCallback = function(response) {
       var data = response.data.children;
@@ -27,7 +27,7 @@ angular.module('SubSnoopApp')
         var promise = $http.jsonp(trustedUrl).then(function() {
 
         }, function() {
-			    return subreddits;
+          return subreddits;
         });
         return promise;
       }
