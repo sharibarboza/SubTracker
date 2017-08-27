@@ -45,7 +45,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
         }
       }
     })
-    .when('/:username', {
+    .when('/:username/', {
       templateUrl: 'views/user.html',
       controller: 'UserCtrl',
       controllerAs: 'user',
@@ -58,7 +58,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
         }
       }
     })
-    .when('/:username/:subreddit', {
+    .when('/:username/:subreddit/', {
       templateUrl: 'views/sub.html',
       controller: 'UserSubCtrl',
       controllerAs: 'usersub',
