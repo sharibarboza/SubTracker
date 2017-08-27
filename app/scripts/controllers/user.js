@@ -11,6 +11,7 @@
  .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 'userData', 'subsData',
   function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment, userData, subsData) {
 
+  $window.scrollTo(0, 0);
   var defaultSort = {value: 'subName', name: 'Subreddit name'};
   var sort;
 
