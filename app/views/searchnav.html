@@ -19,9 +19,9 @@
         <div class="col-xs-1"><i class="glyphicon glyphicon-search" aria-hidden="true"></i></div>
         <div class="col-xs-11">
           <form>
-            <div class="row">
-            <div class="col-xs-10"><input type="text" ng-model="inputname" placeholder="Search for another user..." value="Submit"></div>
-            <div class="col-xs-2"><a href="#/{{ inputname }}"><button style="visibility: hidden;" type="submit"></button></a></div>
+            <div class="row" id="search-strip">
+              <div class="col-xs-10"><input type="text" ng-model="inputname" placeholder="Search for another user..." value="Submit"></div>
+              <div class="col-xs-2"><a href="#/{{ inputname }}"><button style="visibility: hidden;" type="submit"></button></a></div>
             </div>
           </form>
         </div>

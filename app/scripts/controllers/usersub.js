@@ -48,7 +48,7 @@ angular.module('SubSnoopApp')
     $scope.subPage = {};
     $scope.subPage.viewby = defaultView;
     $scope.subPage.items = parseInt(defaultView);
-    $scope.subPage.max = 8;
+    $scope.subPage.max = 7;
     $scope.subPage.current = 1;
 
     rank.setData(subsData.subs);
