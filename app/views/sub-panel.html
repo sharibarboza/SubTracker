@@ -1,17 +1,17 @@
 <div class="row">
   <div class="col-md-2"><img class="sub-icon" ng-src="{{ subElement.icon_img ? subElement.icon_img : '../images/sub-icon.png' }}"></div>
   <div class="col-md-10 small-font">
-  	<a href="https://www.reddit.com/r/{{ subElement.display_name }}"><strong>/r/{{ subElement.display_name }}</strong>
-    &middot <span class="dark-gray">{{ subElement.title }}</span></a>
-  	<p class="gray" ng-bind-html="subElement.public_description_html | sanitize"></p>
+    <a href="https://www.reddit.com/r/{{ subElement.display_name }}"><strong>/r/{{ subElement.display_name }}</strong>
+      &middot <span class="dark-gray">{{ subElement.title }}</span></a>
+    <p class="gray" ng-bind-html="subElement.public_description_html | sanitize"></p>
     <div class="row" id="sub-panel-stats">
       <div class="col-md-5"> 
-      	<span><i class="fa fa-user-plus gray" aria-hidden="true"></i> Subscribers: <strong class="baby-blue">{{ subElement.subscribers | number }}</strong></span>
+        <span><i class="fa fa-user-plus gray" aria-hidden="true"></i> Subscribers: <strong class="baby-blue">{{ subElement.subscribers | number }}</strong></span>
         <br>
         <span ng-if="subElement.advertiser_category"><i class="fa fa-bookmark gray" aria-hidden="true"></i> Category: <strong class="purple">{{ subElement.advertiser_category ? subElement.advertiser_category : 'N/A' }}</strong></span>
       </div>
       <div class="col-md-7">
-      	<span><i class="fa fa-calendar" aria-hidden="true"></i> Created: <strong class="green" ng-bind="subElement.created_utc * 1000 | amDateFormat:'MMM Do YYYY, h:mm a' "></strong></span>
+        <span><i class="fa fa-calendar" aria-hidden="true"></i> Created: <strong class="green" ng-bind="subElement.created_utc * 1000 | amDateFormat:'MMM Do YYYY, h:mm a' "></strong></span>
         <br>
         <span ng-if="subElement.audience_target"><i class="fa fa-bullhorn gray" aria-hidden="true"></i> Audience Target: <strong class="orange">{{ subElement.audience_target ? subElement.audience_target : 'N/A' }}</strong></span>
       </div>

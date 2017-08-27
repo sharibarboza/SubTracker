@@ -731,4 +731,8 @@ Mobile
   .main-content {
     top: 85px;
   }
+
+  #search-strip .col-xs-10 {
+    margin-top: -2px;
+  }
 }
