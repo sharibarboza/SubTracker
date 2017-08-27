@@ -11,7 +11,7 @@
 angular.module('SubSnoopApp')
   .filter('redditlink', function () {
     return function (input) {
-      var url = 'http://www.reddit.com';
+      var url = 'https://www.reddit.com';
       var user_link = 'href="/u/';
       var sub_link = 'href="/r/';
 

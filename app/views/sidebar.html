@@ -4,7 +4,7 @@
       <div class="panel-body">
         <i class="glyphicon glyphicon-time gray" aria-hidden="true"></i> Last Seen: <strong class="green" ng-bind="sub.recent_activity | amDateFormat:'MMMM Do YYYY, h:mm a'"></strong>
         <br>
-        <i class="glyphicon glyphicon-globe gray" aria-hidden="true"></i> <a href="http://www.reddit.com/r/{{ subreddit }}" target="_blank"><strong>Visit /r/{{ subreddit }} &raquo</strong></a>
+        <i class="glyphicon glyphicon-globe gray" aria-hidden="true"></i> <a href="https://www.reddit.com/r/{{ subreddit }}" target="_blank"><strong>Visit /r/{{ subreddit }} &raquo</strong></a>
         <br>
         <h5>Of {{ username }}'s <span class="orange number">{{ subLength }}</span> <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize>, /r/{{ subreddit }} is:</h5>
         Ranked <strong class="green">#{{ mostUpsRank }}</strong> in total upvotes<br>

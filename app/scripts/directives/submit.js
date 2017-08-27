@@ -18,7 +18,7 @@ angular.module('SubSnoopApp')
           scope.submit.url = scope.submit.link_url;
           scope.submit.permalink = scope.submit.link_permalink;
         } else {
-          scope.submit.permalink = 'http://www.reddit.com' + scope.submit.permalink;
+          scope.submit.permalink = 'https://www.reddit.com' + scope.submit.permalink;
         }
       }
     };

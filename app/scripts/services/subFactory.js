@@ -9,7 +9,7 @@
  */
  angular.module('SubSnoopApp')
  .factory('subFactory', ['$http', 'userFactory', '$q', 'moment', '$sce', function ($http, userFactory, $q, moment, $sce) {
-    var baseUrl = 'http://www.reddit.com/user/';
+    var baseUrl = 'https://www.reddit.com/user/';
     var rawJson = 'raw_json=1';
     var username;
     var promise;
@@ -285,7 +285,7 @@
     };
 
     var getJSONP = function(where, callback) {
-      var url = 'http://www.reddit.com/user/'+username+'/'+where+'.json?limit=100&after='+after+'&jsonp='+callback;
+      var url = 'https://www.reddit.com/user/'+username+'/'+where+'.json?limit=100&after='+after+'&jsonp='+callback;
       var trustedUrl =  $sce.trustAsResourceUrl(url);
       return $http.jsonp(trustedUrl);
     }

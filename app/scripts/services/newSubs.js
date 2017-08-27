@@ -22,7 +22,7 @@ angular.module('SubSnoopApp')
     return {
       getData: function (num) {
         subreddits = [];
-        var url = 'http://www.reddit.com/subreddits/new/.json?jsonp=newCallback';
+        var url = 'https://www.reddit.com/subreddits/new/.json?jsonp=newCallback';
         var trustedUrl =  $sce.trustAsResourceUrl(url);
         var promise = $http.jsonp(trustedUrl).then(function() {
 

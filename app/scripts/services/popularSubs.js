@@ -22,7 +22,7 @@ angular.module('SubSnoopApp')
     return {
       getData: function () {
         subreddits = [];
-        var url = 'http://www.reddit.com/subreddits/.json?jsonp=popCallback';
+        var url = 'https://www.reddit.com/subreddits/.json?jsonp=popCallback';
         var trustedUrl =  $sce.trustAsResourceUrl(url);
         var promise = $http.jsonp(trustedUrl).then(function() {
 
