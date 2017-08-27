@@ -12,6 +12,7 @@
       </div>
     </div>
   </div>
+
   <div id="sub-content" class="sub-table">
     <div ng-include src="'views/sidebar.html'"></div>
     <div class="col-md-8 col-md-pull-4 sub-rows">
@@ -50,7 +51,8 @@
       </div>
 
       <div id="post-table">
-        <div ng-repeat="element in getArray().slice(((subPage.current-1)*subPage.items), ((subPage.current)*subPage.items))">
+        <div ng-class="getList()"></div>
+        <div ng-repeat="element in elemArray.slice(((subPage.current-1)*subPage.items), ((subPage.current)*subPage.items))">
           <div ng-if="element.type == 'comment'">
             <div ng-include src="'views/comment.html'"></div>
           </div>
@@ -68,6 +70,7 @@
         </div>
       </div>
     </div>
+
   </div>
 
 </div>

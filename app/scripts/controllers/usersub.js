@@ -56,6 +56,12 @@ angular.module('SubSnoopApp')
     $scope.mostActiveRank = rank.getSubRank($scope.subreddit, 'mostActive');
     $scope.mostUpsRank = rank.getSubRank($scope.subreddit, 'totalUps');
 
+    var setArray = function() {
+      $scope.dataArray = $scope.sub[$scope.tabOptions[$scope.tab]];
+      $scope.elemArray = $filter('sortPosts')($scope.dataArray, $scope.data.selectedSort.value);
+    };
+    setArray();
+
     if ($scope.sub.comments.length > 0) {
       $scope.topPost = rank.getTopPost($scope.sub.comments, 'mostUps');
     }
@@ -67,6 +73,7 @@ angular.module('SubSnoopApp')
     $scope.setTab = function(num) {
       $scope.tab = parseInt(num);
       $scope.subPage.current = 1;
+      setArray()
     };
 
     $scope.isSet = function(num) {
@@ -76,15 +83,12 @@ angular.module('SubSnoopApp')
     $scope.setItemsPerPage = function(num) {
       $scope.subPage.current = 1;
       $scope.subPage.items = num;
+      setArray();
     };
 
     $scope.setSortOption = function() {
       $scope.subPage.current = 1;
-    };
-
-    $scope.getArray = function() {
-      var dataArray = $scope.sub[$scope.tabOptions[$scope.tab]];
-      return $filter('sortPosts')(dataArray, $scope.data.selectedSort.value);
+      setArray();
     };
 
     $scope.getActive = function(num) {

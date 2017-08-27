@@ -35,9 +35,9 @@
           </div>      
           <br>
 
-          <div class="panel panel-default" ng-repeat="subreddit in getArray()" id="sub-row">
+          <div class="panel panel-default" ng-repeat="subreddit in subList" id="sub-row">
             <div class="panel-body">
-              <a href="#/{{ redditor.name }}/{{ subreddit }}">
+              <a href="#/{{ redditor.name }}/{{ subreddit }}/">
               <div class="col-md-6" id="sub-rank">
                 <div class="col-md-2">
                   <span class="baby-blue"><strong>{{ 1 + $index }}</strong></span>

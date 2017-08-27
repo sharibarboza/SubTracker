@@ -16,14 +16,6 @@
 
   $scope.main = false;
 
-  $scope.setSortOption = function() {
-    sessionStorage.sort = JSON.stringify($scope.sortData.selectedSort);
-  };
-
-  $scope.getArray = function() {
-    return $filter('sortSubs')($scope.subsArray, $scope.sortData.selectedSort.value, $scope.subs);
-  };
-
   var configUserData = function(response, store) {
     $scope.redditor = response;
     $scope.totalKarma = $scope.redditor.comment_karma + $scope.redditor.link_karma;
@@ -77,6 +69,16 @@
       {value: 'mostDown', name: 'Most controversial'},
     ],
     selectedSort: sort
+  };
+
+  var setArray = function() {
+    $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.sortData.selectedSort.value, $scope.subs);
+  };
+  setArray();
+
+  $scope.setSortOption = function() {
+    sessionStorage.sort = JSON.stringify($scope.sortData.selectedSort);
+    setArray();
   };
 
 }]);
