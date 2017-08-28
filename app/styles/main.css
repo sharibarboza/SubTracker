@@ -115,6 +115,10 @@ blockquote {
   padding-right: 8px;
 }
 
+.wrap-text {
+  word-wrap: break-word;
+}
+
 /************************
 Content
 ************************/
@@ -195,10 +199,6 @@ md-progress-circular:before {
   padding-top: 15px;
   padding-bottom: 10px;
   font-weight: 700; 
-}
-
-submit-content {
-  word-wrap: break-word; 
 }
 
 /************************
@@ -418,7 +418,6 @@ User Sub Page
 
 .post-body {
   padding-top: 10px;
-  word-wrap: break-word;
   color: #383838;
   font-weight: 400;
 }
