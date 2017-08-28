@@ -294,25 +294,35 @@
       getData: function(user) {
         username = user;
         resetData();
-        var commentPromise = promiseChain('comments', 'commentsCallback');
-        var submitPromise = promiseChain('submitted', 'submitsCallback');
-        var dataPromise = $q.all([commentPromise, submitPromise]).then(function() {
-          organizeComments(comments);
-          organizeSubmitted(submissions);
-          setTotalUps();
 
-          getFirstDate();
-          var subData = {
-            'user': username,
-            'comments' : comments.length,
-            'submissions' : submissions.length,
-            'subs' : subs,
-            'firstDate' : dataAvailable,
-            'latest' : getLatest()
+        var userPromise = userFactory.getData(user);
+        var testPromise = userPromise.then(function(response) {
+
+          if (response !== "") {
+            var commentPromise = promiseChain('comments', 'commentsCallback');
+            var submitPromise = promiseChain('submitted', 'submitsCallback');
+            var dataPromise = $q.all([commentPromise, submitPromise]).then(function() {
+              organizeComments(comments);
+              organizeSubmitted(submissions);
+              setTotalUps();
+
+              getFirstDate();
+              var subData = {
+                'user': response,
+                'comments' : comments.length,
+                'submissions' : submissions.length,
+                'subs' : subs,
+                'firstDate' : dataAvailable,
+                'latest' : getLatest()
+              }
+              return subData;
+            });
+            return dataPromise;
+          } else {
+            return "";
           }
-          return subData;
         });
-        return dataPromise;
+        return testPromise;
       }
     };
   }]);

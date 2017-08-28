@@ -12,6 +12,7 @@ angular.module('SubSnoopApp')
     function ($scope, $routeParams, $window, $filter, rank, userData, subsData) {
     
     $window.scrollTo(0, 0);
+
     var defaultView = "25";
 
     $scope.subreddit = $routeParams.subreddit;

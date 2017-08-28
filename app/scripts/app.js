@@ -20,6 +20,7 @@ var app = angular
 
 var getData = function(route, factory, storage) {
   var username = route.current.params.username;
+
   if (storage.userExists(username)) {
     return null;
   } else {
@@ -50,9 +51,6 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
       controller: 'UserCtrl',
       controllerAs: 'user',
       resolve: {
-        userData: function($route, userFactory, checkStorage) {
-          return getData($route, userFactory, checkStorage);
-        },
         subsData: function($route, subFactory, checkStorage) {
           return getData($route, subFactory, checkStorage);     
         }
