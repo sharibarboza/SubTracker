@@ -290,6 +290,23 @@
       return $http.jsonp(trustedUrl);
     }
 
+    var getSubData = function(response) {
+      organizeComments(comments);
+      organizeSubmitted(submissions);
+      setTotalUps();
+
+      getFirstDate();
+      var subData = {
+        'user': response,
+        'comments' : comments.length,
+        'submissions' : submissions.length,
+        'subs' : subs,
+        'firstDate' : dataAvailable,
+        'latest' : getLatest()
+      }
+      return subData;
+    };
+
     return {
       getData: function(user) {
         username = user;
@@ -302,20 +319,7 @@
             var commentPromise = promiseChain('comments', 'commentsCallback');
             var submitPromise = promiseChain('submitted', 'submitsCallback');
             var dataPromise = $q.all([commentPromise, submitPromise]).then(function() {
-              organizeComments(comments);
-              organizeSubmitted(submissions);
-              setTotalUps();
-
-              getFirstDate();
-              var subData = {
-                'user': response,
-                'comments' : comments.length,
-                'submissions' : submissions.length,
-                'subs' : subs,
-                'firstDate' : dataAvailable,
-                'latest' : getLatest()
-              }
-              return subData;
+              return getSubData(response);
             });
             return dataPromise;
           } else {

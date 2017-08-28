@@ -61,9 +61,6 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
       controller: 'UserSubCtrl',
       controllerAs: 'usersub',
       resolve: {
-        userData: function($route, userFactory, checkStorage) {
-          return getData($route, userFactory, checkStorage);
-        },
         subsData: function($route, subFactory, checkStorage) {
           return getData($route, subFactory, checkStorage);     
         }
