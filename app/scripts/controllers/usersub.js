@@ -27,6 +27,13 @@ angular.module('SubSnoopApp')
     }
     
     $scope.sub = subsData.subs[$scope.subreddit];
+    if ($scope.sub.comments.length > 0) {
+      $scope.topPost = rank.getTopPost($scope.sub.comments, 'mostUps');
+    }
+
+    if ($scope.sub.submissions.length > 0) {
+      $scope.topSubmit = rank.getTopPost($scope.sub.submissions, 'mostUps');
+    }
 
     $scope.data = {
       sortOptions: [
@@ -61,14 +68,6 @@ angular.module('SubSnoopApp')
       $scope.elemArray = $filter('sortPosts')($scope.dataArray, $scope.data.selectedSort.value);
     };
     setArray();
-
-    if ($scope.sub.comments.length > 0) {
-      $scope.topPost = rank.getTopPost($scope.sub.comments, 'mostUps');
-    }
-
-    if ($scope.sub.submissions.length > 0) {
-      $scope.topSubmit = rank.getTopPost($scope.sub.submissions, 'mostUps');
-    }
 
     $scope.setTab = function(num) {
       $scope.tab = parseInt(num);
