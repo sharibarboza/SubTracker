@@ -5,7 +5,7 @@
         <thumbnail data="{{ element }}"></thumbnail>
       </div>
       <div class="col-md-11 col-xs-10">
-        <a href="{{ element.url }}" target="_blank"><strong>{{ element.title }}</strong></a> <span ng-if="element.link_flair_text" class="label label-default">{{ element.link_flair_text }}</span> <span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gilded }}</span></span>
+        <a href="{{ element.url }}" target="_blank"><strong>{{ element.title | escape }}</strong></a> <span ng-if="element.link_flair_text" class="label label-default">{{ element.link_flair_text }}</span> <span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gilded }}</span></span>
         <br><br>
         <span class="post-links">
           <strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong>

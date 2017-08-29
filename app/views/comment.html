@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-content pad-card" id="comment-card">
-    <a href="{{ element.link_url }}" target="_blank" class="wrap-text"><strong>{{ element.link_title }}</strong></a> by <a href="https://www.reddit.com/user/{{ element.link_author }}" target="_blank">{{ element.link_author }}</a> in <a href="https://www.reddit.com/r/{{ element.subreddit }}" target="_blank">{{ element.subreddit }}</a>
+    <a href="{{ element.link_url }}" target="_blank" class="wrap-text"><strong>{{ element.link_title | escape }}</strong></a> by <a href="https://www.reddit.com/user/{{ element.link_author }}" target="_blank">{{ element.link_author }}</a> in <a href="https://www.reddit.com/r/{{ element.subreddit }}" target="_blank">{{ element.subreddit }}</a>
     <br>
     <span class="post-links">
       <ng-pluralize class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'" count="element.ups" when="{'1': '1 point', 'other': '{{ element.ups | number }} points'}"></ng-pluralize>

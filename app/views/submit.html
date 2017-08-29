@@ -1,4 +1,4 @@
-<a href="{{ submit.url }}" target="_blank"><strong>{{ submit.title }}</strong></a><br>
+<a href="{{ submit.url }}" target="_blank"><strong>{{ submit.title | escape }}</strong></a><br>
 
 <div class="label label-default">{{ submit.type == 'comment' ? 'comment' : 'submission' }}</div>
 <br><br>
