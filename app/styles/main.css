@@ -116,7 +116,7 @@ blockquote {
 
 #accordion .panel-body {
   border-top: none;
-  padding-top: 0;
+  padding-top: 5px;
 }
 
 .fa-reddit {
@@ -354,11 +354,11 @@ User Page Side Bar
   padding-bottom: 15px;
 }
 
-.side-card {
+.pad-card {
   padding: 12px !important;
 }
 
-.side-heading {
+.card-heading {
   padding: 12px !important;
 }
 
@@ -790,5 +790,9 @@ Mobile
 @media screen and (max-width: 400px) {
   #submit-card {
     padding-bottom: 0;
+  }
+
+  .submit-pic {
+    max-width: 100%;
   }
 }

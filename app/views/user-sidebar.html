@@ -1,10 +1,10 @@
 <div class="col-md-4 col-md-push-8 user-side">
 
   <div class="card">
-    <div class="card-content side-heading">
+    <div class="card-content card-heading">
       <strong class="purple"><i class="fa fa-user-circle" aria-hidden="true"></i> /u/{{ redditor.name }}</strong>
     </div>
-    <div class="card-action side-card center">
+    <div class="card-action pad-card center">
       <p>Redditor since <strong class="green" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY'"></strong></p>
       <span>Active in <span class="orange number">{{ subLength }}</span> <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span><br>
       <p><a href="https://www.reddit.com/user/{{ redditor.name }}" target="_blank"><strong>Go to user's reddit page &raquo</strong></a></p>
@@ -14,8 +14,8 @@
   </div>
 
   <div class="card">
-    <div class="card-content side-heading"><strong class="purple"><i class="fa fa-comments" aria-hidden="true"></i> Activity</strong></div>
-    <div class="card-action side-card side-stats">
+    <div class="card-content card-heading"><strong class="purple"><i class="fa fa-comments" aria-hidden="true"></i> Activity</strong></div>
+    <div class="card-action pad-card side-stats">
       <div class="row">
         <div class="col-xs-8"><i class="glyphicon glyphicon-chevron-right green" aria-hidden="true"></i> Total comments</div>
         <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ comments }}</strong></div>
@@ -33,7 +33,7 @@
         <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ redditor.link_karma | number }}</strong></div>
       </div>
     </div>
-    <div class="card-action side-card side-stats">
+    <div class="card-action pad-card side-stats">
       <div class="row">
         <div class="col-xs-8"><i class="glyphicon glyphicon-chevron-right green" aria-hidden="true"></i> Average comments per sub</div>
         <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ comments | average:subLength:0 }}</strong></div>
@@ -50,10 +50,10 @@
   </div>
 
   <div class="card">
-    <div class="card-content side-heading">
+    <div class="card-content card-heading">
       <strong class="purple"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Recent Activity</strong>
     </div>
-    <div class="card-action side-card" ng-repeat="element in latest">
+    <div class="card-action pad-card" ng-repeat="element in latest">
       <p><strong class="green">r/{{ element.subreddit }}</strong> <span class="gray small-font">(<span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>)</span></p> 
       <submit data="{{ element }}"></submit>
     </div>
