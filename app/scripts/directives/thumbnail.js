@@ -28,7 +28,7 @@ angular.module('SubSnoopApp')
         
         var getTemplate = function(data, url, type) {
           if (isThumbnail(data)) {
-            return '<a href="' + url + '"><img class="thumb" ng-src="' + type + '"></a>';
+            return '<a href="' + url + '"><img class="thumb thumb-pic" ng-src="' + type + '"></a>';
           } else {
             return '<a href="' + url + '" class="thumb thumb-' + type + '"></a>';
           }

@@ -1,39 +1,32 @@
-<div class="panel panel-default">
-  <div class="panel-body row" id="submit-row">
-
-    <div class="col-md-1 col-xs-2 post-thumbnail">
-      <thumbnail data="{{ element }}"></thumbnail>
-    </div>
-    <div class="col-md-11 col-xs-10" id="accordion">
-      <a href="{{ element.url }}" target="_blank"><strong>{{ element.title }}</strong></a> <span ng-if="element.link_flair_text" class="label label-default">{{ element.link_flair_text }}</span>
-      <br>
-
-      <accordion>
-        <accordion-group ng-init="status = {isOpen: false}" is-open="status.isOpen">
-          <accordion-heading>
-            <div class="row">
-              <div class="col-md-1 col-xs-2">
-                <i class="glyphicon" ng-class="status.isOpen ? 'glyphicon-minus-sign' : 'glyphicon-plus-sign'" aria-hidden="true"></i> 
-                {{ element.html }}
-              </div>
-              <div class="col-md-6 col-xs-10">
-                <p class="post-links">
-                  <strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong> <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMM Do YYYY, h:mm a'" class="post-date gray"></span>
-                </p>
-              </div>
-              <div class="col-md-5 col-xs-10">
-                <p class="post-links" id="post-comments">
-                  <ng-pluralize class="small-font gray" count="element.num_comments" when="{'1': '1 comment', 'other': '{{ element.num_comments | number }} comments'}"></ng-pluralize></a>
-                </p>
-              </div>
-            </div>
-          </accordion-heading>
-          <submit-content class="wrap-text" data="{{ element }}"></submit-content>
-        </accordion-group>
-      </accordion>
-
-      <span class="post-links"><a href="https://www.reddit.com{{ element.permalink }}" target="_blank">permalink</a></span>
-      <span ng-if="element.gilded > 0" class="post-links gilded-icon gray"> x {{ element.gilded }}</span> 
+<div class="card">
+  <div class="card-content" id="submit-card">
+    <div class="row submit-row">
+      <div class="col-md-1 col-xs-2 post-thumbnail">
+        <thumbnail data="{{ element }}"></thumbnail>
+      </div>
+      <div class="col-md-11 col-xs-10">
+        <a href="{{ element.url }}" target="_blank"><strong>{{ element.title }}</strong></a> <span ng-if="element.link_flair_text" class="label label-default">{{ element.link_flair_text }}</span> <span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gilded }}</span></span>
+        <br><br>
+        <span class="post-links">
+          <strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong>
+        </span>
+        <span class="post-links">       
+          <a href="https://www.reddit.com{{ element.permalink }}" target="_blank"><ng-pluralize count="element.num_comments" when="{'1': '1 comment', 'other': '{{ element.num_comments | number }} comments'}"></ng-pluralize></a> 
+        </span> 
+        <span class="post-links">
+          <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date gray"></span>      
+        </span>
+      </div>
     </div>
   </div>
+  <accordion id="accordion">
+    <accordion-group ng-init="status = {isOpen: false}" is-open="status.isOpen">
+      <accordion-heading>
+        <div class="card-action center">
+          <i class="fa fa-2x gray" ng-class="status.isOpen ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true"></i> 
+        </div>
+      </accordion-heading>
+      <submit-content class="wrap-text" data="{{ element }}"></submit-content>
+    </accordion-group>
+  </accordion>
 </div>

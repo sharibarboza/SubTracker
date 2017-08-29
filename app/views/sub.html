@@ -19,7 +19,7 @@
 
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a class="purple" href="/"><strong>Home</strong></a></li>
-        <li class="breadcrumb-item"><a class="purple" href="#/{{ username }}"><strong>{{ username }}'s subreddits</strong></a></li>
+        <li class="breadcrumb-item"><a class="purple" href="#/{{ username }}"><strong>subreddits</strong></a></li>
         <li class="breadcrumb-item active"><strong>{{ subreddit }} {{ tabOptions[tab] }}</strong></li>
       </ol>
       <br>
@@ -61,10 +61,10 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-6" id="back-up">
+          <div class="col-md-6 pull-center" id="back-up">
             <back-top></back-top>
           </div>
-          <div class="col-xs-6 paginate">
+          <div class="col-md-6 paginate">
             <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" ng-change="backTop()" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max"></pagination>
           </div>
         </div>

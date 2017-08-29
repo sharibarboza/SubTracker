@@ -100,14 +100,23 @@ blockquote {
   font-size: 12px;
 }
 
+#accordion .panel-group {
+  margin-bottom: 0;
+}
+
 #accordion .panel-default {
-  margin-top: 5px;
-  margin-bottom: -10px;
+  background-color: #FAFAFA;
+  border: none;
 }
 
 #accordion .panel-default > .panel-heading {
-  padding: 2px 5px;
+  padding: 0 !important;
   cursor: pointer;
+}
+
+#accordion .panel-body {
+  border-top: none;
+  padding-top: 0;
 }
 
 .fa-reddit {
@@ -345,6 +354,14 @@ User Page Side Bar
   padding-bottom: 15px;
 }
 
+.side-card {
+  padding: 12px !important;
+}
+
+.side-heading {
+  padding: 12px !important;
+}
+
 /************************
 Subreddit Table
 ************************/
@@ -358,16 +375,12 @@ Subreddit Table
   padding-bottom: 20px;
 }
 
-#sub-row {
-  margin-bottom: 10px;
-}
-
 #sub-row:hover {
   background-color: #F5F5F5;
 }
 
-#sub-row .panel-body {
-  padding: 10px 0;
+#sub-row .card-content {
+  padding: 10px 20px;
 }
 
 #sub-rank [class*='col-'] {
@@ -423,31 +436,14 @@ User Sub Page
 }
 
 .post-date {
-  font-weight: 600;
+  font-size: 13px;
+  color: gray;
+  font-weight: 400 !important;
 }
 
-.post-points, .post-date {
+.post-points {
   font-size: 13px;
   font-weight: 600;
-}
-
-#submit-row {
-  padding-left: 30px;
-}
-
-.post-thumbnail {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.post-thumbnail img {
-  width: 55px;
-  margin-left: 0px;
-}
-
-#post-table i.glyphicon {
-  margin-top: 5px;
-  font-size: 20px;
 }
 
 .table-options {
@@ -485,7 +481,46 @@ User Sub Page
 }
 
 #back-up {
-  padding-top: 10px;
+  padding-top: 25px;
+}
+
+#comment-card:hover {
+  background-color: #F5F5F5;
+}
+
+.nav-tabs > li > a {
+  border-radius: 0 0 2px 2px;  
+}
+
+/************************
+Card
+************************/
+
+.card {
+  background-color: #FAFAFA;
+  border-radius: 2px !important;
+  margin-bottom: 12px !important;
+  border: 1px solid #D6D6D6;
+}
+
+.card .card-content {
+  padding: 16px 24px;
+  border-radius: 0 0 2px 2px;
+}
+
+.card .card-action:last-child {
+  border-radius: 0 0 2px 2px;
+}
+
+.card .card-action {
+  position: relative !important;
+  background-color: #FAFAFA;
+  border-top: 1px solid rgba(160,160,160,0.2) !important;
+  padding: 4px;
+}
+
+.card-action:hover {
+  background-color: #F5F5F5 !important;
 }
 
 /************************
@@ -499,13 +534,6 @@ Sub Page Side Bar
 .side-stats {
   font-weight: 400;
   color: gray;
-}
-
-.sub-side-stats .glyphicon {
-  color: #1DB3B0;
-}
-
-.sub-side-stats .col-xs-8 {
   font-size: 13px;
 }
 
@@ -535,8 +563,14 @@ Sub Page Side Bar
   max-width: 80%;
 }
 
-#post-comments {
-  text-align: right;
+#stat-lines {
+  padding-top: 15px;
+  padding-left: 5px;
+}
+
+#stat-lines [class*='col-'] {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /************************
@@ -546,12 +580,17 @@ Submit Post Thumbnails
 .thumb {
   float: left;
   font-size: 0;
-  margin-bottom: 2px;
-  margin-right: 5px;
-  margin-top: 0;
-  margin-left: -8px;
   overflow: hidden;
   width: 70px;
+  margin-left: -16px;
+}
+
+.thumb-pic {
+  margin-left: -6px;
+}
+
+.post-thumbnail img {
+  width: 55px;
 }
 
 .thumb-default {
@@ -636,7 +675,7 @@ Mobile
 }
 
 @media screen and (max-width: 768px) {
-  .navbar-default, #submit-row, #searchbar {
+  .navbar-default, #searchbar {
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -644,6 +683,11 @@ Mobile
   .sub-banner {
     padding-left: 5px;
     padding-right: 5px;
+  }
+
+  .container {
+    padding-left: 5px;
+    padding-right: 0;
   }
 
   .sub-rows .row {
@@ -655,7 +699,7 @@ Mobile
     padding: 5px;
   }
 
-  .container, #sub-panels {
+  #sub-panels {
     padding-left: 0;
     padding-right: 0;
   }
@@ -695,6 +739,10 @@ Mobile
   .post-date {
     display: block;
   }
+
+  .card .card-content {
+    padding: 16px 10px;
+  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -708,11 +756,6 @@ Mobile
 
   .user-side, #sidebar {
     margin-top: 0;
-  }
-
-  #post-comments {
-    text-align: left;
-    padding-left: 23.5%;
   }
 
   #sub-panel-stats .span {
@@ -733,5 +776,19 @@ Mobile
 
   #search-strip .col-xs-10 {
     margin-top: -2px;
+  }
+
+  .breadcrumb {
+    text-align: center;
+  }
+
+  .pull-center {
+    text-align: center !important;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #submit-card {
+    padding-bottom: 0;
   }
 }

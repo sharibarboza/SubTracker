@@ -36,8 +36,8 @@
           </div>      
           <br>
 
-          <div class="panel panel-default" ng-repeat="subreddit in subList" id="sub-row">
-            <div class="panel-body">
+          <div class="card" ng-repeat="subreddit in subList" id="sub-row">
+            <div class="card-content row">
               <a href="#/{{ redditor.name }}/{{ subreddit }}/">
               <div class="col-md-6" id="sub-rank">
                 <div class="col-md-2">
@@ -48,15 +48,15 @@
                   <span class="gray sub-text">Last seen <span ng-bind="subs[subreddit].recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></span></span>
                 </div>
               </div>
-              <div class="col-md-2 col-xs-4" align="center">
+              <div class="col-md-2 col-xs-4" id="sub-comments" align="center">
                 <span class="purple number">{{ subs[subreddit].comments.length }}</span><br>
                 <span class="gray sub-text">Comments</span>
               </div>
-              <div class="col-md-2 col-xs-4" align="center">
+              <div class="col-md-2 col-xs-4" id="sub-submits" align="center">
                 <span class="purple number">{{ subs[subreddit].submissions.length }}</span><br>
                 <span class="gray sub-text">Submitted</span>
               </div>
-              <div class="col-md-2 col-xs-4" align="center">
+              <div class="col-md-2 col-xs-4" id="sub-upvotes" align="center">
                 <span class="number" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'">{{ subs[subreddit].total_ups | number }}</span><br>
                 <span class="gray sub-text">Upvotes</span>
               </div>
