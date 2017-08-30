@@ -1,0 +1,26 @@
+<md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
+
+<md-toolbar>
+  <h1 class="md-toolbar-tools user-banner">{{ username }}'s subreddits</h1>
+</md-toolbar>
+<md-content layout-padding>
+  <form>
+    <md-input-container>
+      <label for="testInput"><i class="glyphicon glyphicon-search" aria-hidden="true"></i> Search for a sub</label>
+      <input type="text" id="testInput"
+             ng-model="search" ng-change="changeSubs(search)" md-autofocus>
+    </md-input-container>
+    <button type="submit" style="display: none;" ng-controller="SidebarCtrl" ng-click="close()">Go!</button>
+  </form>
+
+  <ul>
+    <strong>Sorted by: <span class="green">{{ sortData.selectedSort.name ? sortData.selectedSort.name : sort.name }}</span></strong>
+    <br><br>
+
+    <li ng-repeat="subname in subList"><a href="#/{{ username }}/{{ subname }}/""><strong><p>/r/{{ subname }}</p></strong></a></li>
+  </ul>
+
+  <strong ng-controller="SidebarCtrl" ng-click="close()" class="purple"><i class="fa fa-arrow-right gray" aria-hidden="true"></i> Close</strong>
+</md-content>
+
+</md-sidenav>

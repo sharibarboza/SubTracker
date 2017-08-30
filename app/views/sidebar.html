@@ -6,7 +6,7 @@
         <br>
         <i class="glyphicon glyphicon-globe gray" aria-hidden="true"></i> <a href="https://www.reddit.com/r/{{ subreddit }}" target="_blank"><strong>Visit /r/{{ subreddit }} &raquo</strong></a>
         <br><br>
-        <span>Of {{ username }}'s <span class="orange number">{{ subLength }}</span> <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize>, /r/{{ subreddit }} is:</span><br>
+        <span>Of {{ username }}'s <span class="orange number">{{ subLength }}</span> <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize>, {{ subreddit }} is:</span><br>
         <span class="gray side-stats">Ranked <strong class="green number">#{{ mostUpsRank }}</strong> in total upvotes</span><br>
         <span class="gray side-stats">Ranked <strong class="green number">#{{ mostActiveRank }}</strong> in most active</span>
     </div>

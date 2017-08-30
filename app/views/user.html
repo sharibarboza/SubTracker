@@ -5,20 +5,23 @@
       <br>
       <h2 align="center">Sorry, that user could not be found.</h2>
   </div>
-
+  
   <div ng-if="!notfound" class="content" layout="column" ng-cloak>
+
+    <div ng-include src="'views/sidenav.html'"></div>
+
     <div>
       <div class="sub-banner">
         <div class="table-pad">
           <div class="row">
             <div class="col-md-8">
               <i class="fa fa-3x fa-reddit"></i>
-              <a href="https://www.reddit.com/user/{{ redditor.name }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/u/</span>{{ redditor.name }}</span></a> <span class="badge" id="num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
+              <a href="https://www.reddit.com/user/{{ username }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span></a> <span class="badge" id="num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
             </div>
           </div>
         </div>
       </div>
-
+      
       <div class="sub-table">
         <div ng-include src="'views/user-sidebar.html'"></div>
         <div class="col-md-8 col-md-pull-4 sub-rows">
@@ -28,18 +31,27 @@
               <form name="myForm">
                 <md-select ng-model="sortData.selectedSort" placeholder="{{ sortData.selectedSort.name }}" ng-change="setSortOption()">
                   <md-option ng-repeat="sort in sortData.sortOptions" ng-value="sort" ng-selected="sort.value == sortData.selectedSort.value">
-                    {{ sort.name }}
+                    <strong class="gray">{{ sort.name }}</strong>
                   </md-option>
                 </md-select>
               </form>
             </div>
-            <div class="col-xs-6 gray middle-title" align="right">Click on a subreddit below.</div>
+            <div class="col-xs-6 option-pos" align="right">
+              <form>
+                <md-input-container>
+                  <label for="testInput" class="gray"><i class="glyphicon glyphicon-search" aria-hidden="true"></i> Search for a sub</label>
+                  <input type="text" id="testInput"
+                         ng-model="search" ng-change="changeSubs(search)" md-autofocus>
+                </md-input-container>
+                <button type="submit" style="display: none;" ng-controller="SidebarCtrl" ng-click="close()">Go!</button>
+              </form>
+            </div>
           </div>      
           <br>
 
           <div class="card" ng-repeat="subreddit in subList" id="sub-row">
             <div class="card-content row">
-              <a href="#/{{ redditor.name }}/{{ subreddit }}/">
+              <a href="#/{{ username }}/{{ subreddit }}/">
               <div class="col-md-6" id="sub-rank">
                 <div class="col-md-2">
                   <span class="baby-blue"><strong>{{ 1 + $index }}</strong></span>

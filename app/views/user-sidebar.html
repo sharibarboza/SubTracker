@@ -2,12 +2,12 @@
 
   <div class="card">
     <div class="card-content card-heading">
-      <strong class="purple"><i class="fa fa-user-circle" aria-hidden="true"></i> /u/{{ redditor.name }}</strong>
+      <strong class="purple"><i class="fa fa-user-circle" aria-hidden="true"></i> /u/{{ username }}</strong>
     </div>
     <div class="card-action pad-card center">
       <p>Redditor since <strong class="green" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY'"></strong></p>
       <span>Active in <span class="orange number">{{ subLength }}</span> <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span><br>
-      <p><a href="https://www.reddit.com/user/{{ redditor.name }}" target="_blank"><strong>Go to user's reddit page &raquo</strong></a></p>
+      <p><a href="https://www.reddit.com/user/{{ username }}" target="_blank"><strong>Go to user's reddit page &raquo</strong></a></p>
       <span class="gray small-font">Note: This data is based only from the user's most recent 1000 comments and submissions each. All data available is from <span ng-bind="dataAvailable | amDateFormat: 'MMMM Do YYYY'"></span>.
       </span>
     </div>

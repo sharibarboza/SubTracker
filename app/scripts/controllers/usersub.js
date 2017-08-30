@@ -8,13 +8,14 @@
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('UserSubCtrl', ['$scope', '$routeParams', '$window', '$filter', 'rank', 'subsData', 
-    function ($scope, $routeParams, $window, $filter, rank, subsData) {
+  .controller('UserSubCtrl', ['$scope', '$routeParams', '$window', '$filter', 'rank', 'subsData', 'search', 
+    function ($scope, $routeParams, $window, $filter, rank, subsData, search) {
     
       $window.scrollTo(0, 0);
 
       var defaultView = {value: '25', name: '25 options'};
 
+      $scope.page = 'sub';
       $scope.subreddit = $routeParams.subreddit;
       $scope.username = $routeParams.username;
 
@@ -25,7 +26,11 @@ angular.module('SubSnoopApp')
       } else {
         subsData = JSON.parse(sessionStorage.subData);
       }
-      
+    
+
+      $scope.sort = JSON.parse(sessionStorage.sort);
+      $scope.subsArray = Object.keys(subsData.subs);
+      $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.sort.value, subsData.subs);
       $scope.sub = subsData.subs[$scope.subreddit];
       if ($scope.sub.comments.length > 0) {
         $scope.topPost = rank.getTopPost($scope.sub.comments, 'mostUps');
@@ -112,5 +117,11 @@ angular.module('SubSnoopApp')
       $scope.backUp = function() {
         document.getElementById('table-start').scrollIntoView();
       }
+
+      $scope.changeSubs = function(term) {
+        $scope.subList = [];
+        $scope.subList = search.findSubs($scope.subsArray, term);
+      };
+
     }
 ]);

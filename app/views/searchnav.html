@@ -7,7 +7,7 @@
           <a href="https://github.com/sharibarboza/sub-snoop" class="btn btn-social-icon btn-github" id="github-icon">
             <span class="fa fa-github"></span>
           </a>
-          <li ng-hide="main" class="nav-item"><a href="#/{{ username }}" class="nav-link">subreddits</a></li>
+          <li ng-hide="main" class="nav-item" ng-controller="SidebarCtrl"><a href class="nav-link" ng-click="toggleRight()"><i class="fa fa-search" aria-hidden="true"></i> subreddits</a></li>
         </ul>
       </div>
 
@@ -28,5 +28,6 @@
       </div>
     </div><!--/.nav-collapse -->
   </div>
+
 </div>
 

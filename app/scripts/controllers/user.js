@@ -8,22 +8,24 @@
  * Controller of the SubSnoopApp
  */
  angular.module('SubSnoopApp')
- .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 'subsData',
-  function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment, subsData) {
+ .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 'subsData', 'search',
+  function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment, subsData, search) {
 
     $window.scrollTo(0, 0);
     var defaultSort = {value: 'subName', name: 'Subreddit name'};
-    var sort;
 
     $scope.main = false;
+    $scope.page = 'user';
+    $scope.sort = defaultSort;
 
     var configUserData = function(response, store) {
       $scope.redditor = response;
+      $scope.username = $scope.redditor.name
       $scope.totalKarma = $scope.redditor.comment_karma + $scope.redditor.link_karma;
       $scope.notfound = false;
 
       if (store) {
-        sessionStorage.user = $scope.redditor.name;
+        sessionStorage.user = $scope.username;
       }
     };
 
@@ -53,12 +55,12 @@
       if (subsData) {
         configUserData(subsData.user, true);
         configSubData(subsData, true);
-        sort = defaultSort;
+        $scope.sort = defaultSort;
       } else {
         subsData = JSON.parse(sessionStorage.subData);
         configUserData(subsData.user, false);
         configSubData(subsData, false);
-        sort = JSON.parse(sessionStorage.sort);
+        $scope.sort = JSON.parse(sessionStorage.sort);
       }
 
       $scope.sortData = {
@@ -73,7 +75,7 @@
           {value: 'avgSubmit', name: 'Average upvotes per submission'},
           {value: 'mostDown', name: 'Most controversial'},
         ],
-        selectedSort: sort
+        selectedSort: $scope.sort
       };
 
       var setArray = function() {
@@ -84,5 +86,12 @@
     } else {
       $scope.notfound = true;
     }
+
+    $scope.changeSubs = function(term) {
+      $scope.subList = [];
+      $scope.subList = search.findSubs($scope.subsArray, term);
+    };
+
   }
+
 ]);
