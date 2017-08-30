@@ -9,16 +9,16 @@
  */
 angular.module('SubSnoopApp')
   .service('search', function () {
-  	return {
-  		findSubs: function(searchList, term) {
-  			var dataList = [];
-  			for (var i = 0; i < searchList.length; i++) {
-        	var key = searchList[i];
-        	if (key.toLowerCase().indexOf(term.toLowerCase()) >= 0) {
-          	dataList.push(key);
-        	}
-      	}
-      	return dataList;
-  		}
-  	}
+    return {
+      findSubs: function(searchList, term) {
+        var dataList = [];
+        for (var i = 0; i < searchList.length; i++) {
+          var key = searchList[i];
+          if (key.toLowerCase().indexOf(term.toLowerCase()) >= 0) {
+            dataList.push(key);
+          }
+        }
+        return dataList;
+      }
+    }
   });
