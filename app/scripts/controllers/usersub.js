@@ -13,7 +13,7 @@ angular.module('SubSnoopApp')
     
     $window.scrollTo(0, 0);
 
-    var defaultView = "25";
+    var defaultView = {value: '25', name: '25 options'};
 
     $scope.subreddit = $routeParams.subreddit;
     $scope.username = $routeParams.username;
@@ -35,6 +35,19 @@ angular.module('SubSnoopApp')
       $scope.topSubmit = rank.getTopPost($scope.sub.submissions, 'mostUps');
     }
 
+    $scope.subPage = {};
+    $scope.subPage.viewby = defaultView;
+    $scope.subPage.items = parseInt(defaultView);
+    $scope.subPage.max = 7;
+    $scope.subPage.current = 1;
+
+    if ($scope.sub.comments.length > 0) {
+      $scope.tab = 0;
+    } else {
+      $scope.tab = 1;
+    }
+    $scope.tabOptions = ['comments', 'submissions'];
+
     $scope.data = {
       sortOptions: [
         {value: 'newest', name: 'Newest'},
@@ -45,18 +58,12 @@ angular.module('SubSnoopApp')
       selectedSort: {value: 'newest', name: 'Newest'}
     };
 
-    if ($scope.sub.comments.length > 0) {
-      $scope.tab = 0;
-    } else {
-      $scope.tab = 1;
-    }
-    $scope.tabOptions = ['comments', 'submissions'];
-    
-    $scope.subPage = {};
-    $scope.subPage.viewby = defaultView;
-    $scope.subPage.items = parseInt(defaultView);
-    $scope.subPage.max = 7;
-    $scope.subPage.current = 1;
+    $scope.views = [
+      {value: '25', num: 25},
+      {value: '50', num: 50},
+      {value: '100', num: 100},
+      {value: 'All', num: 'All'}
+    ];
 
     rank.setData(subsData.subs);
     $scope.subLength = rank.getSubLength();
@@ -70,6 +77,7 @@ angular.module('SubSnoopApp')
     setArray();
 
     $scope.setTab = function(num) {
+      console.log(num);
       $scope.tab = parseInt(num);
       $scope.subPage.current = 1;
       setArray()
@@ -81,7 +89,12 @@ angular.module('SubSnoopApp')
 
     $scope.setItemsPerPage = function(num) {
       $scope.subPage.current = 1;
-      $scope.subPage.items = num;
+
+      if (num === 'All') {
+        $scope.subPage.items = $scope.sub[$scope.tabOptions[$scope.tab]].length;
+      } else {
+        $scope.subPage.items = $scope.subPage.viewby.num;
+      }
       setArray();
     };
 

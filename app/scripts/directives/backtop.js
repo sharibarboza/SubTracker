@@ -9,7 +9,7 @@
 angular.module('SubSnoopApp')
   .directive('backTop', function () {
     return {
-      template: '<a href ng-click="backTop()"><i class="glyphicon glyphicon-arrow-up gray" aria-hidden="true"></i> Back to top</a>',
+      template: '<strong><i class="fa fa-arrow-up gray" aria-hidden="true"></i><a href class="purple" ng-click="backTop()"> Back to top</a></strong>',
       restrict: 'E',
       controller: ['$scope', '$window', function($scope, $window) {
         $scope.backTop = function() {

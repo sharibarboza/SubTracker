@@ -43,6 +43,11 @@
     }
   };
 
+  $scope.setSortOption = function() {
+    sessionStorage.sort = JSON.stringify($scope.sortData.selectedSort);
+    setArray();
+  };
+
   if (subsData !== "") {
     $scope.notfound = false;
     if (subsData) {
@@ -76,12 +81,7 @@
     };
     setArray();
 
-    $scope.setSortOption = function() {
-      sessionStorage.sort = JSON.stringify($scope.sortData.selectedSort);
-      setArray();
-    };
   } else {
     $scope.notfound = true;
   }
-
 }]);

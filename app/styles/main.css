@@ -192,6 +192,31 @@ md-progress-circular:before {
   background-color: rgba(0,0,0,0.3);
 }
 
+.md-button {
+  text-transform: none !important;
+}
+
+.md-button.md-primary.md-raised {
+  background-color: #5552B3 !important;
+}
+
+md-select {
+  margin-bottom: 0 !important;
+}
+
+md-option {
+  height: 34px;
+}
+
+md-select-menu md-content md-option[selected] {
+  color: white !important;
+  background-color: #5552B3 !important;
+}
+
+.md-select-menu-container {
+  z-index: 1500 !important;
+}
+
 .user-banner {
   color: white;
   background-image: url('../images/icon-bg.png');
@@ -341,6 +366,10 @@ User Page
   font-size: 24px !important;
 }
 
+.middle-title {
+  margin-top: 30px;
+}
+
 /************************
 User Page Side Bar
 ************************/
@@ -455,7 +484,7 @@ User Sub Page
 }
 
 #top-paginate {
-  padding-top: 20px;
+  padding-top: 25px;
 }
 
 .gilded-icon {
@@ -573,6 +602,10 @@ Sub Page Side Bar
   padding-right: 0;
 }
 
+#submit-stats {
+  padding-top: 10px;
+}
+
 /************************
 Submit Post Thumbnails
 ************************/
@@ -686,7 +719,7 @@ Mobile
   }
 
   .container {
-    padding-left: 5px;
+    padding-left: 0;
     padding-right: 0;
   }
 

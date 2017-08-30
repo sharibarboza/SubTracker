@@ -18,9 +18,7 @@
     <div class="col-md-8 col-md-pull-4 sub-rows">
 
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a class="purple" href="/"><strong>Home</strong></a></li>
-        <li class="breadcrumb-item"><a class="purple" href="#/{{ username }}"><strong>subreddits</strong></a></li>
-        <li class="breadcrumb-item active"><strong>{{ subreddit }} {{ tabOptions[tab] }}</strong></li>
+        <li class="breadcrumb-item"><strong><i class="fa fa-arrow-left gray" aria-hidden="true"></i> <a class="purple" href="#/{{ username }}">Back to subreddits</strong></a></li>
       </ol>
       <br>
 
@@ -34,22 +32,26 @@
         <div class="row">
           <div class="col-md-3">
             <form name="myForm">
-              <label for="mySelect">Sort by:</label><br>
-              <select name="mySelect" id="mySelect"
-                ng-options="option.name for option in data.sortOptions track by option.value"
-                ng-model="data.selectedSort" ng-change="setSortOption()"></select>
+                <md-select ng-model="data.selectedSort" placeholder="{{ data.selectedSort.name }}" ng-change="setSortOption()">
+                  <md-option ng-repeat="sort in data.sortOptions" ng-value="sort" ng-selected="sort.value == data.selectedSort.value">
+                    {{ sort.name }}
+                  </md-option>
+                </md-select>
             </form>
           </div>
           <div class="col-md-3">
-            <label>View</label><br>
-            <select ng-change="setItemsPerPage(subPage.viewby)" ng-model="subPage.viewby"><option value="25">25 {{ tabOptions[tab] }}</option><option value="50">50 {{ tabOptions[tab] }}</option><option value="100">100 {{ tabOptions[tab] }}</option><option value="{{ sub.comments.length }}">All {{ tabOptions[tab] }}</option></select>
+            <md-select ng-model="subPage.viewby" placeholder="{{ subPage.viewby.num }}" ng-change="setItemsPerPage(subPage.viewby.num)">
+              <md-option ng-repeat="view in views" ng-value="view" ng-selected="view.value == subPage.viewby.value">
+                {{ view.num }} {{ tabOptions[tab] }}
+              </md-option>
+            </md-select>
           </div>
           <div class="col-md-6 paginate" align="right" id="top-paginate">
             <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" style="margin: -5px;"></pagination>
           </div>
         </div>
       </div>
-
+      <br>
       <div id="post-table">
         <div ng-class="getList()"></div>
         <div ng-repeat="element in elemArray.slice(((subPage.current-1)*subPage.items), ((subPage.current)*subPage.items))">

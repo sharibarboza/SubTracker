@@ -26,10 +26,11 @@
           <div class="row" id="table-head">
             <div class="col-xs-6">
               <form name="myForm">
-                <label for="mySelect">Sort by:</label>
-                <select name="mySelect" id="mySelect"
-                  ng-options="option.name for option in sortData.sortOptions track by option.value"
-                  ng-model="sortData.selectedSort" ng-change="setSortOption()"></select>
+                <md-select ng-model="sortData.selectedSort" placeholder="{{ sortData.selectedSort.name }}" ng-change="setSortOption()">
+                  <md-option ng-repeat="sort in sortData.sortOptions" ng-value="sort" ng-selected="sort.value == sortData.selectedSort.value">
+                    {{ sort.name }}
+                  </md-option>
+                </md-select>
               </form>
             </div>
             <div class="col-xs-6 gray middle-title" align="right">Click on a subreddit below.</div>
