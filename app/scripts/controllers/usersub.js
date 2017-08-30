@@ -108,4 +108,8 @@ angular.module('SubSnoopApp')
         return { 'active': true };
       }
     };
+
+    $scope.backUp = function() {
+      document.getElementById('table-start').scrollIntoView();
+    }
   }]);
