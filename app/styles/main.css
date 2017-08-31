@@ -659,8 +659,11 @@ Sub Page Side Bar
 }
 
 #submit-col {
-  padding-left: 22px;
-  padding-right: 22px;
+  width: 87.5%;
+  margin-left: 80px;
+  padding: 10px 10px 5px 10px;
+  border: 1px solid #E5E5E5;
+  border-radius: 10px;
 }
 
 /************************
@@ -835,8 +838,10 @@ Mobile
   }
 
   #submit-col {
-    padding-left: 0;
-    padding-right: 0;
+    width: 100%;
+    padding: 0;
+    margin-left: 0;
+    border: none;
   }
 }
 
