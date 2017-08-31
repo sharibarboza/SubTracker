@@ -82,7 +82,6 @@ angular.module('SubSnoopApp')
       setArray();
 
       $scope.setTab = function(num) {
-        console.log(num);
         $scope.tab = parseInt(num);
         $scope.subPage.current = 1;
         setArray()

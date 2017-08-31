@@ -34,20 +34,22 @@
         <div class="table-options">
           <div class="row">
             <div class="col-md-3">
-              <form name="myForm">
-                  <md-select ng-model="data.selectedSort" placeholder="{{ data.selectedSort.name }}" ng-change="setSortOption()">
-                    <md-option ng-repeat="sort in data.sortOptions" ng-value="sort" ng-selected="sort.value == data.selectedSort.value">
-                      {{ sort.name }}
-                    </md-option>
-                  </md-select>
+              <form name="sortForm">
+                <md-select ng-model="data.selectedSort" placeholder="{{ data.selectedSort.name }}" ng-change="setSortOption()">
+                  <md-option ng-repeat="sort in data.sortOptions" ng-value="sort" ng-selected="sort.value == data.selectedSort.value">
+                    {{ sort.name }}
+                  </md-option>
+                </md-select>
               </form>
             </div>
             <div class="col-md-3">
-              <md-select ng-model="subPage.viewby" placeholder="{{ subPage.viewby.num }}" ng-change="setItemsPerPage(subPage.viewby.num)">
-                <md-option ng-repeat="view in views" ng-value="view" ng-selected="view.value == subPage.viewby.value">
-                  {{ view.num }} {{ tabOptions[tab] }}
-                </md-option>
-              </md-select>
+              <form name="viewForm">
+                <md-select ng-model="subPage.viewby" placeholder="test" ng-change="setItemsPerPage(subPage.viewby.num)">
+                  <md-option ng-repeat="view in views" ng-value="view" ng-selected="view.value == subPage.viewby.value">
+                    {{ view.num }} {{ tabOptions[tab] }}
+                  </md-option>
+                </md-select>
+              </form>
             </div>
             <div class="col-md-6 paginate" align="right" id="top-paginate">
               <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" style="margin: -5px;"></pagination>
