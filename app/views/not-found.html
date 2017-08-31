@@ -1,16 +1,5 @@
 <div class="jumbotron main-content user-banner">
   <h2>Sorry, that user does not exist.</h2>
   <br>
-  <h4>Enter your Reddit username to view your comments &amp submissions by <span class="green">subreddit.</span></h4>
-
-  <form handle-phone-submit>
-  <div>
-    <div class="input-group col-md-8 col-md-offset-2">
-      <input type="text" class="form-control" ng-model="username" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button class="btn btn-info" type="submit"><i class="glyphicon glyphicon-search" aria-hidden="true"></i></button>
-      </span>
-    </div>
-  </div>
-  </form>
+  <div ng-include src="'views/main-search.html'"></div>
 </div>
