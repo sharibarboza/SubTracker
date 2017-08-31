@@ -85,6 +85,7 @@
 
     } else {
       $scope.notfound = true;
+      $scope.main = true;
     }
 
     $scope.changeSubs = function(term) {
