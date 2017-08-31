@@ -141,6 +141,10 @@ blockquote {
   text-decoration: none;
 }
 
+.mobile-list {
+  padding: 4px 0;
+}
+
 /************************
 Angular Material
 ************************/

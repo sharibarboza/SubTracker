@@ -8,7 +8,7 @@
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('SidebarCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', function ($scope, $timeout, $mdSidenav, $log) {
+  .controller('SidebarCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', '$window', function ($scope, $timeout, $mdSidenav, $log, $window) {
     $scope.toggleRight = buildToggler('right');
 
     $scope.close = function () {
@@ -53,6 +53,8 @@ angular.module('SubSnoopApp')
     }
 
     function buildToggler(navID) {
+      $window.scrollTo(0, 0);
+
       return function() {
         // Component lookup should always be available since we are not using `ng-if`
         $mdSidenav(navID)
