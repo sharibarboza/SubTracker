@@ -658,6 +658,11 @@ Sub Page Side Bar
   padding-top: 10px;
 }
 
+#submit-col {
+  padding-left: 22px;
+  padding-right: 22px;
+}
+
 /************************
 Submit Post Thumbnails
 ************************/
@@ -827,6 +832,11 @@ Mobile
 
   .card .card-content {
     padding: 16px 10px;
+  }
+
+  #submit-col {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
