@@ -1,5 +1,5 @@
 <div id="sidebar" class="col-md-4 col-md-push-8 user-side">
-  <div class="card">
+  <div class="card side-cards">
     <div class="card-content card-heading"><strong class="purple"><i class="fa fa-shield" aria-hidden="true"></i> /r/{{ subreddit }}</strong></div>
       <div class="card-action pad-card center">
         <i class="glyphicon glyphicon-time gray" aria-hidden="true"></i> Last Seen: <strong class="green" ng-bind="sub.recent_activity | amDateFormat:'MMMM Do YYYY, h:mm a'"></strong>
@@ -12,7 +12,7 @@
     </div>
   </div>
 
-  <div ng-if="tab == 0" class="card">
+  <div ng-if="tab == 0" class="card side-cards">
     <div class="card-content card-heading"><strong class="purple"><i class="fa fa-signal" aria-hidden="true"></i> Comment Activity</strong></div>
     <div class="card-action pad-card">
       <sidebar-stats data="{{ sub }}" type="comments"></sidebar-stats>
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div ng-if="tab == 1" class="card">
+  <div ng-if="tab == 1" class="card side-cards">
     <div class="card-content card-heading"><strong class="purple"><i class="fa fa-signal" aria-hidden="true"></i> Submitted Activity</strong></div>
     <div class="card-action pad-card">
       <sidebar-stats data="{{ sub }}" type="submissions"></sidebar-stats>

@@ -5,21 +5,12 @@
   <br>
   <h4>Enter your Reddit username to view your comments &amp submissions by <span class="green">subreddit.</span></h4>
 
-  <form handle-phone-submit>
-  <div>
-    <div class="input-group col-md-8 col-md-offset-2">
-      <input type="text" class="form-control" ng-model="username" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button class="btn btn-info" type="submit"><i class="glyphicon glyphicon-search" aria-hidden="true"></i></button>
-      </span>
-    </div>
-  </div>
-  </form>
+  <div ng-include src="'views/main-search.html'"></div>
 </div>
 
 <div id="sub-panels">
   <div class="col-md-6">
-    <div class="card">
+    <div class="card side-cards">
       <div class="card-content card-heading"><strong class="purple">Popular Subreddits</strong></div>
         <div class="card-action pad-card" ng-repeat="subElement in popularSubs">
           <div ng-include src="'views/sub-panel.html'"></div>
@@ -27,7 +18,7 @@
     </div>
   </div>
   <div class="col-md-6">
-    <div class="card">
+    <div class="card side-cards">
       <div class="card-content card-heading"><strong class="purple">New Subreddits</strong></div>
         <div class="card-action pad-card" ng-repeat="subElement in newSubs">
           <div ng-include src="'views/sub-panel.html'"></div>

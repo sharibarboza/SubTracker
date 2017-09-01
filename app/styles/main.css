@@ -23,6 +23,14 @@ a {
   text-align: center;
 }
 
+.bold {
+  font-weight: bold;
+}
+
+.white {
+  color: white;
+}
+
 .green {
   color: #1DB3B0;
 }
@@ -44,7 +52,7 @@ a {
 }
 
 .gray {
-  color: #9C9C9C;
+  color: #696969;
 }
 
 .badge, .label {
@@ -63,6 +71,10 @@ a {
   border: none;
   background-color: #EDEDED;
   font-weight: 500;
+}
+
+.highlight {
+  background: yellow;
 }
 
 /* Make the masthead heading the same height as the navigation */
@@ -104,21 +116,21 @@ blockquote {
   font-size: 12px;
 }
 
-#accordion .panel-group {
+.accordion .panel-group {
   margin-bottom: 0;
 }
 
-#accordion .panel-default {
+.accordion .panel-default {
   background-color: #FAFAFA;
   border: none;
 }
 
-#accordion .panel-default > .panel-heading {
+.accordion .panel-default > .panel-heading {
   padding: 0 !important;
   cursor: pointer;
 }
 
-#accordion .panel-body {
+.accordion .panel-body {
   border-top: none;
   padding-top: 10px;
 }
@@ -142,7 +154,15 @@ blockquote {
 }
 
 .mobile-list {
-  padding: 4px 0;
+  padding: 6px 0;
+}
+
+.content {
+  min-height: 450px;
+}
+
+.badge {
+  border-radius: 16px;
 }
 
 /************************
@@ -168,14 +188,6 @@ md-progress-circular:before {
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.3);
-}
-
-.md-button {
-  text-transform: none !important;
-}
-
-.md-button.md-primary.md-raised {
-  background-color: #5552B3 !important;
 }
 
 md-select {
@@ -250,7 +262,7 @@ Content
 
 .width-pad {
   padding-left: 50px;
-  padding-right: 65px;
+  padding-right: 50px;
 }
 
 /* Main marketing message and sign up button */
@@ -322,9 +334,21 @@ Navigation
   font-size: 2em;
 }
 
-.navbar-default a.nav-link {
+.navbar-default .nav-link {
   color: white !important;
   font-weight: bold;
+}
+
+.navbar-default .nav-link:last-child {
+  padding-left: 20px;
+}
+
+#navbar-links {
+  margin-top: 15px;
+}
+
+.nav-pos {
+  display: inline;
 }
 
 .navbar-default .btn-github {
@@ -393,7 +417,7 @@ Card
   border: 1px solid #D6D6D6;
 }
 
-.card .card-content {
+.side-cards .card-content {
   padding: 16px 24px;
   border-radius: 0 0 2px 2px;
 }
@@ -402,7 +426,7 @@ Card
   border-radius: 0 0 2px 2px;
 }
 
-.card .card-action {
+.side-cards .card-action {
   position: relative !important;
   background-color: #FAFAFA;
   border-top: 1px solid rgba(160,160,160,0.2) !important;
@@ -410,7 +434,7 @@ Card
 }
 
 .card-action:hover {
-  background-color: #F5F5F5 !important;
+  background-color: #F5F5F5;
 }
 
 /************************
@@ -448,10 +472,11 @@ User Page
   font-size: 18px;
 }
 
-#num-subs {
+.num-subs {
   margin-left: 10px;
   margin-top: -16px;
   font-size: 24px !important;
+  padding: 2px 15px;
 }
 
 .option-pos {
@@ -471,11 +496,11 @@ User Page Side Bar
   padding-bottom: 15px;
 }
 
-.pad-card {
+.side-cards .pad-card {
   padding: 12px !important;
 }
 
-.card-heading {
+.side-cards .card-heading {
   padding: 12px !important;
 }
 
@@ -551,6 +576,26 @@ User Sub Page
   font-weight: 400;
 }
 
+.post-body h1 {
+  font-size: 22px;
+}
+
+.post-body h2 {
+  font-size: 20px;
+}
+
+.post-body h3 {
+  font-size: 18px;
+}
+
+.post-body h4 {
+  font-size: 16px;
+}
+
+.post-body h5 {
+  font-size: 14px;
+}
+
 .post-date {
   font-size: 13px;
   color: gray;
@@ -598,6 +643,10 @@ User Sub Page
 
 #back-up {
   padding-top: 25px;
+}
+
+#comment-card {
+  padding: 12px;
 }
 
 #comment-card:hover {
@@ -665,9 +714,21 @@ Sub Page Side Bar
 #submit-col {
   width: 87.5%;
   margin-left: 80px;
-  padding: 10px 10px 5px 10px;
+  padding: 10px;
   border: 1px solid #E5E5E5;
   border-radius: 10px;
+}
+
+#submit-col .md p {
+  margin-bottom: 0 !important;
+}
+
+#submit-card {
+  padding: 12px 18px;
+}
+
+submit-content iframe {
+  max-width: 650px;
 }
 
 /************************
@@ -725,6 +786,65 @@ Submit Post Thumbnails
   background-position: 0px -1211px;
   background-repeat: no-repeat;
   height: 50px;
+}
+
+/************************
+Search
+************************/
+
+#search-header h3 {
+  text-align: center;
+  font-weight: bold;
+}
+
+#results-table {
+  margin-top: 20px;
+}
+
+#results-found {
+  font-size: 16px;
+}
+
+#results-card {
+  padding: 3px 15px 3px 20px;
+}
+
+#results-card .col-md-1 {
+  margin-top: 2px;
+  text-align: right;
+}
+
+#results-card .col-md-11 {
+  margin-top: 8px;
+}
+
+#results-comment .card, #results-submit .card {
+  border: none;
+}
+
+#results-comment #comment-card {
+  padding: 0 !important;
+}
+
+#results-table #comment-card:hover, #results-table .card-action:hover  {
+  background: none;
+}
+
+#results-submit #post-header {
+  padding-left: 0;
+  margin-left: -5px;
+}
+
+#results-submit #submit-col {
+  margin-left: 100px;
+}
+
+#results-sub {
+  font-size: 17px;
+}
+
+#results-submit .submit-pic {
+  width: 60%;
 }
 
 /************************
@@ -815,18 +935,10 @@ Mobile
     display: block;
   }
 
-  #num-subs {
+  .num-subs {
     margin-left: 0;
     margin-top: 10px;
     float: left;
-  }
-
-  #github-icon {
-    display: none;
-  }
-
-  .nav-link {
-    text-align: right;
   }
 
   .navbar-brand {
@@ -841,11 +953,25 @@ Mobile
     padding: 16px 10px;
   }
 
+  #results-accordion .panel-body {
+    padding: 10px;
+  }
+
   #submit-col {
     width: 100%;
     padding: 0;
     margin-left: 0;
     border: none;
+  }
+
+  #submit-card {
+    padding: 10px 3px;
+  }
+
+  #results-submit #submit-col {
+    margin-left: 0;
+    padding-left: 12px;
+    padding-right: 5px;
   }
 }
 
@@ -891,12 +1017,21 @@ Mobile
   }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 768px) {
   #submit-card {
     padding-bottom: 0;
   }
 
   .submit-pic {
     max-width: 100%;
+  }
+
+  #results-submit #post-header {
+    padding-left: 15px;
+    margin-left: 0;
+  }
+
+  #results-card .col-md-1 {
+    text-align: center;
   }
 }

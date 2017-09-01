@@ -29,6 +29,9 @@
           return user;
         });
         return promise;
+      },
+      getUser: function() {
+        return user;
       }
     };
   }]);

@@ -24,7 +24,7 @@ var getData = function(route, factory, storage) {
   if (storage.userExists(username)) {
     return null;
   } else {
-    var promise = factory.getData(username);  
+    var promise = factory.getData(username); 
     return promise;
   }
 };
@@ -50,6 +50,16 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
       templateUrl: 'views/user.html',
       controller: 'UserCtrl',
       controllerAs: 'user',
+      resolve: {
+        subsData: function($route, subFactory, checkStorage) {
+          return getData($route, subFactory, checkStorage);     
+        }
+      }
+    })
+    .when('/:username/search/', {
+      templateUrl: 'views/search.html',
+      controller: 'SearchCtrl',
+      controllerAs: 'search',
       resolve: {
         subsData: function($route, subFactory, checkStorage) {
           return getData($route, subFactory, checkStorage);     

@@ -8,8 +8,8 @@
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('UserSubCtrl', ['$scope', '$routeParams', '$window', '$filter', 'rank', 'subsData', 'search', 
-    function ($scope, $routeParams, $window, $filter, rank, subsData, search) {
+  .controller('UserSubCtrl', ['$scope', '$routeParams', '$window', '$filter', 'rank', 'subsData', 'search', 'subFactory', 
+    function ($scope, $routeParams, $window, $filter, rank, subsData, search, subFactory) {
     
       $window.scrollTo(0, 0);
 
@@ -20,9 +20,7 @@ angular.module('SubSnoopApp')
       $scope.username = $routeParams.username;
 
       if (subsData) {
-        sessionStorage.user = subsData.user.name;
-        sessionStorage.sort = JSON.stringify({value: 'subName', name: 'Subreddit name'});
-        sessionStorage.subData = JSON.stringify(subsData);
+        sessionStorage.sort = JSON.stringify(subFactory.getDefaultSort());
       } else {
         subsData = JSON.parse(sessionStorage.subData);
       }

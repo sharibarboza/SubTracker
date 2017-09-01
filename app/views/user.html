@@ -13,7 +13,7 @@
           <div class="row">
             <div class="col-md-8">
               <i class="fa fa-3x fa-reddit"></i>
-              <a href="https://www.reddit.com/user/{{ username }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span></a> <span class="badge" id="num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
+              <a href="https://www.reddit.com/user/{{ username }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span></a> <span class="badge num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
             </div>
           </div>
         </div>
@@ -38,7 +38,7 @@
                 <md-input-container>
                   <label for="testInput" class="gray"><i class="glyphicon glyphicon-search" aria-hidden="true"></i> Search for a sub</label>
                   <input type="text" id="testInput"
-                         ng-model="search" ng-change="changeSubs(search)" md-autofocus>
+                         ng-model="searchSub" ng-change="changeSubs(searchSub)" md-autofocus>
                 </md-input-container>
                 <button type="submit" style="display: none;" ng-controller="SidebarCtrl" ng-click="close()">Go!</button>
               </form>

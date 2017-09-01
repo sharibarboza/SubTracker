@@ -36,18 +36,27 @@ angular.module('SubSnoopApp')
     var changeSize = function(html) {
       html = html.replace(/width="\d+"/g, 'width="100%"');
       return html;
-    }
+    };
+
+    var highlightHtml = function(page, html, data) {
+      if (page === 'search' && data.highlighted_body) {
+        return $filter('sanitize')(data.highlighted_body);
+      } else {
+        return $filter('sanitize')(html);
+      }
+    };
  
     return {
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         var data = JSON.parse(attrs.data);
+        var page = attrs.page;
 
         var getTemplate = function(data) {
           if (data.selftext_html) {
-            return $filter('sanitize')(data.selftext_html);
+            return highlightHtml(page, data.selftext_html, data);
           } else if (data.html) {
-            return $filter('sanitize')(data.html);
+            return highlightHtml(page, data.html, data);
           } else if (isLinkedImage(data)) {
             return '<a href="' + data.url +'" target="_blank">' + data.url + '</a><br><img class="submit-pic" ng-src="' + data.url + '">';
           } else if (isAttachedImage(data)) {

@@ -12,8 +12,8 @@
   function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment, subsData, search) {
 
     $window.scrollTo(0, 0);
-    var defaultSort = {value: 'subName', name: 'Subreddit name'};
-
+    $scope.inputUser = $routeParams.username;
+    var defaultSort = subFactory.getDefaultSort();
     $scope.main = false;
     $scope.page = 'user';
     $scope.sort = defaultSort;
@@ -40,9 +40,10 @@
       $scope.subLength = $scope.subsArray.length;
 
       if (store) {
-        sessionStorage.subData = JSON.stringify(response);
         sessionStorage.sort = JSON.stringify(defaultSort);
       }
+
+      subFactory.setSubs($scope.subs);
     };
 
     $scope.setSortOption = function() {

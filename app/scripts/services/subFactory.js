@@ -23,6 +23,8 @@
     var submitData = [];
     var after = "0";
 
+    var subsData = {};
+
     var resetData = function() {
       // Reset all data to empty lists (used for getting a new user)
       comments = [];
@@ -44,6 +46,7 @@
       data.link_title = comment.link_title;
       data.link_author = comment.link_author;
       data.link_url = comment.link_url;
+      data.body = comment.body;
       data.body_html = comment.body_html;
       data.link_permalink = comment.link_permalink;
       data.gilded = comment.gilded;
@@ -65,6 +68,7 @@
       data.html = submit.html;
       data.ups = submit.ups;
       data.num_comments = submit.num_comments;
+      data.selftext = submit.selftext;
       data.selftext_html = submit.selftext_html;
       data.thumbnail = submit.thumbnail;
       data.thumbnail_width = submit.thumbnail_width;
@@ -222,7 +226,9 @@
         } else if (!comment && submit) {
           latest.push(submit);
           submit_index += 1;
-        } 
+        } else {
+          break;
+        }
       }
 
       return latest;
@@ -245,7 +251,6 @@
       if (response) {
         var after = response.after;
         var data = response.children;
-
         for (var i = 0; i < data.length; i++) {
           if (where === 'comments') {
             var comment = buildComment(data[i].data);
@@ -277,7 +282,6 @@
 
     var promiseChain = function(where, callback) {
       var promise = getJSONP(where, callback);
-
       for (var i = 0; i < pages; i++) {
         promise = getPromise(where, callback, promise, i);
       }
@@ -304,7 +308,13 @@
         'firstDate' : dataAvailable,
         'latest' : getLatest()
       }
+      cacheData(subData, response);
       return subData;
+    };
+
+    var cacheData = function(data) {
+      sessionStorage.user = data.name;
+      sessionStorage.subData = JSON.stringify(data);
     };
 
     return {
@@ -318,6 +328,7 @@
           if (response !== "") {
             var commentPromise = promiseChain('comments', 'commentsCallback');
             var submitPromise = promiseChain('submitted', 'submitsCallback');
+
             var dataPromise = $q.all([commentPromise, submitPromise]).then(function() {
               return getSubData(response);
             });
@@ -327,6 +338,15 @@
           }
         });
         return testPromise;
+      },
+      setSubs: function(data) {
+        subsData = data;
+      },
+      getSubs: function() {
+        return subsData;
+      },
+      getDefaultSort: function() {
+        return {value: 'subName', name: 'Subreddit name'};
       }
     };
   }]);
