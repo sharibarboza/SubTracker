@@ -55,7 +55,7 @@
     </div>
     <div class="card-action pad-card" ng-repeat="element in latest">
       <p><strong class="green">r/{{ element.subreddit }}</strong> <span class="gray small-font">(<span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>)</span></p> 
-      <submit data="{{ element }}"></submit>
+      <side-post data="{{ element }}"></side-post>
     </div>
   </div>
 

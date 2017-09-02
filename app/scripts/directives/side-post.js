@@ -4,12 +4,12 @@
  * @ngdoc directive
  * @name SubSnoopApp.directive:submit
  * @description
- * # submit
+ * # sidePost
  */
 angular.module('SubSnoopApp')
-  .directive('submit', function () {
+  .directive('sidePost', function () {
     return {
-      templateUrl: 'views/submit.html',
+      templateUrl: 'views/side-post.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
         scope.submit = JSON.parse(attrs.data);
