@@ -42,7 +42,6 @@
   },
   "dependencies": {
     "angular-moment": "^1.0.1",
-    "moment": "^2.18.1",
-    "snoowrap": "^1.14.2"
+    "moment": "^2.18.1"
   }
 }
