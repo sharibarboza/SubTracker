@@ -55,6 +55,10 @@ a {
   color: #696969;
 }
 
+.main-color {
+  color: #383838;
+}
+
 .badge, .label {
   background-color: #919191;
 }
@@ -65,6 +69,10 @@ a {
 
 .btn:focus, .btn:active {
   outline: none !important;
+}
+
+.low-weight {
+  font-weight: 400;
 }
 
 .alert {
@@ -199,8 +207,11 @@ md-option {
 }
 
 md-select-menu md-content md-option[selected] {
-  color: white !important;
   background-color: #5552B3 !important;
+}
+
+md-select-menu md-content md-option[selected] strong {
+  color: white;
 }
 
 .md-select-menu-container {
@@ -481,6 +492,10 @@ User Page
 
 .option-pos {
   margin-top: 1px;
+}
+
+#table-head {
+  padding-top: 0;
 }
 
 /************************

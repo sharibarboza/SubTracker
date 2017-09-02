@@ -23,12 +23,16 @@
         <div ng-include src="'views/user-sidebar.html'"></div>
         <div class="col-md-8 col-md-pull-4 sub-rows">
 
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><strong><i class="fa fa-arrow-left gray" aria-hidden="true"></i> <a class="purple" href="/">Back to main page</a></strong></li>
+          </ol>
+
           <div class="row" id="table-head">
             <div class="col-xs-6">
               <form name="myForm">
                 <md-select ng-model="sortData.selectedSort" placeholder="{{ sortData.selectedSort.name }}" ng-change="setSortOption()">
                   <md-option ng-repeat="sort in sortData.sortOptions" ng-value="sort" ng-selected="sort.value == sortData.selectedSort.value">
-                    <strong class="gray">{{ sort.name }}</strong>
+                    <strong class="main-color low-weight">{{ sort.name }}</strong>
                   </md-option>
                 </md-select>
               </form>
@@ -36,7 +40,7 @@
             <div class="col-xs-6 option-pos" align="right">
               <form>
                 <md-input-container>
-                  <label for="testInput" class="gray"><i class="glyphicon glyphicon-search" aria-hidden="true"></i> Search for a sub</label>
+                  <label for="testInput" class="main-color low-weight"><i class="glyphicon glyphicon-search" aria-hidden="true"></i> Search for a sub</label>
                   <input type="text" id="testInput"
                          ng-model="searchSub" ng-change="changeSubs(searchSub)" md-autofocus>
                 </md-input-container>
