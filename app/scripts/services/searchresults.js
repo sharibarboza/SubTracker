@@ -49,47 +49,34 @@ angular.module('SubSnoopApp')
         var title = null;
         var terms = searchInput.split(' ');
 
-        var bodyMatch = false;
-        var titleMatch = false;
+        var highlighted_title = null;
 
         if (where === 'comments') {
           body = $filter('escape')(item.body_html);
+          title = item.link_title;
         } else if (item.selftext_html) {
           body = item.selftext_html;
         }
 
-        if (where === 'comments') {
-          title = item.link_title;
-        } else {
+        if (where === 'submissions') {
           title = item.title;
-        }
-
-        if (body) {
-          bodyMatch = matchText(terms, body);
-        }
-
-        if (title) {
-          titleMatch = matchText(terms, title);
-        }
+        } 
 
         /* Reset highlighted html */
         item = resetHighlighted(item);
+        var match = highlightTerms(terms, body, title, where);
 
-        if (bodyMatch || titleMatch) {
-          var highlighted_body = highlightTerms(terms, body);
-          if (highlighted_body) {
-            item = replaceBody(highlighted_body, item, where);
+        if (match) {
+          if ('body' in match) {
+            item = replaceBody(match.body, item, where);
           }
 
-          var highlighted_title = highlightTerms(terms, title);
-          if (highlighted_title) {
-            item = replaceTitle(highlighted_title, item, where);
+          if ('title' in match) {
+            item = replaceTitle(match.title, item, where);
           }
-
-          if (highlighted_body || highlighted_title) {
-            dataList.push(item);
-          }
+          dataList.push(item);
         }
+
       }
 
       return dataList;
@@ -106,16 +93,6 @@ angular.module('SubSnoopApp')
       return item;
     };
 
-    var matchText = function(terms, body) {
-      for (var i = 0; i < terms.length; i++) {
-        var term = terms[i].toLowerCase();
-        if (body.toLowerCase().indexOf(term) < 0) {
-          return false;
-        }
-      }
-      return true;
-    };
-
     var replaceBody = function(text, item, where) {
       item.highlighted_body = text;
       return item;
@@ -128,19 +105,42 @@ angular.module('SubSnoopApp')
 
     var isMatch = function(text, term) {
       var regexp = new RegExp('<span class="highlight">'+ term +'</span>', 'gi');
-      return regexp.exec(text);
+      return regexp.exec(text.toLowerCase());
     };
 
-    var highlightTerms = function(terms, body) {
+    var highlightTerms = function(terms, body, title, where) {
+      var matched_terms = [];
+
       for (var i = 0; i < terms.length; i++) {
         var term = terms[i];
         body = $filter('highlight')(body, term);
 
-        if (!body || !(isMatch(body, term))) {
+        if (body && isMatch(body, term)) {
+          matched_terms.push(term);
+        }
+      }
+
+      if (where === 'submissions') {
+        for (var i = 0; i < terms.length; i++) {
+          var term = terms[i];
+          title = $filter('highlight')(title, term);
+          if (title && isMatch(title, term)) {
+            matched_terms.push(term);
+          }
+        }
+      }
+
+      for (var i = 0; i < terms.length; i++) {
+        if (matched_terms.indexOf(terms[i]) < 0) {
           return null;
         }
       }
-      return body;
+
+      if (where === 'comments') {
+        return {'body': body};
+      } else {
+        return {'body': body, 'title': title};
+      }
     };
 
 

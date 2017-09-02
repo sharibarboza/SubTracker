@@ -48,30 +48,35 @@ angular.module('SubSnoopApp')
  
     return {
       restrict: 'E',
+      scope: {
+          data: '@'
+      },
       link: function postLink(scope, element, attrs) {
-        var data = JSON.parse(attrs.data);
-        var page = attrs.page;
+        scope.$watch('data', function() {
+          var data = JSON.parse(attrs.data);
+          var page = attrs.page;
 
-        var getTemplate = function(data) {
-          if (data.selftext_html) {
-            return highlightHtml(page, data.selftext_html, data);
-          } else if (data.html) {
-            return highlightHtml(page, data.html, data);
-          } else if (isLinkedImage(data)) {
-            return '<a href="' + data.url +'" target="_blank">' + data.url + '</a><br><img class="submit-pic" ng-src="' + data.url + '">';
-          } else if (isAttachedImage(data)) {
-            return '<img class="submit-pic" ng-src="' + data.preview.images[0].source.url + '">';
-          } else if (data.media && data.media.oembed) {
-            return changeSize($filter('escape')(data.media.oembed.html));
-          } else if (isVideo(data.url)) {
-            return '<img class="submit-pic" ng-src="' + getVideoUrl(data.url) + '">';
-          } else if (data.media.reddit_video.fallback_url) {
-            return '<video width="100%" height="240" class="submit-pic" controls><source src="' + data.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
-          } 
-        };
+          var getTemplate = function(data) {
+            if (data.selftext_html) {
+              return highlightHtml(page, data.selftext_html, data);
+            } else if (data.html) {
+              return highlightHtml(page, data.html, data);
+            } else if (isLinkedImage(data)) {
+              return '<a href="' + data.url +'" target="_blank">' + data.url + '</a><br><img class="submit-pic" ng-src="' + data.url + '">';
+            } else if (isAttachedImage(data)) {
+              return '<img class="submit-pic" ng-src="' + data.preview.images[0].source.url + '">';
+            } else if (data.media && data.media.oembed) {
+              return changeSize($filter('escape')(data.media.oembed.html));
+            } else if (isVideo(data.url)) {
+              return '<img class="submit-pic" ng-src="' + getVideoUrl(data.url) + '">';
+            } else if (data.media.reddit_video.fallback_url) {
+              return '<video width="100%" height="240" class="submit-pic" controls><source src="' + data.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
+            } 
+          };
 
-        element.html(getTemplate(data));
-        $compile(element.contents())(scope);
+          element.html(getTemplate(data));
+          $compile(element.contents())(scope);
+        });
       }
     };
   }]);
