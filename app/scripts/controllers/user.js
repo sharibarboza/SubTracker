@@ -56,12 +56,16 @@
       if (subsData) {
         configUserData(subsData.user, true);
         configSubData(subsData, true);
-        $scope.sort = defaultSort;
       } else {
         subsData = JSON.parse(sessionStorage.subData);
         configUserData(subsData.user, false);
         configSubData(subsData, false);
+      }
+
+      if ('sort' in sessionStorage) {
         $scope.sort = JSON.parse(sessionStorage.sort);
+      } else {
+        $scope.sort = subFactory.getDefaultSort();
       }
 
       $scope.sortData = {

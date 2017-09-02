@@ -312,8 +312,8 @@
       return subData;
     };
 
-    var cacheData = function(data) {
-      sessionStorage.user = data.name;
+    var cacheData = function(data, user) {
+      sessionStorage.user = username;
       sessionStorage.subData = JSON.stringify(data);
     };
 
