@@ -10,7 +10,7 @@
       <strong class="green" align="center" id="search-header"><h3>Search in <span class="purple">{{ username }}'s</span> comments and submissions</h3></strong>
       <br>
       <div id="search-input">
-        <form ng-submit="searchResults(0)" search="true" handle-phone-submit>
+        <form ng-submit="searchResults(0)" page="{{ page }}" handle-phone-submit>
           <div class="input-group col-md-8 col-md-offset-2">
             <input type="text" class="form-control" ng-model="searchInput" placeholder="Search for ..." required>
             <span class="input-group-btn">
