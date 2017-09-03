@@ -177,6 +177,10 @@ blockquote {
   border-radius: 2px;
 }
 
+.btn-sm {
+  padding: 2px 10px;
+}
+
 .btn-sm:hover {
   background-color: #1DB3B0;
   color: white;
