@@ -26,8 +26,8 @@ angular.module('SubSnoopApp')
     $scope.noResults = "";
 
     var resetFilters = function() {
-      $scope.results = {};
-      $scope.resultList = $filter('sortSubs')($scope.subsArray, 'subName', $scope.dataSubs);
+      $scope.results = {'data':{}};
+      $scope.resultList = [];
       $scope.type = 1;
       $scope.subs = [];
     };
@@ -41,48 +41,62 @@ angular.module('SubSnoopApp')
         } else if ($scope.type === 3) {
           typeStr = 'submissions';
         }
-        return 'Sorry, no results could be found for "' + $scope.searchInput + '" in ' + $scope.username + "'s " + typeStr + '.';
-      }
-    };
 
-    var getFilteredSubs = function() {
-      var filteredSubs = [];
-      for (var i = 0; i < $scope.resultList.length; i++) {
-        var key = $scope.resultList[i];
-        if ($scope.subs.length == 0 || $scope.subs.indexOf(key) >= 0) {
-          filteredSubs.push(key);
+        var subStr = '';
+        if ($scope.subs.length > 0) {
+          subStr += 'in [';
+          for (var i = 0; i < $scope.subs.length; i++) {
+            var sub = '/r/' + $scope.subs[i]
+            subStr += sub;
+            if (i < $scope.subs.length - 1) {
+              subStr += ', '
+            }
+          }
+          subStr += ']'
         }
-      }
-      return filteredSubs;
-    }
 
-    var pushSub = function(sub) {
-      var index = $scope.subs.indexOf(sub);
-      if (index >= 0) {
-        $scope.subs.splice(index, 1);
-      } else {
-        $scope.subs.push(sub);
+        return 'Sorry, no results could be found ' + subStr + ' for "' + $scope.searchInput + '" in ' + $scope.username + "'s " + typeStr + '.';
       }
     };
 
-    $scope.searchResults = function(type) {
-      if (typeof type === "string") {
-        pushSub(type);
-      } else if (type === 0) {
-        resetFilters();
+    $scope.addSub = function(sub) {
+      var subIndex = $scope.subs.indexOf(sub);
+      if (subIndex < 0) {
+        $scope.subs.push(sub);
       } else {
-        $scope.type = type;
+        $scope.subs.splice(subIndex, 1);
       }
+      $scope.filterResults($scope.type);
+    };
 
+    $scope.deselect = function() {
+      $scope.subs = [];
+      $scope.filterResults($scope.type);
+    };
+
+    $scope.filterResults = function(type) {
+      $scope.type = type;
+      $scope.results = $filter('search')($scope.origResults, type, $scope.subs);
+      $scope.resultList = $filter('sortSubs')(Object.keys($scope.results.data), 'subName', $scope.results.data);
+      $scope.noResults = getNotFoundMsg();
+    };
+
+    $scope.checkType = function(type) {
+      return $scope.type === type;
+    };
+
+    $scope.checkSub = function(sub) {
+      return $scope.subs.indexOf(sub) >= 0;
+    };
+
+    $scope.searchResults = function() {
       $scope.searching = true;
       $timeout(function() { 
-        $scope.results = searchResults.getData($scope.searchInput, $scope.dataSubs, $scope.type, $scope.subs);
-        $scope.resultList = $filter('sortSubs')(Object.keys($scope.results.data), 'subName', $scope.results.data);
+        resetFilters();
+        $scope.origResults = searchResults.getData($scope.searchInput, $scope.dataSubs, $scope.type, $scope.subs);
 
-        $scope.filteredList = getFilteredSubs();
+        $scope.filterResults(1);
         $scope.searching = false;
-
-        $scope.noResults = getNotFoundMsg();
       }, 200);
     };
 

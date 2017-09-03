@@ -4,22 +4,23 @@
 
     <div class="side-stats">
       <div class="radio">
-        <label><input type="radio" name="type" ng-model="type" ng-value="1" ng-change="searchResults(1)">All post types</label>
+        <label><input type="radio" name="type" ng-model="type" ng-value="1" ng-click="filterResults(1)" ng-checked="checkType(1)">All post types</label>
       </div>
       <div class="radio">
-        <label><input type="radio" name="type" ng-model="type" ng-value="2" ng-change="searchResults(2)">Comments only ({{ results.comments }} found)</label>
+        <label><input type="radio" name="type" ng-model="type" ng-value="2" ng-click="filterResults(2)" ng-checked="checkType(2)">Comments only ({{ results.comments }} found)</label>
       </div>
       <div class="radio">
-        <label><input type="radio" name="type" ng-model="type" ng-value="3" ng-change="searchResults(3)">Submissions only ({{ results.submissions }} found)</label>
+        <label><input type="radio" name="type" ng-model="type" ng-value="3" ng-click="filterResults(3)" ng-checked="checkType(3)">Submissions only ({{ results.submissions }} found)</label>
       </div>
     </div>
 
     <br>
     <strong class="purple">Only Search In:</strong>
     <br>
-    <div ng-repeat="subname in resultList" ng-if="results.data[subname].count > 0" class="side-stats">
+    <button class="btn btn-sm" ng-click="deselect()">Deselect All</button>
+    <div ng-repeat="subname in resultList" class="side-stats">
       <div class="checkbox">
-        <label><input type="checkbox" ng-value="subname" ng-model="checkedSub" ng-change="searchResults(subname)">/r/{{ subname }}</label>
+        <label><input type="checkbox" ng-model="checkedSub" ng-value="subname" ng-click="addSub(subname)" ng-checked="checkSub(subname)">/r/{{ subname }}</label>
       </div>
     </div>
   </div>
