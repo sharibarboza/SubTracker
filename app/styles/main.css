@@ -303,17 +303,17 @@ Content
   color: white;
   background-image: url('../images/icon-bg.png');
   background-position: 0 50%;
-  padding-top: 15px;
-  padding-bottom: 10px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   font-weight: 700;
 }
 
 .sub-banner {
   color: white;
   background-image: url('../images/icon-bg.png');
-  background-position: 0 30%;
-  padding-top: 15px;
-  padding-bottom: 10px;
+  background-position: 0 20%;
+  padding-top: 30px;
+  padding-bottom: 30px;
   font-weight: 700; 
 }
 
@@ -811,7 +811,7 @@ Search
 
 #search-header h3 {
   text-align: center;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 #search-input {
@@ -909,7 +909,7 @@ Mobile
 }
 
 @media screen and (max-width: 768px) {
-  .navbar-default, #searchbar {
+  .navbar-default, #searchbar, #search-content .breadcrumb {
     padding-left: 10px;
     padding-right: 10px;
   }

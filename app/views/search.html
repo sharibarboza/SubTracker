@@ -5,19 +5,21 @@
   <div class="content" layout="column" ng-cloak>
 
     <div ng-include src="'views/sidenav.html'"></div>
-    <div ng-controller='SearchCtrl' class="table-pad" id="search-content">
-      <br>
-      <strong class="green" align="center" id="search-header"><h3>Search in <span class="purple">{{ username }}'s</span> comments and submissions</h3></strong>
-      <br>
-      <div id="search-input">
-        <form ng-submit="searchResults(0)" page="{{ page }}" handle-phone-submit>
-          <div class="input-group col-md-8 col-md-offset-2">
-            <input type="text" class="form-control" ng-model="searchInput" placeholder="Search for ..." required>
-            <span class="input-group-btn">
-              <button class="btn btn-info" type="submit"><i class="glyphicon glyphicon-search" aria-hidden="true"></i></button>
-            </span>
-          </div>
-        </form>
+    <div ng-controller='SearchCtrl'>
+      <div class="sub-banner">
+        <br>
+        <strong align="center" id="search-header"><h3>Search in <span class="green">{{ username }}'s</span> comments and submissions</h3></strong>
+        <br>
+        <div id="search-input">
+          <form ng-submit="searchResults(0)" page="{{ page }}" handle-phone-submit>
+            <div class="input-group col-md-8 col-md-offset-2">
+              <input type="text" class="form-control" ng-model="searchInput" placeholder="Search for ..." required>
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="submit"><i class="glyphicon glyphicon-search" aria-hidden="true"></i></button>
+              </span>
+            </div>
+          </form>
+        </div>
       </div>
 
       <br><br>
@@ -25,66 +27,68 @@
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
 
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><strong><i class="fa fa-arrow-left gray" aria-hidden="true"></i> <a class="purple" href="#/{{ username }}">Back to subreddits</a></strong></li>
-      </ol>
-    
-      <br>
-      <div align="center" ng-if="results.len">
-        <span class="gray">Found {{ results.len }} <ng-pluralize count="results.len" when="{'1': 'result', 'other': 'results'}"></ng-pluralize> in {{ results.subs }} <ng-pluralize count="results.subs" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
-      </div>
-      <div align="center" ng-if="results.len == 0">
-        <span>{{ noResults }}</span>
-      </div>
+      <div class="table-pad" id="search-content">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><strong><i class="fa fa-arrow-left gray" aria-hidden="true"></i> <a class="purple" href="#/{{ username }}">Back to subreddits</a></strong></li>
+        </ol>
+      
+        <br>
+        <div align="center" ng-if="results.len">
+          <span class="gray">Found {{ results.len }} <ng-pluralize count="results.len" when="{'1': 'result', 'other': 'results'}"></ng-pluralize> in {{ results.subs }} <ng-pluralize count="results.subs" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
+        </div>
+        <div align="center" ng-if="results.len == 0">
+          <span>{{ noResults }}</span>
+        </div>
 
-      <div class="row" ng-if="results.len" id="results">
+        <div class="row" ng-if="results.len" id="results">
 
-        <div ng-include src="'views/search-sidebar.html'"></div>
-        <div class="col-md-9 col-md-pull-3" id="results-table">
+          <div ng-include src="'views/search-sidebar.html'"></div>
+          <div class="col-md-9 col-md-pull-3" id="results-table">
 
-          <div ng-repeat="sub in filteredList" ng-if="results.data[sub].count > 0">
-            <accordion class="accordion" id="results-accordion">
-              <accordion-group ng-init="status = {isOpen: false}" is-open="status.isOpen">
+            <div ng-repeat="sub in filteredList" ng-if="results.data[sub].count > 0">
+              <accordion class="accordion" id="results-accordion">
+                <accordion-group ng-init="status = {isOpen: false}" is-open="status.isOpen">
 
-                <accordion-heading>
-                  <div class="card">
-                    <div class="card-content row" id="results-card">
-                      <div class="col-md-11">
-                        <strong id="results-sub">/r/{{ sub }}</strong> <span class="green" id="results-found">(<ng-pluralize count="results.data[sub].count" when="{'1': '1 result', 'other': '{{ results.data[sub].count | number }} results'}"></ng-pluralize> found)</span>
-                      </div>
-                      <div class="col-md-1" align="center">
-                        <i class="fa fa-2x fa-angle-down" aria-hidden="true" id="results-chevron"></i>
+                  <accordion-heading>
+                    <div class="card">
+                      <div class="card-content row" id="results-card">
+                        <div class="col-md-11">
+                          <strong id="results-sub">/r/{{ sub }}</strong> <span class="green" id="results-found">(<ng-pluralize count="results.data[sub].count" when="{'1': '1 result', 'other': '{{ results.data[sub].count | number }} results'}"></ng-pluralize> found)</span>
+                        </div>
+                        <div class="col-md-1" align="center">
+                          <i class="fa fa-2x fa-angle-down" aria-hidden="true" id="results-chevron"></i>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </accordion-heading>
+                  </accordion-heading>
 
-                <div class="card-action">
-                  <span class="post-links" ng-if="results.data[sub].commentsCount > 0">
-                    <span class="badge results-badge"><ng-pluralize count="results.data[sub].commentsCount" when="{'1': '1 comment', 'other': '{{ results.data[sub].commentsCount | number }} comments'}"></ng-pluralize></span>
-                  </span>
+                  <div class="card-action">
+                    <span class="post-links" ng-if="results.data[sub].commentsCount > 0">
+                      <span class="badge results-badge"><ng-pluralize count="results.data[sub].commentsCount" when="{'1': '1 comment', 'other': '{{ results.data[sub].commentsCount | number }} comments'}"></ng-pluralize></span>
+                    </span>
 
-                  <span class="post-links" ng-if="results.data[sub].submitsCount > 0">
-                    <span class="badge results-badge"><ng-pluralize count="results.data[sub].submitsCount" when="{'1': '1 submission', 'other': '{{ results.data[sub].submitsCount | number }} submissions'}"></ng-pluralize></span>
-                  </span>
-                  <br><br>
+                    <span class="post-links" ng-if="results.data[sub].submitsCount > 0">
+                      <span class="badge results-badge"><ng-pluralize count="results.data[sub].submitsCount" when="{'1': '1 submission', 'other': '{{ results.data[sub].submitsCount | number }} submissions'}"></ng-pluralize></span>
+                    </span>
+                    <br><br>
 
-                  <h4 class="purple" ng-if="results.data[sub].commentsCount> 0"><strong>Comments</strong></h4>
-                  <div ng-repeat="element in results.data[sub].comments" id="{{ sub }}-comments">
-                    <span class="gray small-font" ng-bind="comment.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>
+                    <h4 class="purple" ng-if="results.data[sub].commentsCount> 0"><strong>Comments</strong></h4>
+                    <div ng-repeat="element in results.data[sub].comments" id="{{ sub }}-comments">
+                      <span class="gray small-font" ng-bind="comment.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>
+                      <br>
+                      <div ng-include src="'views/comment.html'" id="results-comment"></div>
+                      <hr>
+                    </div>
+
                     <br>
-                    <div ng-include src="'views/comment.html'" id="results-comment"></div>
-                    <hr>
+                    <h4 class="purple"><strong ng-if="results.data[sub].submitsCount > 0">Submitted</strong></h4>
+                    <div ng-repeat="element in results.data[sub].submissions" id="{{ sub }}-submits">
+                      <div ng-include src="'views/submission.html'" id='results-submit'></div>
+                    </div>
                   </div>
-
-                  <br>
-                  <h4 class="purple"><strong ng-if="results.data[sub].submitsCount > 0">Submitted</strong></h4>
-                  <div ng-repeat="element in results.data[sub].submissions" id="{{ sub }}-submits">
-                    <div ng-include src="'views/submission.html'" id='results-submit'></div>
-                  </div>
-                </div>
-              </accordion-group>
-            </accordion>
+                </accordion-group>
+              </accordion>
+            </div>
           </div>
         </div>
       </div>

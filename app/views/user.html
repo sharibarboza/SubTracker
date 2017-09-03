@@ -28,7 +28,7 @@
           </ol>
 
           <div class="row" id="table-head">
-            <div class="col-xs-6">
+            <div class="col-md-6">
               <form name="myForm">
                 <md-select ng-model="sortData.selectedSort" placeholder="{{ sortData.selectedSort.name }}" ng-change="setSortOption()">
                   <md-option ng-repeat="sort in sortData.sortOptions" ng-value="sort" ng-selected="sort.value == sortData.selectedSort.value">
