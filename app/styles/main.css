@@ -303,17 +303,17 @@ Content
   color: white;
   background-image: url('../images/icon-bg.png');
   background-position: 0 50%;
-  padding-top: 15px;
-  padding-bottom: 10px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   font-weight: 700;
 }
 
 .sub-banner {
   color: white;
   background-image: url('../images/icon-bg.png');
-  background-position: 0 30%;
-  padding-top: 15px;
-  padding-bottom: 10px;
+  background-position: 0 20%;
+  padding-top: 30px;
+  padding-bottom: 30px;
   font-weight: 700; 
 }
 
@@ -887,7 +887,7 @@ Footer
 }
 
 /************************
-Mobile
+Responsive
 ************************/
 
 /* Responsive: Portrait tablets and up */
