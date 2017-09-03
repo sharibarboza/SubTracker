@@ -19,7 +19,7 @@ angular.module('SubSnoopApp')
           textFields[0].blur();
           var username = textFields[0].value;
 
-          if (page !== 'search') {
+          if (attrs.redirect === 'true') {
             $window.location.assign('#/' + username + '/');
             scope.$apply();
           }
