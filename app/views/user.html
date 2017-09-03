@@ -10,12 +10,8 @@
     <div>
       <div class="sub-banner">
         <div class="table-pad">
-          <div class="row">
-            <div class="col-md-8">
-              <i class="fa fa-3x fa-reddit"></i>
-              <a href="https://www.reddit.com/user/{{ username }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span></a> <span class="badge num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
-            </div>
-          </div>
+          <i class="fa fa-3x fa-reddit"></i>
+          <a href="https://www.reddit.com/user/{{ username }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span></a> <span class="badge num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
         </div>
       </div>
       

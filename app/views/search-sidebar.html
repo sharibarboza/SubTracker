@@ -4,13 +4,13 @@
 
     <div class="side-stats">
       <div class="radio">
-        <label><input type="radio" name="type" ng-model="type" ng-value="1" ng-change="searchResults(1)">All post types</label>
+        <label><input type="radio" name="type" ng-model="type" ng-value="1" ng-change="filterResults(1)">All post types</label>
       </div>
       <div class="radio">
-        <label><input type="radio" name="type" ng-model="type" ng-value="2" ng-change="searchResults(2)">Comments only ({{ results.comments }} found)</label>
+        <label><input type="radio" name="type" ng-model="type" ng-value="2" ng-change="filterResults(2)">Comments only ({{ results.comments }} found)</label>
       </div>
       <div class="radio">
-        <label><input type="radio" name="type" ng-model="type" ng-value="3" ng-change="searchResults(3)">Submissions only ({{ results.submissions }} found)</label>
+        <label><input type="radio" name="type" ng-model="type" ng-value="3" ng-change="filterResults(3)">Submissions only ({{ results.submissions }} found)</label>
       </div>
     </div>
 

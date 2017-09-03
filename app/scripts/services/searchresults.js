@@ -10,46 +10,24 @@
 angular.module('SubSnoopApp')
   .service('searchResults', ['$filter', function ($filter) {
     var searchInput = "";
-    var postType = 1;
-    var filterSubs = null;
 
     var getResults = function(data) {
       var newData = new Object();
       newData.data = {};
-      newData.comments = 0;
-      newData.submissions = 0;
-      newData.len = 0;
-      newData.subs = 0;
-      var comments = [], submissions = [], count;
 
       for (var key in data) {
-        var resultSub = {}, commentLen, submitLen;
+        var resultSub = {}, comments, submissions, count = 0;
 
-        resultSub.count = 0;
-        resultSub.commentsCount = 0;
-        resultSub.submitsCount = 0;
+        /* Add comments data */
+        comments = filterData(data[key], key, 'comments');
+        resultSub.comments = comments;
 
-        if (postType != 3) {
-          comments = filterData(data[key], key, 'comments');
-          resultSub.comments = comments;
-          commentLen = comments.length;
-          resultSub.commentsCount = commentLen;
-          newData.comments += commentLen;
-        }
+        /* Add submissions data */
+        submissions = filterData(data[key], key, 'submissions');
+        resultSub.submissions = submissions;
 
-        if (postType != 2) {
-          submissions = filterData(data[key], key, 'submissions');
-          resultSub.submissions = submissions;
-          submitLen = submissions.length;
-          resultSub.submitsCount = submitLen;
-          newData.submissions += submitLen;
-        }
-
-        resultSub.count = comments.length + submissions.length;
-        if (resultSub.count > 0) {
+        if (comments.length + submissions.length) {
           newData.data[key] = resultSub;
-          newData.len += resultSub.count;
-          newData.subs += 1;
         }
       }
       return newData;
@@ -164,8 +142,6 @@ angular.module('SubSnoopApp')
     return {
       getData: function(input, data, type, subs) {
         searchInput = input;
-        postType = type;
-        filterSubs = subs;
         return getResults(data);
       }
     };
