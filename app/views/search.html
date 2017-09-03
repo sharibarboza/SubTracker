@@ -36,7 +36,7 @@
           <span class="gray">Found {{ results.len }} <ng-pluralize count="results.len" when="{'1': 'result', 'other': 'results'}"></ng-pluralize> in {{ results.subs }} <ng-pluralize count="resultList.length" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
         </div>
         <div align="center" ng-if="results.len == 0">
-          <span>{{ noResults }}</span>
+          <span class="gray">{{ noResults }}</span>
         </div>
 
         <div class="row" ng-if="resultList.length" id="results">
