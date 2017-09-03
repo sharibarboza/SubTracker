@@ -30,6 +30,7 @@ angular.module('SubSnoopApp')
       $scope.resultList = [];
       $scope.type = 1;
       $scope.subs = [];
+      $scope.checkedSub = "";
     };
     resetFilters();
 
@@ -66,7 +67,6 @@ angular.module('SubSnoopApp')
       } else {
         $scope.subs.splice(subIndex, 1);
       }
-
       $scope.filterResults($scope.type);
     };
 
@@ -75,6 +75,14 @@ angular.module('SubSnoopApp')
       $scope.results = $filter('search')($scope.origResults, type, $scope.subs);
       $scope.resultList = $filter('sortSubs')(Object.keys($scope.results.data), 'subName', $scope.results.data);
       $scope.noResults = getNotFoundMsg();
+    };
+
+    $scope.checkType = function(type) {
+      return $scope.type === type;
+    };
+
+    $scope.checkSub = function(sub) {
+      return $scope.subs.indexOf(sub) >= 0;
     };
 
     $scope.searchResults = function() {
