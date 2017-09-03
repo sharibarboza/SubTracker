@@ -62,7 +62,7 @@ angular.module('SubSnoopApp')
             } else if (data.html) {
               return highlightHtml(page, data.html, data);
             } else if (isLinkedImage(data)) {
-              return '<a href="' + data.url +'" target="_blank">' + data.url + '</a><br><img class="submit-pic" ng-src="' + data.url + '">';
+              return '<img class="submit-pic" ng-src="' + data.url + '">';
             } else if (isAttachedImage(data)) {
               return '<img class="submit-pic" ng-src="' + data.preview.images[0].source.url + '">';
             } else if (data.media && data.media.oembed) {

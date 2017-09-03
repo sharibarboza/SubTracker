@@ -10,29 +10,45 @@
 angular.module('SubSnoopApp')
   .service('searchResults', ['$filter', function ($filter) {
     var searchInput = "";
+    var postType = 1;
+    var filterSubs = null;
 
     var getResults = function(data) {
       var newData = new Object();
+      newData.data = {};
+      newData.comments = 0;
+      newData.submissions = 0;
       newData.len = 0;
       newData.subs = 0;
-
-      var comments, submissions, count;
+      var comments = [], submissions = [], count;
 
       for (var key in data) {
-        comments = filterData(data[key], key, 'comments');
-        newData[key] = {};
-        newData[key].comments = comments;
-        newData[key].commentsCount = comments.length;
+        var resultSub = {}, commentLen, submitLen;
 
-        submissions = filterData(data[key], key, 'submissions');
-        newData[key].submissions = submissions;
-        newData[key].submitsCount = submissions.length;
+        resultSub.count = 0;
+        resultSub.commentsCount = 0;
+        resultSub.submitsCount = 0;
 
-        count = comments.length + submissions.length;
+        if (postType != 3) {
+          comments = filterData(data[key], key, 'comments');
+          resultSub.comments = comments;
+          commentLen = comments.length;
+          resultSub.commentsCount = commentLen;
+          newData.comments += commentLen;
+        }
 
-        newData[key].count = count;
-        newData.len += count;
-        if (count > 0) {
+        if (postType != 2) {
+          submissions = filterData(data[key], key, 'submissions');
+          resultSub.submissions = submissions;
+          submitLen = submissions.length;
+          resultSub.submitsCount = submitLen;
+          newData.submissions += submitLen;
+        }
+
+        resultSub.count = comments.length + submissions.length;
+        if (resultSub.count > 0) {
+          newData.data[key] = resultSub;
+          newData.len += resultSub.count;
           newData.subs += 1;
         }
       }
@@ -146,8 +162,10 @@ angular.module('SubSnoopApp')
 
     // Public API here
     return {
-      getData: function(input, data) {
+      getData: function(input, data, type, subs) {
         searchInput = input;
+        postType = type;
+        filterSubs = subs;
         return getResults(data);
       }
     };

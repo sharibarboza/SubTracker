@@ -1,0 +1,26 @@
+<div class="col-md-3 col-md-push-9 card search-content" id="search-side-card">
+  <div class="card-content">
+    <strong class="purple">Filter Results</strong>
+
+    <div class="side-stats">
+      <div class="radio">
+        <label><input type="radio" name="type" ng-model="type" ng-value="1" ng-change="searchResults(1)">All post types</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" name="type" ng-model="type" ng-value="2" ng-change="searchResults(2)">Comments only ({{ results.comments }} found)</label>
+      </div>
+      <div class="radio">
+        <label><input type="radio" name="type" ng-model="type" ng-value="3" ng-change="searchResults(3)">Submissions only ({{ results.submissions }} found)</label>
+      </div>
+    </div>
+
+    <br>
+    <strong class="purple">Only Search In:</strong>
+    <br>
+    <div ng-repeat="subname in resultList" ng-if="results.data[subname].count > 0" class="side-stats">
+      <div class="checkbox">
+        <label><input type="checkbox" ng-value="subname" ng-model="checkedSub" ng-change="searchResults(subname)">/r/{{ subname }}</label>
+      </div>
+    </div>
+  </div>
+</div>

@@ -82,7 +82,7 @@ a {
 }
 
 .highlight {
-  background: yellow;
+  background: #E33900;
 }
 
 /* Make the masthead heading the same height as the navigation */
@@ -185,6 +185,7 @@ md-progress-circular {
   left: 0;
   bottom: 0;
   right: 0;
+  z-index: 999;
 }
 
 md-progress-circular:before {
@@ -196,6 +197,7 @@ md-progress-circular:before {
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.3);
+  z-index: 999;
 }
 
 md-select {
@@ -210,7 +212,7 @@ md-select-menu md-content md-option[selected] {
   background-color: #5552B3 !important;
 }
 
-md-select-menu md-content md-option[selected] strong {
+md-select-menu md-content md-option[selected] span {
   color: white;
 }
 
@@ -807,9 +809,17 @@ Submit Post Thumbnails
 Search
 ************************/
 
+#search-jumbotron {
+  margin-top: 0;
+}
+
 #search-header h3 {
   text-align: center;
   font-weight: bold;
+}
+
+#search-input {
+  padding: 10px;
 }
 
 #results-table {
@@ -845,11 +855,6 @@ Search
   background: none;
 }
 
-#results-submit #post-header {
-  padding-left: 0;
-  margin-left: -5px;
-}
-
 #results-submit #submit-col {
   margin-left: 100px;
 }
@@ -858,8 +863,9 @@ Search
   font-size: 17px;
 }
 
-#results-submit .submit-pic {
-  width: 60%;
+#search-side-card {
+  margin-top: 20px;
+  padding: 10px 16px;
 }
 
 /************************
@@ -912,14 +918,15 @@ Mobile
     padding-right: 10px;
   }
 
+  #search-content, #results {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: 0;
+  }
+
   .sub-banner {
     padding-left: 5px;
     padding-right: 5px;
-  }
-
-  .container {
-    padding-left: 0;
-    padding-right: 0;
   }
 
   .sub-rows .row {
@@ -931,7 +938,7 @@ Mobile
     padding: 5px;
   }
 
-  #sub-panels {
+  .container, #results-table, #search-content, #sub-panels, #table-head [class*='col-'] {
     padding-left: 0;
     padding-right: 0;
   }
@@ -1029,6 +1036,11 @@ Mobile
 
   .pull-center {
     text-align: center !important;
+  }
+
+  #results-table {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 

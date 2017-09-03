@@ -108,12 +108,14 @@
           subs[subreddit].submission_ups = 0;
           subs[subreddit].gilded_comments = 0;
           subs[subreddit].gilded_submissions = 0;
+          subs[subreddit].count = 0;
         }
 
         if (comment.gilded > 0) {
           subs[subreddit].gilded_comments += 1;
         }
 
+        subs[subreddit].count += 1;
         subs[subreddit].recent_activity = subs[subreddit].recent_comment;
       }
     };
@@ -143,6 +145,7 @@
             subs[subreddit].comments = [];
             subs[subreddit].comment_ups = 0;
             subs[subreddit].gilded_submissions = 0;
+            subs[subreddit].count = 0;
           } 
           subs[subreddit].submissions.push(submission);
           subs[subreddit].recent_submission = moment(submission.created_utc*1000);
@@ -160,6 +163,8 @@
         } else {
           subs[subreddit].recent_activity = subs[subreddit].recent_submission;
         }
+
+        subs[subreddit].count += 1;
       }
     };
 

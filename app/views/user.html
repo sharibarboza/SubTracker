@@ -32,7 +32,7 @@
               <form name="myForm">
                 <md-select ng-model="sortData.selectedSort" placeholder="{{ sortData.selectedSort.name }}" ng-change="setSortOption()">
                   <md-option ng-repeat="sort in sortData.sortOptions" ng-value="sort" ng-selected="sort.value == sortData.selectedSort.value">
-                    <strong class="main-color low-weight">{{ sort.name }}</strong>
+                    <span class="main-color low-weight">{{ sort.name }}</span>
                   </md-option>
                 </md-select>
               </form>
