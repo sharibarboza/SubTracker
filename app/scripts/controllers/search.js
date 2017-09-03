@@ -30,7 +30,6 @@ angular.module('SubSnoopApp')
       $scope.resultList = [];
       $scope.type = 1;
       $scope.subs = [];
-      $scope.checkedSub = "";
     };
     resetFilters();
 
@@ -67,6 +66,11 @@ angular.module('SubSnoopApp')
       } else {
         $scope.subs.splice(subIndex, 1);
       }
+      $scope.filterResults($scope.type);
+    };
+
+    $scope.deselect = function() {
+      $scope.subs = [];
       $scope.filterResults($scope.type);
     };
 

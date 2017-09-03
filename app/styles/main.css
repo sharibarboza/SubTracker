@@ -173,6 +173,15 @@ blockquote {
   border-radius: 16px;
 }
 
+.btn {
+  border-radius: 2px;
+}
+
+.btn-sm:hover {
+  background-color: #1DB3B0;
+  color: white;
+}
+
 /************************
 Angular Material
 ************************/
