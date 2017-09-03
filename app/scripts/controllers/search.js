@@ -33,21 +33,20 @@ angular.module('SubSnoopApp')
     };
     resetFilters();
 
-    var getNotFoundMsg = function() {
-      if ($scope.results.len == 0) {
-        var typeStr = 'comments and submissions';
-        if ($scope.type === 2) {
-          typeStr = 'comments';
-        } else if ($scope.type === 3) {
-          typeStr = 'submissions';
-        }
-        return 'Sorry, no results could be found for "' + $scope.searchInput + '" in ' + $scope.username + "'s " + typeStr + '.';
+    $scope.addSub = function(sub) {
+      var subIndex = $scope.subs.indexOf(sub);
+      if (subIndex < 0) {
+        $scope.subs.push(sub);
+      } else {
+        $scope.subs.splice(subIndex, 1);
       }
+
+      $scope.filterResults($scope.type);
     };
 
     $scope.filterResults = function(type) {
       $scope.type = type;
-      $scope.results = $filter('search')($scope.origResults, type);
+      $scope.results = $filter('search')($scope.origResults, type, $scope.subs);
       $scope.resultList = $filter('sortSubs')(Object.keys($scope.results.data), 'subName', $scope.results.data);
     };
 
@@ -55,10 +54,9 @@ angular.module('SubSnoopApp')
       $scope.searching = true;
       $timeout(function() { 
         $scope.origResults = searchResults.getData($scope.searchInput, $scope.dataSubs, $scope.type, $scope.subs);
+
         $scope.filterResults(1);
         $scope.searching = false;
-
-        $scope.noResults = getNotFoundMsg();
       }, 200);
     };
 

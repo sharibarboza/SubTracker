@@ -33,7 +33,7 @@
       
         <br>
         <div align="center" ng-if="results.len">
-          <span class="gray">Found {{ results.len }} <ng-pluralize count="results.len" when="{'1': 'result', 'other': 'results'}"></ng-pluralize> in {{ resultList.length }} <ng-pluralize count="resultList.length" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
+          <span class="gray">Found {{ results.len }} <ng-pluralize count="results.len" when="{'1': 'result', 'other': 'results'}"></ng-pluralize> in {{ results.subs }} <ng-pluralize count="resultList.length" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
         </div>
         <div align="center" ng-if="results.len == 0">
           <span>{{ noResults }}</span>
@@ -44,7 +44,7 @@
           <div ng-include src="'views/search-sidebar.html'"></div>
           <div class="col-md-9 col-md-pull-3" id="results-table">
 
-            <div ng-repeat="sub in resultList" ng-if="(results.data[sub].comments.length) + (results.data[sub].submissions.length)">
+            <div ng-repeat="sub in resultList" ng-if="results.data[sub].comments.length || results.data[sub].submissions.length">
               <accordion class="accordion" id="results-accordion">
                 <accordion-group ng-init="status = {isOpen: false}" is-open="status.isOpen">
 

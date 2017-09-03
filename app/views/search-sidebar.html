@@ -17,9 +17,9 @@
     <br>
     <strong class="purple">Only Search In:</strong>
     <br>
-    <div ng-repeat="subname in resultList" ng-if="results.data[subname].count > 0" class="side-stats">
+    <div ng-repeat="subname in resultList" class="side-stats">
       <div class="checkbox">
-        <label><input type="checkbox" ng-value="subname" ng-model="checkedSub" ng-change="searchResults(subname)">/r/{{ subname }}</label>
+        <label><input type="checkbox" ng-value="subname" ng-model="checkedSub" ng-change="addSub(subname)">/r/{{ subname }}</label>
       </div>
     </div>
   </div>
