@@ -504,10 +504,6 @@ User Page
 User Page Side Bar
 ************************/
 
-.user-side {
-  margin-top: -115px;
-}
-
 .list-group-item, .panel-body {
   padding-top: 15px;
   padding-bottom: 15px;
@@ -1006,10 +1002,6 @@ Mobile
     width: 100%;
   }
 
-  .user-side, #sidebar {
-    margin-top: 0;
-  }
-
   #sub-panel-stats .span {
     display: block;
   }
@@ -1028,10 +1020,6 @@ Mobile
 
   #search-strip .col-xs-10 {
     margin-top: -2px;
-  }
-
-  .breadcrumb {
-    text-align: center;
   }
 
   .pull-center {
@@ -1061,4 +1049,9 @@ Mobile
   #results-card .col-md-1 {
     text-align: center;
   }
-}
+
+  #table-start .col-md-3 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+ }
