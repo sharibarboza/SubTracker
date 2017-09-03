@@ -25,14 +25,14 @@
         </ol>
         <br>
 
-        <ul class="nav nav-tabs" id="table-start">
+        <ul class="nav nav-tabs">
           <li ng-if="sub.comments.length > 0" ng-class="getActive(0)"><a href ng-click="setTab(0)">Comments <span class="badge tab-badge">{{ sub.comments.length }}</span></a></li>
           <li ng-if="sub.submissions.length > 0" ng-class="getActive(1)"><a href ng-click="setTab(1)">Submitted <span class="badge tab-badge">{{ sub.submissions.length }}</span></a></li>
         </ul>
         <br>
 
         <div class="table-options">
-          <div class="row">
+          <div class="row" id="table-start">
             <div class="col-md-3">
               <form name="sortForm">
                 <md-select ng-model="data.selectedSort" placeholder="{{ data.selectedSort.name }}" ng-change="setSortOption()">
