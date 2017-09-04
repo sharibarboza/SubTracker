@@ -18,12 +18,10 @@
     var subs = {};
     var pages = 10;
     var dataAvailable;
-
     var commentData = [];
     var submitData = [];
     var after = "0";
-
-    var subsData = {};
+    var subData = {};
 
     /*
      Reset all data to empty lists (used for getting a new user)
@@ -34,52 +32,8 @@
       subs = {};
       commentData = [];
       submitData = [];
+      subData = {};
       after = '0';
-    };
-
-    var buildComment = function(comment) {
-      var data = {};
-
-      data.type = 'comment';
-      data.id = comment.id;
-      data.subreddit = comment.subreddit;
-      data.created_utc = comment.created_utc;
-      data.ups = comment.ups;
-      data.link_title = comment.link_title;
-      data.link_author = comment.link_author;
-      data.link_url = comment.link_url;
-      data.body = comment.body;
-      data.body_html = comment.body_html;
-      data.link_permalink = comment.link_permalink;
-      data.gilded = comment.gilded;
-      data.num_comments = comment.num_comments;
-
-      return data;
-    };
-
-    var buildSubmit = function(submit) {
-      var data = {};
-
-      data.type = 'submit';
-      data.id = submit.id;
-      data.subreddit = submit.subreddit;
-      data.created_utc = submit.created_utc;
-      data.url = submit.url;
-      data.title = submit.title;
-      data.link_flair_text = submit.link_flair_text;
-      data.html = submit.html;
-      data.ups = submit.ups;
-      data.num_comments = submit.num_comments;
-      data.selftext = submit.selftext;
-      data.selftext_html = submit.selftext_html;
-      data.thumbnail = submit.thumbnail;
-      data.thumbnail_width = submit.thumbnail_width;
-      data.media = submit.media;
-      data.preview = submit.preview;
-      data.permalink = submit.permalink;
-      data.gilded = submit.gilded;
-
-      return data;
     };
 
     /*
@@ -285,12 +239,13 @@
       if (response) {
         var data = response.children;
         for (var i = 0; i < data.length; i++) {
+          var item = data[i].data;
           if (where === 'comments') {
-            var comment = buildComment(data[i].data);
-            comments.push(comment);
+            item.type = 'comment';
+            comments.push(item);
           } else {
-            var submission = buildSubmit(data[i].data);
-            submissions.push(submission);
+            item.type = 'submit';
+            submissions.push(item);
           }
         }
       }
@@ -342,13 +297,13 @@
     /*
      Configure sub data object, which will be passed to the controllers.
     */
-    var getSubData = function(response) {
+    var setSubData = function(response) {
       organizeComments(comments);
       organizeSubmitted(submissions);
       setTotalUps();
 
       getFirstDate();
-      var subData = {
+      subData = {
         'user': response,
         'comments' : comments.length,
         'submissions' : submissions.length,
@@ -356,16 +311,6 @@
         'firstDate' : dataAvailable,
         'latest' : getLatest(2)
       }
-      cacheData(subData, response);
-      return subData;
-    };
-
-    /*
-     Save data in session storage.
-    */
-    var cacheData = function(data, user) {
-      sessionStorage.user = username;
-      sessionStorage.subData = JSON.stringify(data);
     };
 
     return {
@@ -379,14 +324,14 @@
         */
         var userPromise = userFactory.getData(user);
         var testPromise = userPromise.then(function(response) {
-
           if (response !== "") {
             var commentPromise = promiseChain('comments', 'commentsCallback');
             var submitPromise = promiseChain('submitted', 'submitsCallback');
 
             // Resolve both comment and submission promises together
             var dataPromise = $q.all([commentPromise, submitPromise]).then(function() {
-              return getSubData(response);
+              setSubData(response);
+              return subData;
             });
             return dataPromise;
           } else {
@@ -395,14 +340,15 @@
         });
         return testPromise;
       },
-      setSubs: function(data) {
-        subsData = data;
+      getSubData: function() {
+        return subData;
       },
-      getSubs: function() {
-        return subsData;
-      },
-      getDefaultSort: function() {
-        return {value: 'subName', name: 'Subreddit name'};
+      checkUser: function(user) {
+        if (!username) {
+          return false;
+        } else {
+          return username.toLowerCase() === user.toLowerCase();
+        }
       }
     };
   }]);

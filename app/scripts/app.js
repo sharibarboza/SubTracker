@@ -20,9 +20,8 @@ var app = angular
 
 var getData = function(route, factory, storage) {
   var username = route.current.params.username;
-
-  if (storage.userExists(username)) {
-    return null;
+  if (factory.checkUser(username)) {
+    return factory.getSubData();
   } else {
     var promise = factory.getData(username); 
     return promise;

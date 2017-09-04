@@ -8,8 +8,8 @@
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('UserSubCtrl', ['$scope', '$routeParams', '$window', '$filter', 'rank', 'subsData', 'search', 'subFactory', 
-    function ($scope, $routeParams, $window, $filter, rank, subsData, search, subFactory) {
+  .controller('UserSubCtrl', ['$scope', '$routeParams', '$window', '$filter', 'rank', 'subsData', 'search', 'subFactory', 'sortFactory', 
+    function ($scope, $routeParams, $window, $filter, rank, subsData, search, subFactory, sortFactory) {
     
       /*
        Initalization
@@ -19,17 +19,6 @@ angular.module('SubSnoopApp')
       $scope.page = 'sub';
       $scope.subreddit = $routeParams.subreddit;
       $scope.username = $routeParams.username;
-
-      /*
-       If user's sub page is accessed directly, not from the user's main page, get the sub data from the
-       resolved promise
-       Usually, sub data will be fetched from the current session storage
-      */
-      if (subsData) {
-        sessionStorage.sort = JSON.stringify(subFactory.getDefaultSort());
-      } else {
-        subsData = JSON.parse(sessionStorage.subData);
-      }
 
       /*
        Displays activity rank and upvotes rank of the specific subreddit relative to the user's
@@ -45,7 +34,6 @@ angular.module('SubSnoopApp')
        Set up for specific subreddit
        $scope.sub contains the comments and submissions arrays
       */
-      $scope.sort = JSON.parse(sessionStorage.sort);
       $scope.subsArray = Object.keys(subsData.subs);
       $scope.sub = subsData.subs[$scope.subreddit];
 
@@ -151,6 +139,7 @@ angular.module('SubSnoopApp')
       };
       setArray();
 
+      $scope.sort = sortFactory.getSubSort();
       $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.sort.value, subsData.subs);
       $scope.changeSubs = function(term) {
         $scope.subList = [];
