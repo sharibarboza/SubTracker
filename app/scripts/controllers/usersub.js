@@ -140,7 +140,7 @@ angular.module('SubSnoopApp')
       setArray();
 
       $scope.sort = sortFactory.getSubSort();
-      $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.sort, subsData.subs);
+      $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.sort.value, subsData.subs);
       $scope.changeSubs = function(term) {
         $scope.subList = [];
         $scope.subList = search.findSubs($scope.subsArray, term);
