@@ -9,7 +9,11 @@
  */
 angular.module('SubSnoopApp')
   .service('sortNum', ['sortAlpha', 'moment', function (sortAlpha, moment) {
-    // AngularJS will instantiate a singleton by calling "new" on this function
+    
+    /*
+     Sort data numerically
+     A secondary sorting option can be added, if two items are identical
+    */
 
     var sort = function(num1, num2, a, b, reverse, secondary) {
       var val1, val2;

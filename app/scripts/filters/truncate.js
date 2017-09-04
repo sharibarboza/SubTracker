@@ -10,6 +10,10 @@
  */
 angular.module('SubSnoopApp')
   .filter('truncate', function () {
+
+    /*
+     Truncate text posts to a certain number of words
+    */
     return function (input, num) {
       var split = input.split(' ');
       var truncated_input = split.slice(0, num);

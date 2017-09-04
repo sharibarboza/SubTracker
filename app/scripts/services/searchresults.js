@@ -11,6 +11,9 @@ angular.module('SubSnoopApp')
   .service('searchResults', ['$filter', function ($filter) {
     var searchInput = "";
 
+    /*
+     Gets the user input terms and processes the search results
+    */
     var getResults = function(data) {
       var newData = new Object();
       newData.data = {};
@@ -34,6 +37,10 @@ angular.module('SubSnoopApp')
 
     };
 
+    /* 
+     Combines the process of searching for matching terms in posts while
+     also highlighting them.
+    */
     var filterData = function(data, sub, where) {
       var dataList = [];
 
@@ -61,6 +68,11 @@ angular.module('SubSnoopApp')
         var match = highlightTerms(terms, body, title, where);
 
         if (match) {
+
+          /*
+           If the post finds match that must be highlighted, store the wrapped
+           HTML text in the item object
+          */
           if ('body' in match) {
             item = replaceBody(match.body, item, where);
           }
@@ -68,6 +80,8 @@ angular.module('SubSnoopApp')
           if ('title' in match) {
             item = replaceTitle(match.title, item, where);
           }
+
+          // Add item to the results array
           dataList.push(item);
         }
 
@@ -76,6 +90,9 @@ angular.module('SubSnoopApp')
       return dataList;
     };
 
+    /*
+     Reset all highlighted data entries for a new search
+    */
     var resetHighlighted = function(item) {
       if ('highlighted_body' in item) {
         item.highlighted_body = null;
@@ -87,24 +104,43 @@ angular.module('SubSnoopApp')
       return item;
     };
 
+    /*
+     Store HTML post body text with highlighted terms
+    */
     var replaceBody = function(text, item, where) {
       item.highlighted_body = text;
       return item;
     }
 
+    /*
+     Store HTML title text with highlighted terms.
+     Used for submission titles only, not comments.
+    */
     var replaceTitle = function(text, item, where) {
       item.highlighted_title = text;
       return item;
     }
 
+    /*
+     Filtering method, used to confirm if the text has any terms that are
+     indeed highlighted.
+    */
     var isMatch = function(text, term) {
       var regexp = new RegExp('<span class="highlight">'+ term +'</span>', 'gi');
       return regexp.exec(text.toLowerCase());
     };
 
+    /*
+     Keeps track and confirms that all terms are matched in the given text. 
+     For comments, multi-word input must be matched for all terms.
+     For submissions, the matches can be spread out between the body and the title texts.
+     For example, in a search input with 2 words, the submission post is a match if one word 
+     only is found in the body but the other word is found in the title.
+    */
     var highlightTerms = function(terms, body, title, where) {
       var matched_terms = [];
 
+      // Check post body text for any matches
       for (var i = 0; i < terms.length; i++) {
         var term = terms[i];
         body = $filter('highlight')(body, term);
@@ -114,6 +150,7 @@ angular.module('SubSnoopApp')
         }
       }
 
+      // Check submission title only for any matches
       if (where === 'submissions') {
         for (var i = 0; i < terms.length; i++) {
           var term = terms[i];
@@ -124,12 +161,17 @@ angular.module('SubSnoopApp')
         }
       }
 
+      // Check that all terms are matched
       for (var i = 0; i < terms.length; i++) {
         if (matched_terms.indexOf(terms[i]) < 0) {
           return null;
         }
       }
 
+      /*
+       body and title params are each the modified HTML text containing
+       the classes to highlight the matched terms.
+      */
       if (where === 'comments') {
         return {'body': body};
       } else {
@@ -138,7 +180,6 @@ angular.module('SubSnoopApp')
     };
 
 
-    // Public API here
     return {
       getData: function(input, data, type, subs) {
         searchInput = input;

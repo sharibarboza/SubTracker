@@ -9,6 +9,12 @@
 angular.module('SubSnoopApp')
   .directive('handlePhoneSubmit', ['$window', function ($window) {
 
+    /*
+     Ensures that keyboard is automatically closed upon form submit for mobile screens.
+
+     Certain pages will have redirects to new views on some form submits such as
+     user searches on the main front page or the search bar in the top-nav.
+    */
     return {
       restrict: 'AE',
       link: function postLink(scope, element, attrs) {
@@ -20,7 +26,7 @@ angular.module('SubSnoopApp')
           var username = textFields[0].value;
 
           if (attrs.redirect === 'true') {
-            $window.location.assign('#/' + username + '/');
+            $window.location.assign('#/' + username + '/');  // Go to user's main page
             scope.$apply();
           }
         });

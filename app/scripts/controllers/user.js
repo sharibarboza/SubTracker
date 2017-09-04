@@ -11,13 +11,19 @@
  .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 'subsData', 'search',
   function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment, subsData, search) {
 
+    /*
+     Initalization
+    */
     $window.scrollTo(0, 0);
     $scope.inputUser = $routeParams.username;
-    var defaultSort = subFactory.getDefaultSort();
-    $scope.main = false;
+    $scope.main = false; // Prevent hiding of search bar in top-nav
     $scope.page = 'user';
-    $scope.sort = defaultSort;
+    $scope.sort = subFactory.getDefaultSort();
 
+    /*
+     Gets data from user's reddit about page, primarily for username, link karma, comment karma, etc.
+     Stores user in session storage
+     */
     var configUserData = function(response, store) {
       $scope.redditor = response;
       $scope.username = $scope.redditor.name
@@ -29,6 +35,11 @@
       }
     };
 
+    /*
+     Gets data from user's comments and submitted page
+     Sets up primary sub data
+     Stores sort value in session storage
+    */
     var configSubData = function(response, store) {
       $scope.comments = response.comments;
       $scope.submissions = response.submissions;
@@ -40,7 +51,7 @@
       $scope.subLength = $scope.subsArray.length;
 
       if (store) {
-        sessionStorage.sort = JSON.stringify(defaultSort);
+        sessionStorage.sort = JSON.stringify(subFactory.getDefaultSort());
       }
 
       subFactory.setSubs($scope.subs);
@@ -51,6 +62,9 @@
       setArray();
     };
 
+    /*
+     If user/sub data not stored in session storage, use data from resolved promises
+    */
     if (subsData !== "") {
       $scope.notfound = false;
       if (subsData) {
@@ -68,6 +82,9 @@
         $scope.sort = subFactory.getDefaultSort();
       }
 
+      /*
+       Used for sorting subreddits
+      */
       $scope.sortData = {
         sortOptions: [
           {value: 'subName', name: 'Subreddit name'},
@@ -83,6 +100,11 @@
         selectedSort: $scope.sort
       };
 
+      /*
+       Sorts array based on input sort value and sets up the sub array that will be display
+       on the user's main page.
+       By default, user's subs are sorted alphabetically by sub name
+      */
       var setArray = function() {
         $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.sortData.selectedSort.value, $scope.subs);
       };

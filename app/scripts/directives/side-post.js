@@ -9,6 +9,13 @@
 angular.module('SubSnoopApp')
   .directive('sidePost', function () {
     return {
+
+      /*
+       Used for displaying comment or submission posts in the side bars
+
+       On a user's main page, the most recent comments are displayed.
+       On a user's sub page, either the top comment or top submission is displayed.
+      */
       templateUrl: 'views/side-post.html',
       restrict: 'E',
       link: function postLink(scope, element, attrs) {

@@ -9,7 +9,10 @@
  */
 angular.module('SubSnoopApp')
   .service('sortAlpha', function () {
-    // AngularJS will instantiate a singleton by calling "new" on this function
+    
+    /*
+     Sort data alphabetically
+    */
 
     var sort = function(a, b) {
       a = a.toLowerCase();

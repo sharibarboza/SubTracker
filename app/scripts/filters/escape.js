@@ -11,6 +11,10 @@
 angular.module('SubSnoopApp')
   .filter('escape', function () {
 
+    /* 
+     Data response fetched from JSONP requests are automatically returned as reverse characters.
+     Must convert to character entities.
+    */
     return function (input) {
       var string = input;
       if (input) {

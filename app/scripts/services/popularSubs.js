@@ -11,6 +11,9 @@ angular.module('SubSnoopApp')
   .factory('popularSubs', ['$http', '$sce', function ($http, $sce) {
     var subreddits = [];
 
+    /*
+     Custom callback function for JSONP request
+    */
     window.popCallback = function(response) {
       var data = response.data.children;
 
@@ -19,6 +22,9 @@ angular.module('SubSnoopApp')
       }
     };
 
+    /*
+     Request the Reddit API to get popular subs
+    */
     return {
       getData: function () {
         subreddits = [];

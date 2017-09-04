@@ -10,6 +10,12 @@
  */
 angular.module('SubSnoopApp')
   .filter('redditlink', function () {
+
+    /*
+     Links from Reddit that link to users or subs are not preceded by /u/ or /r/ 
+     respectively. If they are not, these links outside the Reddit website will
+     not work.
+    */
     return function (input) {
       var url = 'https://www.reddit.com';
       var user_link = 'href="/u/';

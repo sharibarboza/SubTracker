@@ -13,10 +13,16 @@
     var rawJson = 'raw_json=1';
     var user = "";
 
+    /*
+     Custom callback method for JSONP request
+    */
     window.userCallback = function(response) {
       user = response.data;
     };
 
+    /*
+     Makes a request to the Reddit API to fetch the user's data
+    */
     return {
       getData: function(username) {
         // Return the promise

@@ -11,6 +11,13 @@
 angular.module('SubSnoopApp')
   .filter('sortPosts', ['moment', 'sortNum', function (moment, sortNum) {
 
+    /*
+     Used for sorting comments/submission posts
+    */
+
+    /*
+     Reverse = true to sort by most recent date
+    */
     var sortDate = function(keys, reverse) {
       keys.sort(function(a, b) {
         var num1, num2;
@@ -22,6 +29,11 @@ angular.module('SubSnoopApp')
       return keys;
     };
 
+    /*
+     Reverse = true to sort by most points
+     Secondarily sorted by most recent date, so if a post has the same number of 
+     points, the most recent post has precedence.
+    */
     var sortPoints = function(keys, reverse) {
       keys.sort(function(a, b) {
         return sortNum.get(a.ups, b.ups, a, b, reverse, 'date');

@@ -8,6 +8,16 @@
  */
 angular.module('SubSnoopApp')
   .directive('sidebarStats', function () {
+
+    /*
+     Used for display stats on comments or submissions on the user's sub page.
+     It calculates:
+      - Oldest comment/submission
+      - Total comments/submissions
+      - Total gilded comments/submissions
+      - Total comment/submission points
+      - Average points per comment/submission
+    */
     return {
       templateUrl: 'views/side-stats.html',
       restrict: 'E',
@@ -15,18 +25,13 @@ angular.module('SubSnoopApp')
         data: '@',
         type: '@'
       },  
-      controller: ['$scope', 'rank', 'moment', function($scope, rank, moment) {
+      controller: ['$scope', 'rank', 'moment', '$filter', function($scope, rank, moment, $filter) {
         $scope.getOldestDate = function(data) {
           return moment(rank.getTopPost(data, 'oldest').created_utc*1000);
         };
 
         $scope.getAverage = function(points, total) {
-          if (total === 0) {
-            return 0;
-          } else {
-            var average = (points/total).toFixed(0);
-            return average !== '-0' ? average : 0;
-          }
+          return $filter('average')(points, total);
         };
       }],
       link: function postLink(scope, element, attrs) {

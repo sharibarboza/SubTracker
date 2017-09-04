@@ -14,7 +14,8 @@ angular.module('SubSnoopApp')
       if (parseInt(denom) === 0) {
         return parseInt(denom).toFixed(digits);
       } else {
-        return (parseInt(num) / parseInt(denom)).toFixed(digits);
+        var average = (parseInt(num) / parseInt(denom)).toFixed(digits);
+        return average !== '-0' ? average : 0
       }
     };
   });

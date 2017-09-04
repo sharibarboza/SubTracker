@@ -9,10 +9,12 @@
 angular.module('SubSnoopApp')
   .directive('submitContent', ['$compile', '$filter', function ($compile, $filter) {
 
+    /* Submission posts with no preview images */
     var isLinkedImage = function(submit) {
       return isImage(submit) && !submit.preview;
     };
 
+    /* Submissions posts with a preview image and a link */
     var isAttachedImage = function(submit) {
       return isImage(submit) && submit.preview;
     };
@@ -29,15 +31,25 @@ angular.module('SubSnoopApp')
       }
     };
 
+    /*
+     Submitted videos will usually be of .gifv format.
+     Stripping and using .gif instead will make the video animated.
+    */
     var getVideoUrl = function(url) {
       return url.slice(0, url.length-1);
     };
 
+    /*
+     Change width of embedded videos
+    */
     var changeSize = function(html) {
       html = html.replace(/width="\d+"/g, 'width="100%"');
       return html;
     };
 
+    /*
+     Highlight search terms in text posts for the search page
+    */
     var highlightHtml = function(page, html, data) {
       if (page === 'search' && data.highlighted_body) {
         return $filter('sanitize')(data.highlighted_body);
@@ -46,6 +58,13 @@ angular.module('SubSnoopApp')
       }
     };
  
+    /*
+     Sets up and cleans data for displaying submission content.
+     Deals with displaying:
+      - Sanitized HTML text posts
+      - Attached images, linked images, static/animated gifs
+      - Embedded HTML, usually for videos and image albums (imgur)
+    */
     return {
       restrict: 'E',
       scope: {

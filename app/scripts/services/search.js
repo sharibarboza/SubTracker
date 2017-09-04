@@ -9,6 +9,10 @@
  */
 angular.module('SubSnoopApp')
   .service('search', function () {
+
+    /*
+     Matches term with the searchlist and returns the filtered array
+    */
     return {
       findSubs: function(searchList, term) {
         var dataList = [];

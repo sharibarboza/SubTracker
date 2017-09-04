@@ -11,6 +11,9 @@ angular.module('SubSnoopApp')
   .factory('newSubs', ['$http', '$sce', function ($http, $sce) {
     var subreddits = [];
 
+    /*
+     Custom callback function for JSONP request
+    */
     window.newCallback = function(response) {
       var data = response.data.children;
 
@@ -19,6 +22,9 @@ angular.module('SubSnoopApp')
       }
     };
 
+    /*
+     Request the Reddit API to get the newest subs
+    */
     return {
       getData: function (num) {
         subreddits = [];

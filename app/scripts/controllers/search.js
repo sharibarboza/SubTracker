@@ -9,22 +9,30 @@
  */
 angular.module('SubSnoopApp')
   .controller('SearchCtrl', ['$scope', 'searchResults', '$filter', 'search', 'subFactory', '$timeout', function ($scope, searchResults, $filter, search, subFactory, $timeout) {
-  	$scope.searching = false;
+    /* 
+      Initalization
+    */
+    $scope.searching = false;  // For loading progression wheel
     $scope.page = 'search';
     $scope.dataSubs = JSON.parse(sessionStorage.subData).subs;
     $scope.subsArray = Object.keys($scope.dataSubs);
-    $scope.subList = $scope.subsArray;
+    $scope.subList = $scope.subsArray;  // Used for collapsible sidenav
     $scope.username = sessionStorage.user;
+    $scope.searchInput = "";
+    $scope.noResults = "";
 
+    /*
+     Get sort value to display how sidenav subs are sorted
+    */
     if ('sort' in sessionStorage) {
     	$scope.sort = JSON.parse(sessionStorage.sort)
     } else {
     	$scope.sort = subFactory.getDefaultSort();
     }
 
-    $scope.searchInput = "";
-    $scope.noResults = "";
-
+    /*
+     Reset post-type and subs array to default on new search
+    */
     var resetFilters = function() {
       $scope.results = {'data':{}};
       $scope.resultList = [];
@@ -33,6 +41,9 @@ angular.module('SubSnoopApp')
     };
     resetFilters();
 
+    /*
+     Display static results not found message based on input and filters
+    */
     var getNotFoundMsg = function() {
       if ($scope.results.len == 0) {
         var typeStr = 'comments and submissions';
@@ -59,6 +70,9 @@ angular.module('SubSnoopApp')
       }
     };
 
+    /*
+     Checkbox click prompts new sub to be added to filtered subs array
+    */
     $scope.addSub = function(sub) {
       var subIndex = $scope.subs.indexOf(sub);
       if (subIndex < 0) {
@@ -69,11 +83,18 @@ angular.module('SubSnoopApp')
       $scope.filterResults($scope.type);
     };
 
+    /*
+     Empty filtered subs array
+    */
     $scope.deselect = function() {
       $scope.subs = [];
       $scope.filterResults($scope.type);
     };
 
+    /*
+     Main method for filtering results
+     Stores results in new array, but keeps non-filtered data in origResults
+    */
     $scope.filterResults = function(type) {
       $scope.type = type;
       $scope.results = $filter('search')($scope.origResults, type, $scope.subs);
@@ -81,14 +102,24 @@ angular.module('SubSnoopApp')
       $scope.noResults = getNotFoundMsg();
     };
 
+    /*
+     Checks the current radio button and passes true/false to ng-checked
+    */
     $scope.checkType = function(type) {
       return $scope.type === type;
     };
 
+    /*
+     Checks the current checkbox and passes true/false to ng-checked
+    */
     $scope.checkSub = function(sub) {
       return $scope.subs.indexOf(sub) >= 0;
     };
 
+    /*
+     Called when new search is deployed
+     Gives a sleep delay of at least 2 seconds every search to simulate loading
+    */
     $scope.searchResults = function() {
       $scope.searching = true;
       $timeout(function() { 
@@ -100,6 +131,9 @@ angular.module('SubSnoopApp')
       }, 200);
     };
 
+    /*
+     Used in searching for subs in the sidenav
+    */
     $scope.changeSubs = function(term) {
       $scope.subList = [];
       $scope.subList = search.findSubs($scope.subsArray, term);

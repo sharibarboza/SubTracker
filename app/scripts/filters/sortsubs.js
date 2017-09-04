@@ -11,6 +11,12 @@
 angular.module('SubSnoopApp')
   .filter('sortSubs', ['sortAlpha', 'sortNum', function (sortAlpha, sortNum) {
 
+    /*
+     Used for sorting subreddits
+     All sorting of subs are secondarily sorted by sub name. So if two subreddits are equal,
+     they will then be sorted alphabetically.
+    */
+
     var sortName = function(keys) {
       keys.sort(function(a, b) {
         return sortAlpha.get(a, b);
