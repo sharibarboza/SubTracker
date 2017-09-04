@@ -8,20 +8,19 @@
     <div ng-include src="'views/sidenav.html'"></div>
 
     <div>
-      <div class="sub-banner">
-        <div class="table-pad">
+      <div class="user-banner" id="sub-banner">
+        <div class="table-pad" id="user-page">
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-9">
               <i class="fa fa-user-circle" aria-hidden="true"></i>
               <span class="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span> <span class="badge num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
               <div class="banner-info">
-                <p><span class="green">{{ redditor.comment_karma | number }}</span> comment karma</p>
-                <p><span class="green">{{ redditor.link_karma | number }}</span> post karma</p>
-                <p class="baby-blue">Redditor since <span ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY'"></span></p>
+                </br>
+                <p>Last seen <time-ago class="green" from-time='{{ latest[0].created * 1000 }}'></time-ago></p>
               </div>
             </div>
-            <div class="col-md-4" id="user-link-col">
-              <span class="banner-info"><a href="https://www.reddit.com/user/{{ username }}" class="white"><i class="fa fa-link baby-blue" aria-hidden="true"></i> Visit reddit page</a></span> <i class="fa fa-reddit"></i> 
+            <div class="col-md-3" id="user-link-col">
+              <p class="banner-info"><a href="https://www.reddit.com/user/{{ username }}" class="white"><i class="fa fa-link baby-blue" aria-hidden="true"></i> Visit reddit page</a> <i class="fa fa-reddit" aria-hidden="true"></i></p>
             </div>
           </div>
         </div>

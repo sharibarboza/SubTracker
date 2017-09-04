@@ -15,7 +15,8 @@ var app = angular
     'ngSanitize',
     'ngMaterial',
     'angularMoment',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'yaru22.angular-timeago'
   ]);
 
 var getData = function(route, factory, storage) {
