@@ -557,6 +557,8 @@ User Page Side Bar
 }
 
 .side-cards .card-heading {
+  color: #212121;
+  font-weight: 600;
   padding: 12px !important;
 }
 

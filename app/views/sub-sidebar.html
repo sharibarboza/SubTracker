@@ -1,6 +1,6 @@
 <div id="sidebar" class="col-md-4 col-md-push-8 user-side">
   <div class="card side-cards">
-    <div class="card-content card-heading"><strong class="black"><i class="fa fa-shield" aria-hidden="true"></i> /r/{{ subreddit }}</strong></div>
+    <div class="card-content card-heading"><i class="fa fa-shield" aria-hidden="true"></i> /r/{{ subreddit }}</div>
       <div class="card-action pad-card">
         <span>Of <strong class="green">/u/{{ username }}'s</strong> <span class="orange number">{{ subLength }}</span> <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize>, <strong class="green">/r/{{ subreddit }}</strong> is:</span><br>
         <span class="gray side-stats">Ranked <strong class="baby-blue number">#{{ mostActiveRank }}</strong> in most active</span><br>
@@ -9,7 +9,7 @@
   </div>
 
   <div ng-if="tab == 0" class="card side-cards">
-    <div class="card-content card-heading"><strong class="black"><i class="fa fa-signal" aria-hidden="true"></i> Comment Activity</strong></div>
+    <div class="card-content card-heading"><i class="fa fa-signal" aria-hidden="true"></i> Comment Activity</div>
     <div class="card-action pad-card">
       <sidebar-stats data="{{ sub }}" type="comments"></sidebar-stats>
     </div>
@@ -20,7 +20,7 @@
   </div>
 
   <div ng-if="tab == 1" class="card side-cards">
-    <div class="card-content card-heading"><strong class="black"><i class="fa fa-signal" aria-hidden="true"></i> Submitted Activity</strong></div>
+    <div class="card-content card-heading"><i class="fa fa-signal" aria-hidden="true"></i> Submitted Activity</div>
     <div class="card-action pad-card">
       <sidebar-stats data="{{ sub }}" type="submissions"></sidebar-stats>
     </div>

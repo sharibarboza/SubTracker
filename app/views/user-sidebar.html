@@ -2,7 +2,7 @@
 
 <div class="card side-cards">
   <div class="card-content card-heading">
-    <strong class="black"><i class="fa fa-user-circle" aria-hidden="true"></i> /u/{{ username }}</strong>
+    <i class="fa fa-user-circle" aria-hidden="true"></i> /u/{{ username }}
   </div>
   <div class="card-action pad-card">
     <p>Redditor since <strong class="green" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></strong></p>
@@ -13,7 +13,7 @@
 
   <div class="card side-cards">
     <div class="card-content card-heading">
-      <strong class="black"><i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Recent Activity</strong>
+      <i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Recent Activity
     </div>
     <div class="card-action pad-card" ng-repeat="element in latest">
       <p><strong class="green">r/{{ element.subreddit }}</strong> <span class="gray small-font">(<span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>)</span></p> 
@@ -22,7 +22,7 @@
   </div>
 
   <div class="card side-cards">
-    <div class="card-content card-heading"><strong class="black"><i class="fa fa-comments" aria-hidden="true"></i> Overall Activity</strong></div>
+    <div class="card-content card-heading"><i class="fa fa-comments" aria-hidden="true"></i> Overall Activity</div>
     <div class="card-action pad-card side-stats">
       <div class="row">
         <div class="col-xs-8">Total comments</div>
