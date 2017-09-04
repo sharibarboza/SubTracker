@@ -8,7 +8,7 @@
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('SearchCtrl', ['$scope', 'searchResults', '$filter', 'search', 'subFactory', '$timeout', 'subsData', function ($scope, searchResults, $filter, search, subFactory, $timeout, subsData) {
+  .controller('SearchCtrl', ['$scope', 'searchResults', '$filter', 'search', 'subFactory', '$timeout', 'subsData', 'sortFactory', function ($scope, searchResults, $filter, search, subFactory, $timeout, subsData, sortFactory) {
     /* 
       Initalization
     */
@@ -125,6 +125,7 @@ angular.module('SubSnoopApp')
     /*
      Used in searching for subs in the sidenav
     */
+    $scope.sort = sortFactory.getSubSort();
     $scope.changeSubs = function(term) {
       $scope.subList = [];
       $scope.subList = search.findSubs($scope.subsArray, term);

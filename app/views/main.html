@@ -3,7 +3,7 @@
 <div class="jumbotron main-content user-banner">
   <h2>Track your subreddit activity</h2>
   <br>
-  <h4>Enter your Reddit username to view your comments &amp submissions by <span class="green">subreddit.</span></h4>
+  <h4><strong>Enter your Reddit username to view your comments &amp submissions by <span class="orange">subreddit.</span></strong></h4>
 
   <div ng-include src="'views/main-search.html'"></div>
 </div>
@@ -11,7 +11,7 @@
 <div id="sub-panels">
   <div class="col-md-6">
     <div class="card side-cards">
-      <div class="card-content card-heading"><strong class="purple">Popular Subreddits</strong></div>
+      <div class="card-content card-heading"><strong class="black">Popular Subreddits</strong></div>
         <div class="card-action pad-card" ng-repeat="subElement in popularSubs">
           <div ng-include src="'views/sub-panel.html'"></div>
         </div>
@@ -19,7 +19,7 @@
   </div>
   <div class="col-md-6">
     <div class="card side-cards">
-      <div class="card-content card-heading"><strong class="purple">New Subreddits</strong></div>
+      <div class="card-content card-heading"><strong class="black">New Subreddits</strong></div>
         <div class="card-action pad-card" ng-repeat="subElement in newSubs">
           <div ng-include src="'views/sub-panel.html'"></div>
         </div>

@@ -20,7 +20,7 @@ a {
 }
 
 a:hover {
-  color: #1DB3B0;
+  color: #12C5E0;
 }
 
 .center {
@@ -40,7 +40,7 @@ a:hover {
 }
 
 .orange {
-  color: #E34C00;
+  color: #FF742E;
 }
 
 .purple {
@@ -48,7 +48,7 @@ a:hover {
 }
 
 .baby-blue {
-  color: #12C5E0;
+  color: #00B1CC;
 }
 
 .dark-gray {
@@ -57,6 +57,10 @@ a:hover {
 
 .gray {
   color: #696969;
+}
+
+.black {
+  color: #212121;
 }
 
 .main-color {
@@ -179,10 +183,6 @@ blockquote {
   padding: 6px 0;
 }
 
-.content {
-  min-height: 430px;
-}
-
 .badge {
   border-radius: 16px;
 }
@@ -196,8 +196,13 @@ blockquote {
 }
 
 .btn-sm:hover {
-  background-color: #1DB3B0;
+  background-color: #00B1CC;
   color: white;
+}
+
+.btn-info {
+  background-color: #212121;
+  border-color: #212121;
 }
 
 /************************
@@ -236,7 +241,7 @@ md-option {
 }
 
 md-select-menu md-content md-option[selected] {
-  background-color: #5552B3 !important;
+  background-color: #212121 !important;
 }
 
 md-select-menu md-content md-option[selected] span {
@@ -252,7 +257,7 @@ md-sidenav {
 }
 
 md-toolbar:not(.md-menu-toolbar) {
-  background-color: #5552B3;
+  background-color: #212121;
 }
 
 md-input-container {
@@ -287,6 +292,10 @@ md-input-container label {
 Content
 ************************/
 
+.content {
+  min-height: 575px;
+}
+
 .container {
   margin: 0;
 }
@@ -297,7 +306,6 @@ Content
 
 .main-content {
   position: relative;
-  top: 80px;
 }
 
 .width-pad {
@@ -329,15 +337,14 @@ Content
 .user-banner {
   color: white;
   background-image: url('../images/icon-bg.png');
-  background-position: 0 50%;
-  padding-top: 30px;
+  background-size: auto;
+  padding-top: 120px;
   padding-bottom: 30px;
   font-weight: 700;
 }
 
-#sub-banner {
-  background-position: 10% 30%;
-  padding-top: 15px;
+.sub-banner {
+  padding-top: 110px;
   padding-bottom: 15px;
 }
 
@@ -356,7 +363,7 @@ Navigation
 }
 
 .navbar-default {
-  background-color: #5552B3;
+  background-color: rgba(33,33,33, 0.85);
   border: none;
 }
 
@@ -408,7 +415,7 @@ Navigation
 #search-nav input {
   outline: none;
   border: none !important;
-  width: 100%;
+  width: 120%;
 }
 
 #search-nav .col-xs-1 {
@@ -479,7 +486,6 @@ Main Page
 ************************/
 
 #sub-panels {
-  margin-top: 90px;
   padding: 50px 35px;
 }
 
@@ -902,7 +908,7 @@ Search
 }
 
 #results-card:hover {
-  color: #E34C00;
+  color: #12C5E0;
 }
 
 /************************
@@ -914,11 +920,6 @@ Footer
   padding-top: 19px;
   color: #777;
   border-top: 1px solid #e5e5e5;
-}
-
-.footer {
-  margin-top: 100px;
-  padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
 }

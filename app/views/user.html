@@ -8,7 +8,7 @@
     <div ng-include src="'views/sidenav.html'"></div>
 
     <div>
-      <div class="user-banner" id="sub-banner">
+      <div class="user-banner sub-banner">
         <div class="table-pad" id="user-page">
           <div class="row">
             <div class="col-md-9">
@@ -16,11 +16,11 @@
               <span class="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span> <span class="badge num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
               <div class="banner-info">
                 </br>
-                <p>Last seen <time-ago class="green" from-time='{{ latest[0].created * 1000 }}'></time-ago></p>
+                <p>Last seen <time-ago class="orange" from-time='{{ latest[0].created * 1000 }}'></time-ago></p>
               </div>
             </div>
             <div class="col-md-3" id="user-link-col">
-              <p class="banner-info"><a href="https://www.reddit.com/user/{{ username }}" class="white"><i class="fa fa-link baby-blue" aria-hidden="true"></i> Visit reddit page</a> <i class="fa fa-reddit" aria-hidden="true"></i></p>
+              <p class="banner-info"><a href="https://www.reddit.com/user/{{ username }}" class="white"><i class="fa fa-link orange" aria-hidden="true"></i> Visit reddit page</a> <i class="fa fa-reddit" aria-hidden="true"></i></p>
             </div>
           </div>
         </div>
@@ -31,7 +31,7 @@
         <div class="col-md-8 col-md-pull-4 sub-rows">
 
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><strong><i class="fa fa-arrow-left gray" aria-hidden="true"></i> <a class="purple" href="/">Back to main page</a></strong></li>
+            <li class="breadcrumb-item"><strong><i class="fa fa-arrow-left gray" aria-hidden="true"></i> <a class="black" href="/">Back to main page</a></strong></li>
           </ol>
 
           <div class="row" id="table-head">
@@ -70,11 +70,11 @@
                 </div>
               </div>
               <div class="col-md-2 col-xs-4" id="sub-comments" align="center">
-                <span class="purple number">{{ subs[subreddit].comments.length }}</span><br>
+                <span class="black number">{{ subs[subreddit].comments.length }}</span><br>
                 <span class="gray sub-text">Comments</span>
               </div>
               <div class="col-md-2 col-xs-4" id="sub-submits" align="center">
-                <span class="purple number">{{ subs[subreddit].submissions.length }}</span><br>
+                <span class="black number">{{ subs[subreddit].submissions.length }}</span><br>
                 <span class="gray sub-text">Submitted</span>
               </div>
               <div class="col-md-2 col-xs-4" id="sub-upvotes" align="center">
