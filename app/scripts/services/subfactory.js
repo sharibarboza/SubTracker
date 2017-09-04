@@ -36,51 +36,6 @@
       after = '0';
     };
 
-    var buildComment = function(comment) {
-      var data = {};
-
-      data.type = 'comment';
-      data.id = comment.id;
-      data.subreddit = comment.subreddit;
-      data.created_utc = comment.created_utc;
-      data.ups = comment.ups;
-      data.link_title = comment.link_title;
-      data.link_author = comment.link_author;
-      data.link_url = comment.link_url;
-      data.body = comment.body;
-      data.body_html = comment.body_html;
-      data.link_permalink = comment.link_permalink;
-      data.gilded = comment.gilded;
-      data.num_comments = comment.num_comments;
-
-      return data;
-    };
-
-    var buildSubmit = function(submit) {
-      var data = {};
-
-      data.type = 'submit';
-      data.id = submit.id;
-      data.subreddit = submit.subreddit;
-      data.created_utc = submit.created_utc;
-      data.url = submit.url;
-      data.title = submit.title;
-      data.link_flair_text = submit.link_flair_text;
-      data.html = submit.html;
-      data.ups = submit.ups;
-      data.num_comments = submit.num_comments;
-      data.selftext = submit.selftext;
-      data.selftext_html = submit.selftext_html;
-      data.thumbnail = submit.thumbnail;
-      data.thumbnail_width = submit.thumbnail_width;
-      data.media = submit.media;
-      data.preview = submit.preview;
-      data.permalink = submit.permalink;
-      data.gilded = submit.gilded;
-
-      return data;
-    };
-
     /*
      Grabs the comments and store them in their respective sub object
      as well as other statistics
@@ -284,12 +239,13 @@
       if (response) {
         var data = response.children;
         for (var i = 0; i < data.length; i++) {
+          var item = data[i].data;
           if (where === 'comments') {
-            var comment = buildComment(data[i].data);
-            comments.push(comment);
+            item.type = 'comment';
+            comments.push(item);
           } else {
-            var submission = buildSubmit(data[i].data);
-            submissions.push(submission);
+            item.type = 'submit';
+            submissions.push(item);
           }
         }
       }

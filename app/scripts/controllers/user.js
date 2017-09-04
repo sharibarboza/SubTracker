@@ -42,7 +42,6 @@
       $scope.subs = response.subs;
       $scope.dataAvailable = response.firstDate;
       $scope.latest = response.latest;
-
       $scope.subsArray = $filter('sortSubs')(Object.keys($scope.subs), 'subName', $scope.subs);
       $scope.subLength = $scope.subsArray.length;
     };
