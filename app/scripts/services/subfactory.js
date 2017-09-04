@@ -18,12 +18,10 @@
     var subs = {};
     var pages = 10;
     var dataAvailable;
-
     var commentData = [];
     var submitData = [];
     var after = "0";
-
-    var subsData = {};
+    var subData = {};
 
     /*
      Reset all data to empty lists (used for getting a new user)
@@ -34,6 +32,7 @@
       subs = {};
       commentData = [];
       submitData = [];
+      subData = {};
       after = '0';
     };
 
@@ -342,13 +341,13 @@
     /*
      Configure sub data object, which will be passed to the controllers.
     */
-    var getSubData = function(response) {
+    var setSubData = function(response) {
       organizeComments(comments);
       organizeSubmitted(submissions);
       setTotalUps();
 
       getFirstDate();
-      var subData = {
+      subData = {
         'user': response,
         'comments' : comments.length,
         'submissions' : submissions.length,
@@ -356,16 +355,6 @@
         'firstDate' : dataAvailable,
         'latest' : getLatest(2)
       }
-      cacheData(subData, response);
-      return subData;
-    };
-
-    /*
-     Save data in session storage.
-    */
-    var cacheData = function(data, user) {
-      sessionStorage.user = username;
-      sessionStorage.subData = JSON.stringify(data);
     };
 
     return {
@@ -379,14 +368,14 @@
         */
         var userPromise = userFactory.getData(user);
         var testPromise = userPromise.then(function(response) {
-
           if (response !== "") {
             var commentPromise = promiseChain('comments', 'commentsCallback');
             var submitPromise = promiseChain('submitted', 'submitsCallback');
 
             // Resolve both comment and submission promises together
             var dataPromise = $q.all([commentPromise, submitPromise]).then(function() {
-              return getSubData(response);
+              setSubData(response);
+              return subData;
             });
             return dataPromise;
           } else {
@@ -395,14 +384,15 @@
         });
         return testPromise;
       },
-      setSubs: function(data) {
-        subsData = data;
+      getSubData: function() {
+        return subData;
       },
-      getSubs: function() {
-        return subsData;
-      },
-      getDefaultSort: function() {
-        return {value: 'subName', name: 'Subreddit name'};
+      checkUser: function(user) {
+        if (!username) {
+          return false;
+        } else {
+          return username.toLowerCase() === user.toLowerCase();
+        }
       }
     };
   }]);

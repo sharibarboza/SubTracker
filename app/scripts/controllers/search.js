@@ -8,27 +8,18 @@
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('SearchCtrl', ['$scope', 'searchResults', '$filter', 'search', 'subFactory', '$timeout', function ($scope, searchResults, $filter, search, subFactory, $timeout) {
+  .controller('SearchCtrl', ['$scope', 'searchResults', '$filter', 'search', 'subFactory', '$timeout', 'subsData', function ($scope, searchResults, $filter, search, subFactory, $timeout, subsData) {
     /* 
       Initalization
     */
     $scope.searching = false;  // For loading progression wheel
     $scope.page = 'search';
-    $scope.dataSubs = JSON.parse(sessionStorage.subData).subs;
+    $scope.dataSubs = subsData.subs;
     $scope.subsArray = Object.keys($scope.dataSubs);
     $scope.subList = $scope.subsArray;  // Used for collapsible sidenav
-    $scope.username = sessionStorage.user;
+    $scope.username = subsData.user.name;
     $scope.searchInput = "";
     $scope.noResults = "";
-
-    /*
-     Get sort value to display how sidenav subs are sorted
-    */
-    if ('sort' in sessionStorage) {
-    	$scope.sort = JSON.parse(sessionStorage.sort)
-    } else {
-    	$scope.sort = subFactory.getDefaultSort();
-    }
 
     /*
      Reset post-type and subs array to default on new search

@@ -8,8 +8,8 @@
  * Controller of the SubSnoopApp
  */
  angular.module('SubSnoopApp')
- .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'userFactory', 'subFactory', 'moment', 'subsData', 'search',
-  function ($scope, $routeParams, $filter, $window, userFactory, subFactory, moment, subsData, search) {
+ .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'subFactory', 'moment', 'subsData', 'search', 'sortFactory',
+  function ($scope, $routeParams, $filter, $window, subFactory, moment, subsData, search, sortFactory) {
 
     /*
      Initalization
@@ -18,7 +18,7 @@
     $scope.inputUser = $routeParams.username;
     $scope.main = false; // Prevent hiding of search bar in top-nav
     $scope.page = 'user';
-    $scope.sort = subFactory.getDefaultSort();
+    $scope.sort = sortFactory.getSubSort();
 
     /*
      Gets data from user's reddit about page, primarily for username, link karma, comment karma, etc.
@@ -29,10 +29,6 @@
       $scope.username = $scope.redditor.name
       $scope.totalKarma = $scope.redditor.comment_karma + $scope.redditor.link_karma;
       $scope.notfound = false;
-
-      if (store) {
-        sessionStorage.user = $scope.username;
-      }
     };
 
     /*
@@ -49,16 +45,10 @@
 
       $scope.subsArray = $filter('sortSubs')(Object.keys($scope.subs), 'subName', $scope.subs);
       $scope.subLength = $scope.subsArray.length;
-
-      if (store) {
-        sessionStorage.sort = JSON.stringify(subFactory.getDefaultSort());
-      }
-
-      subFactory.setSubs($scope.subs);
     };
 
     $scope.setSortOption = function() {
-      sessionStorage.sort = JSON.stringify($scope.sortData.selectedSort);
+      sortFactory.setSubSort($scope.sortData.selectedSort);
       setArray();
     };
 
@@ -68,18 +58,8 @@
     if (subsData !== "") {
       $scope.notfound = false;
       if (subsData) {
-        configUserData(subsData.user, true);
-        configSubData(subsData, true);
-      } else {
-        subsData = JSON.parse(sessionStorage.subData);
         configUserData(subsData.user, false);
         configSubData(subsData, false);
-      }
-
-      if ('sort' in sessionStorage) {
-        $scope.sort = JSON.parse(sessionStorage.sort);
-      } else {
-        $scope.sort = subFactory.getDefaultSort();
       }
 
       /*
