@@ -40,7 +40,7 @@ a:hover {
 }
 
 .orange {
-  color: #E33900;
+  color: #E34C00;
 }
 
 .purple {
@@ -64,7 +64,7 @@ a:hover {
 }
 
 .badge, .label {
-  background-color: #7A7A7A;
+  background-color: #6E6E6E;
 }
 
 .label a {
@@ -147,9 +147,14 @@ blockquote {
   padding-top: 10px;
 }
 
-.fa-user-circle {
+#user-page .fa-user-circle {
   font-size: 38px;
   padding-right: 8px;
+}
+
+#sub-page .fa-shield {
+  font-size: 38px;
+  padding-right: 18px;
 }
 
 .fa-reddit {
@@ -330,11 +335,10 @@ Content
   font-weight: 700;
 }
 
-.sub-banner {
-  color: white;
-  background-image: url('../images/icon-bg.png');
-  background-position: 0 20%;
-  font-weight: 700; 
+#sub-banner {
+  background-position: 10% 30%;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 /************************
@@ -508,7 +512,7 @@ User Page
 .num-subs {
   margin-left: 5px;
   margin-top: -20px;
-  font-size: 20px !important;
+  font-size: 20px;
   padding: 5px 15px 7px 15px;
 }
 
@@ -529,7 +533,8 @@ User Page
 #user-link-col {
   text-align: right;
   padding: 0;
-  margin-top: 7.5%;
+  margin-top: 4.5%;
+  margin-left: 0;
 }
 
 /************************
@@ -896,6 +901,10 @@ Search
   padding: 10px 16px;
 }
 
+#results-card:hover {
+  color: #E34C00;
+}
+
 /************************
 Footer
 ************************/
@@ -988,6 +997,8 @@ Mobile
   .num-subs {
     margin-left: 0;
     margin-top: 10px;
+    font-size: 16px;
+    margin-bottom: -15px;
   }
 
   .navbar-brand {
@@ -1089,5 +1100,17 @@ Mobile
   #table-start .col-md-3 {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  #home-page .table-pad {
+    padding-top: 10px;
+  }
+
+  #user-page, #user-page .banner-info {
+    text-align: center;
+  }
+
+  #user-page .fa-reddit {
+    display: none;
   }
  }

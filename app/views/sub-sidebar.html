@@ -1,14 +1,10 @@
 <div id="sidebar" class="col-md-4 col-md-push-8 user-side">
   <div class="card side-cards">
     <div class="card-content card-heading"><strong class="purple"><i class="fa fa-shield" aria-hidden="true"></i> /r/{{ subreddit }}</strong></div>
-      <div class="card-action pad-card center">
-        <i class="glyphicon glyphicon-time gray" aria-hidden="true"></i> Last Seen: <strong class="green" ng-bind="sub.recent_activity | amDateFormat:'MMMM Do YYYY, h:mm a'"></strong>
-        <br>
-        <i class="glyphicon glyphicon-globe gray" aria-hidden="true"></i> <a href="https://www.reddit.com/r/{{ subreddit }}" target="_blank"><strong>Visit /r/{{ subreddit }} &raquo</strong></a>
-        <br><br>
-        <span>Of {{ username }}'s <span class="orange number">{{ subLength }}</span> <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize>, {{ subreddit }} is:</span><br>
-        <span class="gray side-stats">Ranked <strong class="green number">#{{ mostActiveRank }}</strong> in most active</span><br>
-        <span class="gray side-stats">Ranked <strong class="green number">#{{ mostUpsRank }}</strong> in total upvotes</span>
+      <div class="card-action pad-card">
+        <span>Of <strong class="green">/u/{{ username }}'s</strong> <span class="orange number">{{ subLength }}</span> <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize>, <strong class="green">/r/{{ subreddit }}</strong> is:</span><br>
+        <span class="gray side-stats">Ranked <strong class="baby-blue number">#{{ mostActiveRank }}</strong> in most active</span><br>
+        <span class="gray side-stats">Ranked <strong class="baby-blue number">#{{ mostUpsRank }}</strong> in total upvotes</span>
     </div>
   </div>
 
