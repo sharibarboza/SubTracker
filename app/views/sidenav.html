@@ -13,7 +13,7 @@
     <button type="submit" style="display: none;" ng-controller="SidebarCtrl" ng-click="close()">Go!</button>
   </form>
 
-  <a href="#/{{ username }}"><strong ng-controller="SidebarCtrl" class="purple"><i class="fa fa-arrow-left gray" aria-hidden="true"></i> Back to subreddits</strong></a>
+  <a href="#/{{ username }}"><strong ng-controller="SidebarCtrl" class="black"><i class="fa fa-arrow-left gray" aria-hidden="true"></i> Back to subreddits</strong></a>
   <br><br>
   <ul>
     <strong>Sorted by: <span class="green">{{ sortData.selectedSort.name ? sortData.selectedSort.name : sort.name }}</span></strong>
@@ -22,7 +22,7 @@
     <li ng-repeat="subname in subList"><a href="#/{{ username }}/{{ subname }}/"><strong><p class="mobile-list">/r/{{ subname }}</p></strong></a></li>
   </ul>
 
-  <strong ng-controller="SidebarCtrl" ng-click="close()" class="purple"><i class="fa fa-arrow-right gray" aria-hidden="true"></i> Close</strong>
+  <strong ng-controller="SidebarCtrl" ng-click="close()" class="black"><i class="fa fa-arrow-right gray" aria-hidden="true"></i> Close</strong>
 </md-content>
 
 </md-sidenav>

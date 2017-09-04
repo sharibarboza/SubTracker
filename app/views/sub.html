@@ -5,25 +5,36 @@
 
     <div ng-include src="'views/sidenav.html'"></div>
   
-    <div class="sub-banner">
-      <div class="table-pad">
-        <i class="fa fa-3x fa-reddit"></i>
-        <a href="https://www.reddit.com/r/{{ subreddit }}" target="_blank"><span id="reddit-name"><span class="baby-blue">/r/</span>{{ subreddit }}</span></a> <span class="badge num-subs">{{ username }}</span>
+      <div class="user-banner sub-banner">
+        <div class="table-pad" id="sub-page">
+          <div class="row">
+            <div class="col-md-9">
+              <i class="fa fa-shield" aria-hidden="true"></i>
+              <span class="reddit-name"><span class="baby-blue">/r/</span>{{ subreddit }}</span> <span class="badge num-subs">{{ username }}</span>
+              <div class="banner-info">
+                </br>
+                <p>Last seen <time-ago class="orange" from-time='{{ elemArray[0].created * 1000 }}'></time-ago></p>
+              </div>
+            </div>
+            <div class="col-md-3" id="user-link-col">
+              <p class="banner-info"><a href="https://www.reddit.com/r/{{ subreddit }}" class="white"><i class="fa fa-link orange" aria-hidden="true"></i> Visit subreddit</a> <i class="fa fa-reddit" aria-hidden="true"></i></p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
     <div id="sub-content" class="sub-table">
       <div ng-include src="'views/sub-sidebar.html'"></div>
       <div class="col-md-8 col-md-pull-4 sub-rows">
 
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><strong><i class="fa fa-arrow-left gray" aria-hidden="true"></i> <a class="purple" href="#/{{ username }}">Back to subreddits</a></strong></li>
+          <li class="breadcrumb-item"><strong><i class="fa fa-arrow-left gray" aria-hidden="true"></i> <a class="black" href="#/{{ username }}">Back to subreddits</a></strong></li>
         </ol>
         <br>
 
         <ul class="nav nav-tabs">
-          <li ng-if="sub.comments.length > 0" ng-class="getActive(0)"><a href ng-click="setTab(0)">Comments <span class="badge tab-badge">{{ sub.comments.length }}</span></a></li>
-          <li ng-if="sub.submissions.length > 0" ng-class="getActive(1)"><a href ng-click="setTab(1)">Submitted <span class="badge tab-badge">{{ sub.submissions.length }}</span></a></li>
+          <li ng-if="sub.comments.length > 0" ng-class="getActive(0)"><a href ng-click="setTab(0)"><strong>Comments</strong> <span class="badge tab-badge">{{ sub.comments.length }}</span></a></li>
+          <li ng-if="sub.submissions.length > 0" ng-class="getActive(1)"><a href ng-click="setTab(1)"><strong>Submitted</strong> <span class="badge tab-badge">{{ sub.submissions.length }}</span></a></li>
         </ul>
         <br>
 
