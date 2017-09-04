@@ -19,6 +19,10 @@ a {
   text-decoration: none !important;
 }
 
+a:hover {
+  color: #1DB3B0;
+}
+
 .center {
   text-align: center;
 }
@@ -60,7 +64,7 @@ a {
 }
 
 .badge, .label {
-  background-color: #919191;
+  background-color: #7A7A7A;
 }
 
 .label a {
@@ -143,9 +147,14 @@ blockquote {
   padding-top: 10px;
 }
 
-.fa-reddit {
-  font-size: 33px;
+.fa-user-circle {
+  font-size: 38px;
   padding-right: 8px;
+}
+
+.fa-reddit {
+  font-size: 38px;
+  padding-left: 8px;
 }
 
 .wrap-text {
@@ -319,17 +328,13 @@ Content
   padding-top: 30px;
   padding-bottom: 30px;
   font-weight: 700;
-  text-align: center;
 }
 
 .sub-banner {
   color: white;
   background-image: url('../images/icon-bg.png');
   background-position: 0 20%;
-  padding-top: 30px;
-  padding-bottom: 30px;
   font-weight: 700; 
-  text-align: center;
 }
 
 /************************
@@ -490,9 +495,9 @@ User Page
   padding: 0;
 }
  
-#reddit-name {
+.reddit-name {
   color: white;
-  font-size: 34px;
+  font-size: 40px;
 }
 
 #since-date {
@@ -501,10 +506,16 @@ User Page
 }
 
 .num-subs {
-  margin-left: 15px;
-  margin-top: -16px;
-  font-size: 24px !important;
-  padding: 2px 15px;
+  margin-left: 5px;
+  margin-top: -20px;
+  font-size: 20px !important;
+  padding: 5px 15px 7px 15px;
+}
+
+.banner-info {
+  font-size: 18px;
+  margin-left: 48px;
+  line-height: 85%;
 }
 
 .option-pos {
@@ -513,6 +524,12 @@ User Page
 
 #table-head {
   padding-top: 0;
+}
+
+#user-link-col {
+  text-align: right;
+  padding: 0;
+  margin-top: 7.5%;
 }
 
 /************************
@@ -695,7 +712,7 @@ Sub Page Side Bar
 
 .side-stats {
   font-weight: 400;
-  color: gray;
+  color: #333;
   font-size: 13px;
 }
 
@@ -963,7 +980,7 @@ Mobile
     padding-right: 0;
   }
 
-  #reddit-name {
+  .reddit-name {
     font-size: 25px;
     display: block;
   }
@@ -1047,6 +1064,11 @@ Mobile
 }
 
 @media screen and (max-width: 768px) {
+  .banner-info {
+    margin-left: 0;
+    padding-top: 15px;
+  }
+
   #submit-card {
     padding-bottom: 0;
   }
