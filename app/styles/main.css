@@ -232,6 +232,10 @@ md-progress-circular:before {
   z-index: 999;
 }
 
+md-progress-circular path {
+  stroke: #FF742E;
+}
+
 md-select {
   margin-bottom: 0 !important;
 }
