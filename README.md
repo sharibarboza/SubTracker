@@ -21,7 +21,3 @@ Application will be served at [http://localhost:3000/](http://localhost:3000/)
 
 ```grunt build```<br>
 The build will be stored in the /dist directory.
-
-Note: 
-* Data for each user search is stored in the browser's session storage. 
-* The Reddit API only stores the last 1000 comments and the last 1000 submissions for a user.
