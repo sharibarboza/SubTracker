@@ -274,6 +274,11 @@ md-input-container label {
   margin-top: 8px;
 }
 
+md-toolbar h1 {
+  padding-top: 110px !important;
+  padding-bottom: 30px !important;
+}
+
 @media (min-width: 600px) {
   md-sidenav {
     max-width: 275px;
@@ -319,8 +324,6 @@ Content
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
   color: white;
-  margin-top: -40px;
-  padding-bottom: 50px !important;
 }
 
 .jumbotron input {
@@ -338,8 +341,8 @@ Content
   color: white;
   background-image: url('../images/icon-bg.png');
   background-size: auto;
-  padding-top: 120px;
-  padding-bottom: 30px;
+  padding-top: 100px;
+  padding-bottom: 50px;
   font-weight: 700;
 }
 
@@ -486,9 +489,13 @@ Main Page
 ************************/
 
 #sub-panels {
-  padding: 50px 35px;
+  padding: 15px 35px;
 }
 
+#sub-panels .col-md-6 {
+  margin-bottom: 30px;
+}
+ 
 .sub-icon {
   width: 75px;
 }
@@ -949,9 +956,13 @@ Mobile
 }
 
 @media screen and (max-width: 768px) {
-  .navbar-default, #searchbar, #search-content .breadcrumb {
+  .navbar-default, #searchbar, #search-content .breadcrumb, #sub-panels {
     padding-left: 10px;
     padding-right: 10px;
+  }
+
+  .user-banner {
+    margin-bottom: 0;
   }
 
   #search-content, #results {
@@ -997,7 +1008,6 @@ Mobile
     margin-left: 0;
     margin-top: 10px;
     font-size: 16px;
-    margin-bottom: -15px;
   }
 
   .navbar-brand {
@@ -1032,6 +1042,10 @@ Mobile
     padding-left: 12px;
     padding-right: 5px;
   }
+
+  #search-page .breadcrumb {
+    margin-top: 20px;
+  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -1053,10 +1067,6 @@ Mobile
 
   #search-nav {
     padding-bottom: 2px;
-  }
-
-  .main-content {
-    top: 85px;
   }
 
   #search-strip .col-xs-10 {
@@ -1105,11 +1115,4 @@ Mobile
     padding-top: 10px;
   }
 
-  #user-page, #user-page .banner-info {
-    text-align: center;
-  }
-
-  #user-page .fa-reddit {
-    display: none;
-  }
  }
