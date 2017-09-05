@@ -867,10 +867,6 @@ Search
   margin-top: 20px;
 }
 
-#results-found {
-  font-size: 16px;
-}
-
 #results-card {
   padding: 3px 15px 3px 20px;
 }
@@ -881,7 +877,7 @@ Search
 }
 
 #results-card .col-md-11 {
-  margin-top: 8px;
+  margin-top: 7px;
 }
 
 #results-comment .card, #results-submit .card {
@@ -900,8 +896,8 @@ Search
   margin-left: 100px;
 }
 
-#results-sub {
-  font-size: 17px;
+.results-sub {
+  font-size: 15px !important;
 }
 
 #search-side-card {

@@ -5,7 +5,7 @@
     <i class="fa fa-user-circle" aria-hidden="true"></i> /u/{{ username }}
   </div>
   <div class="card-action pad-card">
-    <p>Redditor since <strong class="green" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></strong></p>
+    <p>Redditor since <strong class="purple" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></strong></p>
     <span class="gray small-font">Note: The data shown here is based on the user's most recent 1000 comments and submissions each, starting from <span ng-bind="dataAvailable | amDateFormat: 'MMMM Do YYYY.'"></span>
   </div>
 
@@ -16,7 +16,7 @@
       <i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Recent Activity
     </div>
     <div class="card-action pad-card" ng-repeat="element in latest">
-      <p><strong class="green">r/{{ element.subreddit }}</strong> <span class="gray small-font">(<span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>)</span></p> 
+      <p><strong class="purple">r/{{ element.subreddit }}</strong> <span class="gray small-font">(<span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>)</span></p> 
       <side-post data="{{ element }}"></side-post>
     </div>
   </div>
