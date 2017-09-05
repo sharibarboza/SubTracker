@@ -25,7 +25,7 @@ angular.module('SubSnoopApp')
     /*
      Request the Reddit API to get popular subs
     */
-    return {
+    var factory = {
       getData: function () {
         subreddits = [];
         var url = 'https://www.reddit.com/subreddits/.json?jsonp=popCallback';
@@ -38,4 +38,5 @@ angular.module('SubSnoopApp')
         return promise;
       }
     };
+    return factory;
   }]);

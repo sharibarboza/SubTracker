@@ -13,7 +13,7 @@ angular.module('SubSnoopApp')
     var defaultSubSort = {value: 'subName', name: 'Subreddit name'};
     var subSort = defaultSubSort;
 
-    return {
+    var factory = {
       getDefaultSubSort: function() {
         return defaultSubSort;
       },
@@ -24,4 +24,5 @@ angular.module('SubSnoopApp')
         return subSort;
       }
     };
+    return factory;
   });

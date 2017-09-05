@@ -19,7 +19,7 @@ var app = angular
     'yaru22.angular-timeago'
   ]);
 
-var getData = function(route, factory, storage) {
+var getData = function(route, factory) {
   var username = route.current.params.username;
 
   if (factory.checkUser(username)) {
@@ -53,8 +53,8 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
       controller: 'UserCtrl',
       controllerAs: 'user',
       resolve: {
-        subsData: function($route, subFactory, checkStorage) {
-          return getData($route, subFactory, checkStorage);     
+        subsData: function($route, subFactory) {
+          return getData($route, subFactory);     
         }
       }
     })
@@ -63,8 +63,8 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
       controller: 'SearchCtrl',
       controllerAs: 'search',
       resolve: {
-        subsData: function($route, subFactory, checkStorage) {
-          return getData($route, subFactory, checkStorage);     
+        subsData: function($route, subFactory) {
+          return getData($route, subFactory);     
         }
       }
     })
@@ -73,8 +73,8 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
       controller: 'UserSubCtrl',
       controllerAs: 'usersub',
       resolve: {
-        subsData: function($route, subFactory, checkStorage) {
-          return getData($route, subFactory, checkStorage);     
+        subsData: function($route, subFactory) {
+          return getData($route, subFactory);     
         }
       }
     })
