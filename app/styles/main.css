@@ -351,6 +351,11 @@ Content
   padding-bottom: 15px;
 }
 
+.banner-header h3 {
+  text-align: center;
+  font-weight: 600;
+}
+
 /************************
 Navigation
 ************************/
@@ -859,11 +864,6 @@ Search
 
 #search-jumbotron {
   margin-top: 0;
-}
-
-#search-header h3 {
-  text-align: center;
-  font-weight: 600;
 }
 
 #search-input {
