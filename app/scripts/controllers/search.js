@@ -8,7 +8,8 @@
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('SearchCtrl', ['$scope', 'searchResults', '$filter', 'search', 'subFactory', '$timeout', 'subsData', 'sortFactory', function ($scope, searchResults, $filter, search, subFactory, $timeout, subsData, sortFactory) {
+  .controller('SearchCtrl', ['$rootScope', '$scope', 'searchResults', '$filter', 'search', 'subFactory', '$timeout', 'subsData', 'sortFactory', 
+  function ($rootScope, $scope, searchResults, $filter, search, subFactory, $timeout, subsData, sortFactory) {
     /* 
       Initalization
     */
@@ -20,7 +21,8 @@ angular.module('SubSnoopApp')
     $scope.username = subsData.user.name;
     $scope.searchInput = "";
     $scope.noResults = "";
-
+    $rootScope.title = $scope.username + ' | Search';
+    
     /*
      Reset post-type and subs array to default on new search
     */
