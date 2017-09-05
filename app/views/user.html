@@ -15,7 +15,7 @@
               <i class="fa fa-user-circle" aria-hidden="true"></i>
               <span class="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span> <span class="badge num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
               <div class="banner-info">
-                <p>Last seen <time-ago class="orange" from-time='{{ latest[0].created * 1000 }}'></time-ago></p>
+                <p>Last seen <time-ago class="orange" from-time='{{ latest[0].created_utc * 1000 }}'></time-ago></p>
               </div>
             </div>
             <div class="col-md-3" id="user-link-col">
