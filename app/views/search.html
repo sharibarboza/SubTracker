@@ -11,7 +11,7 @@
         <strong align="center" id="search-header"><h3>Search in <span class="orange">{{ username }}'s</span> comments and submissions</h3></strong>
         <br>
         <div id="search-input">
-          <form ng-submit="searchResults()" redirect="{{ false }}" handle-phone-submit>
+          <form ng-submit="searchResults()" redirect="{{ false }}" novalidate="novalidate" handle-phone-submit>
             <div class="input-group col-md-8 col-md-offset-2">
               <input type="text" ng-model="searchInput" class="form-control" id="search" required>
               <span class="input-group-btn">
