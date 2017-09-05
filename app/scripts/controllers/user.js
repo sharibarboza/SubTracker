@@ -8,8 +8,8 @@
  * Controller of the SubSnoopApp
  */
  angular.module('SubSnoopApp')
- .controller('UserCtrl', ['$scope', '$routeParams', '$filter', '$window', 'subFactory', 'moment', 'subsData', 'search', 'sortFactory',
-  function ($scope, $routeParams, $filter, $window, subFactory, moment, subsData, search, sortFactory) {
+  .controller('UserCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', '$window', 'subFactory', 'moment', 'subsData', 'search', 'sortFactory',
+  function ($rootScope, $scope, $routeParams, $filter, $window, subFactory, moment, subsData, search, sortFactory) {
 
     /*
      Initalization
@@ -59,6 +59,7 @@
       if (subsData) {
         configUserData(subsData.user, false);
         configSubData(subsData, false);
+        $rootScope.title = $scope.username + ' | Subreddits';
       }
 
       /*
@@ -92,13 +93,13 @@
     } else {
       $scope.notfound = true;
       $scope.main = true;
+      $rootScope.title = 'SubSnoop | User not found';
     }
 
     $scope.changeSubs = function(term) {
       $scope.subList = [];
       $scope.subList = search.findSubs($scope.subsArray, term);
     };
-
   }
 
 ]);

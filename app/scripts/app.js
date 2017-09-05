@@ -21,6 +21,7 @@ var app = angular
 
 var getData = function(route, factory, storage) {
   var username = route.current.params.username;
+
   if (factory.checkUser(username)) {
     return factory.getSubData();
   } else {
@@ -44,7 +45,8 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
           var promise = newSubs.getData();
           return promise;
         }
-      }
+      },
+      title: 'SubSnoop - Track your subreddit activity'
     })
     .when('/:username/', {
       templateUrl: 'views/user.html',
@@ -82,18 +84,19 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
     $locationProvider.hashPrefix('');
 }]);
 
-app.run(['$rootScope', function($root) {
+app.run(['$rootScope', function($rootScope) {
 
-  $root.$on('$routeChangeStart', function(e, curr, prev) { 
+  $rootScope.$on('$routeChangeStart', function(e, curr, prev) { 
     if (curr.$$route && curr.$$route.resolve) {
       // Show a loading message until promises are not resolved
-      $root.loadingView = true;
+      $rootScope.loadingView = true;
     }
   });
 
-  $root.$on('$routeChangeSuccess', function(e, curr, prev) { 
+  $rootScope.$on('$routeChangeSuccess', function(e, curr, prev) { 
     // Hide loading message
-    $root.loadingView = false;
+    $rootScope.loadingView = false;
+    $rootScope.title = curr.$$route.title;
   });
 
 }]);
