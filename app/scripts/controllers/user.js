@@ -15,10 +15,9 @@
      Initalization
     */
     $window.scrollTo(0, 0);
-    $scope.inputUser = $routeParams.username;
+    $scope.username = $routeParams.username;
     $scope.main = false; // Prevent hiding of search bar in top-nav
     $scope.page = 'user';
-    $scope.sort = sortFactory.getSubSort();
 
     /*
      Gets data from user's reddit about page, primarily for username, link karma, comment karma, etc.
@@ -42,8 +41,8 @@
       $scope.subs = response.subs;
       $scope.dataAvailable = response.firstDate;
       $scope.latest = response.latest;
-      $scope.subsArray = $filter('sortSubs')(Object.keys($scope.subs), 'subName', $scope.subs);
-      $scope.subLength = $scope.subsArray.length;
+      $scope.subsArray = subFactory.getDefaultSortedArray();
+      $scope.subLength = subFactory.getSubLength();
     };
 
     $scope.setSortOption = function() {
@@ -54,13 +53,13 @@
     /*
      If user/sub data not stored in session storage, use data from resolved promises
     */
-    if (subsData !== "") {
+    if (subsData) {
       $scope.notfound = false;
-      if (subsData) {
-        configUserData(subsData.user, false);
-        configSubData(subsData, false);
-        $rootScope.title = $scope.username + ' | Subreddits';
-      }
+      $rootScope.title = $scope.username + ' | Subreddits';
+      $scope.sort = sortFactory.getSubSort();
+
+      configUserData(subsData.user, false);
+      configSubData(subsData, false);
 
       /*
        Used for sorting subreddits

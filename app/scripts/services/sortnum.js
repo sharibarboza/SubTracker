@@ -15,7 +15,12 @@ angular.module('SubSnoopApp')
      A secondary sorting option can be added, if two items are identical
     */
 
-    var sort = function(num1, num2, a, b, reverse, secondary) {
+    var service = {
+      get: sort
+    };
+    return service;
+
+    function sort(num1, num2, a, b, reverse, secondary) {
       var val1, val2;
 
       if (reverse) {
@@ -35,12 +40,6 @@ angular.module('SubSnoopApp')
           num2 = moment(b.created_utc*1000);
           return sort(num1, num2, a, b, true, null); 
         } 
-      }
-    };
-
-    return {
-      get: function(num1, num2, a, b, reverse, secondary) {
-        return sort(num1, num2, a, b, reverse, secondary);
       }
     };
 

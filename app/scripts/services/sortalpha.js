@@ -14,7 +14,12 @@ angular.module('SubSnoopApp')
      Sort data alphabetically
     */
 
-    var sort = function(a, b) {
+    var service = {
+      get: sort
+    };
+    return service;
+
+    function sort(a, b) {
       a = a.toLowerCase();
       b = b.toLowerCase();
 
@@ -24,12 +29,6 @@ angular.module('SubSnoopApp')
         return 1; 
       } else { 
         return 0; 
-      }
-    };
-
-    return {
-      get: function(a, b) {
-        return sort(a, b);
       }
     };
 

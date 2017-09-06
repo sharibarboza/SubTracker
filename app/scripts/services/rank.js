@@ -17,7 +17,7 @@ angular.module('SubSnoopApp')
     Used primarily for calculating ranks of sorted subreddits or posts.
     Also used, so far, to return the top ranking element in a sorted posts array.
     */
-    return {
+    var factory = {
       setData: function(data) {
         subData = data;
         subArray = Object.keys(subData);
@@ -32,4 +32,5 @@ angular.module('SubSnoopApp')
         return $filter('sortPosts')(data, attribute)[0];
       }
     };
+    return factory;
   }]);

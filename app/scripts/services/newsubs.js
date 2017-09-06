@@ -25,7 +25,7 @@ angular.module('SubSnoopApp')
     /*
      Request the Reddit API to get the newest subs
     */
-    return {
+    var factory = {
       getData: function (num) {
         subreddits = [];
         var url = 'https://www.reddit.com/subreddits/new/.json?jsonp=newCallback';
@@ -38,4 +38,5 @@ angular.module('SubSnoopApp')
         return promise;
       }
     };
+    return factory;
   }]);

@@ -5,16 +5,27 @@
  * @name SubSnoopApp.searchResults
  * @description
  * # searchResults
- * Service in the SubSnoopApp.
+ * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .service('searchResults', ['$filter', function ($filter) {
+  .factory('searchResults', ['$filter', function ($filter) {
     var searchInput = "";
+
+    /*
+     User interface for search results factory
+    */
+    var factory = {
+      getData: function(input, data) {
+        searchInput = input;
+        return getResults(data);
+      }
+    };
+    return factory;
 
     /*
      Gets the user input terms and processes the search results
     */
-    var getResults = function(data) {
+    function getResults(data) {
       var newData = new Object();
       newData.data = {};
 
@@ -41,7 +52,7 @@ angular.module('SubSnoopApp')
      Combines the process of searching for matching terms in posts while
      also highlighting them.
     */
-    var filterData = function(data, sub, where) {
+    function filterData(data, sub, where) {
       var dataList = [];
 
       for (var i = 0; i < data[where].length; i++) {
@@ -93,7 +104,7 @@ angular.module('SubSnoopApp')
     /*
      Reset all highlighted data entries for a new search
     */
-    var resetHighlighted = function(item) {
+    function resetHighlighted(item) {
       if ('highlighted_body' in item) {
         item.highlighted_body = null;
       }
@@ -107,7 +118,7 @@ angular.module('SubSnoopApp')
     /*
      Store HTML post body text with highlighted terms
     */
-    var replaceBody = function(text, item, where) {
+    function replaceBody(text, item, where) {
       item.highlighted_body = text;
       return item;
     }
@@ -116,7 +127,7 @@ angular.module('SubSnoopApp')
      Store HTML title text with highlighted terms.
      Used for submission titles only, not comments.
     */
-    var replaceTitle = function(text, item, where) {
+    function replaceTitle(text, item, where) {
       item.highlighted_title = text;
       return item;
     }
@@ -125,7 +136,7 @@ angular.module('SubSnoopApp')
      Filtering method, used to confirm if the text has any terms that are
      indeed highlighted.
     */
-    var isMatch = function(text, term) {
+    function isMatch(text, term) {
       var regexp = new RegExp('<span class="highlight">'+ term +'</span>', 'gi');
       return regexp.exec(text.toLowerCase());
     };
@@ -137,7 +148,7 @@ angular.module('SubSnoopApp')
      For example, in a search input with 2 words, the submission post is a match if one word 
      only is found in the body but the other word is found in the title.
     */
-    var highlightTerms = function(terms, body, title, where) {
+    function highlightTerms(terms, body, title, where) {
       var matched_terms = [];
 
       // Check post body text for any matches
@@ -179,11 +190,4 @@ angular.module('SubSnoopApp')
       }
     };
 
-
-    return {
-      getData: function(input, data, type, subs) {
-        searchInput = input;
-        return getResults(data);
-      }
-    };
   }]);
