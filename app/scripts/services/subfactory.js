@@ -117,7 +117,7 @@
     */
     function getSubPromise(userPromise) {
       var subPromise = userPromise.then(function(response) {
-        if (response.name.toLowerCase() === username.toLowerCase()) {
+        if (response && response.name.toLowerCase() === username.toLowerCase()) {
           var commentPromise = promiseChain('comments', 'commentsCallback');
           var submitPromise = promiseChain('submitted', 'submitsCallback');
 
