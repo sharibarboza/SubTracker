@@ -8,19 +8,21 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('subFactory', ['$http', 'userFactory', '$q', 'moment', '$sce', function ($http, userFactory, $q, moment, $sce) {
+ .factory('subFactory', ['$http', 'userFactory', '$q', 'moment', '$sce', '$filter', function ($http, userFactory, $q, moment, $sce, $filter) {
     var baseUrl = 'https://www.reddit.com/user/';
     var rawJson = 'raw_json=1';
+    var pages = 10;
     var username;
     var promise;
+    var after = "0";
+    var subLength = 0;
+    var defaultSortedArray = [];
+
     var comments = [];
     var submissions = [];
     var subs = {};
-    var pages = 10;
-    var dataAvailable;
     var commentData = [];
     var submitData = [];
-    var after = "0";
     var subData = {};
 
     /*
@@ -47,7 +49,6 @@
     var factory = {
       getData: function(user) {
         resetData();
-        console.log(user);
         username = user;
         var userPromise = userFactory.getData(user);
         return getSubPromise(userPromise);
@@ -59,11 +60,24 @@
         if (!username) {
           return false;
         } else {
-          return username.toLowerCase() === user.toLowerCase();
+          return matchUser(user, username);
         }
+      },
+      getDefaultSortedArray: function() {
+        return defaultSortedArray;
+      },
+      getSubLength: function() {
+        return subLength;
       }
     };
     return factory;
+
+    /*
+     Check to see if two username strings match
+    */
+    function matchUser(user1, user2) {
+      return user1.toLowerCase() === user2.toLowerCase();
+    }
 
     /*
      Configure sub data object, which will be passed to the controllers.
@@ -72,14 +86,14 @@
       organizeComments(comments);
       organizeSubmitted(submissions);
       setTotalUps();
+      setDefaultSortedArray();
 
-      getFirstDate();
       subData = {
         'user': response,
         'comments' : comments.length,
         'submissions' : submissions.length,
         'subs' : subs,
-        'firstDate' : dataAvailable,
+        'firstDate' : getFirstDate(),
         'latest' : getLatest(2)
       }
     };
@@ -88,13 +102,13 @@
      Reset all data to empty lists (used for getting a new user)
     */
     function resetData() {
+      after = "0";
       comments = [];
       submissions = [];
       subs = {};
       commentData = [];
       submitData = [];
       subData = {};
-      after = '0';
     };
 
     /*
@@ -103,7 +117,7 @@
     */
     function getSubPromise(userPromise) {
       var subPromise = userPromise.then(function(response) {
-        if (response !== "") {
+        if (response.name.toLowerCase() === username.toLowerCase()) {
           var commentPromise = promiseChain('comments', 'commentsCallback');
           var submitPromise = promiseChain('submitted', 'submitsCallback');
 
@@ -114,7 +128,7 @@
           });
           return dataPromise;
         } else {
-          return "";
+          return null;
         }
       });
       return subPromise;
@@ -288,6 +302,7 @@
      Get the date of the first post
     */
     function getFirstDate() {
+      var dataAvailable;
       var lastComment, lastSubmit, commentDate, submitDate;
 
       if (comments.length > 0) {
@@ -307,6 +322,7 @@
       } else if (submitDate) {
         dataAvailable = submitDate;
       } 
+      return dataAvailable;
     };
 
     /*
@@ -358,6 +374,15 @@
       }
 
       return latest;
+    };
+
+    /*
+     Compute the default sorted subreddits alphabetically
+     Also, get the length
+    */
+    function setDefaultSortedArray() {
+      defaultSortedArray = $filter('sortSubs')(Object.keys(subs), 'subName', subs);
+      subLength = defaultSortedArray.length;
     };
 
   }]);
