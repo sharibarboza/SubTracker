@@ -76,7 +76,7 @@
      Check to see if two username strings match
     */
     function matchUser(user1, user2) {
-      return user1.toLowerCase() === user2.toLowerCase();
+      return user2.toLowerCase().indexOf(user1.toLowerCase()) >= 0;
     }
 
     /*
@@ -117,7 +117,7 @@
     */
     function getSubPromise(userPromise) {
       var subPromise = userPromise.then(function(response) {
-        if (response && response.name.toLowerCase() === username.toLowerCase()) {
+        if (response && matchUser(response.name, username)) {
           var commentPromise = promiseChain('comments', 'commentsCallback');
           var submitPromise = promiseChain('submitted', 'submitsCallback');
 
