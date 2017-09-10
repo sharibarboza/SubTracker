@@ -10,7 +10,7 @@
 angular.module('SubSnoopApp')
   .factory('sortFactory', function () {
       
-    var defaultSubSort = {value: 'subName', name: 'Subreddit name'};
+    var defaultSubSort = {value: 'lastSeen', name: 'Most recent activity'};
     var subSort = defaultSubSort;
 
     var factory = {

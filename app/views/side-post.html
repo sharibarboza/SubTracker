@@ -1,7 +1,5 @@
 <a href="{{ submit.url }}" target="_blank"><strong>{{ submit.title | escape }}</strong></a><br>
 
-<div class="label label-default">{{ submit.type == 'comment' ? 'comment' : 'submission' }}</div>
-<br><br>
 <div ng-if="submit.type == 'comment'">
   <p class="small-font post-body wrap-text" ng-bind-html="submit.body_html | sanitize | truncate:50"></p>
 </div>

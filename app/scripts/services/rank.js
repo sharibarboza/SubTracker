@@ -30,6 +30,10 @@ angular.module('SubSnoopApp')
       getTopPost: function(data, attribute) {
         // Returns the first element in the sorted array
         return $filter('sortPosts')(data, attribute)[0];
+      },
+      getTopSub: function(keys, attribute, data) {
+        // Returns the first subreddit in the sorted array
+        return $filter('sortSubs')(keys, attribute, data)[0];
       }
     };
     return factory;

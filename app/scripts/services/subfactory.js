@@ -8,7 +8,7 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('subFactory', ['$http', 'userFactory', '$q', 'moment', '$sce', '$filter', function ($http, userFactory, $q, moment, $sce, $filter) {
+ .factory('subFactory', ['$http', 'userFactory', '$q', 'moment', '$sce', '$filter', 'rank', function ($http, userFactory, $q, moment, $sce, $filter, rank) {
     var baseUrl = 'https://www.reddit.com/user/';
     var rawJson = 'raw_json=1';
     var pages = 10;
@@ -17,6 +17,7 @@
     var after = "0";
     var subLength = 0;
     var defaultSortedArray = [];
+    var upvotes = 0;
 
     var comments = [];
     var submissions = [];
@@ -68,7 +69,15 @@
       },
       getSubLength: function() {
         return subLength;
-      }
+      },
+      getCommentsList: function() {
+        return comments;
+      },
+      getSubmitsList: function() {
+        return submissions;
+      },
+      getFirstPost: getFirstPost,
+      getNewestSub: getNewestSub
     };
     return factory;
 
@@ -94,7 +103,8 @@
         'submissions' : submissions.length,
         'subs' : subs,
         'firstDate' : getFirstDate(),
-        'latest' : getLatest(2)
+        'latest' : [getLatest('comment'), getLatest('submissions')],
+        'upvotes' : upvotes
       }
     };
 
@@ -109,6 +119,7 @@
       commentData = [];
       submitData = [];
       subData = {};
+      upvotes = 0;
     };
 
     /*
@@ -295,6 +306,7 @@
     function setTotalUps() {
       for (var sub in subs) {
         subs[sub].total_ups = subs[sub].comment_ups + subs[sub].submission_ups;
+        upvotes += subs[sub].total_ups;
       }
     };
 
@@ -323,58 +335,7 @@
         dataAvailable = submitDate;
       } 
       return dataAvailable;
-    };
-
-    /*
-     Get the most recent posts (whether they be comment or submission)
-    */
-    function getLatest(num) {
-      var latest = [];
-      var comment_index = 0;
-      var submit_index = 0;
-      var comment, submit, comment_date, submit_date;
-
-      while (latest.length < num && comment_index <= comments.length && submit_index <= submissions.length) {
-        if (comments.length > comment_index) {
-          comment = comments[comment_index];
-          comment_date = moment(comment.created_utc*1000);
-        } else {
-          comment = null;
-        }
-
-        if (submissions.length > submit_index) {
-          submit = submissions[submit_index];
-          submit_date = moment(submit.created_utc*1000);
-        } else {
-          submit = null;
-        }
-
-        /* 
-          When a comment or submission is pushed, increase the index, otherwise keep
-          the index where it is to compare with the next item.
-        */
-        if (comment && submit) {
-          if (comment_date > submit_date) {
-            latest.push(comment);
-            comment_index += 1;
-          } else {
-            latest.push(submit);
-            submit_index += 1;
-          }
-        } else if (comment && !submit) {
-          latest.push(comment);
-          comment_index += 1;
-        } else if (!comment && submit) {
-          latest.push(submit);
-          submit_index += 1;
-        } else {
-          // Not enough comments and submissions
-          break;
-        }
-      }
-
-      return latest;
-    };
+    }
 
     /*
      Compute the default sorted subreddits alphabetically
@@ -384,5 +345,63 @@
       defaultSortedArray = $filter('sortSubs')(Object.keys(subs), 'subName', subs);
       subLength = defaultSortedArray.length;
     };
+
+    function getLatest(where) {
+      if (where === 'comment') {
+        return comments[0];
+      } else {
+        return submissions[0];
+      }
+    }
+
+    function getFirstPost() {
+      var firstComment = comments[comments.length-1];
+      var firstSubmit = submissions[submissions.length-1];
+
+      return compareDates(firstComment, firstSubmit, true);
+    }
+
+    function getNewestSub() {
+      var firstPosts = [];
+      var subComments, subSubmits, oldestComment, oldestSubmit;
+
+      for (var key in subs) {
+        subComments = subs[key].comments;
+        subSubmits = subs[key].submissions;
+
+        oldestComment = subs[key].comments[subComments.length-1];
+        oldestSubmit = subs[key].submissions[subSubmits.length-1];
+
+        firstPosts.push(compareDates(oldestComment, oldestSubmit, false));
+      }
+
+      return rank.getTopPost(firstPosts, 'newest').subreddit;
+    }
+
+    function compareDates(post1, post2, newest) {
+      var post, date1, date2;
+
+      if (post1) {
+        date1 = post1.created_utc * 1000;
+      }
+      if (post2) {
+        date2 = post2.created_utc * 1000;
+      }
+
+      if (date1 && date2) {
+        if (newest) {
+          post = (date1 > date2) ? post1 : post2;
+        } else {
+          post = (date1 < date2) ? post1 : post2;
+        }
+      } else if (date1) {
+        post = post1;
+      } else {
+        post = post2;
+      }
+
+      // Return the post with either the oldest/newest comment
+      return post;
+    }
 
   }]);

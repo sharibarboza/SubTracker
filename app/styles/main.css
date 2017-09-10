@@ -13,6 +13,7 @@ body {
   padding: 0;
   color: #383838;
   background-color: inherit !important;
+  position: relative;
 }
 
 a {
@@ -162,8 +163,9 @@ blockquote {
 }
 
 .fa-reddit {
-  font-size: 38px;
+  font-size: 50px;
   padding-left: 8px;
+  margin-right: 5px;
 }
 
 .wrap-text {
@@ -302,7 +304,7 @@ Content
 ************************/
 
 .content {
-  min-height: 575px;
+  padding-top: 80px;
 }
 
 .container {
@@ -345,19 +347,31 @@ Content
   color: white;
   background-image: url('../images/icon-bg.png');
   background-size: auto;
-  padding-top: 100px;
+  background-position: 0 15%;
+  padding-top: 70px;
   padding-bottom: 50px;
   font-weight: 700;
+  margin-right: 0;
 }
 
 .sub-banner {
-  padding-top: 110px;
-  padding-bottom: 15px;
+  background-position: 0 10%;
+  padding-top: 10px;
+  padding-bottom: 0;
 }
 
 .banner-header h3 {
   text-align: center;
   font-weight: 600;
+}
+
+.banner-img {
+  width: 55px;
+  margin-top: -5px;
+}
+
+.title-heading {
+  border-bottom: 1px solid gray;
 }
 
 /************************
@@ -469,7 +483,7 @@ Card
 .card {
   background-color: #FAFAFA;
   border-radius: 2px !important;
-  margin-bottom: 12px !important;
+  margin-bottom: -1px;
   border: 1px solid #D6D6D6;
 }
 
@@ -527,12 +541,11 @@ User Page
 }
 
 #since-date {
-  margin-top: 50px;
-  font-size: 18px;
+  padding-left: 40px;
 }
 
 .num-subs {
-  margin-left: 5px;
+  margin-left: 10px;
   margin-top: -20px;
   font-size: 20px;
   padding: 5px 15px 7px 15px;
@@ -540,7 +553,6 @@ User Page
 
 .banner-info {
   font-size: 18px;
-  margin-left: 48px;
   line-height: 85%;
 }
 
@@ -549,7 +561,7 @@ User Page
 }
 
 #table-head {
-  padding-top: 0;
+  padding-top: 30px;
 }
 
 #user-link-col {
@@ -559,7 +571,20 @@ User Page
   margin-left: 0;
 }
 
-/************************
+#user-page {
+  padding-left: 85px;
+}
+
+.table-icon {
+  font-size: 60px;
+  color: #66D7D1;
+}
+
+.stat-icon {
+  width: 75px;
+}
+
+/***********************
 User Page Side Bar
 ************************/
 
@@ -569,13 +594,36 @@ User Page Side Bar
 }
 
 .side-cards .pad-card {
-  padding: 12px !important;
+  padding: 12px;
 }
 
 .side-cards .card-heading {
   color: #212121;
   font-weight: 600;
-  padding: 12px !important;
+  padding: 12px;
+}
+
+.user-side {
+  top: 0;
+  left: 0;
+}
+
+#fixed-side .pad-card {
+  padding-top: 19px;
+  padding-bottom: 19px;
+}
+
+#fixed-side .card-action {
+  background-color: #F5F5F5;
+}
+
+#fixed-side .card-action:hover {
+  background-color: white;
+}
+
+.fixed-pos {
+  position: fixed;
+  margin-top: 133px;
 }
 
 /************************
@@ -583,12 +631,12 @@ Subreddit Table
 ************************/
 
 .sub-table {
-  padding: 40px 35px;
+  padding-top: 20px;
 }
 
 .sub-rows {
-  padding-right: 10px;
-  padding-bottom: 20px;
+  position: absolute;
+  left: 366px;
 }
 
 #sub-row:hover {
@@ -608,6 +656,11 @@ Subreddit Table
   font-size: 16px;
   font-weight: bold;
 }
+
+#more-subs {
+  padding: 10px;
+}
+
 
 /************************
 User Sub Page
@@ -717,6 +770,7 @@ User Sub Page
 
 #back-up {
   padding-top: 25px;
+  margin-bottom: 30px;
 }
 
 #comment-card {
@@ -926,11 +980,9 @@ Footer
 
 /* Custom page footer */
 .footer {
-  padding-top: 19px;
   color: #777;
   border-top: 1px solid #e5e5e5;
   padding-bottom: 10px;
-  text-align: center;
 }
 
 /************************
@@ -956,6 +1008,17 @@ Mobile
     margin: 0;
     padding: 0;
     width: inherit;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .user-side {
+    display: none;
+  }
+
+  .sub-rows {
+    position: static;
+    left: 0;
   }
 }
 
