@@ -8,8 +8,9 @@
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('UserSubCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$filter', 'rank', 'subsData', 'search', 'subFactory', 'sortFactory', 
-  function ($rootScope, $scope, $routeParams, $window, $filter, rank, subsData, search, subFactory, sortFactory) {
+  .controller('UserSubCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$filter', 'rank', 'subsData', 'search', 
+    'subFactory', 'sortFactory', '$anchorScroll', '$location', '$timeout', 
+    function ($rootScope, $scope, $routeParams, $window, $filter, rank, subsData, search, subFactory, sortFactory, $anchorScroll, $location, $timeout) {
   
     /*
      Initalization
@@ -30,6 +31,8 @@ angular.module('SubSnoopApp')
     $scope.subLength = Object.keys(subsData.subs).length;
     $scope.mostActiveRank = rank.getSubRank($scope.subreddit, 'mostActive');
     $scope.mostUpsRank = rank.getSubRank($scope.subreddit, 'totalUps');
+    $scope.commentAvgRank = rank.getSubRank($scope.subreddit, 'avgComment');
+    $scope.submitAvgRank = rank.getSubRank($scope.subreddit, 'avgSubmit');
 
     /*
      Set up for specific subreddit
@@ -37,6 +40,8 @@ angular.module('SubSnoopApp')
     */
     $scope.subsArray = Object.keys(subsData.subs);
     $scope.sub = subsData.subs[$scope.subreddit];
+    $scope.latestPost = subFactory.getLatestPost($scope.sub);
+    $scope.firstPost = subFactory.getFirstPost($scope.sub);
 
     /*
      Get the comment with the most upvoteds
@@ -51,6 +56,8 @@ angular.module('SubSnoopApp')
     if ($scope.sub.submissions.length > 0) {
       $scope.topSubmit = rank.getTopPost($scope.sub.submissions, 'mostUps');
     }
+
+    $scope.highestPosts = [$scope.topPost, $scope.topSubmit];
 
     /*
      Set up for pagination of comments or submissions
@@ -78,17 +85,22 @@ angular.module('SubSnoopApp')
     /*
      Tab configuration for toggling between comment and submissions display
     */
-    if ($scope.sub.comments.length > 0) {
-      $scope.tab = 0;
-    } else {
-      $scope.tab = 1;
-    }
+    $scope.tab = 2;
+    $scope.anchor = '';
     $scope.tabOptions = ['comments', 'submissions'];
+    $scope.open = true;
+
+    $scope.setAccordion = function() {
+      $scope.open = $scope.tab === 2 ? true : false;
+    };
+    $scope.setAccordion();
 
     $scope.setTab = function(num) {
+      $window.scrollTo(0, 0);
       $scope.tab = parseInt(num);
       $scope.subPage.current = 1;
-      setArray()
+      setArray();
+      $scope.setAccordion();
     };
 
     $scope.isSet = function(num) {
@@ -152,7 +164,14 @@ angular.module('SubSnoopApp')
     */
     $scope.backUp = function() {
       document.getElementById('table-start').scrollIntoView();
-    }
+    };
+
+    $scope.sliceArray = function() {
+      $scope.slicedArray = $scope.elemArray.slice((($scope.subPage.current-1)*$scope.subPage.items), 
+        (($scope.subPage.current)*$scope.subPage.items));
+      return $scope.slicedArray;
+    };
+
 
   }
 ]);
