@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card post-card">
   <div class="card-content" id="submit-card">
     <div class="row submit-row">
       <div class="col-md-1 col-xs-2 post-thumbnail">
@@ -26,10 +26,8 @@
   <div ng-if="page != 'search'" ng-include src="'views/accordion-submit.html'"></div>
 
   <div ng-if="page == 'search'">
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1" id="submit-col">
-        <submit-content class="wrap-text" data="{{ element }}" page="{{ page }}"></submit-content>
-      </div>
+    <div id="submit-col">
+      <submit-content class="wrap-text" data="{{ element }}" page="{{ page }}"></submit-content>
     </div>
   </div>
 </div>

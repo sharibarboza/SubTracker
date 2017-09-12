@@ -20,6 +20,7 @@
     $scope.page = 'user';
     $scope.limit = 10;
     $scope.currentLimit = $scope.limit;
+    $scope.open = true;
 
     /*
      Gets data from user's reddit about page, primarily for username, link karma, comment karma, etc.
@@ -41,10 +42,11 @@
       $scope.comments = response.comments;
       $scope.submissions = response.submissions;
       $scope.subs = response.subs;
-      $scope.dataAvailable = response.firstDate;
       $scope.latest = response.latest;
       $scope.subsArray = subFactory.getDefaultSortedArray();
       $scope.subLength = subFactory.getSubLength();
+      $scope.lastPost = subFactory.getLatestPost(null);
+      $scope.firstPost = subFactory.getFirstPost(null);
     };
 
     $scope.setSortOption = function() {
