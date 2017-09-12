@@ -1,0 +1,46 @@
+<span class="small-font">Viewing <strong class="orange">{{ slicedArray.length }}</strong> of {{ sub[tabOptions[tab]].length }} {{ tabOptions[tab] }} </span>
+<div class="table-options">
+  <div class="row" id="table-start">
+    <div class="col-md-3">
+      <form name="sortForm">
+        <md-select ng-model="data.selectedSort" placeholder="{{ data.selectedSort.name }}" ng-change="setSortOption()">
+          <md-option ng-repeat="sort in data.sortOptions" ng-value="sort" ng-selected="sort.value == data.selectedSort.value">
+            <span class="main-color low-weight">{{ sort.name }}</span>
+          </md-option>
+        </md-select>
+      </form>
+    </div>
+    <div class="col-md-3">
+      <form name="viewForm">
+        <md-select ng-model="subPage.viewby" placeholder="test" ng-change="setItemsPerPage(subPage.viewby.num)">
+          <md-option ng-repeat="view in views" ng-value="view" ng-selected="view.value == subPage.viewby.value">
+            <span class="main-color low-weight">View {{ view.num }}</span>
+          </md-option>
+        </md-select>
+      </form>
+    </div>
+    <div class="col-md-6 paginate" align="right" id="top-paginate">
+      <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" style="margin: -5px;"></pagination>
+    </div>
+  </div>
+</div>
+<br>
+
+<div id="{{ tabOptions[tab] }}">
+  <div ng-repeat="element in sliceArray()">
+    <div ng-if="element.type == 'comment'">
+      <div ng-include src="'views/comment.html'"></div>
+    </div>
+    <div ng-if="element.type == 'submit'">
+      <div ng-include src="'views/submission.html'"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 pull-center" id="back-up">
+      <back-top></back-top>
+    </div>
+    <div class="col-md-6 paginate">
+      <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" ng-change="backUp()" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" id="bottom-paginate"></pagination>
+    </div>
+  </div>
+</div>
