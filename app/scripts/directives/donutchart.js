@@ -36,7 +36,7 @@ angular.module('SubSnoopApp')
             	if (attrs.type === 'comments') {
             		return "Recent 40 Comments";
             	} else {
-            		return "Recent 40 Submissions";
+            		return "Recent 40 Posts";
             	}
             }
           },
