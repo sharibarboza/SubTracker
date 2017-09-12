@@ -15,9 +15,9 @@ angular.module('SubSnoopApp')
     link: function(scope, element, attrs) {
 
       var chartConfig = {
-        width: 575,
-        height: 575,
-        thickness: 65,
+        width: 525,
+        height: 450,
+        thickness: 50,
         grow: 20,
         labelPadding: 50,
         duration: 100,
@@ -34,9 +34,9 @@ angular.module('SubSnoopApp')
           center: {
             value: function() {
             	if (attrs.type === 'comments') {
-            		return "Recent Comments";
+            		return "Recent 40 Comments";
             	} else {
-            		return "Recent Submissions";
+            		return "Recent 40 Submissions";
             	}
             }
           },
@@ -265,7 +265,7 @@ angular.module('SubSnoopApp')
           .attr('dy', '0em')
     			.attr("text-anchor", "middle")
           .attr("class", 'center-value-' + attrs.type)
-          .attr("font-size", "24px")
+          .attr("font-size", "20px")
           .attr("fill", "#696969")
           .attr("font-weight", "bold");
 

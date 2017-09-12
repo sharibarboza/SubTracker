@@ -170,14 +170,14 @@
             </div>          
 
             <br>
-            <div ng-controller="PiechartCtrl">
+            <div ng-controller="PiechartCtrl" align="center">
               <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent 40 comments</strong></h4>
-              <span class="small-font">Hover over the chart to see the total number of comments and submissions for that subreddit out of {{ username }}'s most recent 40 comments.</span>
+              <span class="small-font">Hover to see the number of comments for that sub out of {{ username }}'s most recent 40 comments.</span>
               <donut-chart ng-if="comments > 0" type="comments" align="center"></donut-chart>
               <h5 ng-if="comments == 0">{{ username }} does not have any comments.</h5>
 
               <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent 40 submissions</strong></h4>
-              <span class="small-font">Hover over the chart to see the total number of comment and submission upvotes for that subreddit out of {{ username }}'s most recent 40 submissions.</span>
+              <span class="small-font">Hover to see the number of submissions for that sub out of {{ username }}'s most recent 40 submissions.</span>
               <donut-chart ng-if="submissions > 0" type="karma" align="center"></donut-chart>
               <h5 class="purple" ng-if="submissions == 0">{{ username }} does not have any submissions.</h5>   
             </div>
