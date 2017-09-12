@@ -25,6 +25,7 @@
     var commentData = [];
     var submitData = [];
     var subData = {};
+    var latest = [];
 
     /*
      Callback function to fetch data from user's comments
@@ -76,8 +77,14 @@
       getSubmitsList: function() {
         return submissions;
       },
+      getLatest: function() {
+        return latest;
+      },
+      compareDates: compareDates,
       getFirstPost: getFirstPost,
-      getNewestSub: getNewestSub
+      getNewestSub: getNewestSub,
+      getLatestPost: getLatestPost,
+      getRecentPosts: getRecentPosts
     };
     return factory;
 
@@ -96,13 +103,13 @@
       organizeSubmitted(submissions);
       setTotalUps();
       setDefaultSortedArray();
+      sortRecent();
 
       subData = {
         'user': response,
         'comments' : comments.length,
         'submissions' : submissions.length,
         'subs' : subs,
-        'firstDate' : getFirstDate(),
         'latest' : [getLatest('comment'), getLatest('submissions')],
         'upvotes' : upvotes
       }
@@ -120,6 +127,7 @@
       submitData = [];
       subData = {};
       upvotes = 0;
+      latest = [];
     };
 
     /*
@@ -311,33 +319,6 @@
     };
 
     /*
-     Get the date of the first post
-    */
-    function getFirstDate() {
-      var dataAvailable;
-      var lastComment, lastSubmit, commentDate, submitDate;
-
-      if (comments.length > 0) {
-        lastComment = comments[comments.length-1];
-        commentDate = moment(lastComment.created_utc*1000);
-      }
-
-      if (submissions.length > 0) {
-        lastSubmit = submissions[submissions.length-1];
-        submitDate = moment(lastSubmit.created_utc*1000);
-      }
-
-      if (commentDate && submitDate) {
-        dataAvailable = (commentDate < submitDate) ? commentDate : submitDate;
-      } else if (commentDate) {
-        dataAvailable = commentDate;
-      } else if (submitDate) {
-        dataAvailable = submitDate;
-      } 
-      return dataAvailable;
-    }
-
-    /*
      Compute the default sorted subreddits alphabetically
      Also, get the length
     */
@@ -346,6 +327,9 @@
       subLength = defaultSortedArray.length;
     };
 
+    /*
+     Get the most recent comment or submission 
+    */
     function getLatest(where) {
       if (where === 'comment') {
         return comments[0];
@@ -354,13 +338,55 @@
       }
     }
 
-    function getFirstPost() {
-      var firstComment = comments[comments.length-1];
-      var firstSubmit = submissions[submissions.length-1];
+    /*
+     Get the oldest post.
+     If sub is null, then get the oldest post out of all the user's subs,
+     otherwise, get the oldest post in the sub only.
+    */
+    function getFirstPost(sub) {
+      if (sub) {
+        var subComment, subSubmit;
+        if ('comments' in sub) {
+          subComment = sub.comments[sub.comments.length-1];
+        } 
 
-      return compareDates(firstComment, firstSubmit, true);
+        if ('submissions' in sub) {
+          subSubmit = sub.submissions[sub.submissions.length-1];
+        }
+
+        return compareDates(subComment, subSubmit, false);
+      } else {
+        return latest[latest.length-1];
+      }
     }
 
+    /*
+     Get the newest post.
+     If sub is null, then get the newest post out of all the user's subs,
+     otherwise, get the newest post in the sub only.
+    */
+    function getLatestPost(sub) {
+      if (sub) {
+        var subComment, subSubmit;
+        if ('comments' in sub) {
+          subComment = sub.comments[0];
+        } 
+
+        if ('submissions' in sub) {
+          subSubmit = sub.submissions[0];
+        }
+
+        return compareDates(subComment, subSubmit, true);
+      } else {
+        return latest[0];
+      }
+    }
+
+    /*
+     Get the newest active sub by taking the oldest post from each subreddit,
+     sort the posts by date and get the newest date. Whichever sub this post 
+     belongs to is the new sub.
+    */
     function getNewestSub() {
       var firstPosts = [];
       var subComments, subSubmits, oldestComment, oldestSubmit;
@@ -378,6 +404,59 @@
       return rank.getTopPost(firstPosts, 'newest').subreddit;
     }
 
+    /*
+     Order all of a user's posts by date with the most recent being at the
+     front of the array.
+    */
+    function sortRecent() {
+      var comment_index = 0;
+      var submit_index = 0;
+      var comment, submit, comment_date, submit_date;
+
+      while (comment_index <= comments.length && submit_index <= submissions.length) {
+        if (comments.length > comment_index) {
+          comment = comments[comment_index];
+          comment_date = moment(comment.created_utc*1000);
+        } else {
+          comment = null;
+        }
+
+        if (submissions.length > submit_index) {
+          submit = submissions[submit_index];
+          submit_date = moment(submit.created_utc*1000);
+        } else {
+          submit = null;
+        }
+
+        /* 
+          When a comment or submission is pushed, increase the index, otherwise keep
+          the index where it is to compare with the next item.
+        */
+        if (comment && submit) {
+          if (comment_date > submit_date) {
+            latest.push(comment);
+            comment_index += 1;
+          } else {
+            latest.push(submit);
+            submit_index += 1;
+          }
+        } else if (comment && !submit) {
+          latest.push(comment);
+          comment_index += 1;
+        } else if (!comment && submit) {
+          latest.push(submit);
+          submit_index += 1;
+        } else {
+          // Not enough comments and submissions
+          break;
+        }
+      }
+    };
+
+    /*
+     Compare to two dates and return one based on the newest date
+     or oldest date.
+    */
     function compareDates(post1, post2, newest) {
       var post, date1, date2;
 
@@ -403,5 +482,26 @@
       // Return the post with either the oldest/newest comment
       return post;
     }
+
+    /*
+     Get either the most recent comments or submissions out of all use's subs.
+     A limit can be set to return a specific number of posts.
+    */
+    function getRecentPosts(where, limit) {
+      var posts = [];
+      var i = 0;
+
+      while (posts.length < limit && i < latest.length) {
+        var item = latest[i];
+        if (where === 'comments' && item.type === 'comment') {
+          posts.push(item);
+        } else if (where === 'submissions' && item.type === 'submit') {
+          posts.push(item);
+        }
+
+        i += 1;
+      }
+      return posts;
+    };
 
   }]);

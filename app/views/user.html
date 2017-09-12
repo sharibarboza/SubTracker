@@ -3,7 +3,7 @@
 <div id="not-found" ng-if="notfound" ng-include src="'views/not-found.html'"></div>
 <div class="main-content" id="home-page">
   
-  <div ng-if="!notfound" class="content" height layout="column" ng-cloak>
+  <div ng-if="!notfound" class="content" layout="column" ng-cloak>
 
     <div ng-include src="'views/sidenav.html'" id="fixed-sidebar"></div>
 
@@ -25,9 +25,9 @@
                  <img ng-if="!redditor.subreddit" ng-src="{{ '../images/sub-icon.png' }}" class="banner-img img-circle">
               </div>
               <div class="col-md-11" id="since-date">
-                <strong>Joined on: <span class="green" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong><br>
-                <strong class="baby-blue small-font">Last seen <time-ago from-time='{{ latest[0].created_utc * 1000 }}'></time-ago></strong> / 
-                <a href="https://www.reddit.com/user/{{ username }}" class="small-font">Visit {{ username }}'s reddit page <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                <strong>Joined on: <span class="purple" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong><br>
+                <strong class="green small-font">Last seen <time-ago from-time='{{ lastPost.created_utc * 1000 }}'></time-ago></strong> / 
+                <a href="https://www.reddit.com/user/{{ username }}" class="small-font">Visit u/{{ username }}'s reddit page <i class="fa fa-external-link" aria-hidden="true"></i></a>
               </div>
             </div>
             <br>
@@ -41,19 +41,19 @@
                     <th><i class="fa fa-file-text-o purple" aria-hidden="true"></i> Submissions</th>
                   </tr>
                   <tr>
-                    <th>Total</th>
-                    <th class="baby-blue">{{ comments }}</th>
-                    <th class="baby-blue">{{ submissions }}</th>
+                    <th>Total Posts</th>
+                    <td>{{ comments }}</td>
+                    <td>{{ submissions }}</td>
                   </tr>
                   <tr>
-                    <th>Average total per sub</th>
+                    <th>Average posts per sub</th>
                     <td>{{ comments | average:subLength:0 }}</td>
                     <td>{{ submissions | average:subLength: 0 }}</td>
                   </tr>
                   <tr>
                     <th>Karma</th>
-                    <th class="baby-blue">{{ redditor.comment_karma | number }}</th>
-                    <th class="baby-blue">{{ redditor.link_karma | number }}</th>
+                    <td>{{ redditor.comment_karma | number }}</td>
+                    <td>{{ redditor.link_karma | number }}</td>
                   </tr> 
                   <tr>
                     <th>Average karma per sub</th>
@@ -121,7 +121,7 @@
               </div>
             </div>
 
-            <div ng-if="(currentLimit > limit) || (currentLimit == limit && subLength >= 5)" class="card" align="center" id="more-subs" ng-click="changeLimit()">
+            <div ng-if="(currentLimit > limit) || (currentLimit == limit && subList.length >= 5)" class="card" align="center" id="more-subs" ng-click="changeLimit()">
               <div class="card-content">
                 <span>{{ limit == subLength ? 'See less subreddits' : 'See more subreddits' }} <i class="fa" ng-class="currentLimit == subLength ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true"></i></span>
               </div>
@@ -132,59 +132,55 @@
           <div id="latest">
             <h3 class="title-heading">Recent Activity</h3>
             <br>
-            <div class="card side-cards" ng-repeat="element in latest" ng-if="element.id">
-              <div class="card-content card-heading">
-                <i class="fa purple" ng-class="element.type == 'comment' ? 'fa-comment-o' : 'fa-file-text-o'" aria-hidden="true"></i> {{ element.type == 'comment' ? 'Most Recent Comment' : 'Most Recent Submission' }}
+            <div ng-repeat="element in latest" ng-if="element.id">
+              <div class="card side-cards">
+                <div class="card-content card-heading">
+                  <i class="fa fa-calendar purple" aria-hidden="true"></i> {{ element.type == 'comment' ? 'Most Recent Comment' : 'Most Recent Submission' }} in <span class="green">r/{{ element.subreddit }}</span>
+                </div>
               </div>
-              <div class="card-action pad-card">
-                <p><strong class="green">r/{{ element.subreddit }}</strong> <span class="gray small-font">(<span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>)</span></p> 
-                <side-post data="{{ element }}"></side-post>
+              <div ng-if="element.type == 'comment'">
+                <div ng-include src="'views/comment.html'"></div>
+              </div>
+              <div ng-if="element.type == 'submit'">
+                <div ng-include src="'views/submission.html'"></div>
               </div>
             </div>
           </div>
 
           <br>
           <div id="statistics" ng-controller="StatsCtrl">
-            <h3 class="title-heading">Badges</h3>
-            <br>
-            <div class="row">
-              <div class="col-md-5 col-md-offset-1" align="center">
+            <h3 class="title-heading">Statistics</h3>
+
+            <div class="row badge-row">
+              <div class="col-md-4" align="center">
                 <img ng-src="{{ '../images/active.png' }}" class="stat-icon"><br>
                 <strong class="green">Most Active Sub</strong><br>
                 <a href="https://www.reddit.com/r/{{ mostActive }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ mostActive }}</strong></a>
               </div>
-              <div class="col-md-5" align="center">
+              <div class="col-md-4" align="center">
                 <img ng-src="{{ '../images/best.png' }}" class="stat-icon"><br>
                 <strong class="green">Most Upvoted Sub</strong><br>
                 <a href="https://www.reddit.com/r/{{ mostUpvoted }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ mostUpvoted }}</strong></a>
               </div>
-            </div>
-            <br>
-            <div class="row">
-              <div class="col-md-5 col-md-offset-1" align="center">
+              <div class="col-md-4" align="center">
                 <img ng-src="{{ '../images/new.png' }}" class="stat-icon"><br>
                 <strong class="green">Newest Active Sub</strong><br>
                 <a href="https://www.reddit.com/r/{{ newestSub }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ newestSub }}</strong></a>
               </div>  
-              <div class="col-md-5" align="center">
-                <img ng-src="{{ '../images/first.png' }}" class="stat-icon"><br>
-                <strong class="green">First Active Sub</strong><br>
-                <a href="https://www.reddit.com/r/{{ firstSub }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ firstSub }}</strong></a>
-              </div>            
-            </div>
-          </div>
+            </div>          
 
-          <br>
-          <div id="data-vis" ng-controller="PiechartCtrl">
-            <h3 class="title-heading">Data Visualization</h3>
             <br>
-            <h4><strong>Activity across <span class="baby-blue">{{ username }}'s</span> top 10 most active subreddits</strong></h4>
-            <span class="small-font">Hover over the chart to see the total number of comments and submissions for that subreddit.</span>
-            <donut-chart type="activity" align="center"></donut-chart>
+            <div ng-controller="PiechartCtrl">
+              <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent 40 comments</strong></h4>
+              <span class="small-font">Hover over the chart to see the total number of comments and submissions for that subreddit out of {{ username }}'s most recent 40 comments.</span>
+              <donut-chart ng-if="comments > 0" type="comments" align="center"></donut-chart>
+              <h5 ng-if="comments == 0">{{ username }} does not have any comments.</h5>
 
-            <h4><strong>Upvotes across <span class="baby-blue">{{ username }}'s</span> 10 best subreddits</strong></h4>
-            <span class="small-font">Hover over the chart to see the total number of comment and submission upvotes for that subreddit.</span>
-            <donut-chart type="karma" align="center"></donut-chart>        
+              <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent 40 submissions</strong></h4>
+              <span class="small-font">Hover over the chart to see the total number of comment and submission upvotes for that subreddit out of {{ username }}'s most recent 40 submissions.</span>
+              <donut-chart ng-if="submissions > 0" type="karma" align="center"></donut-chart>
+              <h5 class="purple" ng-if="submissions == 0">{{ username }} does not have any submissions.</h5>   
+            </div>
           </div>
 
           <div ng-include src="'views/footer.html'"></div>

@@ -7,7 +7,7 @@
  * # pieChart
  */
 angular.module('SubSnoopApp')
-  .directive('donutChart', ['d3Service', '$window', 'subFactory', 'sortFactory', '$filter', function (d3Service, $window, subFactory, sortFactory, $filter) {
+  .directive('donutChart', ['d3Service', '$window', 'subFactory', 'sortFactory', '$filter', 'moment', function (d3Service, $window, subFactory, sortFactory, $filter, moment) {
   return {
     restrict: 'EA',
     replace: true,
@@ -17,79 +17,88 @@ angular.module('SubSnoopApp')
       var chartConfig = {
         width: 575,
         height: 575,
-        thickness: 75,
+        thickness: 65,
         grow: 20,
-        labelPadding: 55,
+        labelPadding: 50,
         duration: 100,
         margin: {
           top: 0,
           right: 100,
-          bottom: 20,
+          bottom: 0,
           left: 100
         }
       };
 
-      function getChartData(_data, _subs) {
+      function getChartData(data, subs) {
         return {
           center: {
             value: function() {
-            	if (attrs.type === 'activity') {
-            		return "Most Active Subs";
-            	} else if (attrs.type === 'karma') {
-            		return "Best Subs";
+            	if (attrs.type === 'comments') {
+            		return "Recent Comments";
+            	} else {
+            		return "Recent Submissions";
             	}
             }
           },
-          values: _subs,
-          data: _data
+          values: subs,
+          data: data
         };
       }
 
+      function getData(data) {
+        var subs = {};
+        for (var i = 0; i < data.length; i++) {
+          var item = data[i];
+          var sub = item.subreddit;
+          if (!(item.subreddit in subs)) {
+            subs[sub] = {};
+            subs[sub].count = 0
+          }
+          subs[sub].count += 1;
+        }
+        return subs;
+      }
+
       function init() {
-      	var dataArray = [];
-      	var subData = subFactory.getSubData();
-      	var subs = subData.subs;
-      	var comments = 0, submissions = 0;
-      	var sortedKeys;
-      	var subKeys = Object.keys(subs);
-
-      	if (attrs.type === 'activity') {
-      		sortedKeys = $filter('sortSubs')(subKeys, 'mostActive', subs);
-      	} else if (attrs.type === 'karma') {
-      		sortedKeys = $filter('sortSubs')(subKeys, 'totalUps', subs);
-      	}
-
+        var dataArray = [];
+        var limit = 40;
       	var filtered = [];
-      	var filteredLength = sortedKeys.length >= 10 ? 10 : sortedKeys.length;
-      	for (var i = 0; i < filteredLength; i++) {
-      		filtered.push(sortedKeys[i]);
-      	}
-      	sortedKeys = $filter('sortSubs')(filtered, 'subName', subs);
+        var recent = subFactory.getLatest().slice(0, limit);
+        var subs, comments, submissions, sortedKeys;
+
+        if (attrs.type === 'comments') {
+          comments = subFactory.getRecentPosts('comments', limit);
+          subs = getData(comments);
+          sortedKeys = $filter('sortSubs')(Object.keys(subs), 'subName', subs);
+        } else {
+          submissions = subFactory.getRecentPosts('submissions', limit);
+          subs = getData(submissions);
+          sortedKeys = $filter('sortSubs')(Object.keys(subs), 'subName', subs);
+        }
 
       	for (var i = 0; i < sortedKeys.length; i++) {
-      		var data = subs[sortedKeys[i]];
-      		comments += data.comments.length;
-      		submissions += data.submissions.length;
-      		dataArray.push(data);
+          var key = subs[sortedKeys[i]];
+      		dataArray.push(key);
       	}
 
-        var chartData = getChartData(subData, dataArray);
+        var data = attrs.type === 'comments' ? comments : submissions;
+        var chartData = getChartData(data, dataArray);
         for (var i = 0; i < sortedKeys.length; i++) {
         	var key = sortedKeys[i];
-        	var d = subs[key];
-        	d.id = i;
-          d.label = key;
-
-          if (attrs.type === 'activity') {
-          	d.value = +(d.comments.length + d.submissions.length);
-          	d.percent = +(d.value / (comments + submissions));
-          } else if (attrs.type === 'karma') {
-          	d.value = +(d.total_ups);
-          	d.percent = +(d.total_ups / (chartData.data.upvotes));
+          var count;
+          if (attrs.type === 'comments') {
+            count = comments.length;
+          } else {
+            count = submissions.length;
           }
 
-          d.percent = (d.percent * 100).toFixed(1);
+          var d = subs[key];
+          d.id = i;
+          d.label = key;
 
+          d.value = +(d.count);
+          d.percent = +(d.value / (count));
+          d.percent = (d.percent * 100).toFixed(1);
         };
 
         var d3ChartEl = d3.select(element[0]);
@@ -136,10 +145,7 @@ angular.module('SubSnoopApp')
 
         var centerLabel = (!!chartData.center.label) ? chartData.center.label : '';
         var centerValue = (!!chartData.center.value) ? chartData.center.value : '';
-	      var numComments = "";
-	      var numSubmits = "";
-
-
+	      var numData = "Since " + moment(chartData.data[chartData.data.length-1].created_utc * 1000).format('MMM Do YYYY');
 
         var d3ChartEl = d3.select(element[0]);
 
@@ -166,19 +172,15 @@ angular.module('SubSnoopApp')
             .each("end", function(d) {
 
 	            d3.select('.center-value-' + attrs.type).text(d.data.label);
-	            var line1, line2;
-	            if (attrs.type === 'activity') {
-	            	line1 = 'Comments: ' + d.data.comments.length;
-	            	line2 = 'Submitted: ' + d.data.submissions.length;
+	            var line1;
+	            if (attrs.type === 'comments') {
+	            	line1 = 'Comments: ' + d.data.count;
 	            } else if (attrs.type === 'karma') {
-	            	line1 = 'Comment Upvotes: ' + $filter('number')(d.data.comment_ups);
-	            	line2 = 'Post Upvotes: ' + $filter('number')(d.data.submission_ups);
+	            	line1 = 'Submissions: ' + d.data.count
 	            }
 
 	            d3.select('.line-1-' + attrs.type)
 	            	.text(line1);
-	            d3.select('.line-2-' + attrs.type)
-	            	.text(line2);
 
 	            d3.selectAll('.arc-' + attrs.type + ' .legend .percent')
 	            	.transition()
@@ -207,8 +209,7 @@ angular.module('SubSnoopApp')
         	if (!e) {
         		d3.selectAll('.arc-' + attrs.type).style('opacity', '1');
         		d3.select('.center-value-' + attrs.type).text(centerValue);
-	        	d3.select('.line-1-' + attrs.type).text(numComments);
-	        	d3.select('.line-2-' + attrs.type).text(numSubmits);
+	        	d3.select('.line-1-' + attrs.type).text(numData);
             d3.selectAll('.arc-' + attrs.type + ' .legend .percent')
               .transition()
               .duration(duration)
@@ -219,8 +220,7 @@ angular.module('SubSnoopApp')
         middleCircle.on('mouseover', function() {
         	d3.selectAll('.arc-' + attrs.type).style('opacity', '1');
         	d3.select('.center-value-' + attrs.type).text(centerValue);
-        	d3.select('.line-1-' + attrs.type).text(numComments);
-        	d3.select('.line-2-' + attrs.type).text(numSubmits);
+        	d3.select('.line-1-' + attrs.type).text(numData);
           d3.selectAll('.arc-' + attrs.type + ' .legend .percent')
             .transition()
             .duration(duration)
@@ -266,11 +266,11 @@ angular.module('SubSnoopApp')
     			.attr("text-anchor", "middle")
           .attr("class", 'center-value-' + attrs.type)
           .attr("font-size", "24px")
-          .attr("fill", "#5552B3")
+          .attr("fill", "#696969")
           .attr("font-weight", "bold");
 
         centerText.append('tspan')
-        	.text(numComments)
+        	.text(numData)
           .attr('x', 0)
           .attr('dy', '1em')
           .attr("text-anchor", "middle")
@@ -278,16 +278,6 @@ angular.module('SubSnoopApp')
           .attr("font-size", "18px")
           .attr("fill", "#333")
           .attr("font-weight", "bold");    
-
-        centerText.append('tspan')
-        	.text(numSubmits)
-          .attr('x', 0)
-          .attr('dy', '1em')
-          .attr("text-anchor", "middle")
-          .attr("class", 'line-2-' + attrs.type)
-          .attr("font-size", "18px")
-          .attr("fill", "#333")
-          .attr("font-weight", "bold"); 
 
         var legend = arcs.append("svg:text")
           .style('fill-opacity', 0)
