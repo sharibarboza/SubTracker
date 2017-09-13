@@ -172,6 +172,10 @@ angular.module('SubSnoopApp')
       return $scope.slicedArray;
     };
 
+    $scope.isOverview = function() {
+      return $scope.tab == 2;
+    };
+
     $scope.switchSub = function() {
       if ($scope.tab < 2) {
         $scope.setTab(2);
