@@ -24,6 +24,10 @@ a:hover {
   color: #12C5E0;
 }
 
+a:focus, div:focus, span:focus {
+  outline: none;
+}
+
 .center {
   text-align: center;
 }
@@ -602,6 +606,18 @@ User Page
   width: 75px;
 }
 
+#user-badges .col-md-4 {
+  margin-bottom: 20px;
+}
+
+.user-head-nav {
+  display: none;
+}
+
+.user-head-nav a {
+  color: inherit;
+}
+ 
 /***********************
 User Page Side Bar
 ************************/
@@ -1034,7 +1050,7 @@ Mobile
   }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1000px) {
   .user-side {
     display: none;
   }
@@ -1071,7 +1087,7 @@ Mobile
     margin-right: 0;
   }
 
-  .table-pad, .sub-table, .sub-rows, .user-side, #sidebar {
+  .sub-table, .sub-rows, .user-side, #sidebar {
     padding: 5px;
   }
 
@@ -1123,10 +1139,6 @@ Mobile
     border: none;
   }
 
-  #submit-card {
-    padding: 10px 3px;
-  }
-
   #results-submit #submit-col {
     margin-left: 0;
     padding-left: 12px;
@@ -1174,6 +1186,23 @@ Mobile
 }
 
 @media screen and (max-width: 768px) {
+  .table-pad {
+    padding: 10px 5px 20px 5px;
+  }
+
+  #user-page {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  #slash {
+    display: none;
+  }
+
+  #since-date a {
+    display: block;
+  }
+
   .banner-info {
     margin-left: 0;
     padding-top: 15px;
@@ -1192,7 +1221,7 @@ Mobile
     margin-left: 0;
   }
 
-  #results-card .col-md-1 {
+  #results-card .col-md-1, #overview, .table-heads th  {
     text-align: center;
   }
 
@@ -1203,6 +1232,23 @@ Mobile
 
   #home-page .table-pad {
     padding-top: 10px;
+  }
+
+  .center-value-comments, .center-value-submits {
+    font-size: 16px;
+  }
+
+  .line-1-comments, .line-1-submits {
+    font-size: 14px;
+  }
+
+  .user-head-nav {
+    display: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 20px;
+    border-bottom: 1px solid gray;
+    text-transform: uppercase;
   }
 
  }

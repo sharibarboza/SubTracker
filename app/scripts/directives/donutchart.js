@@ -9,27 +9,72 @@
 angular.module('SubSnoopApp')
   .directive('donutChart', ['d3Service', '$window', 'subFactory', 'sortFactory', '$filter', 'moment', function (d3Service, $window, subFactory, sortFactory, $filter, moment) {
 
+  var windowWidth = $window.innerWidth;
   return {
     restrict: 'EA',
     replace: true,
     template: '<div id="donut-chart"></div>',
     link: function(scope, element, attrs) {
+
       var limit = attrs.limit;
-      var chartConfig = {
-        width: 525,
-        height: 450,
-        thickness: 50,
-        grow: 20,
-        labelPadding: 50,
-        duration: 100,
-        margin: {
-          top: 0,
-          right: 100,
-          bottom: 0,
-          left: 100
-        }
+      scope.chartConfig = defaultChartConfig();
+
+      if (windowWidth < 550) {
+        scope.chartConfig = changeChartConfig();
+      }
+
+      var w = angular.element($window);
+      scope.getWindowDimensions = function () {
+        return {
+            'w': w.width()
+        };
       };
 
+      scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+        scope.windowWidth = newValue.w;
+
+        if (newValue.w < 550) {
+          scope.chartConfig = changeChartConfig();
+        } else {
+          scope.chartConfig = defaultChartConfig();
+        }
+
+      }, true);
+
+      function defaultChartConfig() {
+        return {
+          width: 525,
+          height: 450,
+          thickness: 50,
+          grow: 20,
+          labelPadding: 50,
+          duration: 100,
+          margin: {
+            top: 0,
+            right: 100,
+            bottom: 0,
+            left: 100
+          }
+        };
+      }
+
+      function changeChartConfig() {
+        return {
+          width: 375,
+          height: 400,
+          thickness: 30,
+          grow: 10,
+          labelPadding: 40,
+          duration: 100,
+          margin: {
+            top: 50,
+            right: 75,
+            bottom: 50,
+            left: 75
+          }
+        };
+      }
+        
       function getChartData(data, subs) {
         return {
           center: {
@@ -102,9 +147,14 @@ angular.module('SubSnoopApp')
         };
 
         var d3ChartEl = d3.select(element[0]);
-        chartConfig.width = parseInt(d3ChartEl.style('width')) || chartConfig.width;
-        chartConfig.height = parseInt(d3ChartEl.style('height')) || chartConfig.height;
-        drawChart(chartData, chartConfig);
+        scope.chartConfig.width = parseInt(d3ChartEl.style('width')) || scope.chartConfig.width;
+        scope.chartConfig.height = parseInt(d3ChartEl.style('height')) || scope.chartConfig.height;
+        drawChart(chartData, scope.chartConfig);
+
+        w.bind('resize', function() {
+          scope.$apply();
+          drawChart(chartData, scope.chartConfig);
+        });
       }
 
       function drawChart(chartData, chartConfig) {
@@ -259,13 +309,16 @@ angular.module('SubSnoopApp')
         var centerText = gRoot.append('svg:text')
           .attr('class', 'center-label');
 
+        var titleSize = '20px';
+        var dataSize = '18px';
+
         centerText.append('tspan')
           .text(centerValue)
           .attr('x', 0)
           .attr('dy', '0em')
     			.attr("text-anchor", "middle")
           .attr("class", 'center-value-' + attrs.type)
-          .attr("font-size", "20px")
+          .attr("font-size", titleSize)
           .attr("fill", "#696969")
           .attr("font-weight", "bold");
 
@@ -275,7 +328,7 @@ angular.module('SubSnoopApp')
           .attr('dy', '1em')
           .attr("text-anchor", "middle")
           .attr("class", 'line-1-' + attrs.type)
-          .attr("font-size", "18px")
+          .attr("font-size", dataSize)
           .attr("fill", "#333")
           .attr("font-weight", "bold");    
 

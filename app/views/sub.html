@@ -10,6 +10,12 @@
         </div>
       </div>
 
+      <div class="user-head-nav">
+        <div class="col-xs-3" align="right" ng-click="switchSub()">{{ tab < 2 ? 'Overview' : 'Subs' }}</div>
+        <div class="col-xs-6" align="center" ng-click="setTab(0)">Comments</div>
+        <div class="co-xs-3" align="left" ng-click="setTab(1)">Posts</div>
+      </div>
+
       <div class="sub-table">
         <div ng-include src="'views/sub-sidebar.html'"></div>
         <div class="col-md-7 col-xs-12 sub-rows" id="table-head">

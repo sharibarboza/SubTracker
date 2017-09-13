@@ -14,6 +14,12 @@
         </div>
       </div>
       
+      <div class="user-head-nav">
+        <div class="col-xs-3" align="right" ng-click="scrollAnchor('subreddits')">Subs</div>
+        <div class="col-xs-6" align="center" ng-click="scrollAnchor('latest')">Recent Activity</div>
+        <div class="co-xs-3" align="left" ng-click="scrollAnchor('statistics')">Statisics</div>
+      </div>
+
       <div class="sub-table">
         <div ng-include src="'views/user-sidebar.html'"></div>
         <div class="col-md-7 col-xs-12 sub-rows" id="table-head">
@@ -26,7 +32,7 @@
               </div>
               <div class="col-md-11" id="since-date">
                 <strong>Joined on: <span class="purple" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong><br>
-                <strong class="green small-font">Last seen <time-ago from-time='{{ lastPost.created_utc * 1000 }}'></time-ago></strong> / 
+                <strong class="green small-font">Last seen <time-ago from-time='{{ lastPost.created_utc * 1000 }}'></time-ago></strong> <span id="slash">/</span> 
                 <a href="https://www.reddit.com/user/{{ username }}" class="small-font">Visit u/{{ username }}'s reddit page <i class="fa fa-external-link" aria-hidden="true"></i></a>
               </div>
             </div>
@@ -35,7 +41,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <table class="table table-bordered" id="overview-table">
-                  <tr>
+                  <tr class="table-heads">
                     <th></th>
                     <th>Comments</th>
                     <th>Submissions</th>
@@ -131,6 +137,7 @@
                 <span>{{ limit == subLength ? 'See less subreddits' : 'See more subreddits' }} <i class="fa" ng-class="currentLimit == subLength ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true"></i></span>
               </div>
             </div>
+
           </div>
 
           <br>
@@ -156,7 +163,7 @@
           <div id="statistics" ng-controller="StatsCtrl">
             <h3 class="title-heading">Statistics</h3>
 
-            <div class="row badge-row">
+            <div class="row badge-row" id="user-badges">
               <div class="col-md-4" align="center">
                 <img ng-src="{{ '../images/active.png' }}" class="stat-icon"><br>
                 <strong class="green">Most Active Sub</strong><br>
@@ -183,7 +190,7 @@
 
               <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent {{ chartLimit }} submissions</strong></h4>
               <span class="small-font">Hover to see the number of submissions for that sub out of {{ username }}'s most recent {{ chartLimit }} submissions.</span>
-              <donut-chart ng-if="submissions > 0" type="karma" limit="20" align="center"></donut-chart>
+              <donut-chart ng-if="submissions > 0" type="submits" limit="20" align="center"></donut-chart>
               <h5 class="purple" ng-if="submissions == 0">{{ username }} does not have any submissions.</h5>   
             </div>
           </div>
