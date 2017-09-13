@@ -1234,11 +1234,11 @@ Mobile
     padding-top: 10px;
   }
 
-  .center-value-comments, .center-value-submits {
-    font-size: 16px;
+  .center-value-comments, .center-value-submissions {
+    font-size: 15px;
   }
 
-  .line-1-comments, .line-1-submits {
+  .line-1-comments, .line-1-submissions {
     font-size: 14px;
   }
 
