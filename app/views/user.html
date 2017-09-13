@@ -37,28 +37,33 @@
                 <table class="table table-bordered" id="overview-table">
                   <tr>
                     <th></th>
-                    <th><i class="fa fa-comment-o purple" aria-hidden="true"></i> Comments</th>
-                    <th><i class="fa fa-file-text-o purple" aria-hidden="true"></i> Submissions</th>
+                    <th>Comments</th>
+                    <th>Submissions</th>
+                    <th>Total</th>
                   </tr>
                   <tr>
                     <th>Total Posts</th>
                     <td>{{ comments }}</td>
                     <td>{{ submissions }}</td>
+                    <td>{{ (comments) + (submissions) | number }}</td>
                   </tr>
                   <tr>
                     <th>Average posts per sub</th>
                     <td>{{ comments | average:subLength:0 }}</td>
                     <td>{{ submissions | average:subLength: 0 }}</td>
+                    <td>{{ (comments) + (submissions) | average:subLength:0 | number }}</td>
                   </tr>
                   <tr>
                     <th>Karma</th>
                     <td>{{ redditor.comment_karma | number }}</td>
                     <td>{{ redditor.link_karma | number }}</td>
+                    <td>{{ (redditor.comment_karma) + (redditor.link_karma) | number }}</td>
                   </tr> 
                   <tr>
                     <th>Average karma per sub</th>
                     <td>{{ redditor.comment_karma | average:subLength:0 | number }}</td>
                     <td>{{ redditor.link_karma | average:subLength:0 | number }}</td>
+                    <td>{{ (redditor.comment_karma) + (redditor.link_karma) | average:subLength:0 | number }}</td>
                   </tr>       
                 </table>    
               </div>
@@ -171,14 +176,14 @@
 
             <br>
             <div ng-controller="PiechartCtrl" align="center">
-              <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent 40 comments</strong></h4>
-              <span class="small-font">Hover to see the number of comments for that sub out of {{ username }}'s most recent 40 comments.</span>
-              <donut-chart ng-if="comments > 0" type="comments" align="center"></donut-chart>
+              <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent {{ chartLimit }} comments</strong></h4>
+              <span class="small-font">Hover to see the number of comments for that sub out of {{ username }}'s most recent {{ chartLimit }} comments.</span>
+              <donut-chart ng-if="comments > 0" type="comments" limit="20" align="center"></donut-chart>
               <h5 ng-if="comments == 0">{{ username }} does not have any comments.</h5>
 
-              <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent 40 submissions</strong></h4>
-              <span class="small-font">Hover to see the number of submissions for that sub out of {{ username }}'s most recent 40 submissions.</span>
-              <donut-chart ng-if="submissions > 0" type="karma" align="center"></donut-chart>
+              <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent {{ chartLimit }} submissions</strong></h4>
+              <span class="small-font">Hover to see the number of submissions for that sub out of {{ username }}'s most recent {{ chartLimit }} submissions.</span>
+              <donut-chart ng-if="submissions > 0" type="karma" limit="20" align="center"></donut-chart>
               <h5 class="purple" ng-if="submissions == 0">{{ username }} does not have any submissions.</h5>   
             </div>
           </div>

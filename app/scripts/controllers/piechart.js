@@ -10,7 +10,8 @@
 angular.module('SubSnoopApp')
   .controller('PiechartCtrl', function ($scope) {
 
-  $scope.color = ["80deea", "#fb8c00", "#d4e157", "#673ab7", "#ffca28", "#2979ff", "#f44336", "#9c27b0", "#aeea00", "#303f9f"];
+  $scope.chartLimit = 20;
+  $scope.color = ["80deea", "#fb8c00", "#d4e157", "#673ab7", "#e64560", "#ffca28", "#2979ff"];
 
   $scope.hoverIn = function(_index) {
     var sel = d3.selectAll('.arc').filter(function(d) {

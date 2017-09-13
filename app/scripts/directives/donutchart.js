@@ -8,12 +8,13 @@
  */
 angular.module('SubSnoopApp')
   .directive('donutChart', ['d3Service', '$window', 'subFactory', 'sortFactory', '$filter', 'moment', function (d3Service, $window, subFactory, sortFactory, $filter, moment) {
+
   return {
     restrict: 'EA',
     replace: true,
     template: '<div id="donut-chart"></div>',
     link: function(scope, element, attrs) {
-
+      var limit = attrs.limit;
       var chartConfig = {
         width: 525,
         height: 450,
@@ -34,9 +35,9 @@ angular.module('SubSnoopApp')
           center: {
             value: function() {
             	if (attrs.type === 'comments') {
-            		return "Recent 40 Comments";
+            		return "Recent " + limit + " Comments";
             	} else {
-            		return "Recent 40 Posts";
+            		return "Recent " + limit + " Posts";
             	}
             }
           },
@@ -61,7 +62,6 @@ angular.module('SubSnoopApp')
 
       function init() {
         var dataArray = [];
-        var limit = 40;
       	var filtered = [];
         var recent = subFactory.getLatest().slice(0, limit);
         var subs, comments, submissions, sortedKeys;

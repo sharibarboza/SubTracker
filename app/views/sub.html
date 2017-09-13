@@ -32,28 +32,33 @@
                   <table class="table table-bordered" id="overview-table">
                     <tr>
                       <th></th>
-                      <th><i class="fa fa-comment-o purple" aria-hidden="true"></i> Comments</th>
-                      <th><i class="fa fa-file-text-o purple" aria-hidden="true"></i> Submissions</th>
+                      <th>Comments</th>
+                      <th>Submissions</th>
+                      <th>Total</th>
                     </tr>
                     <tr>
                       <th>Total Posts</th>
                       <td>{{ sub.comments.length }}</td>
                       <td>{{ sub.submissions.length }}</td>
+                      <td>{{ (sub.comments.length) + (sub.submissions.length) | number }}</td>
                     </tr>
                     <tr>
                       <th>Gilded</th>
                       <td>{{ sub.gilded_comments }}</td>
                       <td>{{ sub.gilded_submissions }}</td>
+                      <td>{{ (sub.gilded_comments) + (sub.gilded_submissions) | number }}</td>
                     </tr> 
                     <tr>
                       <th>Upvotes</th>
                       <td>{{ sub.comment_ups | number }}</td>
                       <td>{{ sub.submission_ups | number }}</td>
+                      <td>{{ (sub.comment_ups) + (sub.submission_ups) | number }}</td>
                     </tr> 
                     <tr>
                       <th>Average upvotes per post</th>
                       <td>{{ sub.comment_ups | average:sub.comments.length:0 | number }}</td>
                       <td>{{ sub.submission_ups | average:sub.submissions.length:0 | number }}</td>
+                      <td>{{ (sub.comment_ups) + (sub.submission_ups) | average:(sub.comments.length) + (sub.submissions.length):0 | number }}</td>
                     </tr>      
                   </table>    
                 </div>
