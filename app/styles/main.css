@@ -60,6 +60,10 @@ a:focus, div:focus, span:focus {
   color: #333;
 }
 
+.text-gray {
+  color: #696969;
+}
+
 .gray {
   color: #696969;
 }
@@ -827,6 +831,11 @@ User Sub Page
   padding-bottom: 30px;
 }
 
+#statistics [class*='col-'] {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 /************************
 Sub Page Side Bar
 ************************/
@@ -1091,18 +1100,13 @@ Mobile
     padding: 5px;
   }
 
-  .container, #results-table, #search-content, #sub-panels, #table-head [class*='col-'] {
+  .container, #results-table, #search-content, #sub-panels, #sub-row .card-content {
     padding-left: 0;
     padding-right: 0;
   }
 
   #sub-row .col-xs-4 {
     margin-top: 10px;
-  }
-
-  #table-head [class*='col-'] {
-    padding-left: 0;
-    padding-right: 0;
   }
 
   .reddit-name {
@@ -1190,8 +1194,9 @@ Mobile
     padding: 10px 5px 20px 5px;
   }
 
-  #user-page {
+  #user-page, #since-date {
     padding-left: 0;
+    padding-right: 0;
     text-align: center;
   }
 
@@ -1209,7 +1214,8 @@ Mobile
   }
 
   #submit-card {
-    padding-bottom: 0;
+    padding: 0;
+    padding-top: 8px;
   }
 
   .submit-pic {
@@ -1244,11 +1250,20 @@ Mobile
 
   .user-head-nav {
     display: inherit;
+    color: #696969;
     font-size: 12px;
     font-weight: 500;
     margin-top: 20px;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #e5e5e5;
     text-transform: uppercase;
+  }
+
+  .user-head-nav p {
+    margin-bottom: 16px;
+  }
+
+  .user-head-nav p:hover {
+    color: #1DB3B0;
   }
 
  }

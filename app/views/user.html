@@ -15,9 +15,9 @@
       </div>
       
       <div class="user-head-nav">
-        <div class="col-xs-3" align="right" ng-click="scrollAnchor('subreddits')">Subs</div>
-        <div class="col-xs-6" align="center" ng-click="scrollAnchor('latest')">Recent Activity</div>
-        <div class="co-xs-3" align="left" ng-click="scrollAnchor('statistics')">Statisics</div>
+        <div class="col-xs-3" align="right" ng-click="scrollAnchor('subreddits')"><p>Subs</p></div>
+        <div class="col-xs-6" align="center" ng-click="scrollAnchor('latest')"><p>Recent Activity</p></div>
+        <div class="co-xs-3" align="left" ng-click="scrollAnchor('statistics')"><p>Statisics</p></div>
       </div>
 
       <div class="sub-table">
@@ -38,39 +38,28 @@
             </div>
             <br>
 
+
             <div class="row">
               <div class="col-sm-12">
                 <table class="table table-bordered" id="overview-table">
                   <tr class="table-heads">
-                    <th></th>
-                    <th>Comments</th>
-                    <th>Submissions</th>
-                    <th>Total</th>
+                    <th class="col-xs-3"></th>
+                    <th class="col-xs-3">Comments</th>
+                    <th class="col-xs-3">Submitted</th>
+                    <th class="col-xs-3">Total</th>
                   </tr>
                   <tr>
-                    <th>Total Posts</th>
+                    <th>Posts</th>
                     <td>{{ comments }}</td>
                     <td>{{ submissions }}</td>
                     <td>{{ (comments) + (submissions) | number }}</td>
-                  </tr>
-                  <tr>
-                    <th>Average posts per sub</th>
-                    <td>{{ comments | average:subLength:0 }}</td>
-                    <td>{{ submissions | average:subLength: 0 }}</td>
-                    <td>{{ (comments) + (submissions) | average:subLength:0 | number }}</td>
                   </tr>
                   <tr>
                     <th>Karma</th>
                     <td>{{ redditor.comment_karma | number }}</td>
                     <td>{{ redditor.link_karma | number }}</td>
                     <td>{{ (redditor.comment_karma) + (redditor.link_karma) | number }}</td>
-                  </tr> 
-                  <tr>
-                    <th>Average karma per sub</th>
-                    <td>{{ redditor.comment_karma | average:subLength:0 | number }}</td>
-                    <td>{{ redditor.link_karma | average:subLength:0 | number }}</td>
-                    <td>{{ (redditor.comment_karma) + (redditor.link_karma) | average:subLength:0 | number }}</td>
-                  </tr>       
+                  </tr>                       
                 </table>    
               </div>
             </div>
@@ -164,17 +153,22 @@
             <h3 class="title-heading">Statistics</h3>
 
             <div class="row badge-row" id="user-badges">
-              <div class="col-md-4" align="center">
+              <div class="col-sm-3 col-xs-6" align="center">
                 <img ng-src="{{ '../images/active.png' }}" class="stat-icon"><br>
                 <strong class="green">Most Active Sub</strong><br>
                 <a href="https://www.reddit.com/r/{{ mostActive }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ mostActive }}</strong></a>
               </div>
-              <div class="col-md-4" align="center">
+              <div class="col-sm-3 col-xs-6" align="center">
                 <img ng-src="{{ '../images/best.png' }}" class="stat-icon"><br>
                 <strong class="green">Most Upvoted Sub</strong><br>
                 <a href="https://www.reddit.com/r/{{ mostUpvoted }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ mostUpvoted }}</strong></a>
               </div>
-              <div class="col-md-4" align="center">
+              <div class="col-sm-3 col-xs-6" align="center">
+                <img ng-src="{{ '../images/worst.png' }}" class="stat-icon"><br>
+                <strong class="green">Least Upvoted Sub</strong><br>
+                <a href="https://www.reddit.com/r/{{ leastUpvoted}}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ leastUpvoted }}</strong></a>
+              </div> 
+              <div class="col-sm-3 col-xs-6" align="center">
                 <img ng-src="{{ '../images/new.png' }}" class="stat-icon"><br>
                 <strong class="green">Newest Active Sub</strong><br>
                 <a href="https://www.reddit.com/r/{{ newestSub }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ newestSub }}</strong></a>
@@ -194,7 +188,9 @@
               <h5 class="purple" ng-if="submissions == 0">{{ username }} does not have any submissions.</h5>   
             </div>
           </div>
-
+          <div align="center">
+            <back-top></back-top>
+          </div>
           <div ng-include src="'views/footer.html'"></div>
         </div>
       </div>

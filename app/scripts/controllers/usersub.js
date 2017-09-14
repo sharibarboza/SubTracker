@@ -23,18 +23,6 @@ angular.module('SubSnoopApp')
     $rootScope.title = $scope.username + ' | ' + $scope.subreddit;
 
     /*
-     Displays activity rank and upvotes rank of the specific subreddit relative to the user's
-     other subreddits. This is what's displayed in the first sidebar card under the link to the
-     subreddit's page.
-    */
-    rank.setData(subsData.subs);
-    $scope.subLength = Object.keys(subsData.subs).length;
-    $scope.mostActiveRank = rank.getSubRank($scope.subreddit, 'mostActive');
-    $scope.mostUpsRank = rank.getSubRank($scope.subreddit, 'totalUps');
-    $scope.commentAvgRank = rank.getSubRank($scope.subreddit, 'avgComment');
-    $scope.submitAvgRank = rank.getSubRank($scope.subreddit, 'avgSubmit');
-
-    /*
      Set up for specific subreddit
      $scope.sub contains the comments and submissions arrays
     */

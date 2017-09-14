@@ -24,7 +24,7 @@ angular.module('SubSnoopApp')
         if (windowWidth < 550) {
           scope.chartConfig = changeChartConfig();
         }
-        console.log(scope.chartConfig);
+        
         var w = angular.element($window);
         scope.getWindowDimensions = function () {
           return {
@@ -349,7 +349,7 @@ angular.module('SubSnoopApp')
           legend.append('tspan')
             .attr('class', 'percent')
             .attr('x', 0)
-            .attr('font-size', '16px')
+            .attr('font-size', '13px')
             .attr('font-weight', '400')
             .style("fill-opacity", 0)
             .text(function(d, i) {

@@ -11,9 +11,9 @@
       </div>
 
       <div class="user-head-nav" align="center">
-        <div class="col-xs-4" ng-click="switchSub()">{{ isOverview() ? "Subs" : "Overview" }}</div>
-        <div class="col-xs-4" ng-click="setTab(0)">Comments</div>
-        <div class="col-xs-4" ng-click="setTab(1)">Posts</div>
+        <div class="col-xs-4" ng-click="switchSub()"><p ng-class="tab == 2 ? 'green' : 'text-gray'">{{ isOverview() ? "Subs" : "Overview" }}</p></div>
+        <div class="col-xs-4" ng-click="setTab(0)"><p ng-class="tab == 0 ? 'green' : 'text-gray'">Comments</p></div>
+        <div class="col-xs-4" ng-click="setTab(1)"><p ng-class="tab == 1 ? 'green' : 'text-gray'">Posts</p></div>
       </div>
 
       <div class="sub-table">
@@ -36,14 +36,14 @@
               <div class="row">
                 <div class="col-sm-12">
                   <table class="table table-bordered" id="overview-table">
-                    <tr>
+                    <tr class="table-heads">
                       <th></th>
                       <th>Comments</th>
-                      <th>Submissions</th>
+                      <th>Submitted</th>
                       <th>Total</th>
                     </tr>
                     <tr>
-                      <th>Total Posts</th>
+                      <th>Posts</th>
                       <td>{{ sub.comments.length }}</td>
                       <td>{{ sub.submissions.length }}</td>
                       <td>{{ (sub.comments.length) + (sub.submissions.length) | number }}</td>
@@ -59,12 +59,6 @@
                       <td>{{ sub.comment_ups | number }}</td>
                       <td>{{ sub.submission_ups | number }}</td>
                       <td>{{ (sub.comment_ups) + (sub.submission_ups) | number }}</td>
-                    </tr> 
-                    <tr>
-                      <th>Average upvotes per post</th>
-                      <td>{{ sub.comment_ups | average:sub.comments.length:0 | number }}</td>
-                      <td>{{ sub.submission_ups | average:sub.submissions.length:0 | number }}</td>
-                      <td>{{ (sub.comment_ups) + (sub.submission_ups) | average:(sub.comments.length) + (sub.submissions.length):0 | number }}</td>
                     </tr>      
                   </table>    
                 </div>
@@ -73,20 +67,28 @@
             </div>
 
             <br>
-            <div id="statistics">
+            <div id="statistics" ng-controller="StatsCtrl">
               <h3 class="title-heading">Statistics</h3>
               <br>
-              <h4>Out of {{ username }}'s <strong class="orange">{{ subLength }}</strong> subreddits, <span class="baby-blue">r/{{ subreddit }}</span> is ranked:</h4>
+              <p align="center">Out of {{ username }}'s <strong class="orange">{{ subLength }}</strong> subreddits, <span class="baby-blue">r/{{ subreddit }}</span> is ranked:</p>
               <br>
               <div class="row badge-row">
-                <div class="col-xs-5 col-xs-offset-1" align="center">
+                <div class="col-sm-3 col-xs-6" align="center">
                   <img ng-src="{{ '../images/active.png' }}" class="stat-icon"><br>
                   <strong class="green">#{{ mostActiveRank }} most active</strong>
                 </div>
-                <div class="col-xs-5" align="center">
+                <div class="col-sm-3 col-xs-6" align="center">
                   <img ng-src="{{ '../images/best.png' }}" class="stat-icon"><br>
                   <strong class="green">#{{ mostUpsRank }} most upvoted</strong>
                 </div>
+                 <div class="col-sm-3 col-xs-6" align="center">
+                  <img ng-src="{{ '../images/comments.png' }}" class="stat-icon"><br>
+                  <strong class="green">#{{ mostCommentsRank }} most comments</strong>
+                </div>  
+                 <div class="col-sm-3 col-xs-6" align="center">
+                  <img ng-src="{{ '../images/posts.png' }}" class="stat-icon"><br>
+                  <strong class="green">#{{ mostSubmitsRank }} most submitted</strong>
+                </div>               
               </div>
 
               <br>
@@ -104,9 +106,12 @@
                 </div>
               </div>
             </div>
+            <div align="center">
+              <back-top></back-top>
+            </div>
           </div>
 
-          <div ng-if="tab == 0 || tab == 1">
+          <div ng-if="(tab == 0 && sub.comments.length > 0) || (tab == 1 && sub.submissions.length > 0)">
             <span class="small-font">Viewing <strong class="orange">{{ slicedArray.length }}</strong> of {{ sub[tabOptions[tab]].length }} {{ tabOptions[tab] }} </span>
             <div class="table-options">
               <div class="row" id="table-start">
@@ -154,6 +159,15 @@
               </div>
             </div>
           </div>
+
+          <div ng-if="tab == 0 && sub.comments.length == 0" align="center">
+            <h5>{{ username }} has no comments in r/{{ subreddit }}.</h5>
+          </div>
+          <div ng-if="tab == 1 && sub.submissions.length == 0" align="center">
+            <h5>{{ username }} has no submissions in r/{{ subreddit }}.</h5>
+          </div>
+
+
           <div ng-include src="'views/footer.html'"></div>
 
         </div>
