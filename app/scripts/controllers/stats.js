@@ -14,7 +14,7 @@ angular.module('SubSnoopApp')
 
     $scope.mostActive = rank.getTopSub(keys, 'mostActive', subs);
    	$scope.mostUpvoted = rank.getTopSub(keys, 'totalUps', subs);
-   	$scope.leastUpvoted = rank.getTopSub(keys, 'mostDown', subs);
+   	$scope.leastUpvoted = rank.getBottomSub(keys, 'totalUps', subs);
    	$scope.newestSub = subFactory.getNewestSub();
 
     /*
