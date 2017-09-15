@@ -284,6 +284,7 @@
             subs[subreddit].submissions = [];
             subs[subreddit].comments = [];
             subs[subreddit].comment_ups = 0;
+            subs[subreddit].gilded_comments = 0;
             subs[subreddit].gilded_submissions = 0;
             subs[subreddit].count = 0;
           } 
