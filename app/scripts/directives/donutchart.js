@@ -81,11 +81,11 @@ angular.module('SubSnoopApp')
           return {
             center: {
               value: function() {
-              	if (attrs.type === 'comments') {
-              		return "Recent " + limit + " Comments";
-              	} else if (attrs.type === 'submissions') {
-              		return "Recent " + limit + " Posts";
-              	}
+                if (attrs.type === 'comments') {
+                  return "Recent " + limit + " Comments";
+                } else if (attrs.type === 'submissions') {
+                  return "Recent " + limit + " Posts";
+                }
               }
             },
             values: subs,
@@ -109,7 +109,7 @@ angular.module('SubSnoopApp')
 
         function init() {
           var dataArray = [];
-        	var filtered = [];
+          var filtered = [];
           var recent = subFactory.getLatest().slice(0, limit);
           var subs, comments, submissions, sortedKeys;
 
@@ -123,15 +123,15 @@ angular.module('SubSnoopApp')
             sortedKeys = $filter('sortSubs')(Object.keys(subs), 'subName', subs);
           }
 
-        	for (var i = 0; i < sortedKeys.length; i++) {
+          for (var i = 0; i < sortedKeys.length; i++) {
             var key = subs[sortedKeys[i]];
-        		dataArray.push(key);
-        	}
+            dataArray.push(key);
+          }
 
           var data = attrs.type === 'comments' ? comments : submissions;
           var chartData = getChartData(data, dataArray);
           for (var i = 0; i < sortedKeys.length; i++) {
-          	var key = sortedKeys[i];
+            var key = sortedKeys[i];
             var count;
             if (attrs.type === 'comments') {
               count = comments.length;
@@ -168,8 +168,8 @@ angular.module('SubSnoopApp')
             radius,
             duration = chartConfig.duration;
 
-  	        width = width - margin.left - margin.right;
-  	        height = height - margin.top - margin.bottom,
+            width = width - margin.left - margin.right;
+            height = height - margin.top - margin.bottom,
             radius = Math.min(width, height) / 2,
             labelRadius = radius + chartConfig.labelPadding;
 
@@ -197,7 +197,7 @@ angular.module('SubSnoopApp')
 
           var centerLabel = (!!chartData.center.label) ? chartData.center.label : '';
           var centerValue = (!!chartData.center.value) ? chartData.center.value : '';
-  	      var numData = "Since " + moment(chartData.data[chartData.data.length-1].created_utc * 1000).format('MMM Do YYYY');
+          var numData = "Since " + moment(chartData.data[chartData.data.length-1].created_utc * 1000).format('MMM Do YYYY');
 
           var d3ChartEl = d3.select(element[0]);
 
@@ -223,29 +223,29 @@ angular.module('SubSnoopApp')
               .duration(duration)
               .each("end", function(d) {
 
-  	            d3.select('.center-value-' + attrs.type).text(d.data.label);
-  	            var line1;
-  	            if (attrs.type === 'comments') {
-  	            	line1 = 'Comments: ' + d.data.count;
-  	            } else if (attrs.type === 'submissions') {
-  	            	line1 = 'Submissions: ' + d.data.count
-  	            }
+                d3.select('.center-value-' + attrs.type).text(d.data.label);
+                var line1;
+                if (attrs.type === 'comments') {
+                  line1 = 'Comments: ' + d.data.count;
+                } else if (attrs.type === 'submissions') {
+                  line1 = 'Submissions: ' + d.data.count
+                }
 
-  	            d3.select('.line-1-' + attrs.type)
-  	            	.text(line1);
+                d3.select('.line-1-' + attrs.type)
+                  .text(line1);
 
-  	            d3.selectAll('.arc-' + attrs.type + ' .legend .percent')
-  	            	.transition()
-  	            	.duration(duration)
-  	            	.style('fill-opacity', 0);
+                d3.selectAll('.arc-' + attrs.type + ' .legend .percent')
+                  .transition()
+                  .duration(duration)
+                  .style('fill-opacity', 0);
                 d3.select(this.parentNode).select('.legend .percent')
                   .transition()
                   .duration(duration)
                   .style("fill-opacity", 1);
 
-  	            d3.selectAll('.arc-' + attrs.type).style('opacity', function(e) {
-  	            	return e.data.label === d.data.label ? '1' : '0.3';
-  	            });
+                d3.selectAll('.arc-' + attrs.type).style('opacity', function(e) {
+                  return e.data.label === d.data.label ? '1' : '0.3';
+                });
 
               })
               .attr("d", arcOver);
@@ -258,21 +258,21 @@ angular.module('SubSnoopApp')
           };
 
           gRoot.on('mouseleave', function(e) {
-          	if (!e) {
-          		d3.selectAll('.arc-' + attrs.type).style('opacity', '1');
-          		d3.select('.center-value-' + attrs.type).text(centerValue);
-  	        	d3.select('.line-1-' + attrs.type).text(numData);
+            if (!e) {
+              d3.selectAll('.arc-' + attrs.type).style('opacity', '1');
+              d3.select('.center-value-' + attrs.type).text(centerValue);
+              d3.select('.line-1-' + attrs.type).text(numData);
               d3.selectAll('.arc-' + attrs.type + ' .legend .percent')
                 .transition()
                 .duration(duration)
                 .style("fill-opacity", 0);
-          	}
+            }
           });
 
           middleCircle.on('mouseover', function() {
-          	d3.selectAll('.arc-' + attrs.type).style('opacity', '1');
-          	d3.select('.center-value-' + attrs.type).text(centerValue);
-          	d3.select('.line-1-' + attrs.type).text(numData);
+            d3.selectAll('.arc-' + attrs.type).style('opacity', '1');
+            d3.select('.center-value-' + attrs.type).text(centerValue);
+            d3.select('.line-1-' + attrs.type).text(numData);
             d3.selectAll('.arc-' + attrs.type + ' .legend .percent')
               .transition()
               .duration(duration)
@@ -286,7 +286,7 @@ angular.module('SubSnoopApp')
             .attr('class', 'arc-' + attrs.type);
 
           var partition = arcs.append('svg:path')
-            .style('fill', function(d) {	
+            .style('fill', function(d) {  
               return color(d.data.label);
             })
             .on("mouseover", scope.mouseOverPath)
@@ -318,14 +318,14 @@ angular.module('SubSnoopApp')
             .text(centerValue)
             .attr('x', 0)
             .attr('dy', '0em')
-      			.attr("text-anchor", "middle")
+            .attr("text-anchor", "middle")
             .attr("class", 'center-value-' + attrs.type)
             .attr("font-size", titleSize)
             .attr("fill", "#696969")
             .attr("font-weight", "bold");
 
           centerText.append('tspan')
-          	.text(numData)
+            .text(numData)
             .attr('x', 0)
             .attr('dy', '1em')
             .attr("text-anchor", "middle")
@@ -342,7 +342,7 @@ angular.module('SubSnoopApp')
                 x = c[0],
                 y = c[1],
                 height = Math.sqrt(x * x + y * y);
-              	return "translate(" + ((x-13) / height * labelRadius) + ',' +
+                return "translate(" + ((x-13) / height * labelRadius) + ',' +
                 ((y+5) / height * labelRadius) + ")";
             });
 
@@ -358,7 +358,7 @@ angular.module('SubSnoopApp')
 
           /* If first arc and last arc are same color, change last arc to the 2nd color */
           if (chartData.values.length % scope.color.length === 1) {
-          	d3.select(partition[0][chartData.values.length-1]).style('fill', scope.color[1]);
+            d3.select(partition[0][chartData.values.length-1]).style('fill', scope.color[1]);
           }
 
         }
