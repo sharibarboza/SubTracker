@@ -23,6 +23,10 @@ angular.module('SubSnoopApp')
       return !submit.selftext_html && !submit.html && !isVideo(submit.url) && !submit.media;
     };
 
+    var isImgurAlbum = function(submit) {
+      return submit.media && submit.media.oembed && submit.media.oembed.provider_name === "Imgur";
+    }
+
     var isVideo = function(url) {
       if (url) {
         return url.indexOf('gifv') >= 0;
@@ -82,10 +86,10 @@ angular.module('SubSnoopApp')
               return highlightHtml(page, data.html, data);
             } else if (isLinkedImage(data)) {
               return '<img class="submit-pic" ng-src="' + data.url + '">';
-            } else if (isAttachedImage(data)) {
-              return '<img class="submit-pic" ng-src="' + data.preview.images[0].source.url + '">';
-            } else if (data.media && data.media.oembed) {
+            } else if (data.media && data.media.oembed && data.media.oembed.provider_name != "Imgur") {
               return changeSize($filter('escape')(data.media.oembed.html));
+            } else if (isAttachedImage(data) || isImgurAlbum(data)) {
+              return '<img class="submit-pic" ng-src="' + data.preview.images[0].source.url + '">';
             } else if (isVideo(data.url)) {
               return '<img class="submit-pic" ng-src="' + getVideoUrl(data.url) + '">';
             } else if (data.media.reddit_video.fallback_url) {

@@ -831,7 +831,8 @@ User Sub Page
   padding-bottom: 30px;
 }
 
-#statistics [class*='col-'] {
+.badge-row [class*='col-'] {
+  padding-top: 20px;
   padding-left: 0;
   padding-right: 0;
 }
@@ -906,6 +907,10 @@ submit-content iframe {
   font-size: 20px;
 }
 
+#post-header {
+  margin-left: -40px;
+}
+
 /************************
 Submit Post Thumbnails
 ************************/
@@ -915,11 +920,6 @@ Submit Post Thumbnails
   font-size: 0;
   overflow: hidden;
   width: 70px;
-  margin-left: -16px;
-}
-
-.thumb-pic {
-  margin-left: -6px;
 }
 
 .post-thumbnail img {
@@ -961,6 +961,10 @@ Submit Post Thumbnails
   background-position: 0px -1211px;
   background-repeat: no-repeat;
   height: 50px;
+}
+
+iframe, video {
+  width: 100%;
 }
 
 /************************
@@ -1215,7 +1219,7 @@ Mobile
 
   #submit-card {
     padding: 0;
-    padding-top: 8px;
+    padding-top: 15px;
   }
 
   .submit-pic {
@@ -1264,6 +1268,15 @@ Mobile
 
   .user-head-nav p:hover {
     color: #1DB3B0;
+  }
+
+  #post-header {
+    margin-left: 8px;
+    width: 80%;
+  }
+
+  iframe, video {
+    height: 30vh;
   }
 
  }
