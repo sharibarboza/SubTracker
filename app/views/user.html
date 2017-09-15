@@ -5,91 +5,196 @@
   
   <div ng-if="!notfound" class="content" layout="column" ng-cloak>
 
-    <div ng-include src="'views/sidenav.html'"></div>
+    <div ng-include src="'views/sidenav.html'" id="fixed-sidebar"></div>
 
     <div>
-      <div class="user-banner sub-banner">
-        <div class="table-pad" id="user-page">
-          <div class="row">
-            <div class="col-md-9">
-              <i class="fa fa-user-circle" aria-hidden="true"></i>
-              <span class="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span> <span class="badge num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
-              <div class="banner-info">
-                <p>Last seen <time-ago class="orange" from-time='{{ latest[0].created_utc * 1000 }}'></time-ago></p>
-              </div>
-            </div>
-            <div class="col-md-3" id="user-link-col">
-              <p class="banner-info"><a href="https://www.reddit.com/user/{{ username }}" class="white"><i class="fa fa-link orange" aria-hidden="true"></i> Visit reddit page</a> <i class="fa fa-reddit" aria-hidden="true"></i></p>
-            </div>
-          </div>
+      <div class="user-banner sub-banner row">
+        <div class="table-pad col-md-9 col-md-push-3" id="user-page">
+          <span class="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span> <span class="badge num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
         </div>
       </div>
       
+      <div class="user-head-nav">
+        <div class="col-xs-3" align="right" ng-click="scrollAnchor('subreddits')"><p>Subs</p></div>
+        <div class="col-xs-6" align="center" ng-click="scrollAnchor('latest')"><p>Recent Activity</p></div>
+        <div class="co-xs-3" align="left" ng-click="scrollAnchor('statistics')"><p>Statisics</p></div>
+      </div>
+
       <div class="sub-table">
         <div ng-include src="'views/user-sidebar.html'"></div>
-        <div class="col-md-8 col-md-pull-4 sub-rows">
+        <div class="col-md-7 col-xs-12 sub-rows" id="table-head">
 
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><strong><i class="fa fa-arrow-left gray" aria-hidden="true"></i> <a class="black" href="/">Back to main page</a></strong></li>
-          </ol>
+          <div id="overview">
+            <div class="row">
+              <div class="col-md-1">
+                <img ng-if="redditor.subreddit" ng-src="{{ redditor.subreddit.icon_img }}" class="banner-img img-circle">
+                 <img ng-if="!redditor.subreddit" ng-src="{{ '../images/sub-icon.png' }}" class="banner-img img-circle">
+              </div>
+              <div class="col-md-11" id="since-date">
+                <strong>Joined on: <span class="purple" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong><br>
+                <strong class="green small-font">Last seen <time-ago from-time='{{ lastPost.created_utc * 1000 }}'></time-ago></strong> <span id="slash">/</span> 
+                <a href="https://www.reddit.com/user/{{ username }}" class="small-font">Visit u/{{ username }}'s reddit page <i class="fa fa-external-link" aria-hidden="true"></i></a>
+              </div>
+            </div>
+            <br>
 
-          <div class="row" id="table-head">
-            <div class="col-md-6">
-              <form name="myForm">
-                <md-select ng-model="sortData.selectedSort" placeholder="{{ sortData.selectedSort.name }}" ng-change="setSortOption()">
-                  <md-option ng-repeat="sort in sortData.sortOptions" ng-value="sort" ng-selected="sort.value == sortData.selectedSort.value">
-                    <span class="main-color low-weight">{{ sort.name }}</span>
-                  </md-option>
-                </md-select>
-              </form>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <table class="table table-bordered" id="overview-table">
+                  <tr class="table-heads">
+                    <th class="col-xs-3"></th>
+                    <th class="col-xs-3">Comments</th>
+                    <th class="col-xs-3">Submitted</th>
+                    <th class="col-xs-3">Total</th>
+                  </tr>
+                  <tr>
+                    <th>Posts</th>
+                    <td>{{ comments }}</td>
+                    <td>{{ submissions }}</td>
+                    <td>{{ (comments) + (submissions) | number }}</td>
+                  </tr>
+                  <tr>
+                    <th>Karma</th>
+                    <td>{{ redditor.comment_karma | number }}</td>
+                    <td>{{ redditor.link_karma | number }}</td>
+                    <td>{{ (redditor.comment_karma) + (redditor.link_karma) | number }}</td>
+                  </tr>                       
+                </table>    
+              </div>
             </div>
-            <div class="col-xs-6 option-pos" align="right">
-              <form>
-                <md-input-container>
-                  <label for="testInput" class="main-color low-weight"><i class="glyphicon glyphicon-search" aria-hidden="true"></i> Search for a sub</label>
-                  <input type="text" id="testInput"
-                         ng-model="searchSub" ng-change="changeSubs(searchSub)" md-autofocus>
-                </md-input-container>
-                <button type="submit" style="display: none;" ng-controller="SidebarCtrl" ng-click="close()">Go!</button>
-              </form>
-            </div>
-          </div>      
+
+          </div>
+
           <br>
 
-          <div class="card" ng-repeat="subreddit in subList" id="sub-row">
-            <div class="card-content row">
-              <a href="#/{{ username }}/{{ subreddit }}/">
-              <div class="col-md-6" id="sub-rank">
-                <div class="col-md-2">
-                  <span class="baby-blue"><strong>{{ 1 + $index }}</strong></span>
+          <div id="subreddits">
+            <h3 class="title-heading">Subreddits</h3>
+            <div class="row">
+              <div class="col-md-6">
+                <form name="myForm">
+                  <md-select ng-model="sortData.selectedSort" placeholder="{{ sortData.selectedSort.name }}" ng-change="setSortOption()">
+                    <md-option ng-repeat="sort in sortData.sortOptions" ng-value="sort" ng-selected="sort.value == sortData.selectedSort.value">
+                      <span class="main-color low-weight">{{ sort.name }}</span>
+                    </md-option>
+                  </md-select>
+                </form>
+              </div>
+              <div class="col-xs-6 option-pos" align="right">
+                <form>
+                  <md-input-container>
+                    <label for="testInput" class="main-color low-weight"><i class="glyphicon glyphicon-search" aria-hidden="true"></i> Search for a sub</label>
+                    <input type="text" id="testInput"
+                           ng-model="searchSub" ng-change="changeSubs(searchSub)" md-autofocus>
+                  </md-input-container>
+                  <button type="submit" style="display: none;" ng-controller="SidebarCtrl" ng-click="close()">Go!</button>
+                </form>
+              </div>
+            </div>      
+            <br>
+
+            <div class="card" ng-repeat="subreddit in subList.slice(0, currentLimit)" id="sub-row">
+              <div class="card-content row">
+                <a href="#/{{ username }}/{{ subreddit }}/">
+                <div class="col-md-6" id="sub-rank">
+                  <div class="col-md-2">
+                    <span class="baby-blue"><strong>{{ 1 + $index }}</strong></span>
+                  </div>
+                  <div class="col-md-10">
+                    <span id="sub-name"> /r/{{ subreddit }}</span><br>
+                    <span class="gray sub-text">Last seen <span ng-bind="subs[subreddit].recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></span></span>
+                  </div>
                 </div>
-                <div class="col-md-10">
-                  <span id="sub-name"> /r/{{ subreddit }}</span><br>
-                  <span class="gray sub-text">Last seen <span ng-bind="subs[subreddit].recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></span></span>
+                <div class="col-md-2 col-xs-4" id="sub-comments" align="center">
+                  <span class="black number">{{ subs[subreddit].comments.length }}</span><br>
+                  <span class="gray sub-text">Comments</span>
+                </div>
+                <div class="col-md-2 col-xs-4" id="sub-submits" align="center">
+                  <span class="black number">{{ subs[subreddit].submissions.length }}</span><br>
+                  <span class="gray sub-text">Submitted</span>
+                </div>
+                <div class="col-md-2 col-xs-4" id="sub-upvotes" align="center">
+                  <span class="number" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'">{{ subs[subreddit].total_ups | number }}</span><br>
+                  <span class="gray sub-text">Upvotes</span>
+                </div>
+                </a>
+              </div>
+            </div>
+
+            <div ng-if="(currentLimit > limit) || (currentLimit == limit && subList.length >= 5)" class="card" align="center" id="more-subs" ng-click="changeLimit()">
+              <div class="card-content">
+                <span>{{ limit == subLength ? 'See less subreddits' : 'See more subreddits' }} <i class="fa" ng-class="currentLimit == subLength ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true"></i></span>
+              </div>
+            </div>
+
+          </div>
+
+          <br>
+          <div id="latest">
+            <h3 class="title-heading">Recent Activity</h3>
+            <br>
+            <div ng-repeat="element in latest" ng-if="element.id">
+              <div class="card side-cards">
+                <div class="card-content card-heading">
+                  <i class="fa fa-calendar purple" aria-hidden="true"></i> {{ element.type == 'comment' ? 'Most Recent Comment' : 'Most Recent Submission' }} in <span class="green">r/{{ element.subreddit }}</span>
                 </div>
               </div>
-              <div class="col-md-2 col-xs-4" id="sub-comments" align="center">
-                <span class="black number">{{ subs[subreddit].comments.length }}</span><br>
-                <span class="gray sub-text">Comments</span>
+              <div ng-if="element.type == 'comment'">
+                <div ng-include src="'views/comment.html'"></div>
               </div>
-              <div class="col-md-2 col-xs-4" id="sub-submits" align="center">
-                <span class="black number">{{ subs[subreddit].submissions.length }}</span><br>
-                <span class="gray sub-text">Submitted</span>
+              <div ng-if="element.type == 'submit'">
+                <div ng-include src="'views/submission.html'"></div>
               </div>
-              <div class="col-md-2 col-xs-4" id="sub-upvotes" align="center">
-                <span class="number" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'">{{ subs[subreddit].total_ups | number }}</span><br>
-                <span class="gray sub-text">Upvotes</span>
-              </div>
-              </a>
             </div>
           </div>
 
-          <div align="center" id="back-up">
+          <br>
+          <div id="statistics" ng-controller="StatsCtrl">
+            <h3 class="title-heading">Statistics</h3>
+
+            <div class="row badge-row small-font" id="user-badges">
+              <div class="col-sm-3 col-xs-6" align="center">
+                <img ng-src="{{ '../images/active.png' }}" class="stat-icon"><br>
+                <strong class="green">Most Active Sub</strong><br>
+                <a href="https://www.reddit.com/r/{{ mostActive }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ mostActive }}</strong></a>
+              </div>
+              <div class="col-sm-3 col-xs-6" align="center">
+                <img ng-src="{{ '../images/best.png' }}" class="stat-icon"><br>
+                <strong class="green">Most Upvoted Sub</strong><br>
+                <a href="https://www.reddit.com/r/{{ mostUpvoted }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ mostUpvoted }}</strong></a>
+              </div>
+              <div class="col-sm-3 col-xs-6" align="center">
+                <img ng-src="{{ '../images/worst.png' }}" class="stat-icon"><br>
+                <strong class="green">Least Upvoted Sub</strong><br>
+                <a href="https://www.reddit.com/r/{{ leastUpvoted}}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ leastUpvoted }}</strong></a>
+              </div> 
+              <div class="col-sm-3 col-xs-6" align="center">
+                <img ng-src="{{ '../images/new.png' }}" class="stat-icon"><br>
+                <strong class="green">Newest Active Sub</strong><br>
+                <a href="https://www.reddit.com/r/{{ newestSub }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ newestSub }}</strong></a>
+              </div>  
+            </div>          
+
+            <br>
+            <div ng-controller="PiechartCtrl" align="center">
+              <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent {{ chartLimit }} comments</strong></h4>
+              <span class="small-font">Hover to see the number of comments for that sub out of {{ username }}'s most recent {{ chartLimit }} comments.</span>
+              <donut-chart ng-if="comments > 0" type="comments" limit="20" align="center"></donut-chart>
+              <h5 ng-if="comments == 0">{{ username }} does not have any comments.</h5>
+
+              <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent {{ chartLimit }} submissions</strong></h4>
+              <span class="small-font">Hover to see the number of submissions for that sub out of {{ username }}'s most recent {{ chartLimit }} submissions.</span>
+              <donut-chart ng-if="submissions > 0" type="submissions" limit="20" align="center"></donut-chart>
+              <h5 class="purple" ng-if="submissions == 0">{{ username }} does not have any submissions.</h5>   
+            </div>
+          </div>
+          <div align="center">
             <back-top></back-top>
           </div>
-
+          <div ng-include src="'views/footer.html'"></div>
         </div>
       </div>
+
     </div>
   </div>
 </div>

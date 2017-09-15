@@ -8,8 +8,8 @@
  * Controller of the SubSnoopApp
  */
  angular.module('SubSnoopApp')
-  .controller('UserCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', '$window', 'subFactory', 'moment', 'subsData', 'search', 'sortFactory',
-  function ($rootScope, $scope, $routeParams, $filter, $window, subFactory, moment, subsData, search, sortFactory) {
+  .controller('UserCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', '$window', 'subFactory', 'moment', 'subsData', 'search', 'sortFactory', '$location', '$anchorScroll',
+  function ($rootScope, $scope, $routeParams, $filter, $window, subFactory, moment, subsData, search, sortFactory, $location, $anchorScroll) {
 
     /*
      Initalization
@@ -18,6 +18,9 @@
     $scope.username = $routeParams.username;
     $scope.main = false; // Prevent hiding of search bar in top-nav
     $scope.page = 'user';
+    $scope.limit = 10;
+    $scope.currentLimit = $scope.limit;
+    $scope.open = true;
 
     /*
      Gets data from user's reddit about page, primarily for username, link karma, comment karma, etc.
@@ -39,10 +42,11 @@
       $scope.comments = response.comments;
       $scope.submissions = response.submissions;
       $scope.subs = response.subs;
-      $scope.dataAvailable = response.firstDate;
       $scope.latest = response.latest;
       $scope.subsArray = subFactory.getDefaultSortedArray();
       $scope.subLength = subFactory.getSubLength();
+      $scope.lastPost = subFactory.getLatestPost(null);
+      $scope.firstPost = subFactory.getFirstPost(null);
     };
 
     $scope.setSortOption = function() {
@@ -98,6 +102,20 @@
     $scope.changeSubs = function(term) {
       $scope.subList = [];
       $scope.subList = search.findSubs($scope.subsArray, term);
+    };
+
+    $scope.changeLimit = function() {
+      if ($scope.currentLimit === $scope.subLength) {
+        $scope.currentLimit = $scope.limit;
+      } else {
+        $scope.currentLimit = $scope.subLength;
+      }
+    };
+
+    $scope.scrollAnchor = function(id) {
+      $location.hash(id);
+      $anchorScroll.yOffset = 120;
+      $anchorScroll();
     };
   }
 

@@ -1,12 +1,12 @@
-<div class="card">
+<div class="card post-card">
   <div class="card-content" id="submit-card">
     <div class="row submit-row">
-      <div class="col-md-1 col-xs-2 post-thumbnail">
+      <div class="col-xs-2 post-thumbnail">
         <thumbnail data="{{ element }}"></thumbnail>
       </div>
-      <div class="col-md-11 col-xs-10" id="post-header">
+      <div class="col-xs-10" id="post-header">
         <a href="{{ element.url }}" target="_blank">
-        <strong ng-if="!element.highlighted_title">{{ element.title | escape }}</strong>
+        <strong ng-if="page != search || !element.highlighted_title">{{ element.title | escape }}</strong>
         <strong ng-if="page =='search' && element.highlighted_title" ng-bind-html="element.highlighted_title | sanitize"></strong>
         </a> <span ng-if="element.link_flair_text" class="label label-default">{{ element.link_flair_text }}</span> <span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gilded }}</span></span>
         <div id="submit-stats">
@@ -26,10 +26,8 @@
   <div ng-if="page != 'search'" ng-include src="'views/accordion-submit.html'"></div>
 
   <div ng-if="page == 'search'">
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1" id="submit-col">
-        <submit-content class="wrap-text" data="{{ element }}" page="{{ page }}"></submit-content>
-      </div>
+    <div id="submit-col">
+      <submit-content class="wrap-text" data="{{ element }}" page="{{ page }}"></submit-content>
     </div>
   </div>
 </div>

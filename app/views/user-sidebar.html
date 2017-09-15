@@ -1,60 +1,14 @@
-<div class="col-md-4 col-md-push-8 user-side">
+<div class="col-md-3 col-md-offset-1 user-side fixed-pos" style="width: 21%;">
 
-<div class="card side-cards">
-  <div class="card-content card-heading">
-    <i class="fa fa-user-circle" aria-hidden="true"></i> /u/{{ username }}
-  </div>
-  <div class="card-action pad-card">
-    <p>Redditor since <strong class="purple" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></strong></p>
-    <span class="gray small-font">Note: The data shown here is based on the user's most recent 1000 comments and submissions each, starting from <span ng-bind="dataAvailable | amDateFormat: 'MMMM Do YYYY.'"></span>
-  </div>
-
-</div>
-
-  <div class="card side-cards">
-    <div class="card-content card-heading">
-      <i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Recent Activity
+  <div class="card side-cards" id="fixed-side">
+    <div class="card-action pad-card" ng-click="scrollAnchor('overview')">Overview</div>
+    <div class="card-action pad-card" ng-click="scrollAnchor('subreddits')">Subreddits</div>
+    <div class="card-action pad-card" ng-click="scrollAnchor('latest')">Recent Activity</div>
+    <div class="card-action pad-card" ng-click="scrollAnchor('statistics')">Statistics</div>
+    <a href="#/{{ username }}/search/"><div class="card-action pad-card"><i class="fa fa-search" aria-hidden="true"></i> Search</div></a>
+    <div class="card-action pad-card white-bg">
+      <span class="gray small-font">Note: The data shown here is based on the user's most recent 1000 comments and submissions each, starting from <span ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMM D, YYYY.'"></span>
     </div>
-    <div class="card-action pad-card" ng-repeat="element in latest">
-      <p><strong class="purple">r/{{ element.subreddit }}</strong> <span class="gray small-font">(<span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>)</span></p> 
-      <side-post data="{{ element }}"></side-post>
-    </div>
-  </div>
 
-  <div class="card side-cards">
-    <div class="card-content card-heading"><i class="fa fa-comments" aria-hidden="true"></i> Overall Activity</div>
-    <div class="card-action pad-card side-stats">
-      <div class="row">
-        <div class="col-xs-8">Total comments</div>
-        <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ comments }}</strong></div>
-      </div>
-      <div class="row">
-        <div class="col-xs-8">Total submitted</div>
-        <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ submissions }}</strong></div>
-      </div>
-      <div class="row">
-        <div class="col-xs-8">Comment karma</div>
-        <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ redditor.comment_karma | number }}</strong></div>
-      </div>
-      <div class="row">
-        <div class="col-xs-8">Post/link karma</div>
-        <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ redditor.link_karma | number }}</strong></div>
-      </div>
-    </div>
-    <div class="card-action pad-card side-stats">
-      <div class="row">
-        <div class="col-xs-8"><i class="glyphicon glyphicon-chevron-right green" aria-hidden="true"></i> Average comments per sub</div>
-        <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ comments | average:subLength:0 }}</strong></div>
-      </div>
-      <div class="row">
-        <div class="col-xs-8"><i class="glyphicon glyphicon-chevron-right green" aria-hidden="true"></i> Average submissions per sub</div>
-        <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ submissions | average:subLength:0 }}</strong></div>
-      </div>
-      <div class="row">
-        <div class="col-xs-8"><i class="glyphicon glyphicon-chevron-right green" aria-hidden="true"></i> Average karma per sub</div>
-        <div class="col-xs-4" align="right"><strong class="baby-blue number">{{ totalKarma | average:subLength:0 | number }}</strong></div>
-      </div>
-    </div>
   </div>
-
 </div>

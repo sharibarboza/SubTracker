@@ -4,85 +4,174 @@
   <div class="content" layout="column" ng-cloak>
 
     <div ng-include src="'views/sidenav.html'"></div>
-  
-      <div class="user-banner sub-banner">
-        <div class="table-pad" id="sub-page">
-          <div class="row">
-            <div class="col-md-9">
-              <i class="fa fa-shield" aria-hidden="true"></i>
-              <span class="reddit-name"><span class="baby-blue">/r/</span>{{ subreddit }}</span> <span class="badge num-subs">{{ username }}</span>
-              <div class="banner-info">
-                <p>Last seen <time-ago class="orange" from-time='{{ elemArray[0].created_utc * 1000 }}'></time-ago></p>
+      <div class="user-banner sub-banner row">
+        <div class="table-pad col-md-9 col-md-push-3" id="user-page">
+          <span class="reddit-name"><span class="baby-blue">/r/</span>{{ subreddit }}</span> <span class="badge num-subs">{{ username }}</span>
+        </div>
+      </div>
+
+      <div class="user-head-nav" align="center">
+        <div class="col-xs-4" ng-click="switchSub()"><p ng-class="tab == 2 ? 'green' : 'text-gray'">{{ isOverview() ? "Subs" : "Overview" }}</p></div>
+        <div class="col-xs-4" ng-click="setTab(0)"><p ng-class="tab == 0 ? 'green' : 'text-gray'">Comments</p></div>
+        <div class="col-xs-4" ng-click="setTab(1)"><p ng-class="tab == 1 ? 'green' : 'text-gray'">Posts</p></div>
+      </div>
+
+      <div class="sub-table">
+        <div ng-include src="'views/sub-sidebar.html'"></div>
+        <div class="col-md-7 col-xs-12 sub-rows" id="table-head">
+
+          <div ng-if="tab == 2">
+            <div id="overview">
+              <div class="row">
+                <div class="col-md-1">
+                   <img ng-src="{{ '../images/sub-icon.png' }}" class="banner-img img-circle">
+                </div>
+                <div class="col-md-11" id="since-date">
+                  <strong class="green">Last seen <time-ago from-time='{{ latestPost.created_utc * 1000 }}'></time-ago></strong><br> 
+                  <a href="https://www.reddit.com/r/{{ subreddit }}" class="small-font">Visit r/{{ subreddit }}'s reddit page <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                </div>
+              </div>
+              <br>
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <table class="table table-bordered" id="overview-table">
+                    <tr class="table-heads">
+                      <th></th>
+                      <th>Comments</th>
+                      <th>Submitted</th>
+                      <th>Total</th>
+                    </tr>
+                    <tr>
+                      <th>Posts</th>
+                      <td>{{ sub.comments.length }}</td>
+                      <td>{{ sub.submissions.length }}</td>
+                      <td>{{ (sub.comments.length) + (sub.submissions.length) | number }}</td>
+                    </tr>
+                    <tr>
+                      <th>Gilded</th>
+                      <td>{{ sub.gilded_comments }}</td>
+                      <td>{{ sub.gilded_submissions }}</td>
+                      <td>{{ (sub.gilded_comments) + (sub.gilded_submissions) | number }}</td>
+                    </tr> 
+                    <tr>
+                      <th>Upvotes</th>
+                      <td>{{ sub.comment_ups | number }}</td>
+                      <td>{{ sub.submission_ups | number }}</td>
+                      <td>{{ (sub.comment_ups) + (sub.submission_ups) | number }}</td>
+                    </tr>      
+                  </table>    
+                </div>
+              </div>
+
+            </div>
+
+            <br>
+            <div id="statistics" ng-controller="StatsCtrl">
+              <h3 class="title-heading">Statistics</h3>
+              <br>
+              <p align="center">Out of {{ username }}'s <strong class="orange">{{ subLength }}</strong> subreddits, <span class="baby-blue">r/{{ subreddit }}</span> is ranked:</p>
+              <br>
+              <div class="row badge-row small-font">
+                <div class="col-sm-3 col-xs-6" align="center">
+                  <img ng-src="{{ '../images/active.png' }}" class="stat-icon"><br>
+                  <strong class="green">#{{ mostActiveRank }} in most active</strong>
+                </div>
+                <div class="col-sm-3 col-xs-6" align="center">
+                  <img ng-src="{{ '../images/best.png' }}" class="stat-icon"><br>
+                  <strong class="green">#{{ mostUpsRank }} in most upvoted</strong>
+                </div>
+                 <div class="col-sm-3 col-xs-6" align="center">
+                  <img ng-src="{{ '../images/comments.png' }}" class="stat-icon"><br>
+                  <strong class="green">#{{ mostCommentsRank }} in most comments</strong>
+                </div>  
+                 <div class="col-sm-3 col-xs-6" align="center">
+                  <img ng-src="{{ '../images/posts.png' }}" class="stat-icon"><br>
+                  <strong class="green">#{{ mostSubmitsRank }} in most submitted</strong>
+                </div>               
+              </div>
+
+              <br>
+              <div ng-repeat="element in highestPosts" ng-if="element.id">
+                <div class="card side-cards">
+                  <div class="card-content card-heading">
+                    <i class="fa fa-star-o purple" aria-hidden="true"></i> {{ element.type == 'comment' ? 'Most Upvoted Comment' : 'Most Upvoted Submission' }}
+                  </div>
+                </div>
+                <div ng-if="element.type == 'comment'">
+                  <div ng-include src="'views/comment.html'"></div>
+                </div>
+                <div ng-if="element.type == 'submit'">
+                  <div ng-include src="'views/submission.html'"></div>
+                </div>
               </div>
             </div>
-            <div class="col-md-3" id="user-link-col">
-              <p class="banner-info"><a href="https://www.reddit.com/r/{{ subreddit }}" class="white"><i class="fa fa-link orange" aria-hidden="true"></i> Visit subreddit</a> <i class="fa fa-reddit" aria-hidden="true"></i></p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    <div id="sub-content" class="sub-table">
-      <div ng-include src="'views/sub-sidebar.html'"></div>
-      <div class="col-md-8 col-md-pull-4 sub-rows">
-
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><strong><i class="fa fa-arrow-left gray" aria-hidden="true"></i> <a class="black" href="#/{{ username }}">Back to subreddits</a></strong></li>
-        </ol>
-        <br>
-
-        <ul class="nav nav-tabs">
-          <li ng-if="sub.comments.length > 0" ng-class="getActive(0)"><a href ng-click="setTab(0)"><strong>Comments</strong> <span class="badge tab-badge">{{ sub.comments.length }}</span></a></li>
-          <li ng-if="sub.submissions.length > 0" ng-class="getActive(1)"><a href ng-click="setTab(1)"><strong>Submitted</strong> <span class="badge tab-badge">{{ sub.submissions.length }}</span></a></li>
-        </ul>
-        <br>
-
-        <div class="table-options">
-          <div class="row" id="table-start">
-            <div class="col-md-3">
-              <form name="sortForm">
-                <md-select ng-model="data.selectedSort" placeholder="{{ data.selectedSort.name }}" ng-change="setSortOption()">
-                  <md-option ng-repeat="sort in data.sortOptions" ng-value="sort" ng-selected="sort.value == data.selectedSort.value">
-                    <span class="main-color low-weight">{{ sort.name }}</span>
-                  </md-option>
-                </md-select>
-              </form>
-            </div>
-            <div class="col-md-3">
-              <form name="viewForm">
-                <md-select ng-model="subPage.viewby" placeholder="test" ng-change="setItemsPerPage(subPage.viewby.num)">
-                  <md-option ng-repeat="view in views" ng-value="view" ng-selected="view.value == subPage.viewby.value">
-                    <span class="main-color low-weight">{{ view.num }} {{ tabOptions[tab] }}</span>
-                  </md-option>
-                </md-select>
-              </form>
-            </div>
-            <div class="col-md-6 paginate" align="right" id="top-paginate">
-              <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" style="margin: -5px;"></pagination>
-            </div>
-          </div>
-        </div>
-        <br>
-        <div id="post-table">
-          <div ng-repeat="element in elemArray.slice(((subPage.current-1)*subPage.items), ((subPage.current)*subPage.items))">
-            <div ng-if="element.type == 'comment'">
-              <div ng-include src="'views/comment.html'"></div>
-            </div>
-            <div ng-if="element.type == 'submit'">
-              <div ng-include src="'views/submission.html'"></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6 pull-center" id="back-up">
+            <div align="center">
               <back-top></back-top>
             </div>
-            <div class="col-md-6 paginate">
-              <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" ng-change="backUp()" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" id="bottom-paginate"></pagination>
+          </div>
+
+          <div ng-if="(tab == 0 && sub.comments.length > 0) || (tab == 1 && sub.submissions.length > 0)">
+            <span class="small-font">Viewing <strong class="orange">{{ slicedArray.length }}</strong> of {{ sub[tabOptions[tab]].length }} {{ tabOptions[tab] }} </span>
+            <div class="table-options">
+              <div class="row" id="table-start">
+                <div class="col-md-3">
+                  <form name="sortForm">
+                    <md-select ng-model="data.selectedSort" placeholder="{{ data.selectedSort.name }}" ng-change="setSortOption()">
+                      <md-option ng-repeat="sort in data.sortOptions" ng-value="sort" ng-selected="sort.value == data.selectedSort.value">
+                        <span class="main-color low-weight">{{ sort.name }}</span>
+                      </md-option>
+                    </md-select>
+                  </form>
+                </div>
+                <div class="col-md-3">
+                  <form name="viewForm">
+                    <md-select ng-model="subPage.viewby" placeholder="test" ng-change="setItemsPerPage(subPage.viewby.num)">
+                      <md-option ng-repeat="view in views" ng-value="view" ng-selected="view.value == subPage.viewby.value">
+                        <span class="main-color low-weight">View {{ view.num }}</span>
+                      </md-option>
+                    </md-select>
+                  </form>
+                </div>
+                <div class="col-md-6 paginate" align="right" id="top-paginate">
+                  <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" style="margin: -5px;"></pagination>
+                </div>
+              </div>
+            </div>
+            <br>
+
+            <div id="{{ tabOptions[tab] }}">
+              <div ng-repeat="element in sliceArray()">
+                <div ng-if="element.type == 'comment'">
+                  <div ng-include src="'views/comment.html'"></div>
+                </div>
+                <div ng-if="element.type == 'submit'">
+                  <div ng-include src="'views/submission.html'"></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 pull-center" id="back-up">
+                  <back-top></back-top>
+                </div>
+                <div class="col-md-6 paginate">
+                  <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" ng-change="backUp()" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" id="bottom-paginate"></pagination>
+                </div>
+              </div>
             </div>
           </div>
+
+          <div ng-if="tab == 0 && sub.comments.length == 0" align="center">
+            <h5>{{ username }} has no comments in r/{{ subreddit }}.</h5>
+          </div>
+          <div ng-if="tab == 1 && sub.submissions.length == 0" align="center">
+            <h5>{{ username }} has no submissions in r/{{ subreddit }}.</h5>
+          </div>
+
+
+          <div ng-include src="'views/footer.html'"></div>
+
         </div>
       </div>
-
     </div>
   </div>
 </div>

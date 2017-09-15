@@ -13,6 +13,7 @@ body {
   padding: 0;
   color: #383838;
   background-color: inherit !important;
+  position: relative;
 }
 
 a {
@@ -21,6 +22,10 @@ a {
 
 a:hover {
   color: #12C5E0;
+}
+
+a:focus, div:focus, span:focus {
+  outline: none;
 }
 
 .center {
@@ -53,6 +58,10 @@ a:hover {
 
 .dark-gray {
   color: #333;
+}
+
+.text-gray {
+  color: #696969;
 }
 
 .gray {
@@ -126,6 +135,7 @@ blockquote {
 .number {
   font-size: 15px;
   font-weight: bold;
+  letter-spacing: 1px;
 }
 
 .small-font {
@@ -162,8 +172,9 @@ blockquote {
 }
 
 .fa-reddit {
-  font-size: 38px;
+  font-size: 50px;
   padding-left: 8px;
+  margin-right: 5px;
 }
 
 .wrap-text {
@@ -203,6 +214,14 @@ blockquote {
 .btn-info {
   background-color: #212121;
   border-color: #212121;
+}
+
+.gray-bg {
+  background-color: #FAFAFA !important;
+}
+
+.white-bg {
+  background-color: white !important;
 }
 
 /************************
@@ -302,7 +321,7 @@ Content
 ************************/
 
 .content {
-  min-height: 575px;
+  padding-top: 80px;
 }
 
 .container {
@@ -345,19 +364,38 @@ Content
   color: white;
   background-image: url('../images/icon-bg.png');
   background-size: auto;
-  padding-top: 100px;
+  background-position: 0 15%;
+  padding-top: 70px;
   padding-bottom: 50px;
   font-weight: 700;
+  margin-right: 0;
 }
 
 .sub-banner {
-  padding-top: 110px;
-  padding-bottom: 15px;
+  background-position: 0 10%;
+  padding-top: 10px;
+  padding-bottom: 0;
 }
 
 .banner-header h3 {
   text-align: center;
   font-weight: 600;
+}
+
+.banner-img {
+  width: 55px;
+  margin-top: -5px;
+}
+
+.title-heading {
+  border-bottom: 1px solid gray;
+}
+
+.table-bordered tr > td {
+  font-weight: 500;
+  color: #696969;
+  letter-spacing: 1px;
+  font-size: 13px;
 }
 
 /************************
@@ -469,13 +507,15 @@ Card
 .card {
   background-color: #FAFAFA;
   border-radius: 2px !important;
-  margin-bottom: 12px !important;
+  margin-bottom: -1px;
   border: 1px solid #D6D6D6;
+  outline: none;
 }
 
 .side-cards .card-content {
   padding: 16px 24px;
   border-radius: 0 0 2px 2px;
+  outline: none;
 }
 
 .card .card-action:last-child {
@@ -484,9 +524,9 @@ Card
 
 .side-cards .card-action {
   position: relative !important;
-  background-color: #FAFAFA;
   border-top: 1px solid rgba(160,160,160,0.2) !important;
   padding: 4px;
+  outline: none;
 }
 
 .card-action:hover {
@@ -527,12 +567,11 @@ User Page
 }
 
 #since-date {
-  margin-top: 50px;
-  font-size: 18px;
+  padding-left: 40px;
 }
 
 .num-subs {
-  margin-left: 5px;
+  margin-left: 10px;
   margin-top: -20px;
   font-size: 20px;
   padding: 5px 15px 7px 15px;
@@ -540,7 +579,6 @@ User Page
 
 .banner-info {
   font-size: 18px;
-  margin-left: 48px;
   line-height: 85%;
 }
 
@@ -549,7 +587,7 @@ User Page
 }
 
 #table-head {
-  padding-top: 0;
+  padding-top: 30px;
 }
 
 #user-link-col {
@@ -559,7 +597,32 @@ User Page
   margin-left: 0;
 }
 
-/************************
+#user-page {
+  padding-left: 85px;
+}
+
+.table-icon {
+  font-size: 60px;
+  color: #66D7D1;
+}
+
+.stat-icon {
+  width: 75px;
+}
+
+#user-badges .col-md-4 {
+  margin-bottom: 20px;
+}
+
+.user-head-nav {
+  display: none;
+}
+
+.user-head-nav a {
+  color: inherit;
+}
+ 
+/***********************
 User Page Side Bar
 ************************/
 
@@ -569,13 +632,36 @@ User Page Side Bar
 }
 
 .side-cards .pad-card {
-  padding: 12px !important;
+  padding: 12px;
 }
 
 .side-cards .card-heading {
   color: #212121;
   font-weight: 600;
-  padding: 12px !important;
+  padding: 12px;
+}
+
+.user-side {
+  top: 0;
+  left: 0;
+}
+
+#fixed-side .pad-card {
+  padding-top: 19px;
+  padding-bottom: 19px;
+}
+
+#fixed-side .card-action {
+  background-color: #F5F5F5;
+}
+
+#fixed-side .card-action:hover {
+  background-color: white;
+}
+
+.fixed-pos {
+  position: fixed;
+  margin-top: 133px;
 }
 
 /************************
@@ -583,12 +669,11 @@ Subreddit Table
 ************************/
 
 .sub-table {
-  padding: 40px 35px;
+  padding-top: 20px;
 }
 
 .sub-rows {
-  padding-right: 10px;
-  padding-bottom: 20px;
+  left: 366px;
 }
 
 #sub-row:hover {
@@ -608,6 +693,11 @@ Subreddit Table
   font-size: 16px;
   font-weight: bold;
 }
+
+#more-subs {
+  padding: 10px;
+}
+
 
 /************************
 User Sub Page
@@ -717,6 +807,7 @@ User Sub Page
 
 #back-up {
   padding-top: 25px;
+  margin-bottom: 30px;
 }
 
 #comment-card {
@@ -729,6 +820,21 @@ User Sub Page
 
 .nav-tabs > li > a {
   border-radius: 0 0 2px 2px;  
+}
+
+.post-card {
+  margin-bottom: 15px;
+}
+
+.badge-row {
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+
+.badge-row [class*='col-'] {
+  padding-top: 20px;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /************************
@@ -768,7 +874,7 @@ Sub Page Side Bar
 }
 
 .submit-pic {
-  max-width: 80%;
+  max-width: 75%;
 }
 
 #stat-lines {
@@ -785,14 +891,6 @@ Sub Page Side Bar
   padding-top: 10px;
 }
 
-#submit-col {
-  width: 87.5%;
-  margin-left: 80px;
-  padding: 10px;
-  border: 1px solid #E5E5E5;
-  border-radius: 10px;
-}
-
 #submit-col .md p {
   margin-bottom: 0 !important;
 }
@@ -805,6 +903,14 @@ submit-content iframe {
   max-width: 650px;
 }
 
+.rank {
+  font-size: 20px;
+}
+
+#post-header {
+  margin-left: -40px;
+}
+
 /************************
 Submit Post Thumbnails
 ************************/
@@ -814,11 +920,6 @@ Submit Post Thumbnails
   font-size: 0;
   overflow: hidden;
   width: 70px;
-  margin-left: -16px;
-}
-
-.thumb-pic {
-  margin-left: -6px;
 }
 
 .post-thumbnail img {
@@ -827,7 +928,7 @@ Submit Post Thumbnails
 
 .thumb-default {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 0px -1099px;
+  background-position: -6px -1099px;
   background-repeat: no-repeat;
   background-repeat-x: no-repeat;
   background-repeat-y: no-repeat;
@@ -836,30 +937,34 @@ Submit Post Thumbnails
 
 .thumb-self {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 0px -1267px;
+  background-position: -6px -1267px;
   background-repeat: no-repeat;
   height: 50px;
 }
 
 .thumb-image {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 0px -1043px;
+  background-position: -6px -1043px;
   background-repeat: no-repeat;
   height: 50px;
 }
 
 .thumb-nsfw {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 0px -1155px;
+  background-position: -6px -1155px;
   background-repeat: no-repeat;
   height: 50px;
 }
 
 .thumb-spoiler {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 0px -1211px;
+  background-position: -6px -1211px;
   background-repeat: no-repeat;
   height: 50px;
+}
+
+iframe, video {
+  width: 100%;
 }
 
 /************************
@@ -904,7 +1009,7 @@ Search
 }
 
 #results-submit #submit-col {
-  margin-left: 100px;
+  margin-left: 85px;
 }
 
 .results-sub {
@@ -926,11 +1031,10 @@ Footer
 
 /* Custom page footer */
 .footer {
-  padding-top: 19px;
   color: #777;
   border-top: 1px solid #e5e5e5;
+  margin-top: 50px;
   padding-bottom: 10px;
-  text-align: center;
 }
 
 /************************
@@ -956,6 +1060,17 @@ Mobile
     margin: 0;
     padding: 0;
     width: inherit;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .user-side {
+    display: none;
+  }
+
+  .sub-rows {
+    position: static;
+    left: 0;
   }
 }
 
@@ -985,22 +1100,17 @@ Mobile
     margin-right: 0;
   }
 
-  .table-pad, .sub-table, .sub-rows, .user-side, #sidebar {
+  .sub-table, .sub-rows, .user-side, #sidebar {
     padding: 5px;
   }
 
-  .container, #results-table, #search-content, #sub-panels, #table-head [class*='col-'] {
+  .container, #results-table, #search-content, #sub-panels, #sub-row .card-content {
     padding-left: 0;
     padding-right: 0;
   }
 
   #sub-row .col-xs-4 {
     margin-top: 10px;
-  }
-
-  #table-head [class*='col-'] {
-    padding-left: 0;
-    padding-right: 0;
   }
 
   .reddit-name {
@@ -1035,10 +1145,6 @@ Mobile
     padding: 0;
     margin-left: 0;
     border: none;
-  }
-
-  #submit-card {
-    padding: 10px 3px;
   }
 
   #results-submit #submit-col {
@@ -1088,13 +1194,32 @@ Mobile
 }
 
 @media screen and (max-width: 768px) {
+  .table-pad {
+    padding: 10px 5px 20px 5px;
+  }
+
+  #user-page, #since-date {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+  }
+
+  #slash {
+    display: none;
+  }
+
+  #since-date a {
+    display: block;
+  }
+
   .banner-info {
     margin-left: 0;
     padding-top: 15px;
   }
 
   #submit-card {
-    padding-bottom: 0;
+    padding: 0;
+    padding-top: 15px;
   }
 
   .submit-pic {
@@ -1106,7 +1231,7 @@ Mobile
     margin-left: 0;
   }
 
-  #results-card .col-md-1 {
+  #results-card .col-md-1, #overview, .table-heads th  {
     text-align: center;
   }
 
@@ -1117,6 +1242,41 @@ Mobile
 
   #home-page .table-pad {
     padding-top: 10px;
+  }
+
+  .center-value-comments, .center-value-submissions {
+    font-size: 15px;
+  }
+
+  .line-1-comments, .line-1-submissions {
+    font-size: 14px;
+  }
+
+  .user-head-nav {
+    display: inherit;
+    color: #696969;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 20px;
+    border-bottom: 1px solid #e5e5e5;
+    text-transform: uppercase;
+  }
+
+  .user-head-nav p {
+    margin-bottom: 16px;
+  }
+
+  .user-head-nav p:hover {
+    color: #1DB3B0;
+  }
+
+  #post-header {
+    margin-left: 8px;
+    width: 80%;
+  }
+
+  iframe, video {
+    height: 30vh;
   }
 
  }
