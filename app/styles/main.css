@@ -928,7 +928,7 @@ Submit Post Thumbnails
 
 .thumb-default {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 0px -1099px;
+  background-position: -6px -1099px;
   background-repeat: no-repeat;
   background-repeat-x: no-repeat;
   background-repeat-y: no-repeat;
@@ -937,28 +937,28 @@ Submit Post Thumbnails
 
 .thumb-self {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 0px -1267px;
+  background-position: -6px -1267px;
   background-repeat: no-repeat;
   height: 50px;
 }
 
 .thumb-image {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 0px -1043px;
+  background-position: -6px -1043px;
   background-repeat: no-repeat;
   height: 50px;
 }
 
 .thumb-nsfw {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 0px -1155px;
+  background-position: -6px -1155px;
   background-repeat: no-repeat;
   height: 50px;
 }
 
 .thumb-spoiler {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 0px -1211px;
+  background-position: -6px -1211px;
   background-repeat: no-repeat;
   height: 50px;
 }
