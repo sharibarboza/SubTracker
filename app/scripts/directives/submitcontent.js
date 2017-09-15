@@ -20,7 +20,7 @@ angular.module('SubSnoopApp')
     };
 
     var isImage = function(submit) {
-      return !submit.selftext_html && !submit.html && !isVideo(submit.url) && !submit.media;
+      return !submit.selftext_html && !submit.html && !submit.media;
     };
 
     var isImgurAlbum = function(submit) {
