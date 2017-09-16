@@ -251,10 +251,19 @@ angular.module('SubSnoopApp')
 
       for (var i = 0; i < words.length; i++) {
         var word = words[i];
-        var splitWords = cleanWord(word);
         
-        addWords(splitWords);
+        if (isNotLink(word)) {
+          var splitWords = cleanWord(word);       
+          addWords(splitWords);
+        }
       }
+    }
+
+    /*
+     Checks whether a word is not a link
+    */
+    function isNotLink(word) {
+      return word.indexOf('http') < 0;
     }
 
     /*
@@ -284,8 +293,6 @@ angular.module('SubSnoopApp')
       if (stopWords.indexOf(word) >= 0) {
         return false;
       } else if (word.length > 20 || word.length < 3) {
-        return false;
-      } else if (word.indexOf('http') >= 0) {
         return false;
       }
       return true;
