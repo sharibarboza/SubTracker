@@ -567,7 +567,7 @@ User Page
  
 .reddit-name {
   color: white;
-  font-size: 40px;
+  font-size: 35px;
 }
 
 #since-date {
@@ -576,8 +576,8 @@ User Page
 
 .num-subs {
   margin-left: 10px;
-  margin-top: -20px;
-  font-size: 20px;
+  margin-top: -18px;
+  font-size: 19px;
   padding: 5px 15px 7px 15px;
 }
 
@@ -665,7 +665,7 @@ User Page Side Bar
 
 .fixed-pos {
   position: fixed;
-  margin-top: 133px;
+  margin-top: 132px;
 }
 
 /************************
