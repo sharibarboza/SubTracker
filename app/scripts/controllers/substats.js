@@ -2,20 +2,14 @@
 
 /**
  * @ngdoc function
- * @name SubSnoopApp.controller:StatsCtrl
+ * @name SubSnoopApp.controller:SubstatsCtrl
  * @description
- * # StatsCtrl
+ * # SubstatsCtrl
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('StatsCtrl', ['$scope', 'subFactory', '$filter', 'rank', function ($scope, subFactory, $filter, rank) {
+  .controller('SubStatsCtrl', ['$scope', 'subFactory', 'rank', '$filter', function ($scope, subFactory, rank, $filter) {
     var subs = subFactory.getSubData().subs;
-    var keys = subFactory.getDefaultSortedArray();
-
-    $scope.mostActive = rank.getTopSub(keys, 'mostActive', subs);
-   	$scope.mostUpvoted = rank.getTopSub(keys, 'totalUps', subs);
-   	$scope.leastUpvoted = rank.getBottomSub(keys, 'totalUps', subs);
-   	$scope.newestSub = subFactory.getNewestSub();
 
     /*
      Displays activity rank and upvotes rank of the specific subreddit relative to the user's
