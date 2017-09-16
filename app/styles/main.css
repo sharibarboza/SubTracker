@@ -680,7 +680,7 @@ Subreddit Table
   left: 366px;
 }
 
-#sub-row:hover {
+#sub-row:hover, #more-subs:hover {
   background-color: #F5F5F5;
 }
 
