@@ -372,7 +372,7 @@ Content
 }
 
 .sub-banner {
-  background-position: 0 10%;
+  background-position: 0 18%;
   padding-top: 10px;
   padding-bottom: 0;
 }
@@ -874,7 +874,9 @@ Sub Page Side Bar
 }
 
 .submit-pic {
-  max-width: 75%;
+  max-width: 80%;
+  display: block;
+  margin: 0 auto;
 }
 
 #stat-lines {
@@ -1006,10 +1008,6 @@ Search
 
 #results-table #comment-card:hover, #results-table .card-action:hover  {
   background: none;
-}
-
-#results-submit #submit-col {
-  margin-left: 85px;
 }
 
 .results-sub {

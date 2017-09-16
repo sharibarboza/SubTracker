@@ -28,7 +28,7 @@
      */
     var configUserData = function(response, store) {
       $scope.redditor = response;
-      $scope.username = $scope.redditor.name
+      $scope.username = $scope.redditor.name;
       $scope.totalKarma = $scope.redditor.comment_karma + $scope.redditor.link_karma;
       $scope.notfound = false;
     };

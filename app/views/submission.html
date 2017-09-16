@@ -23,7 +23,7 @@
       </div>
     </div>
   </div>
-  <div ng-if="page != 'search'" ng-include src="'views/accordion-submit.html'"></div>
+  <div ng-if="page != 'search' && element | isContent" ng-include src="'views/accordion-submit.html'"></div>
 
   <div ng-if="page == 'search'">
     <div id="submit-col">
