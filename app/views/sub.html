@@ -66,7 +66,6 @@
 
             </div>
 
-            <br>
             <div id="statistics" ng-controller="StatsCtrl">
               <h3 class="title-heading">Statistics</h3>
               <br>
@@ -115,8 +114,9 @@
             </div>
 
             <br>
-            <div align="center">
+            <div align="center" class="center-back">
               <back-top></back-top>
+              <br><br>
             </div>
           </div>
 
@@ -175,9 +175,6 @@
           <div ng-if="tab == 1 && sub.submissions.length == 0" align="center">
             <h5>{{ username }} has no submissions in r/{{ subreddit }}.</h5>
           </div>
-
-
-          <div ng-include src="'views/footer.html'"></div>
 
         </div>
       </div>
