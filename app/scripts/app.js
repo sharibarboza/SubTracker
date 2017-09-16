@@ -16,7 +16,8 @@ var app = angular
     'ngMaterial',
     'angularMoment',
     'ui.bootstrap',
-    'yaru22.angular-timeago'
+    'yaru22.angular-timeago',
+    'angular-jqcloud',
   ]);
 
 var getData = function(route, factory) {
