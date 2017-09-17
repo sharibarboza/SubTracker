@@ -61,6 +61,19 @@ angular.module('SubSnoopApp')
         return $filter('sanitize')(html);
       }
     };
+
+    /*
+     Get the preview image with medium-size resolution
+    */
+    var getPreview = function(data) {
+      var resolutions = data.preview.images[0].resolutions;
+      var index = 3;
+
+      if (resolutions.length <= 3) {
+        index = resolutions.length-1;
+      }
+      return data.preview.images[0].resolutions[index].url;
+    }
  
     /*
      Sets up and cleans data for displaying submission content.
@@ -89,7 +102,7 @@ angular.module('SubSnoopApp')
             } else if (data.media && data.media.oembed && data.media.oembed.provider_name != "Imgur") {
               return changeSize($filter('escape')(data.media.oembed.html));
             } else if (isAttachedImage(data) || isImgurAlbum(data)) {
-              return '<img class="submit-pic" ng-src="' + $filter('escape')(data.preview.images[0].resolutions[3].url) + '">';
+              return '<img class="submit-pic" ng-src="' + $filter('escape')(getPreview(data)) + '">';
             } else if (isVideo(data.url)) {
               return '<img class="submit-pic" ng-src="' + getVideoUrl(data.url) + '">';
             } else if (data.media.reddit_video.fallback_url) {
