@@ -118,7 +118,7 @@
               </div>
             </div>
 
-            <div ng-if="(currentLimit > limit) || (currentLimit == limit && subList.length >= 5)" class="card" align="center" id="more-subs" ng-click="changeLimit()">
+            <div ng-if="(currentLimit > limit) || (currentLimit == limit && subList.length >= limit)" class="card" align="center" id="more-subs" ng-click="changeLimit()">
               <div class="card-content">
                 <span>{{ limit == subLength ? 'See less subreddits' : 'See more subreddits' }} <i class="fa" ng-class="currentLimit == subLength ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true"></i></span>
               </div>
