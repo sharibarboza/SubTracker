@@ -89,7 +89,7 @@ angular.module('SubSnoopApp')
             } else if (data.media && data.media.oembed && data.media.oembed.provider_name != "Imgur") {
               return changeSize($filter('escape')(data.media.oembed.html));
             } else if (isAttachedImage(data) || isImgurAlbum(data)) {
-              return '<img class="submit-pic" ng-src="' + data.preview.images[0].source.url + '">';
+              return '<img class="submit-pic" ng-src="' + $filter('escape')(data.preview.images[0].resolutions[3].url) + '">';
             } else if (isVideo(data.url)) {
               return '<img class="submit-pic" ng-src="' + getVideoUrl(data.url) + '">';
             } else if (data.media.reddit_video.fallback_url) {
