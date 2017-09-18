@@ -66,9 +66,6 @@ angular.module('SubSnoopApp')
      Get the preview image with medium-size resolution
     */
     var getPreview = function(data) {
-      if ('preview' in data) {
-
-      }
       var resolutions = data.preview.images[0].resolutions;
       var index = 3;
 
