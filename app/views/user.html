@@ -10,7 +10,14 @@
     <div>
       <div class="user-banner sub-banner row">
         <div class="table-pad col-md-9 col-md-push-3" id="user-page">
-          <span class="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span> <span class="badge num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
+          <div class="row">
+            <div class="col-sm-7">
+              <span class="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span>
+            </div>
+            <div class="col-sm-5 badge-col">
+              <span class="badge num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
+            </div>
+          </div>
         </div>
       </div>
       

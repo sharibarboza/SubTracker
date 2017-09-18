@@ -379,6 +379,16 @@ Content
   background-position: 0 18%;
   padding-top: 10px;
   padding-bottom: 0;
+  padding-left: 2%;
+  padding-right: 9%;
+}
+
+.sub-banner .badge-col {
+  text-align: right;
+}
+
+.sub-banner .col-sm-2 {
+  text-align: right;
 }
 
 .banner-header h3 {
@@ -575,8 +585,7 @@ User Page
 }
 
 .num-subs {
-  margin-left: 10px;
-  margin-top: -18px;
+  margin-top: 10px;
   font-size: 19px;
   padding: 5px 15px 7px 15px;
 }
@@ -1231,7 +1240,7 @@ Mobile
     margin-left: 0;
   }
 
-  #results-card .col-md-1, #overview, .table-heads th  {
+  #results-card .col-md-1, #overview, .table-heads th, .sub-banner .badge-col  {
     text-align: center;
   }
 
