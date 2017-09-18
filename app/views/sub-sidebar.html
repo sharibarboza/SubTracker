@@ -4,8 +4,8 @@
     <div class="card-action pad-card" ng-click="setTab(2)">Overview</div>
     <div class="card-action pad-card" ng-if="sub.submissions.length > 0" ng-click="setTab(1)">Submissions <span class="badge">{{ sub.submissions.length }}</span></div>
     <div class="card-action pad-card" ng-if="sub.comments.length > 0" ng-click="setTab(0)">Comments <span class="badge">{{ sub.comments.length }}</span></div>
+    <a href="#/{{ username }}/search/"><div class="card-action pad-card"><i class="fa fa-search" aria-hidden="true"></i> Search</div></a>
     <a href="#/{{ username }}"><div class="card-action pad-card white-bg"><i class="fa fa-arrow-left" aria-hidden="true"></i> {{ username }}</div></a>
-    <a href="#/{{ username }}/search/"><div class="card-action pad-card white-bg"><i class="fa fa-search" aria-hidden="true"></i> Search</div></a>
     <div class="card-action pad-card white-bg">
       <span class="gray small-font">Note: The data shown here is based on the user's most recent 1000 comments and submissions each, starting from <span ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMM D, YYYY.'"></span>
     </div>
