@@ -66,6 +66,9 @@ angular.module('SubSnoopApp')
      Get the preview image with medium-size resolution
     */
     var getPreview = function(data) {
+      if ('preview' in data) {
+
+      }
       var resolutions = data.preview.images[0].resolutions;
       var index = 3;
 
@@ -101,12 +104,14 @@ angular.module('SubSnoopApp')
               return '<img class="submit-pic" ng-src="' + data.url + '">';
             } else if (data.media && data.media.oembed && data.media.oembed.provider_name != "Imgur") {
               return changeSize($filter('escape')(data.media.oembed.html));
-            } else if (isAttachedImage(data) || isImgurAlbum(data)) {
+            } else if ('preview' in data && (isAttachedImage(data) || isImgurAlbum(data))) {
               return '<img class="submit-pic" ng-src="' + $filter('escape')(getPreview(data)) + '">';
             } else if (isVideo(data.url)) {
               return '<img class="submit-pic" ng-src="' + getVideoUrl(data.url) + '">';
-            } else if (data.media.reddit_video.fallback_url) {
+            } else if ('reddit_video' in data.media && data.media.reddit_video.fallback_url) {
               return '<video width="100%" height="240" class="submit-pic" controls><source src="' + data.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
+            } else {
+              return '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
             } 
           };
 
