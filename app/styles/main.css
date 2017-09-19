@@ -1099,11 +1099,6 @@ Mobile
     margin-left: 0;
   }
 
-  .sub-banner {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-
   .sub-rows .row {
     margin-left: 0;
     margin-right: 0;
@@ -1207,7 +1202,7 @@ Mobile
     padding: 10px 5px 20px 5px;
   }
 
-  #user-page, #since-date, .sub-banner {
+  #user-page, #since-date {
     padding-left: 0;
     padding-right: 0;
     text-align: center;
@@ -1242,10 +1237,6 @@ Mobile
 
   #results-card .col-md-1, #overview, .table-heads th, .sub-banner .badge-col  {
     text-align: center;
-  }
-
-  .sub-banner [class*='col-'] {
-    padding-right: 0;
   }
 
   #table-start .col-md-3 {
@@ -1290,6 +1281,13 @@ Mobile
 
   iframe, video {
     height: 30vh;
+  }
+
+  .sub-banner, .banner-div .row {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
   }
 
  }
