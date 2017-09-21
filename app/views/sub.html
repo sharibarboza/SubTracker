@@ -43,9 +43,10 @@
             </div>
             <hr>
 
-            <img ng-if="banner" ng-src="{{ banner }}" class="sub-banner">
-            <div ng-if="description"><strong>About this subreddit:</strong> <p ng-bind-html="description | sanitize"></p></div>
-            <strong>Subscribers: <span class="baby-blue">{{ subscribers | number }}</span></strong>
+            <img ng-if="subInfo.banner_img" ng-src="{{ subInfo.banner_img }}" class="sub-banner-img">
+            <div ng-if="subInfo.public_description"><strong>About this subreddit:</strong> <p ng-bind-html="subInfo.public_description_html | sanitize"></p></div>
+            <strong>Subscribers: <span class="baby-blue">{{ subInfo.subscribers | number }}</span></strong><br>
+            <strong>Subreddit since: <span class="green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong>
             <br><br>
 
             <div class="row" id="overview-table">

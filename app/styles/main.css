@@ -864,8 +864,9 @@ User Sub Page
   padding-right: 0;
 }
 
-.sub-banner {
+.sub-banner-img {
   width: 100%;
+  margin-bottom: 10px;
 }
 
 /************************
@@ -930,10 +931,6 @@ Sub Page Side Bar
 
 #submit-card {
   padding: 12px 18px;
-}
-
-submit-content iframe {
-  max-width: 650px;
 }
 
 .rank {

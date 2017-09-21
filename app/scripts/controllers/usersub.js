@@ -35,10 +35,7 @@ angular.module('SubSnoopApp')
      Call subreddit API and get sub banner and icon
     */
     subInfo.getData($scope.subreddit).then(function(response) {
-      $scope.icon = response.icon_img;
-      $scope.banner = response.banner_img;
-      $scope.description = response.public_description_html;
-      $scope.subscribers = response.subscribers;
+      $scope.subInfo = response;
     });
 
 
