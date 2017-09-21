@@ -8,14 +8,14 @@
  * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .factory('popularSubs', ['$http', '$sce', function ($http, $sce) {
+  .factory('popularSubs', ['$http', function ($http) {
     var url = "https://api.reddit.com/subreddits.json";
 
     /*
      Request the Reddit API to get popular subs
     */
     var factory = {
-      getData: function (num) {
+      getData: function () {
         return $http.get(url).then(function(response) {
           var data, subreddits = [];
 
