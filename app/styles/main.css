@@ -228,6 +228,10 @@ blockquote {
   margin-bottom: 20px;
 }
 
+.reddit-btn {
+  color: inherit;
+}
+
 /************************
 Angular Material
 ************************/
@@ -376,7 +380,7 @@ Content
 }
 
 .sub-banner {
-  background-position: 0 18%;
+  background-position: 0 28%;
   padding-top: 10px;
   padding-bottom: 0;
 }
@@ -410,6 +414,10 @@ Content
   font-size: 13px;
 }
 
+.top-line {
+  font-size: 20px;
+}
+
 /************************
 Navigation
 ************************/
@@ -425,7 +433,7 @@ Navigation
 }
 
 .navbar-default {
-  background-color: rgba(33,33,33, 0.85);
+  background-color: rgba(33,33,33,1);
   border: none;
 }
 
@@ -611,7 +619,7 @@ User Page
 #user-page {
   padding-left: 6%;
   padding-top: 40px;
-  padding-bottom: 40px;
+  padding-bottom: 30px;
 }
 
 .table-icon {
@@ -675,6 +683,11 @@ User Page Side Bar
 .fixed-pos {
   position: fixed;
   margin-top: 142px;
+}
+
+.side-username {
+  font-weight: 600;
+  font-size: 20px;
 }
 
 /************************

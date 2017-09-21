@@ -34,11 +34,11 @@
           <div id="overview">
             <div class="row">
               <div class="col-md-1">
-                 <img ng-src="{{ '../images/sub-icon.png' }}" class="banner-img img-circle">
+                 <i class="fa fa-reddit" aria-hidden="true"></i>
               </div>
               <div class="col-md-11" id="since-date">
-                <strong class="green">Last seen <time-ago from-time='{{ latestPost.created_utc * 1000 }}'></time-ago></strong><br> 
-                <a href="https://www.reddit.com/r/{{ subreddit }}" class="small-font">Visit r/{{ subreddit }}'s reddit page <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                <strong class="top-line">Current data available since: <span class="purple" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMM D YYYY, h:mm a'"></span></strong><br>
+                <i class="fa fa-clock-o" aria-hidden="true"></i> <strong class="green">Last seen <time-ago from-time='{{ latestPost.created_utc * 1000 }}'></time-ago></strong>
               </div>
             </div>
             <br>

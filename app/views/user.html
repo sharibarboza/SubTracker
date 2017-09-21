@@ -15,7 +15,7 @@
               <span class="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span>
             </div>
             <div class="col-sm-5 badge-col">
-              <span class="badge num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
+              <span class="badge num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span><br><br>
             </div>
           </div>
         </div>
@@ -34,13 +34,11 @@
           <div id="overview">
             <div class="row">
               <div class="col-md-1">
-                <img ng-if="redditor.subreddit" ng-src="{{ redditor.subreddit.icon_img }}" class="banner-img img-circle">
-                 <img ng-if="!redditor.subreddit" ng-src="{{ '../images/sub-icon.png' }}" class="banner-img img-circle">
+                <i class="fa fa-reddit" aria-hidden="true"></i>
               </div>
               <div class="col-md-11" id="since-date">
-                <strong>Joined on: <span class="purple" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong><br>
-                <strong class="green small-font">Last seen <time-ago from-time='{{ lastPost.created_utc * 1000 }}'></time-ago></strong> <span id="slash">/</span> 
-                <a href="https://www.reddit.com/user/{{ username }}" class="small-font">Visit u/{{ username }}'s reddit page <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                <strong class="top-line">Joined on: <span class="purple" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong><br>
+                <i class="fa fa-clock-o" aria-hidden="true"></i> <strong class="small-font baby-blue">Last seen <time-ago from-time='{{ lastPost.created_utc * 1000 }}'></time-ago></strong>
               </div>
             </div>
             <br>
