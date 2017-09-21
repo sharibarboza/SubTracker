@@ -23,6 +23,10 @@ angular.module('SubSnoopApp')
     function sort(num1, num2, a, b, reverse, secondary) {
       var val1, val2;
 
+      if (!(secondary)) {
+        secondary = 'alpha';
+      }
+
       if (reverse) {
         val1 = 1;
         val2 = -1;
@@ -34,11 +38,17 @@ angular.module('SubSnoopApp')
       if (num1 < num2) { return val1; } 
       else if (num1 > num2) { return val2; } 
       else { 
-        if (secondary === 'alpha') { return sortAlpha.get(a, b); }
+        if (secondary === 'alpha') { 
+          if (typeof a !== 'string' && typeof b !== 'string') {
+            a = a.subreddit;
+            b = b.subreddit;
+          } 
+          return sortAlpha.get(a, b); 
+        }
         else if (secondary === 'date') { 
           num1 = moment(a.created_utc*1000);
           num2 = moment(b.created_utc*1000);
-          return sort(num1, num2, a, b, true, null); 
+          return sort(num1, num2, a, b, true, secondary); 
         } 
       }
     };
