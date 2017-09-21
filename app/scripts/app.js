@@ -39,12 +39,14 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
       controllerAs: 'main',
       resolve: {
         popularSubs: function(popularSubs) {
-          var promise = popularSubs.getData();
-          return promise;
+          return popularSubs.getData().then(function(response) {
+            return response;
+          });
         },
         newSubs: function(newSubs) {
-          var promise = newSubs.getData();
-          return promise;
+          return newSubs.getData().then(function(response) {
+            return response;
+          });
         }
       },
       title: 'SubSnoop - Track your subreddit activity'

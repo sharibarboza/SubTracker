@@ -9,33 +9,24 @@
  */
 angular.module('SubSnoopApp')
   .factory('popularSubs', ['$http', '$sce', function ($http, $sce) {
-    var subreddits = [];
-
-    /*
-     Custom callback function for JSONP request
-    */
-    window.popCallback = function(response) {
-      var data = response.data.children;
-
-      for (var i = 0; i < data.length; i++) {
-        subreddits.push(data[i].data);
-      }
-    };
+    var url = "https://api.reddit.com/subreddits.json";
 
     /*
      Request the Reddit API to get popular subs
     */
     var factory = {
-      getData: function () {
-        subreddits = [];
-        var url = 'https://www.reddit.com/subreddits/.json?jsonp=popCallback';
-        var trustedUrl =  $sce.trustAsResourceUrl(url);
-        var promise = $http.jsonp(trustedUrl).then(function() {
+      getData: function (num) {
+        return $http.get(url).then(function(response) {
+          var data, subreddits = [];
 
-        }, function() {
+          data = response.data.data.children;
+
+          for (var i = 0; i < data.length; i++) {
+            subreddits.push(data[i].data);
+          }
+
           return subreddits;
         });
-        return promise;
       }
     };
     return factory;
