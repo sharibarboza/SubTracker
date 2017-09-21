@@ -383,6 +383,7 @@ Content
   background-position: 0 28%;
   padding-top: 10px;
   padding-bottom: 0;
+  margin-left: 0;
 }
 
 .sub-banner .badge-col {
@@ -617,7 +618,7 @@ User Page
 }
 
 #user-page {
-  padding-left: 6%;
+  padding-left: 5%;
   padding-top: 40px;
   padding-bottom: 30px;
 }
@@ -688,6 +689,7 @@ User Page Side Bar
 .side-username {
   font-weight: 600;
   font-size: 20px;
+  word-wrap: break-word;
 }
 
 /************************
@@ -860,6 +862,10 @@ User Sub Page
   padding-top: 20px;
   padding-left: 0;
   padding-right: 0;
+}
+
+.sub-banner {
+  width: 100%;
 }
 
 /************************
@@ -1310,7 +1316,11 @@ Mobile
 
   #user-page {
     padding-top: 10px;
-    padding-bottom: 25px;
+    padding-bottom: 5px;
+  }
+
+  .top-line {
+    font-size: 14px;
   }
 
  }

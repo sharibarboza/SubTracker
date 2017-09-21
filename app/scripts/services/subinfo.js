@@ -8,12 +8,16 @@
  * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .factory('subInfo', function () {
+  .factory('subInfo', ['$http', function ($http) {
 
     // Public API here
     return {
-      getSubInfo: function(sub) {
-        var url = "https://www.reddit.com/api/r/" + sub + '.json';
+      getData: function(sub) {
+        var url = "https://api.reddit.com/r/" + sub + "/about.json";
+        return $http.get(url).then(function(response) {
+
+          return response.data.data;
+        });
       }
     };
-  });
+  }]);

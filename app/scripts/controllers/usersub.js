@@ -9,8 +9,8 @@
  */
 angular.module('SubSnoopApp')
   .controller('UserSubCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$filter', 'rank', 'subsData', 'search', 
-    'subFactory', 'sortFactory', '$anchorScroll', '$location', '$timeout', 
-    function ($rootScope, $scope, $routeParams, $window, $filter, rank, subsData, search, subFactory, sortFactory, $anchorScroll, $location, $timeout) {
+    'subFactory', 'sortFactory', '$anchorScroll', '$location', '$timeout', 'subInfo',
+    function ($rootScope, $scope, $routeParams, $window, $filter, rank, subsData, search, subFactory, sortFactory, $anchorScroll, $location, $timeout, subInfo) {
   
     /*
      Initalization
@@ -30,6 +30,17 @@ angular.module('SubSnoopApp')
     $scope.sub = subsData.subs[$scope.subreddit];
     $scope.latestPost = subFactory.getLatestPost($scope.sub);
     $scope.firstPost = subFactory.getFirstPost($scope.sub);
+
+    /*
+     Call subreddit API and get sub banner and icon
+    */
+    subInfo.getData($scope.subreddit).then(function(response) {
+      $scope.icon = response.icon_img;
+      $scope.banner = response.banner_img;
+      $scope.description = response.public_description_html;
+      $scope.subscribers = response.subscribers;
+    });
+
 
     /*
      Get the comment with the most upvoteds

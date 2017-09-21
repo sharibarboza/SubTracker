@@ -37,11 +37,16 @@
                  <i class="fa fa-reddit" aria-hidden="true"></i>
               </div>
               <div class="col-md-11" id="since-date">
-                <strong class="top-line">Current data available since: <span class="purple" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMM D YYYY, h:mm a'"></span></strong><br>
+                <strong class="top-line">Current data available since: <span class="purple" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong><br>
                 <i class="fa fa-clock-o" aria-hidden="true"></i> <strong class="green">Last seen <time-ago from-time='{{ latestPost.created_utc * 1000 }}'></time-ago></strong>
               </div>
             </div>
-            <br>
+            <hr>
+
+            <img ng-if="banner" ng-src="{{ banner }}" class="sub-banner">
+            <div ng-if="description"><strong>About this subreddit:</strong> <p ng-bind-html="description | sanitize"></p></div>
+            <strong>Subscribers: <span class="baby-blue">{{ subscribers | number }}</span></strong>
+            <br><br>
 
             <div class="row" id="overview-table">
               <div class="col-sm-12">

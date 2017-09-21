@@ -37,8 +37,8 @@
                 <i class="fa fa-reddit" aria-hidden="true"></i>
               </div>
               <div class="col-md-11" id="since-date">
-                <strong class="top-line">Joined on: <span class="purple" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong><br>
-                <i class="fa fa-clock-o" aria-hidden="true"></i> <strong class="small-font baby-blue">Last seen <time-ago from-time='{{ lastPost.created_utc * 1000 }}'></time-ago></strong>
+                <strong class="top-line">Joined Reddit on: <span class="purple" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong><br>
+                <i class="fa fa-clock-o" aria-hidden="true"></i> <strong class="baby-blue">Last seen <time-ago from-time='{{ lastPost.created_utc * 1000 }}'></time-ago></strong>
               </div>
             </div>
             <br>

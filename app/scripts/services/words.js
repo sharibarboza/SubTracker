@@ -307,7 +307,7 @@ angular.module('SubSnoopApp')
 
       for (var i = 0; i < word.length; i++) {
         var char = word[i];
-        if (char.match(/[A-zÀ-ÿ0-9']/i)) {
+        if (char.match(/[A-Za-zÀ-ÿ0-9']/i)) {
           current += char;
         } else {
           if (current.length > 0) {
