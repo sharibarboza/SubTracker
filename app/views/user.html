@@ -9,7 +9,7 @@
 
     <div class="banner-div">
       <div class="user-banner sub-banner row">
-        <div class="table-pad col-md-9 col-md-push-3" id="user-page">
+        <div class="col-md-8 col-md-push-3" id="user-page">
           <div class="row">
             <div class="col-sm-7">
               <span class="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span>
@@ -29,7 +29,7 @@
 
       <div class="sub-table">
         <div ng-include src="'views/user-sidebar.html'"></div>
-        <div class="col-md-7 col-xs-12 sub-rows" id="table-head">
+        <div class="col-md-8 col-md-push-3 col-xs-12 sub-rows" id="table-head">
 
           <div id="overview">
             <div class="row">
@@ -46,9 +46,9 @@
             <br>
 
 
-            <div class="row">
+            <div class="row" id="overview-table">
               <div class="col-sm-12">
-                <table class="table table-bordered" id="overview-table">
+                <table class="table table-bordered">
                   <tr class="table-heads">
                     <th class="col-xs-3"></th>
                     <th class="col-xs-3">Comments</th>

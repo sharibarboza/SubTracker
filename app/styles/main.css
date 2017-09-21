@@ -379,8 +379,6 @@ Content
   background-position: 0 18%;
   padding-top: 10px;
   padding-bottom: 0;
-  padding-left: 2%;
-  padding-right: 9%;
 }
 
 .sub-banner .badge-col {
@@ -611,7 +609,9 @@ User Page
 }
 
 #user-page {
-  padding-left: 85px;
+  padding-left: 6%;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 
 .table-icon {
@@ -674,7 +674,7 @@ User Page Side Bar
 
 .fixed-pos {
   position: fixed;
-  margin-top: 132px;
+  margin-top: 142px;
 }
 
 /************************
@@ -686,7 +686,7 @@ Subreddit Table
 }
 
 .sub-rows {
-  left: 366px;
+  padding-left: 5%;
 }
 
 #sub-row:hover, #more-subs:hover {
@@ -1288,6 +1288,16 @@ Mobile
     padding-right: 0;
     margin-left: 0;
     margin-right: 0;
+  }
+
+  #overview-table .col-sm-12 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  #user-page {
+    padding-top: 10px;
+    padding-bottom: 25px;
   }
 
  }
