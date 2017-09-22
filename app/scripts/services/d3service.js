@@ -8,6 +8,10 @@
  * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
+
+  /*
+   Taken from http://www.ng-newsletter.com/posts/d3-on-angular.html
+  */
   .factory('d3Service', ['$document', '$q', '$rootScope', '$http', '$sce',
     function($document, $q, $rootScope, $http, $sce) {
       var d = $q.defer();

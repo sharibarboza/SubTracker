@@ -9,6 +9,9 @@
 angular.module('SubSnoopApp')
   .directive('donutChart', ['d3Service', '$window', 'subFactory', 'sortFactory', '$filter', 'moment', function (d3Service, $window, subFactory, sortFactory, $filter, moment) {
 
+  /*
+   Based on http://embed.plnkr.co/YICxe0/
+  */
   var windowWidth = $window.innerWidth;
 
   return {
