@@ -33,7 +33,7 @@
         <div ng-if="tab == 2">
           <div id="overview">
             <div class="row">
-              <div class="col-md-1">
+              <div class="col-md-1 reddit-col">
                  <i class="fa fa-reddit" aria-hidden="true"></i>
               </div>
               <div class="col-md-11" id="since-date">
@@ -46,7 +46,7 @@
             <div ng-if="subInfo.banner_img" class="banner-box">
               <img ng-src="{{ subInfo.banner_img }}" class="sub-banner-img" />
               <div class="banner-text">
-                <span>Subscribers: <span class="non-bg baby-blue">{{ subInfo.subscribers | number }}</span></span>
+                <span>Subscribers: <span class="non-bg baby-blue">{{ subInfo.subscribers | number }}</span></span><br>
                 <span>Subreddit since: <span class="non-bg green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></span>
               </div>
             </div>

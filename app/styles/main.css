@@ -875,18 +875,17 @@ User Sub Page
 .banner-text {
   position: absolute;
   left: 0;
-  bottom: 0;
+  bottom: 5px;
 }
 
 .banner-text span:not(.non-bg) { 
-   color: white; 
-   font: bold 20px/45px Helvetica, Sans-Serif; 
-   letter-spacing: -1px;  
-   background: rgb(0, 0, 0); /* fallback color */
-   background: rgba(0, 0, 0, 0.7);
-   padding: 5px 10px; 
+  color: white; 
+  font: bold 20px/45px Helvetica, Sans-Serif; 
+  letter-spacing: -1px;  
+  background: rgb(0, 0, 0); /* fallback color */
+  background: rgba(0, 0, 0, 0.7);
+  padding: 5px 10px; 
 }
-
 
 /************************
 Sub Page Side Bar
@@ -1270,7 +1269,7 @@ Mobile
     margin-left: 0;
   }
 
-  #results-card .col-md-1, #overview, .table-heads th, .sub-banner .badge-col  {
+  #results-card .col-md-1, #overview-table, .table-heads th, .sub-banner .badge-col  {
     text-align: center;
   }
 
@@ -1337,6 +1336,14 @@ Mobile
 
   .top-line {
     font-size: 14px;
+  }
+
+  .banner-text span {
+    font-size: 14px !important;
+  }
+
+  #overview .reddit-col {
+    text-align: center;
   }
 
  }
