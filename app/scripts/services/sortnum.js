@@ -46,9 +46,10 @@ angular.module('SubSnoopApp')
           return sortAlpha.get(a, b); 
         }
         else if (secondary === 'date') { 
+          console.log(a);
           num1 = moment(a.created_utc*1000);
           num2 = moment(b.created_utc*1000);
-          return sort(num1, num2, a, b, true, secondary); 
+          return sort(num1, num2, a, b, true, 'alpha'); 
         } 
       }
     };
