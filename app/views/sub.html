@@ -43,10 +43,20 @@
             </div>
             <hr>
 
-            <img ng-if="subInfo.banner_img" ng-src="{{ subInfo.banner_img }}" class="sub-banner-img">
+            <div ng-if="subInfo.banner_img" class="banner-box">
+              <img ng-src="{{ subInfo.banner_img }}" class="sub-banner-img" />
+              <div class="banner-text">
+                <span>Subscribers: <span class="non-bg baby-blue">{{ subInfo.subscribers | number }}</span></span>
+                <span>Subreddit since: <span class="non-bg green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></span>
+              </div>
+            </div>
+            <hr ng-if="subInfo.banner_img">
             <div ng-if="subInfo.public_description"><strong>About this subreddit:</strong> <p ng-bind-html="subInfo.public_description_html | sanitize"></p></div>
-            <strong>Subscribers: <span class="baby-blue">{{ subInfo.subscribers | number }}</span></strong><br>
-            <strong>Subreddit since: <span class="green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong>
+            <div ng-if="!subInfo.banner_img">
+              <strong>Subscribers: <span class="baby-blue">{{ subInfo.subscribers | number }}</span></strong><br>
+              <strong>Subreddit since: <span class="green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong>
+            </div>
+          
             <br><br>
 
             <div class="row" id="overview-table">
