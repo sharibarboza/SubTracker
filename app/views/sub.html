@@ -7,7 +7,7 @@
 
     <div class="banner-div">
       <div class="user-banner sub-banner row">
-        <div class="col-md-8 col-md-push-3" id="user-page">
+        <div class="col-md-8 col-md-push-3 user-page">
           <div class="row">
             <div class="col-sm-7">
               <span class="reddit-name"><span class="baby-blue">/r/</span>{{ subreddit }}</span>
@@ -33,8 +33,10 @@
         <div ng-if="tab == 2">
           <div id="overview">
             <div class="row">
-              <div class="col-md-1 reddit-col">
-                 <i class="fa fa-reddit" aria-hidden="true"></i>
+              <div class="col-md-1">
+                 <i class="fa fa-reddit" aria-hidden="true"></i><br>
+                <img ng-if="subInfo.icon_img" ng-src="{{ subInfo.icon_img }}" class="banner-img">
+                <img ng-if="!subInfo.icon_img" ng-src="{{ '../images/sub-icon.png' }}" class="banner-img">
               </div>
               <div class="col-md-11" id="since-date">
                 <strong class="top-line">Current data available since: <span class="purple" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong><br>

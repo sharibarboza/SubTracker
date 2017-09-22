@@ -161,7 +161,7 @@ blockquote {
   padding-top: 10px;
 }
 
-#user-page .fa-user-circle {
+.user-page .fa-user-circle {
   font-size: 38px;
   padding-right: 8px;
 }
@@ -617,7 +617,7 @@ User Page
   margin-left: 0;
 }
 
-#user-page {
+.user-page {
   padding-left: 5%;
   padding-top: 40px;
   padding-bottom: 30px;
@@ -642,6 +642,10 @@ User Page
 
 .user-head-nav a {
   color: inherit;
+}
+
+#overview .col-md-1 img {
+  display: none;
 }
  
 /***********************
@@ -1232,11 +1236,15 @@ Mobile
 }
 
 @media screen and (max-width: 768px) {
+  #table-head {
+    padding-top: 5px;
+  }
+
   .table-pad {
     padding: 10px 5px 20px 5px;
   }
 
-  #user-page, #since-date {
+  .user-page, #since-date {
     padding-left: 0;
     padding-right: 0;
     text-align: center;
@@ -1329,9 +1337,9 @@ Mobile
     padding-right: 0;
   }
 
-  #user-page {
+  .user-page {
     padding-top: 10px;
-    padding-bottom: 5px;
+    padding-bottom: 20px;
   }
 
   .top-line {
@@ -1342,8 +1350,16 @@ Mobile
     font-size: 14px !important;
   }
 
-  #overview .reddit-col {
+  #overview .fa-reddit {
+    display: none;
+  }
+
+  #overview .col-md-1 {
     text-align: center;
+  }
+
+  #overview .col-md-1 img {
+    display: inline-block;
   }
 
  }
