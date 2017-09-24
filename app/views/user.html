@@ -7,7 +7,11 @@
 
     <div ng-include src="'views/sidenav.html'" id="fixed-sidebar"></div>
 
-    <div class="banner-div">
+    <div ng-if="subList.length == 0" align="center" class="banner-div">
+      <h3 class="sub-banner">{{ username }} does not have activity.</h3>
+    </div>
+
+    <div ng-if="subList.length > 0" class="banner-div">
       <div class="user-banner sub-banner row">
         <div class="col-md-8 col-md-push-3 user-page">
           <div class="row">
@@ -189,7 +193,7 @@
               <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent {{ chartLimit }} submissions</strong></h4>
               <span class="small-font">Hover to see the number of submissions for that sub out of {{ username }}'s most recent {{ chartLimit }} submissions.</span>
               <donut-chart ng-if="submissions > 0" type="submissions" limit="20" align="center"></donut-chart>
-              <h5 class="purple" ng-if="submissions == 0">{{ username }} does not have any submissions.</h5>   
+              <h5 ng-if="submissions == 0">{{ username }} does not have any submissions.</h5>   
             </div>
           </div>
           <div align="center" class="center-back">
