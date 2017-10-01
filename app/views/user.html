@@ -16,7 +16,7 @@
         <div class="col-md-8 col-md-push-3 user-page">
           <div class="row">
             <div class="col-sm-7">
-              <span class="reddit-name"><span class="baby-blue">/u/</span>{{ username }}</span>
+              <span class="reddit-name shadow-text"><span class="white">/u/</span>{{ username }}</span>
             </div>
             <div class="col-sm-5 badge-col">
               <span class="badge num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
@@ -36,6 +36,8 @@
         <div class="col-md-8 col-md-push-3 col-xs-12 sub-rows" id="table-head">
 
           <div id="overview">
+            <h3 class="title-heading">Overview</h3>
+
             <div class="row">
               <div class="col-md-1">
                 <i class="fa fa-reddit" aria-hidden="true"></i><br>

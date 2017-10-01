@@ -10,7 +10,7 @@
         <div class="col-md-8 col-md-push-3 user-page">
           <div class="row">
             <div class="col-sm-7">
-              <span class="reddit-name"><span class="baby-blue">/r/</span>{{ subreddit }}</span>
+              <span class="reddit-name shadow-text"><span class="baby-blue">/r/</span>{{ subreddit }}</span>
             </div>
             <div class="col-sm-5 badge-col">
               <span class="badge num-subs">{{ username }}</span>
@@ -32,6 +32,21 @@
 
         <div ng-if="tab == 2">
           <div id="overview">
+
+            <div ng-if="subInfo.banner_img" class="banner-box">
+              <img ng-src="{{ subInfo.banner_img }}" class="sub-banner-img" />
+              <div class="banner-text">
+                <span>Subscribers: <span class="non-bg baby-blue">{{ subInfo.subscribers | number }}</span></span><br>
+                <span>Subreddit since: <span class="non-bg green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></span>
+              </div>
+            </div>
+            <div ng-if="subInfo.public_description"><strong>About this subreddit:</strong> <p ng-bind-html="subInfo.public_description_html | sanitize"></p></div>
+            <div ng-if="!subInfo.banner_img">
+              <strong>Subscribers: <span class="baby-blue">{{ subInfo.subscribers | number }}</span></strong><br>
+              <strong>Subreddit since: <span class="green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong>
+            </div>
+            <hr>
+
             <div class="row">
               <div class="col-md-1">
                  <i class="fa fa-reddit" aria-hidden="true"></i><br>
@@ -43,24 +58,7 @@
                 <i class="fa fa-clock-o" aria-hidden="true"></i> <strong class="green">Last seen <time-ago from-time='{{ latestPost.created_utc * 1000 }}'></time-ago></strong>
               </div>
             </div>
-            <hr>
-
-            <div ng-if="subInfo.banner_img" class="banner-box">
-              <img ng-src="{{ subInfo.banner_img }}" class="sub-banner-img" />
-              <div class="banner-text">
-                <span>Subscribers: <span class="non-bg baby-blue">{{ subInfo.subscribers | number }}</span></span><br>
-                <span>Subreddit since: <span class="non-bg green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></span>
-              </div>
-            </div>
-            <hr ng-if="subInfo.banner_img">
-            <div ng-if="subInfo.public_description"><strong>About this subreddit:</strong> <p ng-bind-html="subInfo.public_description_html | sanitize"></p></div>
-            <div ng-if="!subInfo.banner_img">
-              <strong>Subscribers: <span class="baby-blue">{{ subInfo.subscribers | number }}</span></strong><br>
-              <strong>Subreddit since: <span class="green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong>
-            </div>
-          
-            <br><br>
-
+            <br>
             <div class="row" id="overview-table">
               <div class="col-sm-12">
                 <table class="table table-bordered">
