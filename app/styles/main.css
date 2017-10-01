@@ -40,6 +40,10 @@ a:focus, div:focus, span:focus {
   color: white;
 }
 
+.yellow {
+  color: #E8D125;
+}
+
 .green {
   color: #1DB3B0;
 }
@@ -260,7 +264,7 @@ md-progress-circular:before {
 }
 
 md-progress-circular path {
-  stroke: #FF742E;
+  stroke: #00B1CC;
 }
 
 md-select {
@@ -589,7 +593,7 @@ User Page
 }
  
 .reddit-name {
-  color: #FFE100;
+  color: #E8D125;
   font-size: 35px;
 }
 
