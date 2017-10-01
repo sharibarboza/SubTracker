@@ -334,6 +334,7 @@ Content
 
 .container {
   margin: 0;
+  position: relative;
 }
 
 .container .jumbotron, .container-fluid .jumbotron {
@@ -559,6 +560,7 @@ Main Page
 ************************/
 
 #sub-panels {
+  overflow: hidden;
   padding: 15px 35px;
 }
 

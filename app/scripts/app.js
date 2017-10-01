@@ -56,8 +56,8 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
       controller: 'UserCtrl',
       controllerAs: 'user',
       resolve: {
-        subsData: function($route, subFactory) {
-          return getData($route, subFactory);     
+        subsData: function($q, $route, subFactory) {
+          return getData($route, subFactory); 
         }
       }
     })
@@ -81,13 +81,16 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
         }
       }
     })
+    .when('/notfound/:username', {
+      templateUrl: 'views/not-found.html'
+    })
     .otherwise({
       redirectTo: '/'
     });
     $locationProvider.hashPrefix('');
 }]);
 
-app.run(['$rootScope', function($rootScope) {
+app.run(['$rootScope', '$location', function($rootScope, $location) {
 
   $rootScope.$on('$routeChangeStart', function(e, curr, prev) { 
     if (curr.$$route && curr.$$route.resolve) {

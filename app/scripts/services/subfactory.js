@@ -149,6 +149,8 @@
         } else {
           return null;
         }
+      }, function(error) {
+        return null;
       });
       return subPromise;
     };

@@ -10,7 +10,6 @@
  angular.module('SubSnoopApp')
   .controller('UserCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', '$window', 'subFactory', 'moment', 'subsData', 'search', 'sortFactory', '$location', '$anchorScroll',
   function ($rootScope, $scope, $routeParams, $filter, $window, subFactory, moment, subsData, search, sortFactory, $location, $anchorScroll) {
-
     /*
      Initalization
     */
@@ -57,7 +56,7 @@
     /*
      If user/sub data not stored in session storage, use data from resolved promises
     */
-    if (subsData) {
+    if (subsData && Object.keys(subsData).length > 0) {
       $scope.notfound = false;
       $rootScope.title = $scope.username + ' | Subreddits';
       $scope.sort = sortFactory.getSubSort();
