@@ -350,11 +350,11 @@
       if (sub) {
         var subComment, subSubmit;
         if ('comments' in sub) {
-          subComment = sub.comments[sub.comments.length-1];
+          subComment = rank.getTopPost(sub.comments, 'oldest');
         } 
 
         if ('submissions' in sub) {
-          subSubmit = sub.submissions[sub.submissions.length-1];
+          subSubmit = rank.getTopPost(sub.submissions, 'oldest');
         }
 
         return compareDates(subComment, subSubmit, false);
