@@ -8,7 +8,7 @@
  * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .factory('words', function () {
+  .factory('words', ['subFactory', function (subFactory) {
     var wordDict = {};
     var wordArray = [];
 
@@ -195,9 +195,10 @@ angular.module('SubSnoopApp')
      Split comments or submissions for a specific subreddit into words for word cloud
     */
     return {
-      getWords: function(subs, sub) {
+      getWords: function(sub) {
         resetData();
 
+        var subs = subFactory.getSubData().subs;
         var comments = subs[sub].comments;
         var submissions = subs[sub].submissions;
 
@@ -323,4 +324,4 @@ angular.module('SubSnoopApp')
       return newWords;
     }
 
-  });
+  }]);

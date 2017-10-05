@@ -133,6 +133,13 @@
             </div>
           </div>
 
+          <div class="heatmap" ng-controller="HeatmapCtrl">
+            <br>
+            <h4><strong>Post Activity This Year</strong></h4>
+            <p ng-if="showNote(firstPost)" class="gray small-font">Note: The data here is only available since <span class="purple" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY'"></span>, because the user's posts from all subreddits are capped out at the most recent 1000 comments and submissions each.</p>
+            <calendar-heatmap data="mapData" color="'#05753B'" overview="'year'" handler="print"></calendar-heatmap>
+          </div>
+
           <br>
           <div ng-controller="WordcloudCtrl">
             <h4><strong>Words in r/{{ subreddit }}</strong></h4>

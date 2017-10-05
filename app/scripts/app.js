@@ -18,6 +18,7 @@ var app = angular
     'ui.bootstrap',
     'yaru22.angular-timeago',
     'angular-jqcloud',
+    'g1b.calendar-heatmap'
   ]);
 
 var getData = function(route, factory) {
