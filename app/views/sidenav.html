@@ -16,7 +16,7 @@
   <a href="#/{{ username }}"><strong ng-controller="SidebarCtrl" class="black"><i class="fa fa-arrow-left gray" aria-hidden="true"></i> Back to subreddits</strong></a>
   <br><br>
   <ul>
-    <strong>Sorted by: <span class="purple">{{ sortData.selectedSort.name ? sortData.selectedSort.name : sort.name }}</span></strong>
+    <strong>Sorted by: <span class="purple">{{ selected.name }}</span></strong>
     <br><br>
 
     <li ng-repeat="subname in subList"><a href="#/{{ username }}/{{ subname }}/"><strong><p class="mobile-list">/r/{{ subname }}</p></strong></a></li>

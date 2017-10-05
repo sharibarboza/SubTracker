@@ -329,6 +329,41 @@ md-toolbar h1 {
 }
 
 /************************
+Dropdown
+************************/
+
+.select-dropdown {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.select-dropdown button {
+  text-align: left;
+  position: relative;
+}
+
+.select-dropdown button:before {
+  position: absolute;
+  content: "\f0d7";
+  font-family: FontAwesome;
+  right: 10px;
+}
+
+.dropdown-menu {
+  width: inherit;
+}
+
+.dropdown-menu li {
+  padding: 5px 10px;
+}
+
+.dropdown-menu li:hover {
+  color: white;
+  font-weight: bold;
+  background-color: black;
+}
+
+/************************
 Content
 ************************/
 
@@ -963,6 +998,14 @@ Sub Page Side Bar
   margin-bottom: 0 !important;
 }
 
+#submit-col {
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+  padding: 5px;
+  width: 90%;
+  margin-left: 5%;
+}
+
 #submit-card {
   padding: 12px 18px;
 }
@@ -1216,10 +1259,6 @@ Mobile
     text-align: center;
   }
 
-  .sub-table select {
-    width: 100%;
-  }
-
   #sub-panel-stats .span {
     display: block;
   }
@@ -1259,6 +1298,12 @@ Mobile
     padding-left: 0;
     padding-right: 0;
     text-align: center;
+  }
+
+  #subreddits .col-xs-8 {
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
   }
 
   #slash {

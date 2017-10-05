@@ -17,8 +17,8 @@ angular.module('SubSnoopApp')
       getDefaultSubSort: function() {
         return defaultSubSort;
       },
-      setSubSort: function(sortObj) {
-        subSort = sortObj;
+      setSubSort: function(sort) {
+        subSort = sort;
       },
       getSubSort: function() {
         return subSort;

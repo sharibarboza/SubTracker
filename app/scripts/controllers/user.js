@@ -48,8 +48,9 @@
       $scope.firstPost = subFactory.getFirstPost(null);
     };
 
-    $scope.setSortOption = function() {
-      sortFactory.setSubSort($scope.sortData.selectedSort);
+    $scope.setSortOption = function(sort) {
+      sortFactory.setSubSort(sort);
+      $scope.selected = sort;
       setArray();
     };
 
@@ -59,7 +60,7 @@
     if (subsData && Object.keys(subsData).length > 0) {
       $scope.notfound = false;
       $rootScope.title = $scope.username + ' | Subreddits';
-      $scope.sort = sortFactory.getSubSort();
+      sortFactory.getSubSort();
 
       configUserData(subsData.user, false);
       configSubData(subsData, false);
@@ -79,8 +80,9 @@
           {value: 'avgSubmit', name: 'Average upvotes per submission'},
           {value: 'mostDown', name: 'Most controversial'},
         ],
-        selectedSort: $scope.sort
       };
+
+      $scope.selected = sortFactory.getSubSort();
 
       /*
        Sorts array based on input sort value and sets up the sub array that will be display
@@ -88,7 +90,7 @@
        By default, user's subs are sorted alphabetically by sub name
       */
       var setArray = function() {
-        $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.sortData.selectedSort.value, $scope.subs);
+        $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.selected.value, $scope.subs);
       };
       setArray();
 

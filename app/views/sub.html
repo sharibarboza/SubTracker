@@ -157,23 +157,25 @@
           <span class="small-font">Viewing <strong class="orange">{{ slicedArray.length }}</strong> of {{ sub[tabOptions[tab]].length }} {{ tabOptions[tab] }} </span>
           <div class="table-options">
             <div class="row" id="table-start">
-              <div class="col-md-3">
-                <form name="sortForm">
-                  <md-select ng-model="data.selectedSort" placeholder="{{ data.selectedSort.name }}" ng-change="setSortOption()">
-                    <md-option ng-repeat="sort in data.sortOptions" ng-value="sort" ng-selected="sort.value == data.selectedSort.value">
-                      <span class="main-color low-weight">{{ sort.name }}</span>
-                    </md-option>
-                  </md-select>
-                </form>
+              <div class="col-md-3">               
+                <div class="btn-group select-dropdown">
+                  <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    {{ sortSelected.name }}
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li ng-repeat="sort in data.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
+                  </ul>
+                </div>
               </div>
               <div class="col-md-3">
-                <form name="viewForm">
-                  <md-select ng-model="subPage.viewby" placeholder="test" ng-change="setItemsPerPage(subPage.viewby.num)">
-                    <md-option ng-repeat="view in views" ng-value="view" ng-selected="view.value == subPage.viewby.value">
-                      <span class="main-color low-weight">View {{ view.num }}</span>
-                    </md-option>
-                  </md-select>
-                </form>
+                <div class="btn-group select-dropdown">
+                  <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    View {{ subPage.items }}
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li ng-repeat="view in views" ng-click="setItemsPerPage(view)">{{ view }}</li>
+                  </ul>
+                </div>
               </div>
               <div class="col-md-6 paginate" align="right" id="top-paginate">
                 <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" style="margin: -5px;"></pagination>

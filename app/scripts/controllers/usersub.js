@@ -16,7 +16,6 @@ angular.module('SubSnoopApp')
      Initalization
     */
     $window.scrollTo(0, 0);
-    var defaultView = {value: '25', name: '25 options'};
     $scope.page = 'sub';
     $scope.subreddit = $routeParams.subreddit;
     $scope.username = $routeParams.username;
@@ -56,10 +55,16 @@ angular.module('SubSnoopApp')
     $scope.highestPosts = [$scope.topPost, $scope.topSubmit];
 
     /*
+     Determines how many comments/submissions to display on screen
+     Default is set to 25
+    */
+    $scope.views = [25, 50, 100, 'All'];
+    var defaultView = 25;
+
+    /*
      Set up for pagination of comments or submissions
     */
     $scope.subPage = {};
-    $scope.subPage.viewby = defaultView;
     $scope.subPage.items = parseInt(defaultView);
     $scope.subPage.max = 7;
     $scope.subPage.current = 1;
@@ -73,7 +78,7 @@ angular.module('SubSnoopApp')
       if (num === 'All') {
         $scope.subPage.items = $scope.sub[$scope.tabOptions[$scope.tab]].length;
       } else {
-        $scope.subPage.items = $scope.subPage.viewby.num;
+        $scope.subPage.items = num;
       }
       setArray();
     };
@@ -118,25 +123,16 @@ angular.module('SubSnoopApp')
         {value: 'oldest', name: 'Oldest'},
         {value: 'mostUps', name: 'Most upvoted'},
         {value: 'mostDowns', name: 'Most controversial'},
-      ],
-      selectedSort: {value: 'newest', name: 'Newest'}
+      ]
     };
 
-    $scope.setSortOption = function() {
+    $scope.setSortOption = function(sort) {
       $scope.subPage.current = 1;
+      $scope.sortSelected = sort;
       setArray();
     };
 
-    /*
-     Determines how many comments/submissions to display on screen
-     Default is set to 25
-    */
-    $scope.views = [
-      {value: '25', num: 25},
-      {value: '50', num: 50},
-      {value: '100', num: 100},
-      {value: 'All', num: 'All'}
-    ];
+    $scope.sortSelected = {value: 'newest', name: 'Newest'};
 
     /*
      Set up the data array to be displayed based on the current tab and sort value.
@@ -144,12 +140,15 @@ angular.module('SubSnoopApp')
     */
     var setArray = function() {
       $scope.dataArray = $scope.sub[$scope.tabOptions[$scope.tab]];
-      $scope.elemArray = $filter('sortPosts')($scope.dataArray, $scope.data.selectedSort.value);
+      $scope.elemArray = $filter('sortPosts')($scope.dataArray, $scope.sortSelected.value);
     };
     setArray();
 
-    $scope.sort = sortFactory.getSubSort();
-    $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.sort.value, subsData.subs);
+    /*
+     Sort subreddits when side nav is toggled
+    */
+    $scope.selected = sortFactory.getSubSort();
+    $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.selected.value, subsData.subs);
     $scope.changeSubs = function(term) {
       $scope.subList = [];
       $scope.subList = search.findSubs($scope.subsArray, term);
