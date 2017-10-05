@@ -16,8 +16,9 @@
     <link rel="stylesheet" href="bower_components/jqcloud2/dist/jqcloud.css" />
     <!-- endbower -->
     <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
+    <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="lib/angular-calendar-heatmap/dist/calendar-heatmap.css">
     <!-- endbuild -->
   </head>
   <body>
@@ -72,6 +73,7 @@
      <!-- build:js({.tmp,app}) scripts/scripts.js -->
      <script src="scripts/app.js"></script>
      <script src="lib/angular-jqcloud.js"></script>
+     <script src="lib/angular-calendar-heatmap/dist/calendar-heatmap.js"></script>
      <script src="scripts/controllers/main.js"></script>
      <script src="scripts/controllers/user.js"></script>
      <script src="scripts/services/userfactory.js"></script>
@@ -110,6 +112,8 @@
      <script src="scripts/controllers/wordcloud.js"></script>
      <script src="scripts/controllers/substats.js"></script>
      <script src="scripts/services/subinfo.js"></script>
+     <script src="scripts/controllers/heatmap.js"></script>
+     <script src="scripts/services/heatmap.js"></script>
      <!-- endbuild -->
    </body>
  </html>

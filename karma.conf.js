@@ -26,6 +26,7 @@ module.exports = function(config) {
       'app/bower_components/font-awesome/css/font-awesome.css',
       'app/bower_components/angular-timeago/dist/*.js',
       'app/lib/*.js',
+      'app/lib/angular-calendar-heatmap/dist/*.js',
       'app/scripts/controllers/*.js',
       'app/scripts/services/*.js',
       'test/spec/*/*.js',

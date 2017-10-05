@@ -1,0 +1,56 @@
+.calendar-heatmap {
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+.calendar-heatmap .item {
+  cursor: pointer;
+}
+.calendar-heatmap .label {
+  cursor: pointer;
+  fill: rgb(170, 170, 170);
+  font-family: Helvetica, arial, 'Open Sans', sans-serif;
+}
+.calendar-heatmap .button {
+  cursor: pointer;
+  fill: transparent;
+  stroke-width: 2;
+  stroke: rgb(170, 170, 170);
+}
+.calendar-heatmap .button text {
+  stroke-width: 1;
+  text-anchor: middle;
+  fill: rgb(170, 170, 170);
+}
+.calendar-heatmap .heatmap-tooltip {
+  pointer-events: none;
+  position: absolute;
+  z-index: 9999;
+  width: 200px;
+  max-width: 200px;
+  overflow: hidden;
+  padding: 10px;
+  font-size: 12px;
+  line-height: 14px;
+  color: rgb(255, 255, 255);
+  font-family: Helvetica, arial, 'Open Sans', sans-serif;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+}
+.calendar-heatmap .heatmap-tooltip .header strong {
+  display: inline-block;
+  width: 250px;
+}
+.calendar-heatmap .heatmap-tooltip span {
+  display: inline-block;
+  width: 50%;
+  padding-right: 10px;
+  box-sizing: border-box;
+}
+.calendar-heatmap .heatmap-tooltip span,
+.calendar-heatmap .heatmap-tooltip .header strong {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
