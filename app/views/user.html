@@ -188,15 +188,19 @@
 
             <br>
             <div ng-controller="PiechartCtrl" align="center">
-              <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent {{ chartLimit }} comments</strong></h4>
-              <span class="small-font">Hover to see the number of comments for that sub out of {{ username }}'s most recent {{ chartLimit }} comments.</span>
-              <donut-chart ng-if="comments > 0" type="comments" limit="20" align="center"></donut-chart>
-              <h5 ng-if="comments == 0">{{ username }} does not have any comments.</h5>
+              <div ng-if="comments > 0">
+                <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent {{ chartLimit }} comments</strong></h4>
+                <span class="small-font">Hover to see the number of comments for that sub out of {{ username }}'s most recent {{ chartLimit }} comments.</span>
+                <donut-chart type="comments" limit="20" align="center"></donut-chart>
+                <h5 ng-if="comments == 0">{{ username }} does not have any comments.</h5>
+              </div>
 
-              <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent {{ chartLimit }} submissions</strong></h4>
-              <span class="small-font">Hover to see the number of submissions for that sub out of {{ username }}'s most recent {{ chartLimit }} submissions.</span>
-              <donut-chart ng-if="submissions > 0" type="submissions" limit="20" align="center"></donut-chart>
-              <h5 ng-if="submissions == 0">{{ username }} does not have any submissions.</h5>   
+              <div ng-if="submissions > 0">
+                <h4><strong>Subreddit distribution across <span class="baby-blue">{{ username }}'s</span> most recent {{ chartLimit }} submissions</strong></h4>
+                <span class="small-font">Hover to see the number of submissions for that sub out of {{ username }}'s most recent {{ chartLimit }} submissions.</span>
+                <donut-chart type="submissions" limit="20" align="center"></donut-chart>
+                <h5 ng-if="submissions == 0">{{ username }} does not have any submissions.</h5> 
+              </div>  
             </div>
           </div>
           <div align="center" class="center-back">
