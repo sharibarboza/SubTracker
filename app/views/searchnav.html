@@ -1,10 +1,10 @@
 <div class="header">
   <div class="navbar navbar-default navbar-fixed-top width-pad" role="navigation">
     <div class="container row">
-      <div class="col-xs-2"><a class="navbar-brand" href="#/">SubSnoop</a></div>
+      <div class="col-xs-2"><a class="navbar-brand" ng-href="#/">SubSnoop</a></div>
       <div class="col-xs-10">
         <ul align="right" id="navbar-links">
-          <li ng-hide="main" class="nav-pos"><a href="#/{{ username }}/search/" class="nav-link"><i class="fa fa-search" aria-hidden="true"></i> search</a></li>
+          <li ng-hide="main" class="nav-pos"><a ng-href="#/{{ username }}/search/" class="nav-link"><i class="fa fa-search" aria-hidden="true"></i> search</a></li>
           <li ng-hide="main" class="nav-pos" ng-controller="SidebarCtrl"><a href class="nav-link" ng-click="toggleRight()"><i class="fa fa-reddit-alien" aria-hidden="true"></i> subreddits</a></li>
         </ul>
       </div>

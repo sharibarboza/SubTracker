@@ -106,7 +106,7 @@
 
             <div class="card" ng-repeat="subreddit in subList.slice(0, currentLimit)" id="sub-row">
               <div class="card-content row">
-                <a href="#/{{ username }}/{{ subreddit }}/">
+                <a ng-href="#/{{ username }}/{{ subreddit }}/">
                 <div class="col-md-6" id="sub-rank">
                   <div class="col-md-2">
                     <span class="baby-blue"><strong>{{ 1 + $index }}</strong></span>
@@ -167,22 +167,22 @@
               <div class="col-sm-3 col-xs-6" align="center">
                 <img ng-src="{{ '../images/active.png' }}" class="stat-icon"><br>
                 <strong class="green">Most Active Sub</strong><br>
-                <a href="https://www.reddit.com/r/{{ mostActive }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ mostActive }}</strong></a>
+                <a ng-href="https://www.reddit.com/r/{{ mostActive }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ mostActive }}</strong></a>
               </div>
               <div class="col-sm-3 col-xs-6" align="center">
                 <img ng-src="{{ '../images/best.png' }}" class="stat-icon"><br>
                 <strong class="green">Most Upvoted Sub</strong><br>
-                <a href="https://www.reddit.com/r/{{ mostUpvoted }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ mostUpvoted }}</strong></a>
+                <a ng-href="https://www.reddit.com/r/{{ mostUpvoted }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ mostUpvoted }}</strong></a>
               </div>
               <div class="col-sm-3 col-xs-6" align="center">
                 <img ng-src="{{ '../images/worst.png' }}" class="stat-icon"><br>
                 <strong class="green">Least Upvoted Sub</strong><br>
-                <a href="https://www.reddit.com/r/{{ leastUpvoted}}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ leastUpvoted }}</strong></a>
+                <a ng-href="https://www.reddit.com/r/{{ leastUpvoted}}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ leastUpvoted }}</strong></a>
               </div> 
               <div class="col-sm-3 col-xs-6" align="center">
                 <img ng-src="{{ '../images/new.png' }}" class="stat-icon"><br>
                 <strong class="green">Newest Active Sub</strong><br>
-                <a href="https://www.reddit.com/r/{{ newestSub }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ newestSub }}</strong></a>
+                <a ng-href="https://www.reddit.com/r/{{ newestSub }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ newestSub }}</strong></a>
               </div>  
             </div>          
 
