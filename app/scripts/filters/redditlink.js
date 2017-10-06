@@ -23,7 +23,7 @@ angular.module('SubSnoopApp')
 
       if (input) {
         if (input.indexOf(user_link) >= 0) {
-          input = input.replace(user_link, 'href="' + url + '/u/');
+          input = input.replace(/href="\/u\//g, 'href="#/');
         }
 
         if (input.indexOf(sub_link) >= 0) {
