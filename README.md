@@ -1,6 +1,6 @@
 # SubSnoop
 
-SubSnoop is a web app built with AngularJS that uses the Reddit API to group a user's comments and submissions by subreddit. The site is located at [http://subsnoop.com](http://subsnoop.com).
+SubSnoop is a web app built with AngularJS that uses the Reddit API to group a user's comments and submissions by subreddit. The site is located [here](https://subsnoop-e6873.firebaseapp.com/#/).
 
 On a user's main page, you can sort a user's active subreddits by a number of categories, such as *most recent activity*, *most upvotes*, *most submissions*, and more.
 
