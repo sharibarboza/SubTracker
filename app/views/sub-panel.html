@@ -10,7 +10,7 @@
         <span><i class="fa fa-user-plus gray" aria-hidden="true"></i> Subscribers: <strong class="baby-blue">{{ subElement.subscribers | number }}</strong></span>
         <br>
         <span ng-if="subElement.advertiser_category"><i class="fa fa-bookmark gray" aria-hidden="true"></i> Category: <strong class="purple">{{ subElement.advertiser_category ? subElement.advertiser_category : 'N/A' }}</strong></span>
-        <span ng-if="subElement.subreddit_type"><i class="fa fa-bookmark gray" aria-hidden="true"></i> Category: <strong class="purple">{{ subElement.subreddit_type == 'user' ? 'User' : 'Subreddit' }}</strong>
+        <span ng-if="!subElement.advertiser_category && subElement.subreddit_type"><i class="fa fa-bookmark gray" aria-hidden="true"></i> Category: <strong class="purple">{{ subElement.subreddit_type == 'user' ? 'User' : 'Subreddit' }}</strong>
         </span>
       </div>
       <div class="col-md-7">
