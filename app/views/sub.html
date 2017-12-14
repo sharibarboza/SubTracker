@@ -16,6 +16,14 @@
               <span class="badge num-subs">{{ username }}</span>
             </div>
           </div>
+          <div class="row banner-subtext">
+            <div class="col-md-8 col-xs-12">
+              <strong class=shadow-text">Current data available since: <span class="white" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong>
+            </div>
+            <div class="col-md-4 col-xs-12 right-box">
+              <div class="shadow-text"><i class="fa fa-clock-o" aria-hidden="true"></i> <strong class="white">Last seen <time-ago from-time='{{ latestPost.created_utc * 1000 }}'></time-ago></strong></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -47,18 +55,6 @@
             </div>
             <hr>
 
-            <div class="row">
-              <div class="col-md-1">
-                 <i class="fa fa-reddit" aria-hidden="true"></i><br>
-                <img ng-if="subInfo.icon_img" ng-src="{{ subInfo.icon_img }}" class="banner-img">
-                <img ng-if="!subInfo.icon_img" ng-src="{{ '../images/sub-icon.png' }}" class="banner-img">
-              </div>
-              <div class="col-md-11" id="since-date">
-                <strong class="top-line">Current data available since: <span class="purple" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong><br>
-                <i class="fa fa-clock-o" aria-hidden="true"></i> <strong class="green">Last seen <time-ago from-time='{{ latestPost.created_utc * 1000 }}'></time-ago></strong>
-              </div>
-            </div>
-            <br>
             <div class="row" id="overview-table">
               <div class="col-sm-12">
                 <table class="table table-bordered">
@@ -93,7 +89,7 @@
           </div>
 
           <div id="statistics" ng-controller="SubStatsCtrl">
-            <h3 class="title-heading">Statistics</h3>
+            <h4 class="title-heading">Statistics</h4>
             <br>
             <div align="center">
               <span>Out of {{ username }}'s <strong class="orange">{{ subLength }}</strong> subreddits, <span class="baby-blue">r/{{ subreddit }}</span> is ranked:</span>
@@ -133,17 +129,18 @@
             </div>
           </div>
 
-          <div class="heatmap" ng-controller="HeatmapCtrl">
-            <br>
+          <div class="heatmap border-box" ng-controller="HeatmapCtrl">
             <h4><strong>Post Activity This Year</strong></h4>
             <p ng-if="showNote(firstPost)" class="gray small-font">Note: The data here is only available since <span class="purple" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY'"></span>, because the user's posts from all subreddits are capped out at the most recent 1000 comments and submissions each.</p>
             <calendar-heatmap data="mapData" color="'#05753B'" overview="'year'" handler="print"></calendar-heatmap>
           </div>
 
           <br>
-          <div ng-controller="WordcloudCtrl">
+          <div ng-controller="WordcloudCtrl" class="border-box">
             <h4><strong>Words in r/{{ subreddit }}</strong></h4>
-            <jqcloud words="words" steps="7" colors="{{ colors }}" style="width: 100%; height: 350px;"></jqcloud>
+            <div align="center">
+              <jqcloud words="words" steps="7" colors="{{ colors }}" style="width: 90%; height: 350px;"></jqcloud>
+            </div>
           </div>
 
           <br>
@@ -210,8 +207,6 @@
         <div ng-if="tab == 1 && sub.submissions.length == 0" align="center">
           <h5>{{ username }} has no submissions in r/{{ subreddit }}.</h5>
         </div>
-
-        <div ng-include src="'views/footer.html'"></div>
       </div>
     </div>
 

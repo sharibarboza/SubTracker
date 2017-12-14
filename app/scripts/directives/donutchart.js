@@ -48,17 +48,17 @@ angular.module('SubSnoopApp')
 
         function defaultChartConfig() {
           return {
-            width: 525,
-            height: 450,
-            thickness: 50,
-            grow: 20,
+            width: 350,
+            height: 350,
+            thickness: 30,
+            grow: 10,
             labelPadding: 50,
             duration: 100,
             margin: {
               top: 0,
-              right: 100,
+              right: 70,
               bottom: 0,
-              left: 100
+              left: 70
             }
           };
         }
@@ -314,8 +314,8 @@ angular.module('SubSnoopApp')
           var centerText = gRoot.append('svg:text')
             .attr('class', 'center-label');
 
-          var titleSize = '20px';
-          var dataSize = '18px';
+          var titleSize = '14px';
+          var dataSize = '14px';
 
           centerText.append('tspan')
             .text(centerValue)

@@ -60,6 +60,10 @@ a:focus, div:focus, span:focus {
   color: #00B1CC;
 }
 
+.bright-blue {
+  color: #D9F2FA;
+}
+
 .dark-gray {
   color: #333;
 }
@@ -176,8 +180,8 @@ blockquote {
 }
 
 .fa-reddit {
-  font-size: 50px;
-  padding-left: 8px;
+  font-size: 42px;
+  padding-left: 0px;
   margin-right: 5px;
 }
 
@@ -234,6 +238,15 @@ blockquote {
 
 .reddit-btn {
   color: inherit;
+}
+
+.border-box {
+  border: 1px solid #D6D6D6;
+  padding: 5px 10px 10px 10px;
+}
+
+.right-box {
+  text-align: right;
 }
 
 /************************
@@ -368,7 +381,7 @@ Content
 ************************/
 
 .content {
-  padding-top: 80px;
+  padding-top: 50px;
 }
 
 .container {
@@ -421,8 +434,8 @@ Content
 
 .sub-banner {
   background-position: 0 16%;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
   margin-left: 0;
 }
 
@@ -445,7 +458,6 @@ Content
 }
 
 .title-heading {
-  border-bottom: 1px solid gray;
 }
 
 .table-bordered tr > td {
@@ -456,7 +468,7 @@ Content
 }
 
 .top-line {
-  font-size: 20px;
+  font-size: 14px;
 }
 
 .shadow-text {
@@ -478,8 +490,8 @@ Navigation
 }
 
 .navbar-default {
-  background-color: rgba(33,33,33,1);
-  border: none;
+  background-color: white;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .navbar {
@@ -488,13 +500,13 @@ Navigation
 }
 
 .navbar-default .navbar-brand {
-  color: white;
+  color: #5552B3;
   font-weight: bold;
   font-size: 2em;
 }
 
 .navbar-default .nav-link {
-  color: white !important;
+  color: #5552B3 !important;
   font-weight: bold;
 }
 
@@ -525,6 +537,7 @@ Navigation
 #search-nav {
   padding-top: 8px;
   padding-bottom: 4px;
+  border-top: 1px solid #e5e5e5;
 }
 
 #search-nav input {
@@ -628,19 +641,15 @@ User Page
 }
  
 .reddit-name {
-  color: #E8D125;
-  font-size: 35px;
-}
-
-#since-date {
-  padding-left: 40px;
+  color: white;
+  font-size: 30px;
 }
 
 .num-subs {
   color: #00B1CC;
   background-color: white;
-  margin-top: 10px;
-  font-size: 19px;
+  margin-top: 8px;
+  font-size: 16px;
   padding: 5px 15px 7px 15px;
 }
 
@@ -651,10 +660,6 @@ User Page
 
 .option-pos {
   margin-top: 1px;
-}
-
-#table-head {
-  padding-top: 30px;
 }
 
 #user-link-col {
@@ -693,6 +698,15 @@ User Page
 
 #overview .col-md-1 img {
   display: none;
+}
+
+.overview {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.banner-subtext {
+  font-size: 16px;
 }
  
 /***********************
@@ -734,7 +748,7 @@ User Page Side Bar
 
 .fixed-pos {
   position: fixed;
-  margin-top: 142px;
+  margin-top: 100px;
 }
 
 .side-username {
@@ -815,6 +829,7 @@ User Sub Page
 
 .post-body {
   padding-top: 10px;
+  font-size: 14px;
   color: #383838;
   font-weight: 400;
 }
@@ -906,7 +921,10 @@ User Sub Page
 }
 
 .badge-row {
+  margin-left: 0px;
+  margin-right: 0px;
   padding-bottom: 30px;
+  border: 1px solid #D6D6D6;
 }
 
 .badge-row [class*='col-'] {
@@ -936,6 +954,18 @@ User Sub Page
   background: rgb(0, 0, 0); /* fallback color */
   background: rgba(0, 0, 0, 0.7);
   padding: 5px 10px; 
+}
+
+.pie-box-left {
+  border-top: 1px solid #D6D6D6;
+  border-bottom: 1px solid #D6D6D6;
+  border-left: 1px solid #D6D6D6;
+}
+
+.pie-box-right {
+  border-top: 1px solid #D6D6D6;
+  border-bottom: 1px solid #D6D6D6;
+  border-right: 1px solid #D6D6D6;
 }
 
 /************************
@@ -975,7 +1005,7 @@ Sub Page Side Bar
 }
 
 .submit-pic {
-  max-width: 80%;
+  max-width: 100%;
   display: block;
   margin: 0 auto;
 }
@@ -1002,8 +1032,7 @@ Sub Page Side Bar
   border: 1px solid #e5e5e5;
   border-radius: 5px;
   padding: 5px;
-  width: 90%;
-  margin-left: 5%;
+  width: 100%;
 }
 
 #submit-card {
@@ -1136,7 +1165,8 @@ Footer
 .footer {
   color: #777;
   border-top: 1px solid #e5e5e5;
-  padding-bottom: 10px;
+  padding: 15px 0 15px 0;
+  font-size: 12px;
 }
 
 /************************
@@ -1172,6 +1202,20 @@ Mobile
   .sub-rows {
     position: static;
     left: 0;
+  }
+
+  .pie-box-left {
+    border-top: 1px solid #D6D6D6;
+    border-left: 1px solid #D6D6D6;
+    border-right: 1px solid #D6D6D6;
+    border-bottom: none;
+  }
+
+  .pie-box-right {
+    border-top: none;
+    border-bottom: 1px solid #D6D6D6;
+    border-left: 1px solid #D6D6D6;
+    border-right: 1px solid #D6D6D6;
   }
 }
 
@@ -1217,7 +1261,7 @@ Mobile
   .num-subs {
     margin-left: 0;
     margin-top: 10px;
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .navbar-brand {
@@ -1396,10 +1440,6 @@ Mobile
   .user-page {
     padding-top: 10px;
     padding-bottom: 20px;
-  }
-
-  .top-line {
-    font-size: 14px;
   }
 
   .banner-text span {
