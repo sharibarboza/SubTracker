@@ -18,7 +18,7 @@
           </div>
           <div class="row banner-subtext">
             <div class="col-md-7 col-xs-12">
-              <strong class="shadow-text">Data available since: <span class="bright-blue" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong>
+              <strong class="shadow-text">Data from: <span class="bright-blue" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong>
             </div>
             <div class="col-md-5 col-xs-12 right-box">
               <div class="shadow-text"><i class="fa fa-clock-o" aria-hidden="true"></i> <strong class="white">Last seen: <time-ago class="bright-blue" from-time='{{ latestPost.created_utc * 1000 }}'></time-ago></strong></div>
