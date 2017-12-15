@@ -32,8 +32,11 @@
 
         <div ng-include src="'views/footer.html'"></div>
 
-        <div ng-show="loadingView">
+        <div ng-show="loadingView" class="loading-bg">
           <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+          <div class="loading-msg" align="center">
+            <span>Fetching from Reddit ...</span>
+          </div>
         </div>
       </div>
 

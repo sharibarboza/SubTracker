@@ -22,6 +22,7 @@ angular.module('SubSnoopApp')
     $scope.searchInput = "";
     $scope.noResults = "";
     $rootScope.title = $scope.username + ' | Search';
+    $scope.statuses = [];
     
     /*
      Reset post-type and subs array to default on new search
@@ -29,6 +30,7 @@ angular.module('SubSnoopApp')
     var resetFilters = function() {
       $scope.results = {'data':{}};
       $scope.resultList = [];
+      $scope.rawResults = [];
       $scope.type = 1;
       $scope.subs = [];
     };
@@ -91,7 +93,15 @@ angular.module('SubSnoopApp')
     $scope.filterResults = function(type) {
       $scope.type = type;
       $scope.results = $filter('search')($scope.origResults, type, $scope.subs);
-      $scope.resultList = $filter('sortSubs')(Object.keys($scope.results.data), 'subName', $scope.results.data);
+      $scope.rawResults = $filter('sortSubs')(Object.keys($scope.results.data), 'subName', $scope.results.data);
+
+      for (var i = 0; i < $scope.rawResults.length; i++) {
+        var result = {};
+        result.data = $scope.rawResults[i];
+        result.status = false;
+        $scope.resultList.push(result);
+      }
+
       $scope.noResults = getNotFoundMsg();
     };
 
