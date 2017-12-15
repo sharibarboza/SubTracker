@@ -17,11 +17,11 @@
             </div>
           </div>
           <div class="row banner-subtext">
-            <div class="col-md-8 col-xs-12">
-              <strong class=shadow-text">Current data available since: <span class="white" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong>
+            <div class="col-md-7 col-xs-12">
+              <strong class="shadow-text">Data available since: <span class="bright-blue" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong>
             </div>
-            <div class="col-md-4 col-xs-12 right-box">
-              <div class="shadow-text"><i class="fa fa-clock-o" aria-hidden="true"></i> <strong class="white">Last seen <time-ago from-time='{{ latestPost.created_utc * 1000 }}'></time-ago></strong></div>
+            <div class="col-md-5 col-xs-12 right-box">
+              <div class="shadow-text"><i class="fa fa-clock-o" aria-hidden="true"></i> <strong class="white">Last seen: <time-ago class="bright-blue" from-time='{{ latestPost.created_utc * 1000 }}'></time-ago></strong></div>
             </div>
           </div>
         </div>

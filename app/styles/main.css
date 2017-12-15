@@ -671,8 +671,8 @@ User Page
 
 .user-page {
   padding-left: 5%;
-  padding-top: 40px;
-  padding-bottom: 30px;
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 
 .table-icon {
@@ -748,7 +748,7 @@ User Page Side Bar
 
 .fixed-pos {
   position: fixed;
-  margin-top: 100px;
+  margin-top: 85px;
 }
 
 .side-username {
@@ -960,12 +960,14 @@ User Sub Page
   border-top: 1px solid #D6D6D6;
   border-bottom: 1px solid #D6D6D6;
   border-left: 1px solid #D6D6D6;
+  padding: 0;
 }
 
 .pie-box-right {
   border-top: 1px solid #D6D6D6;
   border-bottom: 1px solid #D6D6D6;
   border-right: 1px solid #D6D6D6;
+  padding: 0;
 }
 
 /************************
@@ -1338,10 +1340,14 @@ Mobile
     padding: 10px 5px 20px 5px;
   }
 
-  .user-page, #since-date {
+  .user-page, #since-date, .right-box {
     padding-left: 0;
     padding-right: 0;
     text-align: center;
+  }
+
+  .banner-subtext {
+    margin-top: 10px;
   }
 
   #subreddits .col-xs-8 {
@@ -1456,6 +1462,10 @@ Mobile
 
   #overview .col-md-1 img {
     display: inline-block;
+  }
+
+  .banner-subtext {
+    font-size: 15px;
   }
 
  }
