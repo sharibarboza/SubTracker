@@ -22,11 +22,17 @@ angular.module('SubSnoopApp')
       d3Service.d3().then(function(d3) {
 
         var limit = attrs.limit;
-        scope.chartConfig = defaultChartConfig();
 
-        if (windowWidth < 550) {
-          scope.chartConfig = changeChartConfig();
+        function configChart(scope_chart, window_width) {
+          if (window_width < 1200 && window_width > 950) {
+            scope_chart = changeChartConfig(window_width);
+          } else {
+            scope_chart = setChartConfig(350)
+          }
+          return scope_chart;
         }
+
+        scope.chartConfig = configChart(scope.chartConfig, windowWidth);
         
         var w = angular.element($window);
         scope.getWindowDimensions = function () {
@@ -37,18 +43,13 @@ angular.module('SubSnoopApp')
 
         scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
           scope.windowWidth = newValue.w;
-
-          if (newValue.w < 550) {
-            scope.chartConfig = changeChartConfig();
-          } else {
-            scope.chartConfig = defaultChartConfig();
-          }
-
+          scope.chartConfig = configChart(scope.chartConfig, newValue.w);
         }, true);
 
-        function defaultChartConfig() {
+        function setChartConfig(chart_width) {
+
           return {
-            width: 350,
+            width: chart_width,
             height: 350,
             thickness: 30,
             grow: 10,
@@ -63,19 +64,19 @@ angular.module('SubSnoopApp')
           };
         }
 
-        function changeChartConfig() {
+        function changeChartConfig(window_width) {
           return {
-            width: 350,
-            height: 400,
+            width: window_width - 750,
+            height: 350,
             thickness: 30,
             grow: 10,
-            labelPadding: 40,
+            labelPadding: 50,
             duration: 100,
             margin: {
-              top: 50,
-              right: 60,
-              bottom: 50,
-              left: 60
+              top: 0,
+              right: 30,
+              bottom: 0,
+              left: 30
             }
           };
         }

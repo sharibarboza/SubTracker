@@ -960,14 +960,17 @@ User Sub Page
   border-top: 1px solid #D6D6D6;
   border-bottom: 1px solid #D6D6D6;
   border-left: 1px solid #D6D6D6;
-  padding: 0;
 }
 
 .pie-box-right {
   border-top: 1px solid #D6D6D6;
   border-bottom: 1px solid #D6D6D6;
   border-right: 1px solid #D6D6D6;
-  padding: 0;
+}
+
+.pie-box-left svg, .pie-box-right svg {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /************************
