@@ -98,7 +98,7 @@ angular.module('SubSnoopApp')
 
       }
 
-      return dataList;
+      return $filter('sortPosts')(dataList, 'newest');
     };
 
     /*
