@@ -27,6 +27,7 @@ angular.module('SubSnoopApp')
       newData.comments = 0;  // Number of filtered comments
       newData.submissions = 0;  // Number of filtered submissions
       newData.subs = 0;  // Number of subs in filtered data
+      newData.status = false;
 
       for (var key in input.data) {
 
@@ -35,6 +36,7 @@ angular.module('SubSnoopApp')
         newData.data[key] = subData;
         subData.comments = [];
         subData.submissions = [];
+        subData.status = false;
 
         //If filtered subs array is empty, this means get all subs
         if (subs.length === 0 || subs.indexOf(key) >= 0) {

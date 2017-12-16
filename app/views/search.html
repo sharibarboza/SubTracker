@@ -44,35 +44,35 @@
           <div ng-include src="'views/search-sidebar.html'"></div>
           <div class="col-md-9 col-md-pull-3" id="results-table">
 
-            <div ng-repeat="sub in resultList" ng-if="results.data[sub.data].comments.length || results.data[sub.data].submissions.length">
+            <div ng-repeat="sub in resultList" ng-if="results.data[sub].comments.length || results.data[sub].submissions.length">
               <accordion class="accordion" id="results-accordion">
-                <accordion-group ng-init="sub.status = open" is-open="sub.status">
+                <accordion-group ng-init="results.data[sub].status = open" is-open="results.data[sub].status">
 
                   <accordion-heading>
                     <div class="card">
                       <div class="card-content row" id="results-card">
                         <div class="col-md-11">
-                          <strong class="results-sub">/r/{{ sub.data }}</strong> <span class="purple results-sub">(<ng-pluralize count="(results.data[sub.data].comments.length) + (results.data[sub.data].submissions.length)" when="{'1': '1 result', 'other': '{{ ((results.data[sub.data].comments.length) + (results.data[sub.data].submissions.length)) | number }} results'}"></ng-pluralize> found)</span>
+                          <strong class="results-sub">/r/{{ sub }}</strong> <span class="purple results-sub">(<ng-pluralize count="(results.data[sub].comments.length) + (results.data[sub].submissions.length)" when="{'1': '1 result', 'other': '{{ ((results.data[sub].comments.length) + (results.data[sub].submissions.length)) | number }} results'}"></ng-pluralize> found)</span>
                         </div>
                         <div class="col-md-1" align="center">
-                          <i class="fa fa-2x gray" ng-class="sub.status ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true" id="results-chevron"></i>
+                          <i class="fa fa-2x gray" ng-class="results.data[sub].status ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true" id="results-chevron"></i>
                         </div>
                       </div>
                     </div>
                   </accordion-heading>
 
                   <div class="card-action">
-                    <span class="post-links" ng-if="results.data[sub.data].comments.length">
-                      <span class="badge results-badge"><ng-pluralize count="results.data[sub.data].comments.length" when="{'1': '1 comment', 'other': '{{ results.data[sub.data].comments.length | number }} comments'}"></ng-pluralize></span>
+                    <span class="post-links" ng-if="results.data[sub].comments.length">
+                      <span class="badge results-badge"><ng-pluralize count="results.data[sub].comments.length" when="{'1': '1 comment', 'other': '{{ results.data[sub].comments.length | number }} comments'}"></ng-pluralize></span>
                     </span>
 
-                    <span class="post-links" ng-if="results.data[sub.data].submissions.length">
-                      <span class="badge results-badge"><ng-pluralize count="results.data[sub.data].submissions.length" when="{'1': '1 submission', 'other': '{{ results.data[sub.data].submissions.length | number }} submissions'}"></ng-pluralize></span>
+                    <span class="post-links" ng-if="results.data[sub].submissions.length">
+                      <span class="badge results-badge"><ng-pluralize count="results.data[sub].submissions.length" when="{'1': '1 submission', 'other': '{{ results.data[sub].submissions.length | number }} submissions'}"></ng-pluralize></span>
                     </span>
                     <br><br>
 
-                    <h4 class="black" ng-if="results.data[sub.data].comments.length"><strong>Comments</strong></h4>
-                    <div ng-repeat="element in results.data[sub.data].comments" id="{{ sub.data }}-comments" ng-if="type != 3">
+                    <h4 class="black" ng-if="results.data[sub].comments.length"><strong>Comments</strong></h4>
+                    <div ng-repeat="element in results.data[sub].comments" id="{{ sub }}-comments" ng-if="type != 3">
                       <span class="gray small-font" ng-bind="comment.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>
                       <br>
                       <div ng-include src="'views/comment.html'" id="results-comment"></div>
@@ -80,8 +80,8 @@
                     </div>
 
                     <br>
-                    <h4 class="black"><strong ng-if="results.data[sub.data].submissions.length">Submitted</strong></h4>
-                    <div ng-repeat="element in results.data[sub.data].submissions" id="{{ sub.data }}-submits" ng-if="type != 2">
+                    <h4 class="black"><strong ng-if="results.data[sub].submissions.length">Submitted</strong></h4>
+                    <div ng-repeat="element in results.data[sub].submissions" id="{{ sub }}-submits" ng-if="type != 2">
                       <div ng-include src="'views/submission.html'" id='results-submit'></div>
                     </div>
                   </div>

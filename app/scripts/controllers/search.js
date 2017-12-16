@@ -30,7 +30,6 @@ angular.module('SubSnoopApp')
     var resetFilters = function() {
       $scope.results = {'data':{}};
       $scope.resultList = [];
-      $scope.rawResults = [];
       $scope.type = 1;
       $scope.subs = [];
     };
@@ -52,7 +51,7 @@ angular.module('SubSnoopApp')
         if ($scope.subs.length > 0) {
           subStr += 'in [';
           for (var i = 0; i < $scope.subs.length; i++) {
-            var sub = '/r/' + $scope.subs[i]
+            var sub = '/r/' + $scope.subs[i];
             subStr += sub;
             if (i < $scope.subs.length - 1) {
               subStr += ', '
@@ -93,15 +92,8 @@ angular.module('SubSnoopApp')
     $scope.filterResults = function(type) {
       $scope.type = type;
       $scope.results = $filter('search')($scope.origResults, type, $scope.subs);
-      $scope.rawResults = $filter('sortSubs')(Object.keys($scope.results.data), 'subName', $scope.results.data);
 
-      for (var i = 0; i < $scope.rawResults.length; i++) {
-        var result = {};
-        result.data = $scope.rawResults[i];
-        result.status = false;
-        $scope.resultList.push(result);
-      }
-
+      $scope.resultList = $filter('sortSubs')(Object.keys($scope.results.data), 'subName', $scope.results.data);
       $scope.noResults = getNotFoundMsg();
     };
 
