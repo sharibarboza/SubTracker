@@ -23,4 +23,4 @@ Application will be served at [http://localhost:3000/](http://localhost:3000/)
 The build will be stored in the /dist directory.
 
 ---
-SubSnoop is not affiliated with Reddit[https://www.reddit.com] and does not require the user to be signed into a Reddit account at any time.
+SubSnoop is not affiliated with [Reddit, Inc.](https://www.reddit.com) and does not require the user to be signed into a Reddit account.
