@@ -12,7 +12,7 @@
           </div>
         </form>          
       </div>
-      <div class="col-md-3 col-sm-8 col-xs-8">
+      <div ng-hide="noSubs" class="col-md-3 col-sm-8 col-xs-8">
         <ul align="right" id="navbar-links">
           <li ng-hide="main" class="nav-pos"><a ng-href="#/{{ username }}/search/" class="nav-link"><i class="fa fa-search" aria-hidden="true"></i> search</a></li>
           <li ng-hide="main" class="nav-pos" ng-controller="SidebarCtrl"><a href class="nav-link" ng-click="toggleRight()"><i class="fa fa-reddit-alien" aria-hidden="true"></i> subreddits</a></li>

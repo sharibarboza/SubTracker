@@ -20,6 +20,8 @@
     $scope.limit = 10;
     $scope.currentLimit = $scope.limit;
     $scope.open = true;
+    $scope.noSubs = Object.keys(subsData.subs).length == 0;
+    $scope.subLength = 0;
 
     /*
      Gets data from user's reddit about page, primarily for username, link karma, comment karma, etc.
@@ -57,7 +59,7 @@
     /*
      If user/sub data not stored in session storage, use data from resolved promises
     */
-    if (subsData && Object.keys(subsData).length > 0) {
+    if (subsData && Object.keys(subsData.subs).length > 0) {
       $scope.notfound = false;
       $rootScope.title = $scope.username + ' | Subreddits';
       sortFactory.getSubSort();

@@ -720,6 +720,10 @@ User Page
   font-size: 16px;
 }
  
+#not-found-div {
+  height: 83vh;
+}
+
 /***********************
 User Page Side Bar
 ************************/
