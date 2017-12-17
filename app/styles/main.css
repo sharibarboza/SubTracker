@@ -356,7 +356,7 @@ Dropdown
 ************************/
 
 .select-dropdown {
-  width: 100%;
+  width: 96%;
   margin-top: 20px;
 }
 
@@ -547,25 +547,26 @@ Navigation
 #search-nav {
   padding-top: 8px;
   padding-bottom: 4px;
-  border-top: 1px solid #e5e5e5;
 }
 
 #search-nav input {
   outline: none;
-  border: none !important;
-  width: 120%;
+  border: 1px solid #e5e5e5 !important;
+  width: 100%;
+  margin-left: 39px;
 }
 
-#search-nav .col-xs-1 {
-  width: 2%;
+#nav-button {
+  height: 34px;
+  z-index: 999;
+}
+
+#nav-icon {
+  font-size: 18px !important;
 }
 
 #search-strip {
   width: 100%;
-}
-
-#search-nav .glyphicon-search {
-  font-size: 20px;
 }
 
 #nav-btn {
@@ -1122,6 +1123,10 @@ iframe, video {
 Search
 ************************/
 
+#search-content {
+  min-height: 35vh;
+}
+
 #search-jumbotron {
   margin-top: 0;
 }
@@ -1324,10 +1329,6 @@ Mobile
 
   .option-pos {
     display: none;
-  }
-
-  #search-nav {
-    padding-bottom: 2px;
   }
 
   #search-strip .col-xs-10 {
