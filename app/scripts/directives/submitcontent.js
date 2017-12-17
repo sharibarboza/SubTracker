@@ -74,6 +74,13 @@ angular.module('SubSnoopApp')
       }
       return data.preview.images[0].resolutions[index].url;
     }
+
+    /*
+     Adds s to https for video urls
+    */
+    var secureVideo = function(url) {
+      return url.replace('http', 'https');
+    }
  
     /*
      Sets up and cleans data for displaying submission content.
@@ -104,9 +111,9 @@ angular.module('SubSnoopApp')
             } else if ('preview' in data && (isAttachedImage(data) || isImgurAlbum(data))) {
               return '<img class="submit-pic" ng-src="' + $filter('escape')(getPreview(data)) + '">';
             } else if (isVideo(data.url)) {
-              return '<img class="submit-pic" ng-src="' + getVideoUrl(data.url) + '">';
+              return '<img class="submit-pic" ng-src="' + secureVideo(getVideoUrl(data.url)) + '">';
             } else if ('reddit_video' in data.media && data.media.reddit_video.fallback_url) {
-              return '<video width="100%" height="240" class="submit-pic" controls><source src="' + data.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
+              return '<video width="100%" height="240" class="submit-pic" controls><source src="' + secureVideo(data.media.reddit_video.fallback_url) + '" type="video/mp4"></video>';
             } else {
               return '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
             } 
