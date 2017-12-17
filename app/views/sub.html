@@ -89,12 +89,12 @@
           </div>
 
           <div id="statistics" ng-controller="SubStatsCtrl">
-            <h4 class="title-heading">Statistics</h4>
-            <br>
-            <div align="center">
-              <span>Out of {{ username }}'s <strong class="orange">{{ subLength }}</strong> subreddits, <span class="baby-blue">r/{{ subreddit }}</span> is ranked:</span>
-            </div>
             <div class="row badge-row small-font">
+
+              <div align="center">
+                <h4>Out of {{ username }}'s <strong class="orange">{{ subLength }}</strong> subreddits, <span class="baby-blue">r/{{ subreddit }}</span> is ranked:</h4>
+              </div>
+
               <div class="col-sm-3 col-xs-6" align="center">
                 <img ng-src="{{ '../images/active.png' }}" class="stat-icon"><br>
                 <strong class="green">#{{ mostActiveRank }} in most active</strong>

@@ -444,8 +444,8 @@ Content
 
 .sub-banner {
   background-position: 0 16%;
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin-left: 0;
 }
 
@@ -763,7 +763,7 @@ User Page Side Bar
 
 .fixed-pos {
   position: fixed;
-  margin-top: 85px;
+  margin-top: 95px;
 }
 
 .side-username {

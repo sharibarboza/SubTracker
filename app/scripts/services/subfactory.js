@@ -110,7 +110,7 @@
         'comments' : comments.length,
         'submissions' : submissions.length,
         'subs' : subs,
-        'latest' : [getLatest('comment'), getLatest('submissions')],
+        'latest' : [getLatest('submissions'), getLatest('comment')],
         'upvotes' : upvotes
       }
     };
