@@ -373,7 +373,7 @@ Dropdown
 }
 
 .dropdown-menu {
-  width: inherit;
+  width: 100%;
 }
 
 .dropdown-menu li {
@@ -1347,6 +1347,11 @@ Mobile
     padding-left: 0;
     padding-right: 0;
   }
+
+  .select-dropdown {
+    width: 100%;
+    margin-top: 20px;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -1456,7 +1461,7 @@ Mobile
     margin-right: 0;
   }
 
-  #overview-table .col-sm-12 {
+  #overview-table .col-sm-12, .dropdown-col {
     padding-left: 0;
     padding-right: 0;
   }
@@ -1484,6 +1489,10 @@ Mobile
 
   .banner-subtext {
     font-size: 15px;
+  }
+
+  .loading-msg {
+    margin-top: 5px;
   }
 
  }
