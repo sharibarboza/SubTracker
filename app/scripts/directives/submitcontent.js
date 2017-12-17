@@ -76,10 +76,10 @@ angular.module('SubSnoopApp')
     }
 
     /*
-     Adds s to https for video urls
+     Make URLs in html secure by adding s to http
     */
-    var secureVideo = function(url) {
-      return url.replace('http', 'https');
+    var secureURLs = function(html) {
+      return html.replace('http', 'https');
     }
  
     /*
@@ -107,13 +107,13 @@ angular.module('SubSnoopApp')
             } else if (isLinkedImage(data)) {
               return '<img class="submit-pic" ng-src="' + data.url + '">';
             } else if (data.media && data.media.oembed && data.media.oembed.provider_name != "Imgur") {
-              return changeSize($filter('escape')(data.media.oembed.html));
+              return changeSize($filter('escape')(secureURLs(data.media.oembed.html)));
             } else if ('preview' in data && (isAttachedImage(data) || isImgurAlbum(data))) {
               return '<img class="submit-pic" ng-src="' + $filter('escape')(getPreview(data)) + '">';
             } else if (isVideo(data.url)) {
-              return '<img class="submit-pic" ng-src="' + secureVideo(getVideoUrl(data.url)) + '">';
+              return '<img class="submit-pic" ng-src="' + secureURLs(getVideoUrl(data.url)) + '">';
             } else if ('reddit_video' in data.media && data.media.reddit_video.fallback_url) {
-              return '<video width="100%" height="240" class="submit-pic" controls><source src="' + secureVideo(data.media.reddit_video.fallback_url) + '" type="video/mp4"></video>';
+              return '<video width="100%" height="240" class="submit-pic" controls><source src="' + secureURLs(data.media.reddit_video.fallback_url) + '" type="video/mp4"></video>';
             } else {
               return '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
             } 
