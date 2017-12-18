@@ -79,7 +79,10 @@ angular.module('SubSnoopApp')
      Make URLs in html secure by adding s to http
     */
     var secureURLs = function(html) {
-      return html.replace('http', 'https');
+      if (html.indexOf('https') < 0) {
+        return html.replace('http', 'https');
+      }
+      return html;
     }
  
     /*
