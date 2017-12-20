@@ -78,7 +78,7 @@
                     </div>
                     <div class="col-md-10">
                       <span id="sub-name"> /r/{{ subreddit }}</span><br>
-                      <span class="gray sub-text">Last seen <span ng-bind="subs[subreddit].recent_activity | amDateFormat:'MMM Do YYYY, h:mm a'"></span></span>
+                      <span class="gray sub-text">Last seen <span ng-bind="subs[subreddit].recent_activity.created_utc * 1000 | amDateFormat:'MMM Do YYYY, h:mm a'"></span></span>
                     </div>
                   </div>
                   <div class="col-md-2 col-xs-4" id="sub-comments" align="center">

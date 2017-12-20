@@ -116,7 +116,6 @@ angular.module('SubSnoopApp')
         function init() {
           var dataArray = [];
           var filtered = [];
-          var recent = subFactory.getLatest().slice(0, limit);
           var subs, comments, submissions, sortedKeys;
 
           if (attrs.type === 'comments') {

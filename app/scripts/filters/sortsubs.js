@@ -9,7 +9,7 @@
  * Filter in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .filter('sortSubs', ['sortAlpha', 'sortNum', function (sortAlpha, sortNum) {
+  .filter('sortSubs', ['sortAlpha', 'sortNum', 'moment', '$filter', function (sortAlpha, sortNum, moment, $filter) {
 
     /*
      Used for sorting subreddits
@@ -56,6 +56,15 @@ angular.module('SubSnoopApp')
       return keys;
     };
 
+    var sortRecent = function(keys, data) {
+      keys.sort(function(a, b) {
+        var date1 = $filter('date')(data[a].recent_activity);
+        var date2 = $filter('date')(data[b].recent_activity);
+        return sortNum.get(date1, date2, a, b, true, 'alpha');
+      });
+      return keys;
+    }
+
     var sort = function(keys, data, where, reverse) {
       keys.sort(function(a, b) {
         var num1 = data[a][where];
@@ -78,7 +87,7 @@ angular.module('SubSnoopApp')
         } else if (attribute === 'totalUps') {
           sortedData = sort(input, subs, 'total_ups', true);
         } else if (attribute === 'lastSeen') {
-          sortedData = sort(input, subs, 'recent_activity', true);
+          sortedData = sortRecent(input, subs);
         } else if (attribute === 'mostActive') {
           sortedData = sortActivity(input, subs);
         } else if (attribute === 'avgComment') {
