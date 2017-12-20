@@ -76,6 +76,9 @@
       getSubmitsList: function() {
         return submissions;
       },
+      setSubInfo: function(subreddit, info) {
+        subData.subs[subreddit].info = info;
+      },
       compareDates: compareDates,
       getFirstPost: getFirstPost,
       getNewestSub: getNewestSub,
@@ -217,6 +220,7 @@
     */
     function organizeComments(comments) {
       subs = {};
+
       // Push comments
       for (var i = 0; i < comments.length; i++) {
         var comment = comments[i];
@@ -227,6 +231,7 @@
         } 
 
         addComment(subs[subreddit], comment);
+
       }
     };
 
@@ -261,6 +266,7 @@
       subData.gilded_submissions = 0;
       subData.count = 0;
       subData.recent_activity = null;
+      subData.info = null;
 
       return subData;
     };
@@ -273,7 +279,7 @@
       subreddit.count += 1;
 
       var date = $filter('date')(comment);
-      subreddit.recent_comment = date
+      subreddit.recent_comment = date;
       subreddit.comment_ups += parseInt(comment.ups);
 
       if (comment.gilded > 0) {
@@ -291,11 +297,11 @@
       subreddit.count += 1;
 
       var date = $filter('date')(submission);
-      subreddit.recent_submission = date
+      subreddit.recent_submission = date;
       subreddit.submission_ups += parseInt(submission.ups);
 
       if (submission.gilded > 0) {
-        subs[subreddit].gilded_submissions += 1;
+        subreddit.gilded_submissions += 1;
       }
 
       subreddit.recent_activity = compareDates(subreddit.recent_activity, submission, true);

@@ -125,22 +125,22 @@
             <div id="statistics" ng-controller="UserStatsCtrl">
               <div class="row badge-row small-font" id="user-badges">
                 <div class="col-sm-3 col-xs-6" align="center">
-                  <img ng-src="{{ '../images/active.png' }}" class="stat-icon"><br>
+                  <img ng-src="{{ mostActiveInfo.icon_img ? mostActiveInfo.icon_img : '../images/sub-icon.png' }}" class="stat-icon"><br>
                   <strong class="green">Most Active Sub</strong><br>
                   <a ng-href="https://www.reddit.com/r/{{ mostActive }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ mostActive }}</strong></a>
                 </div>
                 <div class="col-sm-3 col-xs-6" align="center">
-                  <img ng-src="{{ '../images/best.png' }}" class="stat-icon"><br>
+                  <img ng-src="{{ mostUpvotedInfo.icon_img ? mostUpvotedInfo.icon_img : '../images/sub-icon.png' }}" class="stat-icon"><br>
                   <strong class="green">Most Upvoted Sub</strong><br>
                   <a ng-href="https://www.reddit.com/r/{{ mostUpvoted }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ mostUpvoted }}</strong></a>
                 </div>
                 <div class="col-sm-3 col-xs-6" align="center">
-                  <img ng-src="{{ '../images/worst.png' }}" class="stat-icon"><br>
+                  <img ng-src="{{ leastUpvotedInfo.icon_img ? leastUpvotedInfo.icon_img : '../images/sub-icon.png' }}" class="stat-icon"><br>
                   <strong class="green">Least Upvoted Sub</strong><br>
                   <a ng-href="https://www.reddit.com/r/{{ leastUpvoted}}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ leastUpvoted }}</strong></a>
                 </div> 
                 <div class="col-sm-3 col-xs-6" align="center">
-                  <img ng-src="{{ '../images/new.png' }}" class="stat-icon"><br>
+                  <img ng-src="{{ newestSubInfo.icon_img ? newestSubInfo.icon_img : '../images/sub-icon.png' }}" class="stat-icon"><br>
                   <strong class="green">Newest Active Sub</strong><br>
                   <a ng-href="https://www.reddit.com/r/{{ newestSub }}" target="_blank"><strong><i class="fa fa-shield" aria-hidden="true"></i> r/{{ newestSub }}</strong></a>
                 </div>  

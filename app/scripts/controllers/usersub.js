@@ -33,10 +33,14 @@ angular.module('SubSnoopApp')
     /*
      Call subreddit API and get sub banner and icon
     */
-    subInfo.getData($scope.subreddit).then(function(response) {
-      $scope.subInfo = response;
-    });
-
+    if ($scope.sub.info == null) {
+      $scope.subInfo = subInfo.getData($scope.subreddit).then(function(response) {
+        $scope.subInfo = response;
+        subFactory.setSubInfo($scope.subreddit, response);
+      });
+    } else {
+      $scope.subInfo = $scope.sub.info;
+    }
 
     /*
      Get the comment with the most upvoteds
