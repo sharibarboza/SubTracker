@@ -975,12 +975,14 @@ User Sub Page
   border-top: 1px solid #D6D6D6;
   border-bottom: 1px solid #D6D6D6;
   border-left: 1px solid #D6D6D6;
+  min-height: 500px;
 }
 
 .pie-box-right {
   border-top: 1px solid #D6D6D6;
   border-bottom: 1px solid #D6D6D6;
   border-right: 1px solid #D6D6D6;
+  min-height: 500px;
 }
 
 .pie-box-left svg, .pie-box-right svg {

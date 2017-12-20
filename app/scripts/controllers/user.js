@@ -27,7 +27,7 @@
      Gets data from user's reddit about page, primarily for username, link karma, comment karma, etc.
      Stores user in session storage
      */
-    var configUserData = function(response, store) {
+    var configUserData = function(response) {
       $scope.redditor = response;
       $scope.username = $scope.redditor.name;
       $scope.totalKarma = $scope.redditor.comment_karma + $scope.redditor.link_karma;
@@ -39,7 +39,7 @@
      Sets up primary sub data
      Stores sort value in session storage
     */
-    var configSubData = function(response, store) {
+    var configSubData = function(response) {
       $scope.comments = response.comments;
       $scope.submissions = response.submissions;
       $scope.subs = response.subs;
@@ -62,10 +62,9 @@
     if (subsData && Object.keys(subsData.subs).length > 0) {
       $scope.notfound = false;
       $rootScope.title = $scope.username + ' | Subreddits';
-      sortFactory.getSubSort();
 
-      configUserData(subsData.user, false);
-      configSubData(subsData, false);
+      configUserData(subsData.user);
+      configSubData(subsData);
 
       /*
        Used for sorting subreddits

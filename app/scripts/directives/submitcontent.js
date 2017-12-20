@@ -115,7 +115,7 @@ angular.module('SubSnoopApp')
               return '<img class="submit-pic" ng-src="' + $filter('escape')(getPreview(data)) + '">';
             } else if (isVideo(data.url)) {
               return '<img class="submit-pic" ng-src="' + secureURLs(getVideoUrl(data.url)) + '">';
-            } else if ('reddit_video' in data.media && data.media.reddit_video.fallback_url) {
+            } else if (data.media && 'reddit_video' in data.media && data.media.reddit_video.fallback_url) {
               return '<video width="100%" height="240" class="submit-pic" controls><source src="' + secureURLs(data.media.reddit_video.fallback_url) + '" type="video/mp4"></video>';
             } else {
               return '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
