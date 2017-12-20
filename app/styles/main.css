@@ -49,7 +49,7 @@ a:focus, div:focus, span:focus {
 }
 
 .orange {
-  color: #FF3D00;
+  color: #EB582A;
 }
 
 .light-orange {
@@ -264,7 +264,7 @@ blockquote {
   z-index: 999;
   font-weight: bold;
   font-size: 18px;
-  color: #FF3D00;
+  color: #EB582A;
 }
 
 .loading-bg {
@@ -295,7 +295,7 @@ md-progress-circular {
 }
 
 md-progress-circular path {
-  stroke: #FF3D00;
+  stroke: #EB582A;
 }
 
 md-select {
