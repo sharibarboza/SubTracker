@@ -62,7 +62,6 @@
     if (subsData && Object.keys(subsData.subs).length > 0) {
       $scope.notfound = false;
       $rootScope.title = $scope.username + ' | Subreddits';
-      sortFactory.getSubSort();
 
       configUserData(subsData.user, false);
       configSubData(subsData, false);
