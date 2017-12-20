@@ -15,19 +15,8 @@
             <span class="light-gray sub-panel-category"><i class="fa fa-user-plus" aria-hidden="true"></i> SUBSCRIBERS</span>
             <br>
             <span class="sub-panel-value">{{ subElement.subscribers | number }}</span></span>
-            <br><br>
-            <span ng-if="subElement.advertiser_category"><span class="light-gray sub-panel-category"><i class="fa fa-bookmark" aria-hidden="true"></i> CATEGORY</span>
-            <br>
-            <span class="sub-panel-value">{{ subElement.advertiser_category ? subElement.advertiser_category : 'N/A' }}</span></span>
-            <span ng-if="!subElement.advertiser_category && subElement.subreddit_type"><span class="light-gray sub-panel-category"><i class="fa fa-bookmark" aria-hidden="true"></i> CATEGORY</span>
-             <br>
-             <span class="sub-panel-value">{{ subElement.subreddit_type == 'user' ? 'User' : 'Subreddit' }}</span></span>
           </div>
           <div class="col-md-7">
-            <span class="light-gray sub-panel-category"><i class="fa fa-bullhorn gray" aria-hidden="true"></i> AUDIENCE TARGET</span> 
-            <br>
-            <span class="sub-panel-value">{{ subElement.audience_target ? subElement.audience_target : 'N/A' }}</span></span>
-            <br><br>
             <span class="light-gray sub-panel-category"><i class="fa fa-calendar" aria-hidden="true"></i> CREATED</span>
             <br> 
             <span class="sub-panel-value" ng-bind="subElement.created_utc * 1000 | amDateFormat:'MMM Do YYYY, h:mm a' "></span></span>
@@ -35,7 +24,8 @@
         </strong></div>
       </md-card-title-text>
     </md-card-title>
-    <md-card-actions layout="row" layout-align="left">
+    <md-divider></md-divider>
+    <md-card-actions layout="row" layout-align="center">
       <md-button><a ng-href="https://www.reddit.com/r/{{ subElement.display_name }}" target="_blank">Visit <i class="fa fa-arrow-right" aria-hidden="true"></i></a></md-button>
     </md-card-actions>
   </md-card>
