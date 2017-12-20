@@ -2,26 +2,22 @@
 
 <div class="main-container">
   <div class="jumbotron main-content user-banner">
-    <h2 class="shadow-text"><strong>Track your subreddit activity</strong></h2>
-    <h3 class="shadow-text"><strong>View and order your comments and submissions by <span class="light-orange">subreddit.</span></strong></h3>
+    <h2><strong>Track your subreddit activity</strong></h2>
+    <h3><strong>View and order your comments and submissions by <span class="orange">subreddit.</span></strong></h3>
 
     <div ng-include src="'views/main-search.html'"></div>
   </div>
   <div id="sub-panels">
     <div class="col-md-6">
-      <div class="card side-cards">
-        <div class="card-content card-heading">Popular Subreddits</div>
-          <div class="card-action pad-card" ng-repeat="subElement in popularSubs">
-            <div ng-include src="'views/sub-panel.html'"></div>
-          </div>
+      <strong class="sub-panel-title dark-gray">Popular Subreddits</strong>
+      <div ng-repeat="subElement in popularSubs">
+        <div ng-include src="'views/sub-panel.html'"></div>
       </div>
     </div>
     <div class="col-md-6">
-      <div class="card side-cards">
-        <div class="card-content card-heading">New Subreddits</div>
-          <div class="card-action pad-card" ng-repeat="subElement in newSubs">
-            <div ng-include src="'views/sub-panel.html'"></div>
-          </div>
+      <strong class="sub-panel-title dark-gray">New Subreddits</strong>
+      <div ng-repeat="subElement in newSubs">
+        <div ng-include src="'views/sub-panel.html'"></div>
       </div>
     </div>
   </div>

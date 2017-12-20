@@ -12,7 +12,7 @@ Utility
 body {
   padding: 0;
   color: #383838;
-  background-color: inherit !important;
+  background-color: #F5F5F5 !important;
   position: relative;
 }
 
@@ -49,7 +49,7 @@ a:focus, div:focus, span:focus {
 }
 
 .orange {
-  color: #FF742E;
+  color: #FF3D00;
 }
 
 .light-orange {
@@ -78,6 +78,14 @@ a:focus, div:focus, span:focus {
 
 .gray {
   color: #696969;
+}
+
+.light-gray {
+  color: #A3A3A3;
+}
+
+.md-gray {
+  color: #616161;
 }
 
 .black {
@@ -151,7 +159,7 @@ blockquote {
 }
 
 .small-font {
-  font-size: 12px;
+  font-size: 1.4rem;
 }
 
 .accordion .panel-group {
@@ -256,7 +264,7 @@ blockquote {
   z-index: 999;
   font-weight: bold;
   font-size: 18px;
-  color: #FF7300;
+  color: #FF3D00;
 }
 
 .loading-bg {
@@ -287,7 +295,7 @@ md-progress-circular {
 }
 
 md-progress-circular path {
-  stroke: #FF7300;
+  stroke: #FF3D00;
 }
 
 md-select {
@@ -349,6 +357,10 @@ md-toolbar h1 {
     min-width: 275px;
     max-width: 275px;
   }
+}
+
+md-card md-card-title {
+  padding: 16px 16px 16px 16px;
 }
 
 /************************
@@ -433,9 +445,9 @@ Content
 
 .user-banner {
   color: white;
-  background-image: url('../images/alt-banner.png');
+  background-image: url('../images/banner.png');
   background-size: auto;
-  background-position: 0 15%;
+  background-position: 0 55%;
   padding-top: 100px;
   padding-bottom: 100px;
   font-weight: 700;
@@ -482,7 +494,7 @@ Content
 }
 
 .shadow-text {
-  text-shadow: 2px 3px #333;
+  text-shadow: 1px 2px #545454;
 }
 
 /************************
@@ -634,9 +646,26 @@ Main Page
 #sub-panels .col-md-6 {
   margin-bottom: 30px;
 }
- 
+
+.sub-panel-content {
+  margin-left: 15px;
+}
+
 .sub-icon {
-  width: 75px;
+  margin-top: 10px;
+}
+
+.sub-panel-title {
+  font-size: 1.8rem;
+}
+
+.sub-panel-category {
+  font-size: 1.2rem;
+}
+
+.sub-panel-value {
+  font-size: 1.6rem;
+  letter-spacing: 1px;
 }
 
 h2 {
@@ -964,10 +993,8 @@ User Sub Page
 
 .banner-text span:not(.non-bg) { 
   color: white; 
-  font: bold 20px/45px Helvetica, Sans-Serif; 
   letter-spacing: -1px;  
-  background: rgb(0, 0, 0); /* fallback color */
-  background: rgba(0, 0, 0, 0.7);
+  background: #ccc;
   padding: 5px 10px; 
 }
 
