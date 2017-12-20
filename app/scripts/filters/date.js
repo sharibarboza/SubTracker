@@ -12,7 +12,7 @@ angular.module('SubSnoopApp')
   .filter('date', ['moment', function (moment) {
 
     /*
-     Truncate text posts to a certain number of words
+     Get the moment date object from a comment or submission
     */
     return function (post) {
       return moment(post.created_utc*1000);
