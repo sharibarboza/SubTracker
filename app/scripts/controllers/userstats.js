@@ -15,19 +15,23 @@ angular.module('SubSnoopApp')
     $scope.badges = {
       'mostActive' : {
         'image' : null,
-        'name' : 'MOST ACTIVE SUB'
+        'name' : 'MOST ACTIVE SUB',
+        'points' : 0 
       },
       'mostUpvoted' : {
         'image' : null,
-        'name' : 'MOST UPVOTED SUB'
+        'name' : 'MOST UPVOTED SUB',
+        'points' : 0 
       },
       'leastUpvoted' : {
         'image' : null,
-        'name' : 'LEAST UPVOTED SUB'
+        'name' : 'LEAST UPVOTED SUB',
+        'points' : 0 
       },
       'newestSub' : {
         'image' :null,
-        'name' : 'NEWEST SUB'
+        'name' : 'NEWEST SUB',
+        'points' : 0 
       }
     }
 
@@ -36,6 +40,7 @@ angular.module('SubSnoopApp')
     subInfo.getData(mostActiveSub).then(function(response) {
       $scope.mostActiveInfo = response;
       $scope.badges['mostActive'].image = response.icon_img;
+      $scope.badges['mostActive'].points = subs[mostActiveSub].total_ups;
       subFactory.setSubInfo(mostActiveSub, response);
     });
 
@@ -44,6 +49,7 @@ angular.module('SubSnoopApp')
     subInfo.getData(mostUpvotedSub).then(function(response) {
       $scope.mostUpvotedInfo = response;
       $scope.badges['mostUpvoted'].image = response.icon_img;
+      $scope.badges['mostUpvoted'].points = subs[mostUpvotedSub].total_ups;
       subFactory.setSubInfo(mostUpvotedSub, response);
     });
 
@@ -52,6 +58,7 @@ angular.module('SubSnoopApp')
     subInfo.getData(leastUpvotedSub).then(function(response) {
       $scope.leastUpvotedInfo = response;
       $scope.badges['leastUpvoted'].image = response.icon_img;
+      $scope.badges['leastUpvoted'].points = subs[leastUpvotedSub].total_ups;
       subFactory.setSubInfo(leastUpvotedSub, response);
     });
 
@@ -60,6 +67,7 @@ angular.module('SubSnoopApp')
     subInfo.getData(newestSub).then(function(response) {
       $scope.newestSubInfo = response;
       $scope.badges['newestSub'].image = response.icon_img;
+      $scope.badges['newestSub'].points = subs[newestSub].total_ups;
       subFactory.setSubInfo(newestSub, response);
     });
 
