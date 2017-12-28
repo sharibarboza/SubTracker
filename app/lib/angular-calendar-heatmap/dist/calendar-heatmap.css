@@ -23,12 +23,17 @@
   text-anchor: middle;
   fill: rgb(170, 170, 170);
 }
+
+.parent-tooltip {
+  position: relative;
+  width: 125px;
+  max-width: 125px;
+}
+
 .calendar-heatmap .heatmap-tooltip {
   pointer-events: none;
   position: absolute;
   z-index: 9999;
-  width: 200px;
-  max-width: 200px;
   overflow: hidden;
   padding: 10px;
   font-size: 12px;
@@ -38,13 +43,13 @@
   background: rgba(0, 0, 0, 0.8);
   border-radius: 5px;
 }
+
 .calendar-heatmap .heatmap-tooltip .header strong {
   display: inline-block;
-  width: 250px;
+  width: 100px;
 }
 .calendar-heatmap .heatmap-tooltip span {
   display: inline-block;
-  width: 50%;
   padding-right: 10px;
   box-sizing: border-box;
 }

@@ -1,15 +1,15 @@
 <div class="row">
-  <md-card md-theme-watch>
+  <md-card>
     <md-card-title>
       <md-card-title-media>
-        <img class="md-media-sm sub-icon" ng-src="{{ subElement.icon_img ? subElement.icon_img : '../images/sub-icon.png' }}">
+        <img class="md-media-sm sub-icon" ng-src="{{ subElement.icon_img ? subElement.icon_img : '../images/subplanet.jpg' }}">
       </md-card-title-media>
       <md-card-title-text class="small-font sub-panel-content">
         <span>
           <a ng-if="subElement.subreddit_type != 'user'" class="sub-panel-title purple" ng-href="https://www.reddit.com/r/{{ subElement.display_name }}" target="_blank"><strong><span class="baby-blue">/r/</span>{{ subElement.display_name }}</strong></a>
           <a ng-if="subElement.subreddit_type == 'user'" ng-href="#/{{ subElement.display_name_prefixed | username }}" target="_blank"><strong>/{{ subElement.display_name_prefixed }}</strong></a> &middot <span class="dark-gray wrap-text">{{ subElement.title }}</span>
+          <p class="md-gray wrap-text" ng-bind-html="subElement.public_description_html | sanitize"></p>
         </span>
-        <p class="md-gray wrap-text" ng-bind-html="subElement.public_description_html | sanitize"></p>
         <div class="row" id="sub-panel-stats"><strong>
           <div class="col-md-5">
             <span class="light-gray sub-panel-category"><i class="fa fa-user-plus" aria-hidden="true"></i> SUBSCRIBERS</span>

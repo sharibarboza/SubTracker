@@ -28,6 +28,10 @@ a:focus, div:focus, span:focus {
   outline: none;
 }
 
+input {
+  font-weight: bold;
+}
+
 .center {
   text-align: center;
 }
@@ -64,6 +68,10 @@ a:focus, div:focus, span:focus {
   color: #00B1CC;
 }
 
+.baby-blue2 {
+  color: #12C5E0;
+}
+
 .bright-blue {
   color: #D9F2FA;
 }
@@ -76,12 +84,20 @@ a:focus, div:focus, span:focus {
   color: #696969;
 }
 
+.md-blue {
+  color: rgb(63,81,181);
+}
+
 .gray {
   color: #696969;
 }
 
 .light-gray {
   color: #A3A3A3;
+}
+
+.icon-gray {
+  color: #BDBDBD;
 }
 
 .md-gray {
@@ -94,6 +110,10 @@ a:focus, div:focus, span:focus {
 
 .main-color {
   color: #383838;
+}
+
+.blue-bg {
+  background-color: #00B1CC;
 }
 
 .badge, .label {
@@ -178,7 +198,7 @@ blockquote {
 
 .accordion .panel-body {
   border-top: none;
-  padding-top: 10px;
+  padding-top: 15px;
 }
 
 .user-page .fa-user-circle {
@@ -218,6 +238,7 @@ blockquote {
 
 .btn-sm {
   padding: 2px 10px;
+  background-color: #DEDEDE;
 }
 
 .btn-sm:hover {
@@ -226,33 +247,21 @@ blockquote {
 }
 
 .btn-info {
-  background-color: #212121;
-  border-color: #212121;
+  background-color: rgb(63,81,181);
+  border-color: rgb(63,81,181);
 }
 
 .gray-bg {
   background-color: #FAFAFA !important;
 }
 
-.white-bg {
-  background-color: white !important;
-}
-
 .center-back {
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 
 .reddit-btn {
   color: inherit;
-}
-
-.border-box {
-  border: 1px solid #D6D6D6;
-  padding: 5px 10px 10px 10px;
-}
-
-.right-box {
-  text-align: right;
 }
 
 .loading-msg {
@@ -277,6 +286,37 @@ blockquote {
   height: 100%;
   background-color: rgba(0,0,0,0.7);
   z-index: 999;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.margin-bottom {
+  margin-bottom: 5px;
+}
+
+.no-margin {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.no-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.margin-pad {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.no-toppad {
+  padding-top: 0;
+}
+
+.no-marginbottom {
+  margin-bottom: 0;
 }
 
 /************************
@@ -328,10 +368,16 @@ md-toolbar:not(.md-menu-toolbar) {
 
 md-input-container {
   margin-bottom: 0;
+  width: 90% !important;
 }
 
 md-input-container label {
+  font-size: 18px;
   text-align: left;
+}
+
+md-input-container .md-input {
+  width: 99%;
 }
 
 .md-toolbar-tools {
@@ -361,6 +407,14 @@ md-toolbar h1 {
 
 md-card md-card-title {
   padding: 16px 16px 16px 16px;
+}
+
+.md-button {
+  font-weight: 600 !important;
+}
+
+.tooltip {
+  font-size: 13px !important;
 }
 
 /************************
@@ -420,8 +474,8 @@ Content
 }
 
 .width-pad {
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 120px;
+  padding-right: 120px;
 }
 
 /* Main marketing message and sign up button */
@@ -430,6 +484,7 @@ Content
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
   color: white;
+  margin-top: 50px;
 }
 
 .jumbotron input {
@@ -445,20 +500,29 @@ Content
 
 .user-banner {
   color: white;
-  background-image: url('../images/banner.png');
+  background-image: url('../images/icons-bg.jpg');
   background-size: auto;
-  background-position: 0 55%;
-  padding-top: 100px;
-  padding-bottom: 100px;
-  font-weight: 700;
+  background-position: 0 15%;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  font-weight: 400;
   margin-right: 0;
 }
 
+.main-banner {
+  padding-top: 50px;
+  padding-bottom: 70px;
+  background-position: 0 50%;
+}
+
 .sub-banner {
-  background-position: 0 16%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-left: 0;
+  background-position: 0 60%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.side-banner {
+  background-position: 0 80%;
 }
 
 .sub-banner .badge-col {
@@ -475,8 +539,7 @@ Content
 }
 
 .banner-img {
-  width: 55px;
-  margin-top: -5px;
+  width: 120px;
 }
 
 .title-heading {
@@ -495,6 +558,10 @@ Content
 
 .shadow-text {
   text-shadow: 1px 2px #545454;
+}
+
+#search-subs {
+  margin-top: 5px;
 }
 
 /************************
@@ -640,7 +707,7 @@ Main Page
 
 #sub-panels {
   overflow: hidden;
-  padding: 15px 35px;
+  padding: 15px 100px;
 }
 
 #sub-panels .col-md-6 {
@@ -648,7 +715,7 @@ Main Page
 }
 
 .sub-panel-content {
-  margin-left: 15px;
+  padding-left: 15px;
 }
 
 .sub-icon {
@@ -683,6 +750,7 @@ User Page
 .reddit-name {
   color: white;
   font-size: 30px;
+  font-weight: bold;
 }
 
 .num-subs {
@@ -709,10 +777,8 @@ User Page
   margin-left: 0;
 }
 
-.user-page {
-  padding-left: 5%;
-  padding-top: 25px;
-  padding-bottom: 25px;
+.user-page .row {
+  margin: 0;
 }
 
 .table-icon {
@@ -724,12 +790,41 @@ User Page
   width: 75px;
 }
 
-#user-badges .col-md-4 {
-  margin-bottom: 20px;
+.badge-image {
+  height: 100px;
+  width: 100px;
 }
 
 .user-head-nav {
-  display: none;
+  background-color: white;
+  color: #696969;
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 120px;
+  padding-right: 120px;
+  text-transform: uppercase;
+}
+
+.post-tab {
+  padding: 15px 20px;
+}
+
+.post-tab:hover {
+  background-color: #F5F5F5;
+}
+
+.user-head-nav span {
+  vertical-align: middle;
+  line-height: 50px;
+  font-size: 14px;
+}
+
+.user-head-nav img {
+  margin-top: 10px;
+}
+
+.underline-tab {
+  border-bottom: 3px solid rgb(63,81,181);
 }
 
 .user-head-nav a {
@@ -751,6 +846,63 @@ User Page
  
 #not-found-div {
   height: 83vh;
+}
+
+.post-wing {
+  margin-top: 50px;
+}
+
+.left-wing {
+  margin-right: 10px;
+  padding-right: 10px;
+}
+
+.right-wing {
+  margin-left: 10px;
+  padding-left: 10px;
+}
+
+.sub-box {
+  padding: 0;
+}
+
+.rank-box {
+  background-color: #00B1CC;
+  height: 75px;
+  vertical-align: middle;
+  line-height: 75px;
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.subname-box {
+  padding: 10px 20px;
+}
+
+.subbox-stats {
+  border-left: 1px solid #e5e5e5;
+  font-size: 16px;
+  vertical-align: middle;
+  padding-top: 10px;
+  line-height: 25px;
+}
+
+#subreddits .row {
+  margin: 0 !important;
+}
+
+#sub-row md-card {
+  margin: 0;
+}
+
+.user-name {
+  margin-top: 5px;
+  font-size: 27px;
+}
+
+.avatar-header div {
+  display: inline-block;
 }
 
 /***********************
@@ -786,10 +938,6 @@ User Page Side Bar
   background-color: #F5F5F5;
 }
 
-#fixed-side .card-action:hover {
-  background-color: white;
-}
-
 .fixed-pos {
   position: fixed;
   margin-top: 95px;
@@ -801,20 +949,28 @@ User Page Side Bar
   word-wrap: break-word;
 }
 
+.visit-btn {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 /************************
 Subreddit Table
 ************************/
 
 .sub-table {
   padding-top: 20px;
+  background-color: #F5F5F5 !important;
 }
 
 .sub-rows {
-  padding-left: 5%;
+  padding-left: 110px;
+  padding-right: 110px;
 }
 
-#sub-row:hover, #more-subs:hover {
-  background-color: #F5F5F5;
+#sub-row:hover, .sub-box:hover {
+  background-color: #F5F5F5 !important;
+  cursor: pointer !important;
 }
 
 #sub-row .card-content {
@@ -826,13 +982,35 @@ Subreddit Table
   padding-right: 0;
 }
 
-#sub-name {
-  font-size: 16px;
+.sub-name {
+  font-size: 20px;
   font-weight: bold;
+}
+
+.sub-name:hover {
+  color: #12C5E0;
 }
 
 #more-subs {
   padding: 10px;
+  margin-left: 9px;
+  margin-right: 9px;
+}
+
+#more-subs strong {
+  font-size: 16px;
+}
+
+#more-subs:hover {
+  border: 1px solid #e5e5e5;
+  background-color: #F5F5F5;
+}
+
+.table-headers {
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 15px;
 }
 
 
@@ -864,7 +1042,7 @@ User Sub Page
 
 .post-links a {
   color: gray;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .post-links a:hover {
@@ -952,10 +1130,6 @@ User Sub Page
   padding: 12px;
 }
 
-#comment-card:hover {
-  background-color: #F5F5F5;
-}
-
 .nav-tabs > li > a {
   border-radius: 0 0 2px 2px;  
 }
@@ -967,8 +1141,6 @@ User Sub Page
 .badge-row {
   margin-left: 0px;
   margin-right: 0px;
-  padding-bottom: 30px;
-  border: 1px solid #D6D6D6;
 }
 
 .badge-row [class*='col-'] {
@@ -981,40 +1153,53 @@ User Sub Page
   position: relative;
 }
 
+.banner-box md-card {
+  padding: 10px;
+}
+
 .sub-banner-img {
   width: 100%;
+  height: 100%;
+  margin-bottom: 10px;
 }
 
 .banner-text {
   position: absolute;
-  left: 0;
-  bottom: 5px;
+  left: 0px;
+  bottom: 25px;
 }
 
 .banner-text span:not(.non-bg) { 
   color: white; 
   letter-spacing: -1px;  
-  background: #ccc;
-  padding: 5px 10px; 
+  background-color: rgba(51, 51, 51, 0.8);
+  padding: 8px 20px 8px 10px;
+  font-weight: 600;
+  font-size: 16px;
 }
 
-.pie-box-left {
-  border-top: 1px solid #D6D6D6;
-  border-bottom: 1px solid #D6D6D6;
-  border-left: 1px solid #D6D6D6;
-  min-height: 500px;
+.table-heads th {
+  color: white;
+  font-size: 13px;
+  text-transform: uppercase;
 }
 
-.pie-box-right {
-  border-top: 1px solid #D6D6D6;
-  border-bottom: 1px solid #D6D6D6;
-  border-right: 1px solid #D6D6D6;
-  min-height: 500px;
+.stats-title {
+  font-size: 16px;
 }
 
-.pie-box-left svg, .pie-box-right svg {
-  padding-left: 0;
-  padding-right: 0;
+.bottom-pag {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.post-margin {
+  margin-bottom: 15px;
+}
+
+.no-posts {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 /************************
@@ -1032,7 +1217,8 @@ Sub Page Side Bar
 }
 
 .table-pad {
-  padding: 30px 50px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .table-pad .row {
@@ -1054,9 +1240,16 @@ Sub Page Side Bar
 }
 
 .submit-pic {
-  max-width: 100%;
   display: block;
   margin: 0 auto;
+}
+
+.smaller-pic {
+  width: 70%;
+}
+
+.fuller-pic {
+  max-width: 100%;
 }
 
 #stat-lines {
@@ -1073,27 +1266,12 @@ Sub Page Side Bar
   padding-top: 10px;
 }
 
-#submit-col .md p {
-  margin-bottom: 0 !important;
-}
-
-#submit-col {
-  border: 1px solid #e5e5e5;
-  border-radius: 5px;
-  padding: 5px;
-  width: 100%;
-}
-
 #submit-card {
-  padding: 12px 18px;
+  padding: 12px;
 }
 
 .rank {
   font-size: 20px;
-}
-
-#post-header {
-  margin-left: -40px;
 }
 
 /************************
@@ -1101,63 +1279,124 @@ Submit Post Thumbnails
 ************************/
 
 .thumb {
-  float: left;
-  font-size: 0;
-  overflow: hidden;
-  width: 70px;
+  width: 100%;
 }
 
 .post-thumbnail img {
-  width: 55px;
+  width: 100%;
 }
 
 .thumb-default {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -6px -1099px;
+  background-position: 5px -455px;
   background-repeat: no-repeat;
-  background-repeat-x: no-repeat;
-  background-repeat-y: no-repeat;
-  height: 50px;
+  height: 105px;
+}
+
+.thumb-beta-default {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: -3px -1095px;
+  background-repeat: no-repeat;
+  height: 55px;
+}
+
+.thumb-search-default {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 10px -1095px;
+  background-repeat: no-repeat;
+  height: 55px;
 }
 
 .thumb-self {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -6px -1267px;
+  background-position: 5px -895px;
   background-repeat: no-repeat;
-  height: 50px;
+  height: 105px;
+}
+
+.thumb-beta-self {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: -3px -1265px;
+  background-repeat: no-repeat;
+  height: 55px;
+}
+
+.thumb-search-self {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 10px -1265px;
+  background-repeat: no-repeat;
+  height: 55px;
 }
 
 .thumb-image {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -6px -1043px;
+  background-position: 5px -310px;
   background-repeat: no-repeat;
-  height: 50px;
+  height: 105px;
+}
+
+.thumb-beta-image {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: -3px -1040px;
+  background-repeat: no-repeat;
+  height: 55px;
+}
+
+.thumb-search-image {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 10px -1040px;
+  background-repeat: no-repeat;
+  height: 55px;
 }
 
 .thumb-nsfw {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -6px -1155px;
+  background-position: 5px -603px;
   background-repeat: no-repeat;
-  height: 50px;
+  height: 105px;
+}
+
+.thumb-beta-nsfw {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: -3px -1150px;
+  background-repeat: no-repeat;
+  height: 55px; 
+}
+
+.thumb-search-nsfw {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 10px -1150px;
+  background-repeat: no-repeat;
+  height: 55px; 
 }
 
 .thumb-spoiler {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -6px -1211px;
+  background-position: 5px -748px;
   background-repeat: no-repeat;
-  height: 50px;
+  height: 105px;
 }
 
-iframe, video {
-  width: 100%;
+.thumb-beta-spoiler {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: -3px -1210px;
+  background-repeat: no-repeat;
+  height: 55px; 
+}
+
+.thumb-search-spoiler {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 10px -1210px;
+  background-repeat: no-repeat;
+  height: 55px; 
 }
 
 /************************
 Search
 ************************/
 
-#search-content {
-  min-height: 35vh;
+.search-content {
+  min-height: 35.5vh;
 }
 
 #search-jumbotron {
@@ -1185,16 +1424,8 @@ Search
   margin-top: 7px;
 }
 
-#results-comment .card, #results-submit .card {
-  border: none;
-}
-
-#results-comment #comment-card {
-  padding: 0 !important;
-}
-
-#results-table #comment-card:hover, #results-table .card-action:hover  {
-  background: none;
+#results-accordion .panel-body {
+  background-color: white;
 }
 
 .results-sub {
@@ -1210,16 +1441,25 @@ Search
   color: #12C5E0;
 }
 
+#submit-col {
+  padding: 10px;
+}
+
 /************************
 Footer
 ************************/
 
 /* Custom page footer */
 .footer {
-  color: #777;
-  border-top: 1px solid #e5e5e5;
-  padding: 15px 0 15px 0;
-  font-size: 12px;
+  color: white;
+  padding: 30px 0 30px 0;
+  font-size: 14px;
+  background-color: #333;
+  font-weight: 500;
+}
+
+.footer a {
+  color: white;
 }
 
 /************************
@@ -1273,16 +1513,24 @@ Mobile
 }
 
 @media screen and (max-width: 768px) {
-  .navbar-default, #searchbar, #search-content .breadcrumb, #sub-panels {
+  .navbar-default, #searchbar, .search-content .breadcrumb, #sub-panels {
     padding-left: 10px;
     padding-right: 10px;
   }
 
   .user-banner {
     margin-bottom: 0;
+    background-position: 35% 0%;
+    background-size: 200% 175%;
+    padding-top: 25px;
+    padding-bottom: 25px;
   }
 
-  #search-content, #results {
+  .main-banner {
+    padding-top: 10px;
+  }
+
+  .search-content, #results {
     padding-left: 15px;
     padding-right: 15px;
     margin-left: 0;
@@ -1297,7 +1545,7 @@ Mobile
     padding: 5px;
   }
 
-  .container, #results-table, #search-content, #sub-panels, #sub-row .card-content {
+  .container, #results-table, .search-content, #sub-panels, #sub-row .card-content {
     padding-left: 0;
     padding-right: 0;
   }
@@ -1335,8 +1583,6 @@ Mobile
 
   #submit-col {
     width: 100%;
-    padding: 0;
-    margin-left: 0;
     border: none;
   }
 
@@ -1430,11 +1676,6 @@ Mobile
     max-width: 100%;
   }
 
-  #results-submit #post-header {
-    padding-left: 15px;
-    margin-left: 0;
-  }
-
   #results-card .col-md-1, #overview-table, .table-heads th, .sub-banner .badge-col  {
     text-align: center;
   }
@@ -1456,29 +1697,6 @@ Mobile
     font-size: 14px;
   }
 
-  .user-head-nav {
-    display: inherit;
-    color: #696969;
-    font-size: 12px;
-    font-weight: 500;
-    margin-top: 20px;
-    border-bottom: 1px solid #e5e5e5;
-    text-transform: uppercase;
-  }
-
-  .user-head-nav p {
-    margin-bottom: 16px;
-  }
-
-  .user-head-nav p:hover {
-    color: #1DB3B0;
-  }
-
-  #post-header {
-    margin-left: 8px;
-    width: 80%;
-  }
-
   iframe, video {
     height: 30vh;
   }
@@ -1490,14 +1708,9 @@ Mobile
     margin-right: 0;
   }
 
-  #overview-table .col-sm-12, .dropdown-col {
+  #overview-table .col-sm-12, .dropdown-col,   .sub-table, #table-head {
     padding-left: 0;
     padding-right: 0;
-  }
-
-  .user-page {
-    padding-top: 10px;
-    padding-bottom: 20px;
   }
 
   .banner-text span {
@@ -1522,6 +1735,20 @@ Mobile
 
   .loading-msg {
     margin-top: 5px;
+  }
+
+  .sub-name {
+    font-size: 16px;
+    word-wrap: break-word;
+  }
+
+  #more-subs {
+    padding: 0;
+  }
+
+  md-card, .non-badge, #more-subs {
+    margin-left: 0;
+    margin-right: 0;
   }
 
  }

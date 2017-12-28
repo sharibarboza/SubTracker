@@ -1,10 +1,20 @@
-<div class="card post-card">
-  <div class="card-content" id="submit-card">
+<md-card ng-class="page == 'submissions' || page == 'search' ? 'post-margin' : 'empty-class'">
+  <md-card-title ng-if="page == 'user' || page == 'sub'">
+    <div class="col-xs-7 no-padding">
+      <h4><strong>{{ page == 'user' ? 'Most Recent Submission' : 'Most Upvoted Submission' }}</strong></h4>
+    </div>
+    <div ng-if="page == 'user'" class="col-xs-5 no-padding" align="right">
+      <h4><strong><a class="purple" ng-href="#/{{ username }}/{{ element.subreddit }}/">/r/{{ element.subreddit | truncate:15:true }}</a></strong></h4>
+    </div>
+  </md-card-title>
+  <md-divider></md-divider>
+
+  <md-card-content id="submit-card">
     <div class="row submit-row">
       <div class="col-xs-2 post-thumbnail">
-        <thumbnail data="{{ element }}"></thumbnail>
+        <thumbnail data="{{ element }}" page="{{ page }}"></thumbnail>
       </div>
-      <div class="col-xs-10" id="post-header">
+      <div class="col-xs-10" style="border-left: 1px solid #e5e5e5;">
         <a ng-href="{{ element.url }}" target="_blank">
         <strong ng-if="page != 'search' || !element.highlighted_title" class="wrap-text">{{ element.title | escape }}</strong>
         <strong ng-if="page == 'search' && element.highlighted_title" class="wrap-text" ng-bind-html="element.highlighted_title | sanitize"></strong>
@@ -22,12 +32,13 @@
         </div>
       </div>
     </div>
-  </div>
+  </md-card-content>
   <div ng-if="page != 'search' && element | isContent" ng-include src="'views/accordion-submit.html'"></div>
 
   <div ng-if="page == 'search' && element | isContent">
+    <md-divider></md-divider>
     <div id="submit-col">
       <submit-content class="wrap-text" data="{{ element }}" page="{{ page }}"></submit-content>
     </div>
   </div>
-</div>
+</md-card>

@@ -20,8 +20,13 @@
     $scope.limit = 10;
     $scope.currentLimit = $scope.limit;
     $scope.open = true;
-    $scope.noSubs = Object.keys(subsData.subs).length == 0;
     $scope.subLength = 0;
+
+    if (subsData) {
+      $scope.noSubs = Object.keys(subsData.subs).length == 0;
+    } else {
+      $scope.noSubs = true;
+    }
 
     /*
      Gets data from user's reddit about page, primarily for username, link karma, comment karma, etc.
