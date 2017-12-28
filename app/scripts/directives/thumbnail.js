@@ -35,12 +35,17 @@ angular.module('SubSnoopApp')
         scope.data = JSON.parse(attrs.data);
         scope.type = scope.data.thumbnail;
         scope.url = scope.data.url;
+        var page = attrs.page;
         
         var getTemplate = function(data, url, type) {
           if (isThumbnail(data)) {
-            return '<a href="' + url + '"><img class="thumb thumb-pic" ng-src="' + type + '"></a>';
+            return '<img class="thumb thumb-pic" ng-src="' + type + '">';
+          } else if (page == 'submissions') {
+            return '<div class="thumb thumb-' + type + '"></div>';
+          } else if (page == 'search') {
+            return '<div class="thumb thumb-search-' + type + '"></div>';
           } else {
-            return '<a href="' + url + '" class="thumb thumb-' + type + '"></a>';
+            return '<div class="thumb thumb-beta-' + type + '"></div>';
           }
         };
 

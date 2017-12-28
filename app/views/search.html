@@ -6,9 +6,9 @@
 
     <div ng-include src="'views/sidenav.html'"></div>
     <div>
-      <div class="user-banner">
+      <div class="user-banner main-banner">
         <br>
-        <strong align="center" class="banner-header"><h3 class="shadow-text">Search in <span class="light-orange">{{ username }}'s</span> comments and submissions</h3></strong>
+        <strong align="center" class="banner-header"><h3>Search in <span class="baby-blue">{{ username }}'s</span> comments and submissions</h3></strong>
         <br>
         <div id="search-input">
           <form ng-submit="searchResults()" redirect="{{ false }}" novalidate="novalidate" handle-phone-submit>
@@ -26,12 +26,9 @@
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
 
-      <div class="table-pad" id="search-content">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><strong><i class="fa fa-arrow-left gray" aria-hidden="true"></i> <a class="black" ng-href="#/{{ username }}">Back to subreddits</a></strong></li>
-        </ol>
-      
-        <br>
+      <div class="table-pad search-content width-pad" style="background-color: white;">
+        <a ng-href="#/{{ username }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to subs <i class="fa fa-list" aria-hidden="true"></i></i></md-button></a>
+
         <div align="center" ng-if="results.len">
           <span class="gray">Found {{ results.len }} <ng-pluralize count="results.len" when="{'1': 'result', 'other': 'results'}"></ng-pluralize> in {{ results.subs }} <ng-pluralize count="resultList.length" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
         </div>
@@ -39,10 +36,10 @@
           <span class="gray">{{ noResults }}</span>
         </div>
 
-        <div class="row" ng-if="resultList.length" id="results">
+        <div class="row no-margin" ng-if="resultList.length" id="results">
 
           <div ng-include src="'views/search-sidebar.html'"></div>
-          <div class="col-md-9 col-md-pull-3" id="results-table">
+          <div class="col-md-9" id="results-table">
 
             <div ng-repeat="sub in resultList" ng-if="results.data[sub].comments.length || results.data[sub].submissions.length">
               <accordion class="accordion" id="results-accordion">
@@ -61,7 +58,7 @@
                     </div>
                   </accordion-heading>
 
-                  <div class="card-action">
+                  <div class="card-action" style="background-color: white;">
                     <span class="post-links" ng-if="results.data[sub].comments.length">
                       <span class="badge results-badge"><ng-pluralize count="results.data[sub].comments.length" when="{'1': '1 comment', 'other': '{{ results.data[sub].comments.length | number }} comments'}"></ng-pluralize></span>
                     </span>
@@ -74,9 +71,7 @@
                     <h4 class="black" ng-if="results.data[sub].comments.length"><strong>Comments</strong></h4>
                     <div ng-repeat="element in results.data[sub].comments" id="{{ sub }}-comments" ng-if="type != 3">
                       <span class="gray small-font" ng-bind="comment.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>
-                      <br>
                       <div ng-include src="'views/comment.html'" id="results-comment"></div>
-                      <hr>
                     </div>
 
                     <br>

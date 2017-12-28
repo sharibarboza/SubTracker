@@ -6,141 +6,180 @@
     <div ng-include src="'views/sidenav.html'"></div>
 
     <div class="banner-div">
-      <div class="user-banner sub-banner row">
-        <div class="col-md-8 col-md-push-3 user-page">
-          <div class="row">
-            <div class="col-sm-7">
-              <span class="reddit-name shadow-text"><span class="baby-blue">/r/</span>{{ subreddit }}</span>
+      <div class="user-banner row" align="center">
+        <div class="user-page">
+          <div class="avatar-header">
+            <div class="post-wing left-wing" align="center" style="border-right: 1px solid #C3D5DB;">
+              {{ sub.comments.length }}
+              <br>
+              <strong>Comments</strong>
             </div>
-            <div class="col-sm-5 badge-col">
-              <span class="badge num-subs">{{ username }}</span>
+            <div class="profile-img">
+              <img ng-if="subInfo.icon_img" ng-src="{{ subInfo.icon_img }}" class="banner-img img-circle">
+              <img ng-if="!subInfo.icon_img" ng-src="{{ '../images/sub-icon.png' }}" class="banner-img img-circle">
+            </div>
+            <div class="post-wing right-wing" align="center" style="border-left: 1px solid #C3D5DB;">
+              {{ sub.submissions.length }}
+              <br>
+              <strong>Submitted</strong>
             </div>
           </div>
-          <div class="row banner-subtext">
-            <div class="col-md-7 col-xs-12">
-              <strong class="shadow-text">Data from: <span class="bright-blue" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong>
-            </div>
-            <div class="col-md-5 col-xs-12 right-box">
-              <div class="shadow-text"><i class="fa fa-clock-o" aria-hidden="true"></i> <strong class="white">Last seen: <time-ago class="bright-blue" from-time='{{ latestPost.created_utc * 1000 }}'></time-ago></strong></div>
-            </div>
-          </div>
+          <span class="user-name" id="{{ redditor.name }}"><strong><span class="baby-blue2">/r/</span>{{ subreddit }}</strong></span>
+          <br>
+          <span class="badge num-subs">{{ username }}</span>
+          <br><br>
+          Current data from: <span class="bright-blue" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>
         </div>
       </div>
     </div>
 
     <div class="user-head-nav" align="center">
-      <div class="col-xs-4" ng-click="switchSub()"><p ng-class="tab == 2 ? 'green' : 'text-gray'">{{ isOverview() ? "Subs" : "Overview" }}</p></div>
-      <div class="col-xs-4" ng-click="setTab(0)"><p ng-class="tab == 0 ? 'green' : 'text-gray'">Comments</p></div>
-      <div class="col-xs-4" ng-click="setTab(1)"><p ng-class="tab == 1 ? 'green' : 'text-gray'">Posts</p></div>
+      <div class="col-xs-3 no-padding" align="left">
+        <a ng-href="#/{{ username }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to subs <i class="fa fa-list" aria-hidden="true"></i></i></md-button></a>
+      </div>
+      <div class="col-xs-2 post-tab" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">Overview</strong></div>
+      <div class="col-xs-2 post-tab" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">Comments</strong></div>
+      <div class="col-xs-2 post-tab" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">Posts</strong></div>
+      <div class="col-xs-3 no-padding" align="right">
+        <a ng-href="https://www.reddit.com/r/{{ subreddit }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-reddit-alien" aria-hidden="true"></i> To Reddit page <i class="fa fa-external-link" aria-hidden="true"></i></i></md-button></a>
+      </div>
     </div>
 
     <div class="sub-table">
-      <div ng-include src="'views/sub-sidebar.html'"></div>
-      <div class="col-md-8 col-md-push-3 col-xs-12 sub-rows" id="table-head">
+      <div class="sub-rows" id="table-head">
 
         <div ng-if="tab == 2">
           <div id="overview">
 
-            <div ng-if="subInfo.banner_img" class="banner-box">
-              <img ng-src="{{ subInfo.banner_img }}" class="sub-banner-img" />
-              <div class="banner-text">
-                <span>Subscribers: <span class="non-bg baby-blue">{{ subInfo.subscribers | number }}</span></span><br>
-                <span>Subreddit since: <span class="non-bg green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></span>
+            <div class="row no-margin">
+              <div class="col-md-6 no-padding">
+                <md-card>
+                  <md-card-content>
+                    <div ng-if="subInfo.banner_img" class="banner-box">
+                      <img ng-src="{{ subInfo.banner_img }}" class="sub-banner-img" />
+                      <div class="banner-text">
+                        <span class="txt-block">Subscribers: <span class="non-bg baby-blue">{{ subInfo.subscribers | number }}</span></span>
+                      </div>
+                    </div>
+                    <div><strong class="light-gray">ABOUT THIS SUBREDDIT</strong>
+                    <br>
+                    <p ng-if="subInfo.public_description" ng-bind-html="subInfo.public_description_html | sanitize"></p></div>
+                    <p ng-if="!subInfo.public_description">No description available.</p>
+                  </md-card-content>
+                  <md-divider></md-divider>
+                  <md-card-content>
+                    <div ng-if="!subInfo.banner_img">
+                      <strong class="dark-gray"><i class="fa fa-user-plus" aria-hidden="true"></i>  Subscribers:
+                      <span class="baby-blue">{{ subInfo.subscribers | number }}</span></strong>
+                    </div>
+                    <strong class="dark-gray"><i class="fa fa-calendar" aria-hidden="true"></i>  Created:
+                    <span class="green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong>
+                 </md-card-content>
+                </md-card>
+              </div>
+              <div class="col-md-6 no-padding">
+                <md-card>
+                  <md-card-content>
+                    <strong class="light-gray">{{ username | uppercase }}'S ACTIVITY IN {{ subreddit | uppercase }}</strong>
+                    <br>
+                    <strong class="dark-gray"><i class="fa fa-clock-o" aria-hidden="true"></i>  Last seen:
+                    <time-ago class="green" from-time='{{ latestPost.created_utc * 1000 }}'></time-ago></strong>
+                  </md-card-content>
+                  <md-divider></md-divider>
+                  <md-card-content>
+                    <div class="row" id="overview-table">
+                      <div class="col-sm-12">
+                        <table class="table">
+                          <tr class="table-heads blue-bg">
+                            <th class="col-xs-3"></th>
+                            <th class="col-xs-3">Comments</th>
+                            <th class="col-xs-3">Submitted</th>
+                            <th class="col-xs-3">Total</th>
+                          </tr> 
+                          <tr>
+                            <th class="dark-gray"><i class="glyphicon glyphicon-pencil icon-gray" aria-hidden="true"></i>  Posts</th>
+                            <td>{{ sub.comments.length }}</td>
+                            <td>{{ sub.submissions.length }}</td>
+                            <td>{{ (sub.comments.length) + (sub.submissions.length) | number }}</td>
+                          </tr>
+                          <tr>
+                            <th class="dark-gray"><i class="glyphicon glyphicon-star icon-gray" aria-hidden="true"></i>  Gilded</th>
+                            <td>{{ sub.gilded_comments }}</td>
+                            <td>{{ sub.gilded_submissions }}</td>
+                            <td>{{ (sub.gilded_comments) + (sub.gilded_submissions) | number }}</td>
+                          </tr>  
+                          <tr>
+                            <th class="dark-gray"><i class="glyphicon glyphicon-arrow-up icon-gray" aria-hidden="true"></i>  Upvotes</th>
+                            <td>{{ sub.comment_ups | number }}</td>
+                            <td>{{ sub.submission_ups | number }}</td>
+                            <td>{{ (sub.comment_ups) + (sub.submission_ups) | number }}</td>
+                          </tr>    
+                        </table>    
+                        <span class="gray small-font">Note: The data shown here is only a portion from the the user's more recent 1000 comments and most recent 1000 submissions from all subreddits.</span>
+                      </div>
+                    </div>
+                  </md-card-content>
+                </md-card>
               </div>
             </div>
-            <div ng-if="subInfo.public_description"><strong>About this subreddit:</strong> <p ng-bind-html="subInfo.public_description_html | sanitize"></p></div>
-            <div ng-if="!subInfo.banner_img">
-              <strong>Subscribers: <span class="baby-blue">{{ subInfo.subscribers | number }}</span></strong><br>
-              <strong>Subreddit since: <span class="green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong>
-            </div>
-            <hr>
-
-            <div class="row" id="overview-table">
-              <div class="col-sm-12">
-                <table class="table table-bordered">
-                  <tr class="table-heads">
-                    <th class="col-xs-3"></th>
-                    <th class="col-xs-3">Comments</th>
-                    <th class="col-xs-3">Submitted</th>
-                    <th class="col-xs-3">Total</th>
-                  </tr>
-                  <tr>
-                    <th>Posts</th>
-                    <td>{{ sub.comments.length }}</td>
-                    <td>{{ sub.submissions.length }}</td>
-                    <td>{{ (sub.comments.length) + (sub.submissions.length) | number }}</td>
-                  </tr>
-                  <tr>
-                    <th>Gilded</th>
-                    <td>{{ sub.gilded_comments }}</td>
-                    <td>{{ sub.gilded_submissions }}</td>
-                    <td>{{ (sub.gilded_comments) + (sub.gilded_submissions) | number }}</td>
-                  </tr> 
-                  <tr>
-                    <th>Upvotes</th>
-                    <td>{{ sub.comment_ups | number }}</td>
-                    <td>{{ sub.submission_ups | number }}</td>
-                    <td>{{ (sub.comment_ups) + (sub.submission_ups) | number }}</td>
-                  </tr>      
-                </table>    
-              </div>
-            </div>
-
-          </div>
-
-          <div id="statistics" ng-controller="SubStatsCtrl">
-            <div class="row badge-row small-font">
-
-              <div align="center">
-                <h4>Out of {{ username }}'s <strong class="orange">{{ subLength }}</strong> subreddits, <span class="baby-blue">r/{{ subreddit }}</span> is ranked:</h4>
-              </div>
-
-              <div class="col-sm-3 col-xs-6" align="center">
-                <img ng-src="{{ '../images/active.png' }}" class="stat-icon"><br>
-                <strong class="green">#{{ mostActiveRank }} in most active</strong>
-              </div>
-              <div class="col-sm-3 col-xs-6" align="center">
-                <img ng-src="{{ '../images/best.png' }}" class="stat-icon"><br>
-                <strong class="green">#{{ mostUpsRank }} in most upvoted</strong>
-              </div>
-               <div class="col-sm-3 col-xs-6" align="center">
-                <img ng-src="{{ '../images/comments.png' }}" class="stat-icon"><br>
-                <strong class="green">#{{ mostCommentsRank }} in most comments</strong>
-              </div>  
-               <div class="col-sm-3 col-xs-6" align="center">
-                <img ng-src="{{ '../images/posts.png' }}" class="stat-icon"><br>
-                <strong class="green">#{{ mostSubmitsRank }} in most submitted</strong>
-              </div>               
-            </div>
-
-            <br>
-            <div ng-repeat="element in highestPosts" ng-if="element.id">
-              <div class="card side-cards">
-                <div class="card-content card-heading">
-                  <i class="fa fa-star-o purple" aria-hidden="true"></i> {{ element.type == 'comment' ? 'Most Upvoted Comment' : 'Most Upvoted Submission' }}
-                </div>
-              </div>
-              <div ng-if="element.type == 'comment'">
-                <div ng-include src="'views/comment.html'"></div>
-              </div>
-              <div ng-if="element.type == 'submit'">
-                <div ng-include src="'views/submission.html'"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="heatmap border-box" ng-controller="HeatmapCtrl">
-            <h4><strong>Post Activity This Year</strong></h4>
-            <p ng-if="showNote(firstPost)" class="gray small-font">Note: The data here is only available since <span class="purple" ng-bind="firstPost.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY'"></span>, because the user's posts from all subreddits are capped out at the most recent 1000 comments and submissions each.</p>
-            <calendar-heatmap data="mapData" color="'#05753B'" overview="'year'" handler="print"></calendar-heatmap>
           </div>
 
           <br>
-          <div ng-controller="WordcloudCtrl" class="border-box">
-            <h4><strong>Words in r/{{ subreddit }}</strong></h4>
-            <div align="center">
-              <jqcloud words="words" steps="7" colors="{{ colors }}" style="width: 90%; height: 350px;"></jqcloud>
+
+          <div class="heatmap" ng-controller="HeatmapCtrl">
+            <md-card>
+              <md-card-content>
+                <h4><strong>Post Activity This Year</strong></h4>
+                <p class="gray small-font">Hover over a circle to see the number of comments and submissions posted on that day.</p>
+                <br>
+                <calendar-heatmap data="mapData" color="'#05753B'" overview="'year'" handler="print"></calendar-heatmap>
+             </md-card-content>
+            </md-card>
+          </div>
+
+          <br>
+          <div id="statistics" ng-controller="SubStatsCtrl">
+
+            <strong class="stats-title" style="padding-left: 10px;">Out of {{ username }}'s <span class="badge">{{ subLength }}</span> subreddits, <span class="purple">/r/{{ subreddit }}</span> is:</strong>
+            <div class="row badge-row small-font">
+              <div ng-repeat="(badge, data) in badges" class="col-sm-3 col-xs-6" align="center">
+                <md-card>
+                  <br>
+                  <img ng-src="{{ data.image }}" class="stat-icon">
+                  <md-card-content>
+                    <strong class="green" ng-class="{ 'md-blue' : data.rank > 5, 'green' : data.rank == 1, 'baby-blue' : data.rank < 5 && data.rank > 1 }">Ranked #{{ data.rank }}</strong>
+                  </md-card-content>
+                  <md-divider></md-divider>
+                  <md-card-actions layout="row" layout-align="center">
+                    <h5 class="light-gray"><strong>{{ data.name }}</strong></h5>
+                  </md-card-actions>                
+                </md-card>
+              </div>             
             </div>
+
+            <br>
+            <div class="row no-margin">
+              <div ng-repeat="element in highestPosts" ng-if="element.id" class="col-md-6 col-xs-12 no-padding">
+                <div ng-if="element.type == 'comment'">
+                  <div ng-include src="'views/comment.html'"></div>
+                </div>
+                <div ng-if="element.type == 'submit'">
+                  <div ng-include src="'views/submission.html'"></div>
+                </div>
+                <br>
+              </div>
+            </div>
+          </div>
+
+          <div ng-controller="WordcloudCtrl" class="border-box">
+            <md-card>
+              <md-card-content>
+                <h4><strong>Words in r/{{ subreddit }}</strong></h4>
+                <div align="center">
+                  <jqcloud words="words" steps="7" colors="{{ colors }}" style="width: 90%; height: 350px;"></jqcloud>
+                </div>
+              </md-card-content>
+            </md-card>
           </div>
 
           <br>
@@ -151,31 +190,33 @@
         </div>
 
         <div ng-if="(tab == 0 && sub.comments.length > 0) || (tab == 1 && sub.submissions.length > 0)">
-          <span class="small-font">Viewing <strong class="orange">{{ slicedArray.length }}</strong> of {{ sub[tabOptions[tab]].length }} {{ tabOptions[tab] }} </span>
-          <div class="table-options">
-            <div class="row" id="table-start">
-              <div class="col-md-3">               
-                <div class="btn-group select-dropdown">
-                  <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    {{ sortSelected.name }}
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="sort in data.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
-                  </ul>
+          <div class="margin-pad">
+            <span class="small-font">Viewing <strong class="orange">{{ slicedArray.length }}</strong> of {{ sub[tabOptions[tab]].length }} {{ tabOptions[tab] }} </span>
+            <div class="table-options">
+              <div class="row" id="table-start">
+                <div class="col-md-3">               
+                  <div class="btn-group select-dropdown">
+                    <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      {{ sortSelected.name }}
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li ng-repeat="sort in data.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-3">
-                <div class="btn-group select-dropdown">
-                  <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    View {{ subPage.items }}
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="view in views" ng-click="setItemsPerPage(view)">{{ view }}</li>
-                  </ul>
+                <div class="col-md-3">
+                  <div class="btn-group select-dropdown">
+                    <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      View {{ subPage.items }}
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li ng-repeat="view in views" ng-click="setItemsPerPage(view)">{{ view }}</li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-6 paginate" align="right" id="top-paginate">
-                <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" style="margin: -5px;"></pagination>
+                <div class="col-md-6 paginate" align="right" id="top-paginate">
+                  <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" style="margin: -5px;"></pagination>
+                </div>
               </div>
             </div>
           </div>
@@ -190,22 +231,22 @@
                 <div ng-include src="'views/submission.html'"></div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-6 pull-center" id="back-up">
+            <div class="row bottom-pag">
+              <div class="col-md-6 pull-center no-padding" id="back-up">
                 <back-top></back-top>
               </div>
-              <div class="col-md-6 paginate">
+              <div class="col-md-6 paginate no-padding">
                 <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" ng-change="backUp()" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" id="bottom-paginate"></pagination>
               </div>
             </div>
           </div>
         </div>
 
-        <div ng-if="tab == 0 && sub.comments.length == 0" align="center">
-          <h5>{{ username }} has no comments in r/{{ subreddit }}.</h5>
+        <div ng-if="tab == 0 && sub.comments.length == 0" class="no-posts margin-pad">
+          <h4 class="light-gray">{{ username }} has no comments in r/{{ subreddit }}.</h4>
         </div>
-        <div ng-if="tab == 1 && sub.submissions.length == 0" align="center">
-          <h5>{{ username }} has no submissions in r/{{ subreddit }}.</h5>
+        <div ng-if="tab == 1 && sub.submissions.length == 0" class="no-posts margin-pad">
+          <h4 class="light-gray">{{ username }} has no submissions in r/{{ subreddit }}.</h4>
         </div>
       </div>
     </div>

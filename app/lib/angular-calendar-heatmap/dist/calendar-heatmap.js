@@ -3,7 +3,7 @@
 /* globals d3 */
 
 angular.module('g1b.calendar-heatmap', []).
-    directive('calendarHeatmap', ['$window', '$timeout', function ($window, $timeout) {
+    directive('calendarHeatmap', ['$window', '$timeout', 'd3Service', function ($window, $timeout, d3Service) {
 
     return {
       restrict: 'E',
@@ -30,7 +30,7 @@ angular.module('g1b.calendar-heatmap', []).
         var in_transition = false;
 
         // Tooltip defaults
-        var tooltip_width = 200;
+        var tooltip_width = 125;
         var tooltip_padding = 10;
 
         // Initialize current overview type and history
@@ -50,7 +50,7 @@ angular.module('g1b.calendar-heatmap', []).
 
         // Add tooltip to the same element as main svg
         var tooltip = d3.select(element[0]).append('div')
-          .attr('class', 'heatmap-tooltip')
+          .attr('class', 'parent-tooltip')
           .style('opacity', 0);
 
         var getNumberOfWeeks = function () {
@@ -212,10 +212,13 @@ angular.module('g1b.calendar-heatmap', []).
 
                 // Construct tooltip
                 var tooltip_html = '';
+                tooltip_html += '<div class="heatmap-tooltip">';
                 tooltip_html += '<div class="header"><strong>' + (d.total ? scope.formatTime(d.total) : 'No posts') + ' created</strong></div>';
-                tooltip_html += '<div>on ' + moment(d.date).format('dddd, MMM Do YYYY') + '</div><br>';
+                tooltip_html += '<div>on ' + moment(d.date).format('dddd') + '</div>';
+                tooltip_html += '<div>' + moment(d.date).format('MMM Do YYYY') + '</div><br>';
                 tooltip_html += '<div><strong>Comments: </strong>' + d.comments + '</div>';
                 tooltip_html += '<div><strong>Submissions: </strong>' + d.submissions + '</div>';
+                tooltip_html += '</div>';
 
                 // Calculate tooltip position
                 var x = calcItemX(d) + item_size;
@@ -223,10 +226,7 @@ angular.module('g1b.calendar-heatmap', []).
                   x -= tooltip_width + tooltip_padding * 2;
                 }
                 var y = calcItemY(d) + item_size;
-                
-                var box = svg[0][0].getBoundingClientRect();
-                y += window.pageYOffset;
-                x += 55;
+                y -= 150;
 
                 // Show tooltip
                 tooltip.html(tooltip_html)

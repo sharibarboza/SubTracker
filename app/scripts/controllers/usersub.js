@@ -16,7 +16,8 @@ angular.module('SubSnoopApp')
      Initalization
     */
     $window.scrollTo(0, 0);
-    $scope.page = 'sub';
+    $scope.pages = ['comments', 'submissions', 'sub'];
+    $scope.page = $scope.pages[2];
     $scope.subreddit = $routeParams.subreddit;
     $scope.username = $routeParams.username;
     $rootScope.title = $scope.username + ' | ' + $scope.subreddit;
@@ -56,7 +57,7 @@ angular.module('SubSnoopApp')
       $scope.topSubmit = rank.getTopPost($scope.sub.submissions, 'mostUps');
     }
 
-    $scope.highestPosts = [$scope.topPost, $scope.topSubmit];
+    $scope.highestPosts = [$scope.topSubmit, $scope.topPost];
 
     /*
      Determines how many comments/submissions to display on screen
@@ -106,7 +107,12 @@ angular.module('SubSnoopApp')
       $scope.subPage.current = 1;
       setArray();
       $scope.setAccordion();
+      $scope.setPage(num);
     };
+
+    $scope.setPage = function(num) {
+      $scope.page = $scope.pages[num];
+    }
 
     $scope.isSet = function(num) {
       return $scope.tab === parseInt(num);
@@ -169,18 +175,6 @@ angular.module('SubSnoopApp')
       $scope.slicedArray = $scope.elemArray.slice((($scope.subPage.current-1)*$scope.subPage.items), 
         (($scope.subPage.current)*$scope.subPage.items));
       return $scope.slicedArray;
-    };
-
-    $scope.isOverview = function() {
-      return $scope.tab == 2;
-    };
-
-    $scope.switchSub = function() {
-      if ($scope.tab < 2) {
-        $scope.setTab(2);
-      } else {
-        $location.path('/' + $scope.username + '/');
-      }
     };
 
   }

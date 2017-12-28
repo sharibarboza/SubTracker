@@ -1,4 +1,4 @@
-<div class="col-md-3 col-md-push-9 card search-content" id="search-side-card">
+<div class="col-md-3 card search-content" id="search-side-card">
   <div class="card-content">
     <strong class="black">Filter Results</strong>
 
@@ -16,11 +16,11 @@
 
     <br>
     <strong class="black">Only Search In:</strong>
-    <br>
+    <br><br>
     <button class="btn btn-sm" ng-click="deselect()">Deselect All</button>
     <div ng-repeat="subname in resultList" class="side-stats">
       <div class="checkbox">
-        <label><input type="checkbox" ng-model="checkedSub" ng-value="subname" ng-click="addSub(subname)" ng-checked="checkSub(subname)">/r/{{ subname }}</label>
+        <label><input type="checkbox" ng-model="checkedSub" ng-value="subname" ng-click="addSub(subname)" ng-checked="checkSub(subname)">{{ subname }}</label>
       </div>
     </div>
   </div>
