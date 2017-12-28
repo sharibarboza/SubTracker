@@ -905,6 +905,11 @@ User Page
   display: inline-block;
 }
 
+.user-badge-card:hover {
+  color: white !important;
+  background-color: #00B1CC;
+}
+
 /***********************
 User Page Side Bar
 ************************/
