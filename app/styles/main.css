@@ -1265,10 +1265,6 @@ Sub Page Side Bar
   max-width: 100%;
 }
 
-.submit-info {
-  border-left: 1px solid #e5e5e5;
-}
-
 #stat-lines {
   padding-top: 15px;
   padding-left: 5px;
@@ -1299,6 +1295,10 @@ Submit Post Thumbnails
   width: 100%;
 }
 
+.post-thumbnail {
+  border-right: 1px solid #e5e5e5;
+}
+
 .post-thumbnail img {
   width: 100%;
 }
@@ -1312,7 +1312,7 @@ Submit Post Thumbnails
 
 .thumb-beta-default {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -3px -1095px;
+  background-position: -4px -1095px;
   background-repeat: no-repeat;
   height: 55px;
 }
@@ -1333,7 +1333,7 @@ Submit Post Thumbnails
 
 .thumb-beta-self {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -3px -1265px;
+  background-position: -4px -1265px;
   background-repeat: no-repeat;
   height: 55px;
 }
@@ -1354,7 +1354,7 @@ Submit Post Thumbnails
 
 .thumb-beta-image {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -3px -1040px;
+  background-position: -4px -1040px;
   background-repeat: no-repeat;
   height: 55px;
 }
@@ -1375,7 +1375,7 @@ Submit Post Thumbnails
 
 .thumb-beta-nsfw {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -3px -1150px;
+  background-position: -4px -1150px;
   background-repeat: no-repeat;
   height: 55px; 
 }
@@ -1396,7 +1396,7 @@ Submit Post Thumbnails
 
 .thumb-beta-spoiler {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -3px -1210px;
+  background-position: -4px -1210px;
   background-repeat: no-repeat;
   height: 55px; 
 }
@@ -1456,10 +1456,6 @@ Search
 
 #results-card:hover {
   color: #12C5E0;
-}
-
-#submit-col {
-  padding: 10px;
 }
 
 #submit-col-search {
@@ -1761,7 +1757,7 @@ Mobile
     padding: 0;
   }
 
-  md-card, .non-badge, #more-subs, #subreddits, .post-page {
+  md-card, .non-badge, #more-subs, #subreddits, .post-page, #submit-card .row  {
     margin-left: 0;
     margin-right: 0;
   }
@@ -1778,13 +1774,18 @@ Mobile
     display: inline !important;
   }
 
-  .submit-info {
+  .post-thumbnail {
     border-left: none;
   }
 
   .table-note {
     padding-left: 10px;
     padding-right: 10px;
+  }
+
+  #search-banner {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   #more-subs {
