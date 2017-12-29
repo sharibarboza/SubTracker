@@ -10,7 +10,7 @@ angular.module('SubSnoopApp')
   .directive('submitContent', ['$compile', '$filter', '$window', function ($compile, $filter, $window) {
 
     var windowWidth = $window.innerWidth;
-    var videoWidth = 100;
+    var defaultVideo = 100;
 
     /* Submission posts with no preview images */
     var isLinkedImage = function(submit) {
@@ -50,6 +50,8 @@ angular.module('SubSnoopApp')
      Change width of embedded videos
     */
     var changeSize = function(page, html) {
+      var videoWidth = defaultVideo;
+
       if (page == 'submissions' && windowWidth > 800) {
         videoWidth = 70;
       }
