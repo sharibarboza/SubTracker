@@ -7,7 +7,10 @@
  * # submitContent
  */
 angular.module('SubSnoopApp')
-  .directive('submitContent', ['$compile', '$filter', function ($compile, $filter) {
+  .directive('submitContent', ['$compile', '$filter', '$window', function ($compile, $filter, $window) {
+
+    var windowWidth = $window.innerWidth;
+    var videoWidth = 100;
 
     /* Submission posts with no preview images */
     var isLinkedImage = function(submit) {
@@ -47,12 +50,11 @@ angular.module('SubSnoopApp')
      Change width of embedded videos
     */
     var changeSize = function(page, html) {
-      var width = 100;
-      if (page == 'submissions') {
-        width = 70;
+      if (page == 'submissions' && windowWidth > 800) {
+        videoWidth = 70;
       }
 
-      html = html.replace(/width="\d+"/g, 'width="' + width + '%"');
+      html = html.replace(/width="\d+"/g, 'width="' + videoWidth + '%"');
       return html;
     };
 
@@ -116,7 +118,9 @@ angular.module('SubSnoopApp')
      Alter the width of an image
     */
     var getImageClass = function(page) {
-      if (page == 'submissions' || page == 'search') {
+      if (windowWidth < 800) {
+        return '<img class="submit-pic fuller-pic" ';
+      } else if (page == 'submissions' || page == 'search') {
         return '<img class="submit-pic smaller-pic" ';
       } else {
         return '<img class="submit-pic fuller-pic" ';
@@ -162,7 +166,7 @@ angular.module('SubSnoopApp')
             } else if (isVideo(data.url)) {
               return centerWrap(getImageClass(page) + 'ng-src="' + secureURLs(getVideoUrl(data.url)) + '">');
             } else if (data.media && 'reddit_video' in data.media && data.media.reddit_video.fallback_url) {
-              var html = '<video width="70%" height="240" class="submit-pic" controls><source src="' + secureURLs(data.media.reddit_video.fallback_url) + '" type="video/mp4"></video>';
+              var html = '<video width="100%" height="240" class="submit-pic" controls><source src="' + secureURLs(data.media.reddit_video.fallback_url) + '" type="video/mp4"></video>';
               return centerWrap(changeSize(page, html));
             } else {
               return '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';

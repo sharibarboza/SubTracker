@@ -40,10 +40,10 @@
       </div>
 
       <div class="user-head-nav row no-margin">
-        <div class="col-md-4 no-padding">
+        <div class="col-md-4 col-xs-12 no-padding last-seen">
           <span><i class="fa fa-clock-o" aria-hidden="true"></i> <strong class="md-blue">Last seen: <time-ago class="light-gray" from-time='{{ lastPost.created_utc * 1000 }}'></time-ago></strong></span>
         </div>
-        <div class="col-md-4 no-padding" align="center">
+        <div class="col-md-4 hidden-xs no-padding" align="center">
           <div ng-if="subLength >= 25 && subLength < 50">
             <img ng-src="{{ '../images/bronze.png' }}" alt="bronze-medal">
             <md-tooltip class="tooltip">Posted in at least 25 subreddits</md-tooltip>
@@ -57,7 +57,7 @@
             <md-tooltip class="tooltip">Posted in at least 100 subreddits</md-tooltip>
           </div>
         </div>
-        <div class="col-md-4 no-padding" align="right">
+        <div class="col-md-4 hidden-xs no-padding" align="right">
           <a ng-href="https://www.reddit.com/user/{{ redditor.name }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-reddit-alien" aria-hidden="true"></i> To Reddit page <i class="fa fa-external-link" aria-hidden="true"></i></md-button></a>
         </div>
       </div>
@@ -89,7 +89,7 @@
             </div>      
             <br>
 
-            <div class="table-headers">
+            <div class="table-headers hidden-mobile">
               <div class="col-sm-1">Rank</div>
               <div class="col-sm-5">Subreddit</div>
               <div class="col-sm-2">Comments</div>
@@ -142,7 +142,7 @@
                   <br>
                   <img ng-src="{{ data.image ? data.image : '../images/subplanet.jpg' }}" class="badge-image img-circle" alt="badge">
                   <br>
-                  <strong class="sub-name"><i class="fa fa-shield green" aria-hidden="true"></i><br>
+                  <strong class="sub-name badge-name"><i class="fa fa-shield green" aria-hidden="true"></i><br>
                   r/{{ data.sub | truncate:15:true }}</strong>
                 </md-card-content>
                 <md-divider></md-divider>

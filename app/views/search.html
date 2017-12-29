@@ -59,11 +59,11 @@
                   </accordion-heading>
 
                   <div class="card-action" style="background-color: white;">
-                    <span class="post-links" ng-if="results.data[sub].comments.length">
+                    <span class="post-links post-badge" ng-if="results.data[sub].comments.length">
                       <span class="badge results-badge"><ng-pluralize count="results.data[sub].comments.length" when="{'1': '1 comment', 'other': '{{ results.data[sub].comments.length | number }} comments'}"></ng-pluralize></span>
                     </span>
 
-                    <span class="post-links" ng-if="results.data[sub].submissions.length">
+                    <span class="post-links post-badge" ng-if="results.data[sub].submissions.length">
                       <span class="badge results-badge"><ng-pluralize count="results.data[sub].submissions.length" when="{'1': '1 submission', 'other': '{{ results.data[sub].submissions.length | number }} submissions'}"></ng-pluralize></span>
                     </span>
                     <br><br>

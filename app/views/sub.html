@@ -34,15 +34,25 @@
     </div>
 
     <div class="user-head-nav" align="center">
-      <div class="col-xs-3 no-padding" align="left">
-        <a ng-href="#/{{ username }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to subs <i class="fa fa-list" aria-hidden="true"></i></i></md-button></a>
+      <div class="col-sm-3 hidden-xs no-padding" align="left">
+        <a ng-href="#/{{ username }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to subs <i class="fa fa-list" aria-hidden="true"></i></md-button></a>
       </div>
-      <div class="col-xs-2 post-tab" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">Overview</strong></div>
-      <div class="col-xs-2 post-tab" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">Comments</strong></div>
-      <div class="col-xs-2 post-tab" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">Posts</strong></div>
-      <div class="col-xs-3 no-padding" align="right">
-        <a ng-href="https://www.reddit.com/r/{{ subreddit }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-reddit-alien" aria-hidden="true"></i> To Reddit page <i class="fa fa-external-link" aria-hidden="true"></i></i></md-button></a>
+      <div class="col-sm-2 col-xs-4 post-tab" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">Overview</strong></div>
+      <div class="col-sm-2 col-xs-4 post-tab" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">Comments</strong></div>
+      <div class="col-sm-2 col-xs-4 post-tab" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">Posts</strong></div>
+      <div class="col-sm-3 hidden-xs no-padding" align="right">
+        <a ng-href="https://www.reddit.com/r/{{ subreddit }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-reddit-alien" aria-hidden="true"></i> To Reddit page <i class="fa fa-external-link" aria-hidden="true"></i></md-button></a>
       </div>
+    </div>
+
+    <div class="buttons-mobile">
+      <br>
+      <div class="col-xs-6 no-padding" align="left">
+        <a ng-href="#/{{ username }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to subs</md-button></a>
+      </div> 
+      <div class="col-xs-6 no-padding" align="right">
+        <a ng-href="https://www.reddit.com/r/{{ subreddit }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-reddit-alien" aria-hidden="true"></i> Reddit page </md-button></a>
+      </div> 
     </div>
 
     <div class="sub-table">
@@ -86,7 +96,7 @@
                     <time-ago class="green" from-time='{{ latestPost.created_utc * 1000 }}'></time-ago></strong>
                   </md-card-content>
                   <md-divider></md-divider>
-                  <md-card-content>
+                  <md-card-content class="activity-table">
                     <div class="row" id="overview-table">
                       <div class="col-sm-12">
                         <table class="table">
@@ -115,7 +125,9 @@
                             <td>{{ (sub.comment_ups) + (sub.submission_ups) | number }}</td>
                           </tr>    
                         </table>    
-                        <span class="gray small-font">Note: The data shown here is only a portion from the the user's more recent 1000 comments and most recent 1000 submissions from all subreddits.</span>
+                        <div class="table-note">
+                          <span class="gray small-font">Note: The data shown here is only a portion from the the user's more recent 1000 comments and most recent 1000 submissions from all subreddits.</span>
+                        </div>
                       </div>
                     </div>
                   </md-card-content>
@@ -140,7 +152,7 @@
           <br>
           <div id="statistics" ng-controller="SubStatsCtrl">
 
-            <strong class="stats-title" style="padding-left: 10px;">Out of {{ username }}'s <span class="badge">{{ subLength }}</span> subreddits, <span class="purple">/r/{{ subreddit }}</span> is:</strong>
+            <div class="stats-title"><strong>Out of {{ username }}'s <span class="badge">{{ subLength }}</span> subreddits, <span class="purple">/r/{{ subreddit }}</span> is:</strong></div>
             <div class="row badge-row small-font">
               <div ng-repeat="(badge, data) in badges" class="col-sm-3 col-xs-6" align="center">
                 <md-card>
@@ -190,8 +202,8 @@
         </div>
 
         <div ng-if="(tab == 0 && sub.comments.length > 0) || (tab == 1 && sub.submissions.length > 0)">
-          <div class="margin-pad">
-            <span class="small-font">Viewing <strong class="orange">{{ slicedArray.length }}</strong> of {{ sub[tabOptions[tab]].length }} {{ tabOptions[tab] }} </span>
+          <div class="margin-pad post-page">
+            <span class="small-font viewing-title">Viewing <strong class="orange">{{ slicedArray.length }}</strong> of {{ sub[tabOptions[tab]].length }} {{ tabOptions[tab] }} </span>
             <div class="table-options">
               <div class="row" id="table-start">
                 <div class="col-md-3">               

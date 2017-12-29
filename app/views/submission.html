@@ -10,11 +10,11 @@
   <md-divider></md-divider>
 
   <md-card-content id="submit-card">
-    <div class="row submit-row">
-      <div class="col-xs-2 post-thumbnail">
+    <div class="row submit-row no-margin">
+      <div class="col-md-2 hidden-xs post-thumbnail">
         <thumbnail data="{{ element }}" page="{{ page }}"></thumbnail>
       </div>
-      <div class="col-xs-10" style="border-left: 1px solid #e5e5e5;">
+      <div class="col-md-10 col-xs-12 submit-info">
         <a ng-href="{{ element.url }}" target="_blank">
         <strong ng-if="page != 'search' || !element.highlighted_title" class="wrap-text">{{ element.title | escape }}</strong>
         <strong ng-if="page == 'search' && element.highlighted_title" class="wrap-text" ng-bind-html="element.highlighted_title | sanitize"></strong>
@@ -37,7 +37,7 @@
 
   <div ng-if="page == 'search' && element | isContent">
     <md-divider></md-divider>
-    <div id="submit-col">
+    <div id="submit-col-search">
       <submit-content class="wrap-text" data="{{ element }}" page="{{ page }}"></submit-content>
     </div>
   </div>
