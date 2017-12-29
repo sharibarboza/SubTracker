@@ -1,4 +1,4 @@
-<md-card ng-class="page == 'submissions' || page == 'search' ? 'post-margin' : 'empty-class'">
+<md-card ng-class="{ 'post-margin' : page == 'submissions' || page == 'search', 'no-margin' : page == 'search' }">
   <md-card-title ng-if="page == 'user' || page == 'sub'">
     <div class="col-xs-7 no-padding">
       <h4><strong>{{ page == 'user' ? 'Most Recent Submission' : 'Most Upvoted Submission' }}</strong></h4>

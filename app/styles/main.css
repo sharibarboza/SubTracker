@@ -906,8 +906,8 @@ User Page
 }
 
 .user-badge-card:hover {
-  color: white !important;
-  background-color: #00B1CC;
+  color: white;
+  background-color: #5552B3;
 }
 
 /***********************
@@ -1319,7 +1319,7 @@ Submit Post Thumbnails
 
 .thumb-search-default {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 10px -1095px;
+  background-position: 12px -1095px;
   background-repeat: no-repeat;
   height: 55px;
 }
@@ -1340,7 +1340,7 @@ Submit Post Thumbnails
 
 .thumb-search-self {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 10px -1265px;
+  background-position: 12px -1265px;
   background-repeat: no-repeat;
   height: 55px;
 }
@@ -1361,7 +1361,7 @@ Submit Post Thumbnails
 
 .thumb-search-image {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 10px -1040px;
+  background-position: 12px -1040px;
   background-repeat: no-repeat;
   height: 55px;
 }
@@ -1382,7 +1382,7 @@ Submit Post Thumbnails
 
 .thumb-search-nsfw {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 10px -1150px;
+  background-position: 12px -1150px;
   background-repeat: no-repeat;
   height: 55px; 
 }
@@ -1403,7 +1403,7 @@ Submit Post Thumbnails
 
 .thumb-search-spoiler {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 10px -1210px;
+  background-position: 12px -1210px;
   background-repeat: no-repeat;
   height: 55px; 
 }
