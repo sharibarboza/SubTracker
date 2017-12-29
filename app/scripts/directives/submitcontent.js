@@ -118,13 +118,17 @@ angular.module('SubSnoopApp')
      Alter the width of an image
     */
     var getImageClass = function(page) {
+      var html;
+
       if (windowWidth < 800) {
-        return '<img class="submit-pic fuller-pic" ';
+        html = '<img class="submit-pic fuller-pic" ';
       } else if (page == 'submissions' || page == 'search') {
-        return '<img class="submit-pic smaller-pic" ';
+        html = '<img class="submit-pic smaller-pic" ';
       } else {
-        return '<img class="submit-pic fuller-pic" ';
+        html = '<img class="submit-pic fuller-pic" ';
       }
+
+      return html;
     }
 
     /*
@@ -152,25 +156,29 @@ angular.module('SubSnoopApp')
           var page = attrs.page;
 
           var getTemplate = function(data) {
+            var content;
+
             if (data.selftext_html) {
-              return highlightHtml(page, data.selftext_html, data);
+              content = highlightHtml(page, data.selftext_html, data);
             } else if (data.html) {
-              return highlightHtml(page, data.html, data);
+              content = highlightHtml(page, data.html, data);
             } else if (isLinkedImage(data)) {
-              return getImageClass(page) + 'ng-src="' + data.url + '">';
+              content = getImageClass(page) + 'ng-src="' + data.url + '">';
             } else if (data.media && data.media.oembed && data.media.oembed.provider_name != "Imgur") {
               var html = $filter('escape')(secureURLs(data.media.oembed.html));
-              return centerWrap(changeSize(page, html));
+              content = centerWrap(changeSize(page, html));
             } else if (isPreview(data) && (isAttachedImage(data) || isImgurAlbum(data))) {
-              return  getImageClass(page) +'ng-src="' + $filter('escape')(getPreview(data)) + '">';
+              content = getImageClass(page) +'ng-src="' + $filter('escape')(getPreview(data)) + '">';
             } else if (isVideo(data.url)) {
-              return centerWrap(getImageClass(page) + 'ng-src="' + secureURLs(getVideoUrl(data.url)) + '">');
+              content = centerWrap(getImageClass(page) + 'ng-src="' + getVideoUrl(data.url)) + '">';
             } else if (data.media && 'reddit_video' in data.media && data.media.reddit_video.fallback_url) {
-              var html = '<video width="100%" height="240" class="submit-pic" controls><source src="' + secureURLs(data.media.reddit_video.fallback_url) + '" type="video/mp4"></video>';
-              return centerWrap(changeSize(page, html));
+              var html = '<video width="100%" height="240" class="submit-pic" controls><source src="' + data.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
+              content = centerWrap(changeSize(page, html));
             } else {
-              return '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
+              content = '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
             } 
+
+            return secureURLs(content);
           };
 
           element.html(getTemplate(data));
