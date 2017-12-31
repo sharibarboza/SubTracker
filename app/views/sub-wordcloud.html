@@ -1,0 +1,13 @@
+<div ng-controller="WordcloudCtrl" class="border-box">
+  <md-card>
+    <md-card-title>
+      <h5><strong>Most Mentioned Words</strong></h5>
+    </md-card-title>
+    <md-divider></md-divider>
+    <md-card-content>
+      <div align="center">
+        <jqcloud words="words" steps="7" colors="{{ colors }}" style="width: 90%; height: 350px;"></jqcloud>
+      </div>
+    </md-card-content>
+  </md-card>
+</div>

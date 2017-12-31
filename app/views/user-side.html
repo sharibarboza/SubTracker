@@ -1,0 +1,12 @@
+<div ng-include src="'views/user-last-seen.html'" class="non-mobile-only"></div>
+
+<div class="row no-margin">
+  <div ng-repeat="element in latest" ng-if="element.id">
+    <div ng-if="element.type == 'comment'">
+      <div ng-include src="'views/comment-card.html'"></div>
+    </div>
+    <div ng-if="element.type == 'submit'">
+      <div ng-include src="'views/submit-card.html'"></div>
+    </div>
+  </div>
+</div>

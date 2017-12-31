@@ -1,0 +1,20 @@
+<div class="row badge-row small-font" ng-controller="UserStatsCtrl">
+  <div ng-repeat="(badge, data) in badges" class="col-sm-3 col-xs-6" align="center">
+    <a href="#/{{ username }}/{{ data.sub }}/">
+    <md-card>
+      <md-tooltip class="tooltip">{{ data.sub }}: {{ data.points | number }} <i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i></md-tooltip>
+      <md-card-content class="user-badge-card">
+        <br>
+        <img ng-src="{{ data.image ? data.image : '../images/subplanet.jpg' }}" class="badge-image img-circle" alt="badge">
+        <br>
+        <strong class="badge-name"><i class="fa fa-shield green" aria-hidden="true"></i><br>
+        r/{{ data.sub | truncate:15:true }}</strong>
+      </md-card-content>
+      <md-divider></md-divider>
+      <md-card-actions layout="row" layout-align="center">
+        <strong class="light-gray">{{ data.name }}</strong>
+      </md-card-actions>            
+    </md-card>
+    </a>
+  </div>
+</div> 

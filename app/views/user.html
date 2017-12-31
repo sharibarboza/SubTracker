@@ -40,8 +40,19 @@
       </div>
 
       <div class="user-head-nav row no-margin">
-        <div class="col-md-4 col-xs-12 no-padding last-seen">
-          <span><i class="fa fa-clock-o" aria-hidden="true"></i> <strong class="md-blue">Last seen: <time-ago class="light-gray" from-time='{{ lastPost.created_utc * 1000 }}'></time-ago></strong></span>
+        <div class="col-md-4 col-md-offset-0 col-xs-10 col-xs-offset-1 no-padding" id="search-subs">
+          <div class="col-xs-1 no-padding" style="margin-top: 8px;">
+            <i class="fa fa-search" aria-hidden="true" style="font-size: 22px;"></i>
+          </div>
+          <div class="col-xs-11 no-padding">
+            <form>
+              <md-input-container md-no-float class="md-block">
+                <input type="text" id="testInput"
+                       ng-model="searchSub" ng-change="changeSubs(searchSub)" placeholder="Search for a subreddit ..." md-autofocus>
+              </md-input-container>
+              <button type="submit" style="display: none;" ng-controller="SidebarCtrl" ng-click="close()">Go!</button>
+            </form>
+          </div>
         </div>
         <div class="col-md-4 hidden-xs no-padding" align="center">
           <div ng-if="subLength >= 25 && subLength < 50">
@@ -57,145 +68,128 @@
             <md-tooltip class="tooltip">Posted in at least 100 subreddits</md-tooltip>
           </div>
         </div>
-        <div class="col-md-4 hidden-xs no-padding" align="right">
+        <div class="col-md-4 col-md-offset-0 col-xs-10 col-xs-offset-1 no-padding mobile-center user-reddit-btn" align="right">
           <a ng-href="https://www.reddit.com/user/{{ redditor.name }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-reddit-alien" aria-hidden="true"></i> To Reddit page <i class="fa fa-external-link" aria-hidden="true"></i></md-button></a>
         </div>
       </div>
+      <div class="sub-table column-pad">
+        <div class="no-margin row">
 
-      <div class="sub-table">
-        <div class="sub-rows" id="table-head">
-          <div id="subreddits" class="margin-pad">
-            <div class="row" id="subtable-head">
-              <div class="col-md-8 col-sm-12 col-xs-12 dropdown-col no-padding">
-                <div class="btn-group select-dropdown">
-                  <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    {{ selected.name }}
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="sort in sortData.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
-                  </ul>
+          <div ng-include src="'views/user-last-seen.html'" class="mobile-only"></div>
+
+          <div class="col-md-8 no-padding" id="table-head">
+            <div ng-include src="'views/sub-badges.html'"></div>
+
+            <div id="subreddits" class="margin-pad">
+
+              <div class="row" id="subtable-head">
+                <div class="col-md-3 no-padding sort-col">
+                  <strong class="sort-title">Sort subreddits by:</strong>
+                </div>
+                <div class="col-md-9 col-sm-12 col-xs-12 dropdown-col no-padding">
+                  <div class="btn-group select-dropdown">
+                    <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      {{ selected.name }}
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li ng-repeat="sort in sortData.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
+                    </ul>
+                </div>
+                </div>
               </div>
+
+              <div class="viewing-row" id="user-viewing">
+                <span class="small-font viewing-title">Viewing <strong class="orange">{{ currentLimit }}</strong> of {{ subLength }} subreddits </span>
               </div>
-              <div class="col-md-4 hidden-sm hidden-xs option-pos" id="search-subs" align="right">
-                <form>
-                  <md-input-container>
-                    <label for="testInput" class="main-color low-weight"><i class="glyphicon glyphicon-search" aria-hidden="true"></i> <strong class="light-gray">Search for a subreddit ...</strong></label>
-                    <input type="text" id="testInput"
-                           ng-model="searchSub" ng-change="changeSubs(searchSub)" md-autofocus>
-                  </md-input-container>
-                  <button type="submit" style="display: none;" ng-controller="SidebarCtrl" ng-click="close()">Go!</button>
-                </form>
+
+              <div class="table-headers hidden-mobile light-gray">
+                <div class="col-sm-1">Rank</div>
+                <div class="col-sm-5">Subreddit</div>
+                <div class="col-sm-2">Comments</div>
+                <div class="col-sm-2">Submitted</div>
+                <div class="col-sm-2">Points</div>
               </div>
-            </div>      
-            <br>
 
-            <div class="table-headers hidden-mobile">
-              <div class="col-sm-1">Rank</div>
-              <div class="col-sm-5">Subreddit</div>
-              <div class="col-sm-2">Comments</div>
-              <div class="col-sm-2">Submitted</div>
-              <div class="col-sm-2">Upvotes</div>
-            </div>
-
-            <br>
-            <div ng-repeat="subreddit in subList.slice(0, currentLimit)" id="sub-row">
-              <a ng-href="#/{{ username }}/{{ subreddit }}/">
-              <md-card ng-class="$index < (currentLimit - 1) ? 'border-bottom' : 'margin-bottom'">
-                <md-card-title class="sub-box">
-                  <div class="col-sm-1 hidden-xs rank-box" align="center">{{ 1 + $index }}</div>
-                  <div class="col-sm-5 col-xs-12 subname-box">
-                    <span class="purple sub-name">{{ subreddit }}</span><br>
-                    <span class="gray sub-text"><span ng-bind="subs[subreddit].recent_activity.created_utc * 1000 | amDateFormat:'MMM Do YYYY, h:mm a'"></span></span>                   
-                  </div>
-                  <div class="col-sm-2 hidden-xs subbox-stats subname-box" align="center">
-                    <span class="black number">{{ subs[subreddit].comments.length }}</span><br>
-                    <i class="glyphicon glyphicon-comment icon-gray" aria-hidden="true"></i>
-                  </div>
-                  <div class="col-sm-2 hidden-xs subbox-stats subname-box" align="center">
-                    <span class="black number">{{ subs[subreddit].submissions.length }}</span><br>
-                    <i class="glyphicon glyphicon-list-alt icon-gray" aria-hidden="true"></i>
-                  </div>
-                  <div class="col-sm-2 hidden-xs subbox-stats subname-box" align="center">
-                    <span class="number" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'">{{ subs[subreddit].total_ups | number }}</span><br>
-                    <i class="glyphicon glyphicon-arrow-up icon-gray" aria-hidden="true"></i>
-                  </div>
-                </md-card-title>
-              </md-card>
-              </a>
-            </div>
-          </div>
-
-          <div ng-if="(currentLimit > limit) || (currentLimit == limit && subList.length > limit)" class="non-badge" align="center" id="more-subs" ng-click="changeLimit()">
-            <div>
-              <strong class="light-gray">{{ currentLimit == subLength ? 'See less subreddits' : 'See more subreddits' }}
-              <br><i class="fa fa-2x" ng-class="currentLimit == subLength ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true"></i></strong>
-            </div>
-          </div>
-
-          <br><br>
-          <div class="row badge-row small-font" ng-controller="UserStatsCtrl">
-            <div ng-repeat="(badge, data) in badges" class="col-sm-3 col-xs-6" align="center">
-              <a href="#/{{ username }}/{{ data.sub }}/">
-              <md-card>
-                <md-tooltip class="tooltip">{{ data.sub }}: {{ data.points | number }} <i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i></md-tooltip>
-                <md-card-content class="user-badge-card">
-                  <br>
-                  <img ng-src="{{ data.image ? data.image : '../images/subplanet.jpg' }}" class="badge-image img-circle" alt="badge">
-                  <br>
-                  <strong class="sub-name badge-name"><i class="fa fa-shield green" aria-hidden="true"></i><br>
-                  r/{{ data.sub | truncate:15:true }}</strong>
-                </md-card-content>
-                <md-divider></md-divider>
-                <md-card-actions layout="row" layout-align="center">
-                  <h5><strong class="light-gray">{{ data.name }}</strong></h5>
-                </md-card-actions>            
-              </md-card>
-              </a>
-            </div>
-          </div> 
-          <br><br>
-
-          <div class="row no-margin">
-            <div ng-repeat="element in latest" ng-if="element.id" class="col-md-6 col-xs-12 no-padding">
-              <div ng-if="element.type == 'comment'">
-                <div ng-include src="'views/comment.html'"></div>
-              </div>
-              <div ng-if="element.type == 'submit'">
-                <div ng-include src="'views/submission.html'"></div>
-              </div>
-            </div>
-          </div>
-
-          <br>
-          <div id="statistics">
-            <br><br>
-            <div ng-controller="PiechartCtrl" align="center" id="pies">
-              <div class="col-md-6 col-xs-12 no-padding" align="center">
-                <md-card ng-if="comments > 0">
-                  <md-card-content>
-                    <h4><strong>Subreddit distribution across<br><span class="baby-blue">{{ username }}'s</span><br>most recent {{ chartLimit }} comments</strong></h4>
-                    <span class="small-font">Hover to see the number of comments for that sub out of {{ username }}'s most recent {{ chartLimit }} comments.</span>
-                    <donut-chart type="comments" limit="20" align="center"></donut-chart>
-                    <h5 ng-if="comments == 0">{{ username }} does not have any comments.</h5>
-                  </md-card-content>
+              <br>
+              <div ng-repeat="subreddit in subList.slice(0, currentLimit)" id="sub-row">
+                <a ng-href="#/{{ username }}/{{ subreddit }}/">
+                <md-card ng-class="$index < (currentLimit - 1) ? 'border-bottom' : 'margin-bottom'">
+                  <md-card-title class="sub-box">
+                    <div class="col-sm-1 hidden-xs rank-box" align="center">{{ 1 + $index }}</div>
+                    <div class="col-sm-5 col-xs-12 subname-box">
+                      <span class="purple sub-name">{{ subreddit }}</span><br>
+                      <span class="gray sub-text"><span ng-bind="subs[subreddit].recent_activity.created_utc * 1000 | amDateFormat:'MMM Do YYYY, h:mm a'"></span></span>                   
+                    </div>
+                    <div class="col-sm-2 hidden-xs subbox-stats subname-box" align="center">
+                      <strong class="black">{{ subs[subreddit].comments.length }}</strong><br>
+                      <i class="glyphicon glyphicon-comment icon-gray" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-sm-2 hidden-xs subbox-stats subname-box" align="center">
+                      <strong class="black">{{ subs[subreddit].submissions.length }}</strong><br>
+                      <i class="glyphicon glyphicon-list-alt icon-gray" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-sm-2 hidden-xs subbox-stats subname-box" align="center">
+                      <strong ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'">{{ subs[subreddit].total_ups | number }}</strong><br>
+                      <i class="glyphicon glyphicon-arrow-up icon-gray" aria-hidden="true"></i>
+                    </div>
+                  </md-card-title>
                 </md-card>
-              </div>
-              <div class="col-md-6 col-xs-12 no-padding" align="center">
-                <md-card ng-if="submissions > 0">
-                  <md-card-content>
-                    <h4><strong>Subreddit distribution across<br><span class="baby-blue">{{ username }}'s</span><br>most recent {{ chartLimit }} submissions</strong></h4>
-                    <span class="small-font">Hover to see the number of submissions for that sub out of {{ username }}'s most recent {{ chartLimit }} submissions.</span>
-                    <donut-chart type="submissions" limit="20" align="center"></donut-chart>
-                    <h5 ng-if="submissions == 0">{{ username }} does not have any submissions.</h5> 
-                  </md-card-content>
-                </md-card>  
+                </a>
               </div>
             </div>
+
+            <div ng-if="(currentLimit > limit) || (currentLimit == limit && subList.length > limit)" class="non-badge" align="center" id="more-subs" ng-click="changeLimit()">
+              <div>
+                <strong class="light-gray">{{ currentLimit == subLength ? 'See less subreddits' : 'See more subreddits' }}
+                <br><i class="fa fa-2x" ng-class="currentLimit == subLength ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true"></i></strong>
+              </div>
+            </div>
+
+            <br>
+            <div id="statistics">
+              <div ng-controller="PiechartCtrl" align="center" id="pies" class="row no-margin">
+                <div class="col-md-6 col-xs-12 no-padding" align="center">
+                  <md-card ng-if="comments > 0">
+                    <md-card-content>
+                      <h4><strong>Subreddit distribution across<br><span class="baby-blue">{{ username }}'s</span><br>most recent {{ chartLimit }} comments</strong></h4>
+                      <span class="small-font">Hover to see the number of comments for that sub out of {{ username }}'s most recent {{ chartLimit }} comments.</span>
+                      <donut-chart type="comments" limit="20" align="center"></donut-chart>
+                      <h5 ng-if="comments == 0">{{ username }} does not have any comments.</h5>
+                    </md-card-content>
+                  </md-card>
+                </div>
+                <div class="col-md-6 col-xs-12 no-padding" align="center">
+                  <md-card ng-if="submissions > 0">
+                    <md-card-content>
+                      <h4><strong>Subreddit distribution across<br><span class="baby-blue">{{ username }}'s</span><br>most recent {{ chartLimit }} submissions</strong></h4>
+                      <span class="small-font">Hover to see the number of submissions for that sub out of {{ username }}'s most recent {{ chartLimit }} submissions.</span>
+                      <donut-chart type="submissions" limit="20" align="center"></donut-chart>
+                      <h5 ng-if="submissions == 0">{{ username }} does not have any submissions.</h5> 
+                    </md-card-content>
+                  </md-card>  
+                </div>
+              </div>
+            </div>
+
+            <br>
+            <div align="center" class="center-back">
+              <back-top></back-top>
+              <br><br>
+            </div>
+
           </div>
-          <div align="center" class="center-back">
+
+          <div class="col-md-4 no-padding">
+            <div ng-include src="'views/user-side.html'"></div>
+          </div>
+
+          <div align="center" class="mobile-only">
             <back-top></back-top>
+            <br><br>
           </div>
+
         </div>
+
       </div>
     </div>
   </div>

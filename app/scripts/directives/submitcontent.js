@@ -63,12 +63,16 @@ angular.module('SubSnoopApp')
     /*
      Highlight search terms in text posts for the search page
     */
-    var highlightHtml = function(page, html, data) {
+    var highlightHtml = function(page, html, data, truncate) {
+      var text;
+
       if (page === 'search' && data.highlighted_body) {
-        return $filter('sanitize')(data.highlighted_body);
+        text = $filter('sanitize')(data.highlighted_body);
       } else {
-        return $filter('sanitize')(html);
+        text = $filter('sanitize')(html);
       }
+
+      return truncateText(text, truncate);
     };
 
     /*
@@ -134,6 +138,17 @@ angular.module('SubSnoopApp')
     }
 
     /*
+     Truncate text posts
+    */
+    var truncateText = function(html, truncate) {
+      if (truncate == "true") {
+        return $filter('truncate')(html, 75, false);
+      } else {
+        return html;
+      }
+    }
+
+    /*
      Align content in the center
     */
     var centerWrap = function(html) {
@@ -150,20 +165,23 @@ angular.module('SubSnoopApp')
     return {
       restrict: 'E',
       scope: {
-          data: '@'
+          data: '@',
+          page: '@',
+          truncate: '='
       },
       link: function postLink(scope, element, attrs) {
         scope.$watch('data', function() {
           var data = JSON.parse(attrs.data);
           var page = attrs.page;
+          var truncate = attrs.truncate;
 
-          var getTemplate = function(data) {
+          var getTemplate = function(data, truncate) {
             var content;
 
             if (data.selftext_html) {
-              content = highlightHtml(page, data.selftext_html, data);
+              content = highlightHtml(page, data.selftext_html, data, truncate);
             } else if (data.html) {
-              content = highlightHtml(page, data.html, data);
+              content = highlightHtml(page, data.html, data, truncate);
             } else if (isLinkedImage(data)) {
               content = getImageClass(page) + 'ng-src="' + data.url + '">';
             } else if (data.media && data.media.oembed && data.media.oembed.provider_name != "Imgur") {
@@ -179,11 +197,10 @@ angular.module('SubSnoopApp')
             } else {
               content = '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
             } 
-
             return secureURLs(content);
           };
 
-          element.html(getTemplate(data));
+          element.html(getTemplate(data, truncate));
           $compile(element.contents())(scope);
         });
       }
