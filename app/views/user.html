@@ -40,19 +40,8 @@
       </div>
 
       <div class="user-head-nav row no-margin">
-        <div class="col-md-4 col-md-offset-0 col-xs-10 col-xs-offset-1 no-padding" id="search-subs">
-          <div class="col-xs-1 no-padding" style="margin-top: 8px;">
-            <i class="fa fa-search" aria-hidden="true" style="font-size: 22px;"></i>
-          </div>
-          <div class="col-xs-11 no-padding">
-            <form>
-              <md-input-container md-no-float class="md-block">
-                <input type="text" id="testInput"
-                       ng-model="searchSub" ng-change="changeSubs(searchSub)" placeholder="Search for a subreddit ..." md-autofocus>
-              </md-input-container>
-              <button type="submit" style="display: none;" ng-controller="SidebarCtrl" ng-click="close()">Go!</button>
-            </form>
-          </div>
+        <div class="col-md-4 hidden-xs no-padding">
+          <md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-shield" aria-hidden="true"></i> To Random Sub <i class="fa fa-random" aria-hidden="true"></i></md-button>
         </div>
         <div class="col-md-4 hidden-xs no-padding" align="center">
           <div ng-if="subLength >= 25 && subLength < 50">
@@ -98,11 +87,29 @@
                 </div>
               </div>
 
-              <div class="viewing-row" id="user-viewing">
-                <span class="small-font viewing-title">Viewing <strong class="orange">{{ currentLimit }}</strong> of {{ subLength }} subreddits </span>
+              <div class="row no-margin">
+                <div class="col-md-6 col-xs-12 no-padding">
+                  <div class="viewing-row" id="user-viewing">
+                    <span class="small-font viewing-title">Viewing <strong class="orange">{{ currentLimit }}</strong> of {{ subLength }} subreddits </span>
+                  </div>
+                </div>
+                <div class="col-md-6 hidden-xs no-padding" align="right" id="search-subs">
+                  <div class="col-xs-1 no-padding" style="margin-top: 8px;">
+                    <i class="fa fa-search icon-gray" aria-hidden="true" style="font-size: 22px;"></i>
+                  </div>
+                  <div class="col-xs-11 no-padding">
+                    <form>
+                      <md-input-container md-no-float class="md-block">
+                        <input type="text" id="testInput"
+                               ng-model="searchSub" ng-change="changeSubs(searchSub)" placeholder="Search for a subreddit ..." md-autofocus>
+                      </md-input-container>
+                      <button type="submit" style="display: none;" ng-controller="SidebarCtrl" ng-click="close()">Go!</button>
+                    </form>
+                  </div>
+                </div>
               </div>
 
-              <div class="table-headers hidden-mobile light-gray">
+              <div class="table-headers hidden-mobile">
                 <div class="col-sm-1">Rank</div>
                 <div class="col-sm-5">Subreddit</div>
                 <div class="col-sm-2">Comments</div>

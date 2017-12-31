@@ -418,6 +418,7 @@ md-card md-card-title {
 
 .md-button {
   font-weight: 600 !important;
+  margin-bottom: 10px;
 }
 
 .tooltip {
@@ -572,7 +573,7 @@ Content
 }
 
 #search-subs {
-  margin-top: 5px;
+  margin-top: 15px;
 }
 
 .mobile-only {
@@ -774,8 +775,8 @@ User Page
 }
 
 .badge-image {
-  height: 80px;
   width: 80px;
+  height: 80px;
 }
 
 .badge-title {
@@ -1827,10 +1828,6 @@ Mobile
 
   .post-wing {
     margin-top: 30px;
-  }
-
-  .user-reddit-btn {
-    margin-bottom: 10px;
   }
 
   .dropdown-left-col {
