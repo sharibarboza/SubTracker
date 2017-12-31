@@ -1332,18 +1332,11 @@ Submit Post Thumbnails
   height: 55px;
 }
 
-.thumb-mobile-default {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: 4px -1095px;
-  background-repeat: no-repeat;
-  height: 55px;
-}
-
 .thumb-search-default {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 12px -1095px;
+  background-position: -15px -455px;
   background-repeat: no-repeat;
-  height: 55px;
+  height: 105px;
 }
 
 .thumb-self {
@@ -1354,13 +1347,6 @@ Submit Post Thumbnails
 }
 
 .thumb-beta-self {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: 4px -1265px;
-  background-repeat: no-repeat;
-  height: 55px;
-}
-
-.thumb-mobile-self {
   background-image: url('../images/sprite-reddit.png');
   background-position: 4px -1265px;
   background-repeat: no-repeat;
@@ -1388,13 +1374,6 @@ Submit Post Thumbnails
   height: 55px;
 }
 
-.thumb-mobile-image {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: 4px -1040px;
-  background-repeat: no-repeat;
-  height: 55px;
-}
-
 .thumb-search-image {
   background-image: url('../images/sprite-reddit.png');
   background-position: -15px -310px;
@@ -1416,13 +1395,6 @@ Submit Post Thumbnails
   height: 55px; 
 }
 
-.thumb-mobile-nsfw {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: 4px -1150px;
-  background-repeat: no-repeat;
-  height: 55px; 
-}
-
 .thumb-search-nsfw {
   background-image: url('../images/sprite-reddit.png');
   background-position: -15px -603px;
@@ -1438,13 +1410,6 @@ Submit Post Thumbnails
 }
 
 .thumb-beta-spoiler {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: 4px -1210px;
-  background-repeat: no-repeat;
-  height: 55px; 
-}
-
-.thumb-mobile-spoiler {
   background-image: url('../images/sprite-reddit.png');
   background-position: 4px -1210px;
   background-repeat: no-repeat;
