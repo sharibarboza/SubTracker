@@ -394,7 +394,6 @@
         }
 
         var latestPost = compareDates(subComment, subSubmit, true);
-        console.log(latestPost);
         sub.latest_post = latestPost.created_utc;
         return sub.latest_post;
       } else {
