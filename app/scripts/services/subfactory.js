@@ -8,7 +8,7 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('subFactory', ['$http', 'userFactory', '$q', 'moment', '$sce', '$filter', 'rank', function ($http, userFactory, $q, moment, $sce, $filter, rank) {
+ .factory('subFactory', ['$http', 'userFactory', '$q', 'moment', '$filter', 'rank', function ($http, userFactory, $q, moment, $filter, rank) {
     var baseUrl = 'https://www.reddit.com/user/';
     var rawJson = 'raw_json=1';
     var pages = 10;
@@ -27,24 +27,6 @@
     var commentData = [];
     var submitData = [];
     var subData = {};
-
-    /*
-     Callback function to fetch data from user's comments
-    */
-    window.commentsCallback = function(response) {
-      commentData.push(response.data.children);
-      after = response.data.after;
-      pushData(response.data, 'comments');
-    };
-
-    /*
-     Callback function to fetch data from user's submissions
-    */
-    window.submitsCallback = function(response) {
-      submitData.push(response.data.children);
-      after = response.data.after;
-      pushData(response.data, 'submits');
-    };
 
     /*
      User interface for sub factory
@@ -103,6 +85,10 @@
     function setSubData(response) {
       organizeComments(comments);
       organizeSubmitted(submissions);
+
+      // Sort submissions - In Beta, reddit allows submissions to be pinned
+      submissions = $filter('sortPosts')(submissions, 'newest');
+
       subNames = Object.keys(subs);
       subLength = subNames.length;
 
@@ -161,10 +147,9 @@
     /*
      Make the http request to the Reddit API using JSONP.
     */
-    function getJSONP(where, callback) {
-      var url = 'https://www.reddit.com/user/'+username+'/'+where+'.json?limit=100&after='+after+'&jsonp='+callback;
-      var trustedUrl =  $sce.trustAsResourceUrl(url);
-      return $http.jsonp(trustedUrl);
+    function getJSONP(where) {
+      var url = 'https://api.reddit.com/user/'+username+'/'+where+'.json?limit=100&after='+after;
+      return $http.get(url);
     };
 
     /*
@@ -186,23 +171,21 @@
       }
     };
 
-    function getDataList(where) {
-      return where === 'comments' ? commentData : submitData;
-    };
-
     /*
      Resolve promise and return data if there is no more requests.
      If there is still an after value, chain the next promise.
     */
-    function getPromise(where, callback, promise, index) {
-      var promise = promise.then(function() {
-        return getDataList(where);
-      }, function() {
-        if (index === pages-1) {
-          return getDataList(where);
+    function getPromise(where, promise, index) {
+      var promise = promise.then(function(response) {
+        var data = getDataList(where, response);
+
+        if (after) {
+          return getJSONP(where);
         } else {
-          return after ? getJSONP(where, callback) : getDataList(where);
+          return data;
         }
+      }, function(error) {
+        console.log("Error: " + error);
       });
       return promise;
     };
@@ -212,12 +195,49 @@
      Reddit API caps at 1000 comments and submisions each. Only 100 items can be
      fetched at a time, making for at most 10 API requests.
     */
-    function promiseChain(where, callback) {
-      var promise = getJSONP(where, callback);
+    function promiseChain(where) {
+      var promise = getJSONP(where);
       for (var i = 0; i < pages; i++) {
-        promise = getPromise(where, callback, promise, i);
+        promise = getPromise(where, promise, i);
       }
       return promise;
+    };
+
+    /*
+     Update comment or submission array data and return the list
+    */
+    function getDataList(where, response) {
+      if (where === 'comments') {
+        return getCommentsData(response.data);
+      } else {
+        return getSubmitsData(response.data);
+      }
+    };
+
+    /*
+     If there is a response, get the new comment post data
+     Return current comment data
+    */
+    function getCommentsData(response) {
+      if (response) {
+        commentData.push(response.data.children);
+        after = response.data.after;
+        pushData(response.data, 'comments');
+      }
+      return commentData;
+    };
+
+    /*
+     If there is a response, get the new submitted post data
+     Return current submissions data
+    */
+    function getSubmitsData(response) {
+      if (response) {
+        submitData.push(response.data.children);
+        after = response.data.after;
+        pushData(response.data, 'submits');
+      }
+      return submitData;
     };
 
     /*
