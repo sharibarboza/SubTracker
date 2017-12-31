@@ -79,10 +79,10 @@
       setSubInfo: function(subreddit, info) {
         subData.subs[subreddit].info = info;
       },
-      compareDates: compareDates,
       getFirstPost: getFirstPost,
-      getNewestSub: getNewestSub,
       getLatestPost: getLatestPost,
+      compareDates: compareDates,
+      getNewestSub: getNewestSub,
       getRecentPosts: getRecentPosts
     };
     return factory;
@@ -231,7 +231,6 @@
         } 
 
         addComment(subs[subreddit], comment);
-
       }
     };
 
@@ -344,6 +343,10 @@
     */
     function getFirstPost(sub) {
       if (sub) {
+        if ('first_post' in sub) {
+          return sub.first_post;
+        }
+
         var subComment, subSubmit;
         if ('comments' in sub) {
           subComment = sub.comments[sub.comments.length-1];
@@ -353,11 +356,14 @@
           subSubmit = sub.submissions[sub.submissions.length-1];
         }
 
-        return compareDates(subComment, subSubmit, false);
+        var firstPost = compareDates(subComment, subSubmit, false);
+        sub.first_post = firstPost.created_utc;
+        return sub.first_post;
       } else {
         var oldestComment = comments[comments.length-1];
         var oldestSubmit = submissions[submissions.length-1];
-        return compareDates(oldestComment, oldestSubmit, false);
+        var firstPost = compareDates(oldestComment, oldestSubmit, false);
+        return firstPost.created_utc;
       }
     }
 
@@ -368,6 +374,10 @@
     */
     function getLatestPost(sub) {
       if (sub) {
+        if ('latest_post' in sub) {
+          return sub.latest_post;
+        }
+
         var subComment, subSubmit;
         if ('comments' in sub) {
           subComment = sub.comments[0];
@@ -377,11 +387,15 @@
           subSubmit = sub.submissions[0];
         }
 
-        return compareDates(subComment, subSubmit, true);
+        var latestPost = compareDates(subComment, subSubmit, true);
+        console.log(latestPost);
+        sub.latest_post = latestPost.created_utc;
+        return sub.latest_post;
       } else {
         var newestComment = comments[0];
         var newestSubmit = submissions[0];
-        return compareDates(newestComment, newestSubmit, true);
+        var newestPost = compareDates(newestComment, newestSubmit, true);
+        return newestPost.created_utc;
       }
     }
 
