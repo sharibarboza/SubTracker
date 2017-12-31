@@ -1838,6 +1838,11 @@ Mobile
     padding-left: 0px !important;
   }
 
+  .user-reddit-btn {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
   .user-reddit-btn .md-button {
     width: 100%;
   }
