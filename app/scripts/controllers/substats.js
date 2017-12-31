@@ -15,22 +15,22 @@ angular.module('SubSnoopApp')
 
     $scope.badges = {
       'mostActiveRank' : {
-        'image' : '../images/active.png',
+        'image' : 'glyphicon glyphicon-stats',
         'rank' : $scope.subLength,
         'name' : 'MOST ACTIVE'
       },
       'mostUpsRank' : {
-        'image' : '../images/best.png',
+        'image' : 'glyphicon glyphicon-arrow-up',
         'rank' : $scope.subLength,
         'name' : 'MOST UPVOTED'
       },
       'mostCommentsRank' : {
-        'image' : '../images/comments.png',
+        'image' : 'glyphicon glyphicon-comment',
         'rank' : $scope.subLength,
         'name' : 'MOST COMMENTS'
       },
       'mostSubmitsRank' : {
-        'image' : '../images/posts.png',
+        'image' : 'glyphicon glyphicon-list-alt',
         'rank' : $scope.subLength,
         'name' : 'MOST SUBMITS'
       }

@@ -1,0 +1,13 @@
+<md-card style="margin-bottom: 8px;">
+  <md-card-content>
+    <div class="row no-margin">
+      <div class="col-xs-11 no-padding">
+        <strong class="md-blue"> Last seen
+        <time-ago class="light-gray" from-time='{{ lastPost.created_utc * 1000 }}'></time-ago></strong>
+      </div>
+      <div class="col-xs-1 no-padding" align="right">
+        <i class="fa fa-clock-o" aria-hidden="true"></i>
+      </div>
+    </div>
+  </md-card-content>
+</md-card>

@@ -1,0 +1,7 @@
+<md-divider></md-divider>
+<md-card-content>
+  <span class="post-links"><a ng-href="{{ element.link_permalink }}{{ element.id }}" target="_blank">permalink</a></span>
+  <span class="post-links"><a ng-href="{{ element.link_permalink }}{{ element.id }}?context=3" target="_blank">context</a></span> 
+  <span class="post-links"><a ng-href="{{ element.link_permalink }}" target="_blank">full comments ({{ element.num_comments | number }})</a></span>
+  <span ng-if="element.gilded > 0" class="post-links gilded-icon gray"> x {{ element.gilded }}</span>
+</md-card-content>

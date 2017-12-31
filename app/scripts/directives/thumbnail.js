@@ -7,7 +7,9 @@
  * # thumbnail
  */
 angular.module('SubSnoopApp')
-  .directive('thumbnail', function ($compile) {
+  .directive('thumbnail', ['$compile', '$window', function ($compile, $window) {
+
+    var windowWidth = $window.innerWidth;
 
     /*
      Thumbnail is an attached image
@@ -40,9 +42,11 @@ angular.module('SubSnoopApp')
         var getTemplate = function(data, url, type) {
           if (isThumbnail(data)) {
             return '<img class="thumb thumb-pic" ng-src="' + type + '">';
-          } else if (page == 'submissions') {
+          } else if (page == 'submissions' && windowWidth > 800) {
             return '<div class="thumb thumb-' + type + '"></div>';
-          } else if (page == 'search') {
+          } else if (page == 'submissions' && windowWidth <= 800) {
+            return '<div class="thumb thumb-mobile-' + type + '"></div>';
+          } else if (page == 'search' && windowWidth > 800) {
             return '<div class="thumb thumb-search-' + type + '"></div>';
           } else {
             return '<div class="thumb thumb-beta-' + type + '"></div>';
@@ -53,4 +57,4 @@ angular.module('SubSnoopApp')
         $compile(element.contents())(scope);
       }
     };
-  });
+  }]);

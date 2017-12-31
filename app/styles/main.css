@@ -32,6 +32,10 @@ input {
   font-weight: bold;
 }
 
+h5 {
+  font-size: 16px;
+}
+
 .center {
   text-align: center;
 }
@@ -179,7 +183,7 @@ blockquote {
 }
 
 .small-font {
-  font-size: 1.4rem;
+  font-size: 13px;
 }
 
 .accordion .panel-group {
@@ -255,11 +259,6 @@ blockquote {
   background-color: #FAFAFA !important;
 }
 
-.center-back {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
 .reddit-btn {
   color: inherit;
 }
@@ -299,6 +298,10 @@ blockquote {
 .no-margin {
   margin-left: 0;
   margin-right: 0;
+}
+
+.no-pad {
+  padding: 0;
 }
 
 .no-padding {
@@ -367,12 +370,12 @@ md-toolbar:not(.md-menu-toolbar) {
 }
 
 md-input-container {
-  margin-bottom: 0;
+  margin: 0 0 10px 0;
   width: 90% !important;
 }
 
 md-input-container label {
-  font-size: 18px;
+  font-size: 15px;
   text-align: left;
 }
 
@@ -405,8 +408,12 @@ md-toolbar h1 {
   }
 }
 
+md-card {
+  margin-bottom: 15px;
+}
+
 md-card md-card-title {
-  padding: 16px 16px 16px 16px;
+  padding: 10px 16px;
 }
 
 .md-button {
@@ -422,8 +429,7 @@ Dropdown
 ************************/
 
 .select-dropdown {
-  width: 96%;
-  margin-top: 20px;
+  width: 100%;
 }
 
 .select-dropdown button {
@@ -474,8 +480,13 @@ Content
 }
 
 .width-pad {
-  padding-left: 120px;
-  padding-right: 120px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.column-pad {
+  padding-left: 42px;
+  padding-right: 42px;
 }
 
 /* Main marketing message and sign up button */
@@ -539,7 +550,7 @@ Content
 }
 
 .banner-img {
-  width: 120px;
+  width: 100px;
 }
 
 .title-heading {
@@ -562,6 +573,10 @@ Content
 
 #search-subs {
   margin-top: 5px;
+}
+
+.mobile-only {
+  display: none;
 }
 
 /************************
@@ -669,45 +684,12 @@ Navigation
 }
 
 /************************
-Card
-************************/
-
-.card {
-  background-color: #FAFAFA;
-  border-radius: 2px !important;
-  margin-bottom: -1px;
-  border: 1px solid #D6D6D6;
-  outline: none;
-}
-
-.side-cards .card-content {
-  padding: 16px 24px;
-  border-radius: 0 0 2px 2px;
-  outline: none;
-}
-
-.card .card-action:last-child {
-  border-radius: 0 0 2px 2px;
-}
-
-.side-cards .card-action {
-  position: relative !important;
-  border-top: 1px solid rgba(160,160,160,0.2) !important;
-  padding: 4px;
-  outline: none;
-}
-
-.card-action:hover {
-  background-color: #F5F5F5;
-}
-
-/************************
 Main Page
 ************************/
 
 #sub-panels {
   overflow: hidden;
-  padding: 15px 100px;
+  padding: 15px 45px;
 }
 
 #sub-panels .col-md-6 {
@@ -787,12 +769,18 @@ User Page
 }
 
 .stat-icon {
-  width: 75px;
+  width: 40px;
+  margin-bottom: 10px;
 }
 
 .badge-image {
-  height: 100px;
-  width: 100px;
+  height: 80px;
+  width: 80px;
+}
+
+.badge-title {
+  vertical-align: middle;
+  line-height: 50px;
 }
 
 .user-head-nav {
@@ -800,9 +788,8 @@ User Page
   color: #696969;
   font-size: 14px;
   font-weight: 500;
-  padding-left: 120px;
-  padding-right: 120px;
-  text-transform: uppercase;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .post-tab {
@@ -868,24 +855,28 @@ User Page
 
 .rank-box {
   background-color: #00B1CC;
-  height: 75px;
+  height: 65px;
   vertical-align: middle;
-  line-height: 75px;
+  line-height: 65px;
   color: white;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .subname-box {
-  padding: 10px 20px;
+  padding: 10px 15px;
 }
 
 .subbox-stats {
   border-left: 1px solid #e5e5e5;
-  font-size: 16px;
+  font-size: 14px;
   vertical-align: middle;
-  padding-top: 10px;
-  line-height: 25px;
+  line-height: 22px;
+}
+
+#subreddits {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #subreddits .row {
@@ -908,6 +899,14 @@ User Page
 .user-badge-card:hover {
   color: white;
   background-color: #5552B3;
+}
+
+.viewing-row {
+  padding: 25px 0 10px 0;
+}
+
+#user-viewing {
+  padding-bottom: 20px;
 }
 
 /***********************
@@ -965,12 +964,8 @@ Subreddit Table
 
 .sub-table {
   padding-top: 20px;
+  padding-bottom: 20px;
   background-color: #F5F5F5 !important;
-}
-
-.sub-rows {
-  padding-left: 110px;
-  padding-right: 110px;
 }
 
 #sub-row:hover, .sub-box:hover {
@@ -988,7 +983,7 @@ Subreddit Table
 }
 
 .sub-name {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
 }
 
@@ -1000,6 +995,7 @@ Subreddit Table
   padding: 10px;
   margin-left: 9px;
   margin-right: 9px;
+  border: 1px solid #e5e5e5;
 }
 
 #more-subs strong {
@@ -1007,8 +1003,7 @@ Subreddit Table
 }
 
 #more-subs:hover {
-  border: 1px solid #e5e5e5;
-  background-color: #F5F5F5;
+  background-color: white;
 }
 
 .table-headers {
@@ -1018,6 +1013,20 @@ Subreddit Table
   font-size: 15px;
 }
 
+.sort-col {
+  padding-top: 7px;
+}
+
+.sort-title {
+  font-size: 15px;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 7px 20px 7px 0;
+}
+
+.card-sub {
+  padding-top: 8px;
+}
 
 /************************
 User Sub Page
@@ -1092,16 +1101,12 @@ User Sub Page
   font-weight: 600;
 }
 
-.table-options {
-  padding-right: 5px;
-}
-
 .paginate {
   text-align: right;
 }
 
 #top-paginate {
-  padding-top: 25px;
+  padding-top: 22px;
 }
 
 .gilded-icon {
@@ -1126,11 +1131,6 @@ User Sub Page
   vertical-align: -3px;
 }
 
-#back-up {
-  padding-top: 25px;
-  margin-bottom: 30px;
-}
-
 #comment-card {
   padding: 12px;
 }
@@ -1149,7 +1149,6 @@ User Sub Page
 }
 
 .badge-row [class*='col-'] {
-  padding-top: 20px;
   padding-left: 0;
   padding-right: 0;
 }
@@ -1170,7 +1169,7 @@ User Sub Page
 
 .banner-text {
   position: absolute;
-  left: 0px;
+  left: 15px;
   bottom: 25px;
 }
 
@@ -1190,9 +1189,7 @@ User Sub Page
 }
 
 .stats-title {
-  font-size: 16px;
-  padding-left: 10px;
-  padding-right: 10px;
+  font-size: 15px;
 }
 
 .bottom-pag {
@@ -1213,6 +1210,24 @@ User Sub Page
   display: none;
   margin-left: 15px;
   margin-right: 15px;
+}
+
+.post-page {
+  margin-top: 10px;
+  margin-right: 7px;
+  margin-left: 7px;
+}
+
+.pagination-sm {
+  margin: 0 !important;
+}
+
+.dropdown-left-col {
+  padding-right: 7px;
+}
+
+.dropdown-right-col {
+  padding-left: 7px;
 }
 
 /************************
@@ -1305,14 +1320,21 @@ Submit Post Thumbnails
 
 .thumb-default {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 5px -455px;
+  background-position: -20px -455px;
   background-repeat: no-repeat;
   height: 105px;
 }
 
 .thumb-beta-default {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -4px -1095px;
+  background-position: 4px -1095px;
+  background-repeat: no-repeat;
+  height: 55px;
+}
+
+.thumb-mobile-default {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 4px -1095px;
   background-repeat: no-repeat;
   height: 55px;
 }
@@ -1326,86 +1348,114 @@ Submit Post Thumbnails
 
 .thumb-self {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 5px -895px;
+  background-position: -20px -895px;
   background-repeat: no-repeat;
   height: 105px;
 }
 
 .thumb-beta-self {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -4px -1265px;
+  background-position: 4px -1265px;
+  background-repeat: no-repeat;
+  height: 55px;
+}
+
+.thumb-mobile-self {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 4px -1265px;
   background-repeat: no-repeat;
   height: 55px;
 }
 
 .thumb-search-self {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 12px -1265px;
+  background-position: -15px -895px;
   background-repeat: no-repeat;
-  height: 55px;
+  height: 105px;
 }
 
 .thumb-image {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 5px -310px;
+  background-position: -20px -310px;
   background-repeat: no-repeat;
   height: 105px;
 }
 
 .thumb-beta-image {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -4px -1040px;
+  background-position: 4px -1040px;
+  background-repeat: no-repeat;
+  height: 55px;
+}
+
+.thumb-mobile-image {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 4px -1040px;
   background-repeat: no-repeat;
   height: 55px;
 }
 
 .thumb-search-image {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 12px -1040px;
+  background-position: -15px -310px;
   background-repeat: no-repeat;
-  height: 55px;
+  height: 105px;
 }
 
 .thumb-nsfw {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 5px -603px;
+  background-position: -20px -603px;
   background-repeat: no-repeat;
   height: 105px;
 }
 
 .thumb-beta-nsfw {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -4px -1150px;
+  background-position: 4px -1150px;
+  background-repeat: no-repeat;
+  height: 55px; 
+}
+
+.thumb-mobile-nsfw {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 4px -1150px;
   background-repeat: no-repeat;
   height: 55px; 
 }
 
 .thumb-search-nsfw {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 12px -1150px;
+  background-position: -15px -603px;
   background-repeat: no-repeat;
-  height: 55px; 
+  height: 105px;
 }
 
 .thumb-spoiler {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 5px -748px;
+  background-position: -20px -748px;
   background-repeat: no-repeat;
   height: 105px;
 }
 
 .thumb-beta-spoiler {
   background-image: url('../images/sprite-reddit.png');
-  background-position: -4px -1210px;
+  background-position: 4px -1210px;
+  background-repeat: no-repeat;
+  height: 55px; 
+}
+
+.thumb-mobile-spoiler {
+  background-image: url('../images/sprite-reddit.png');
+  background-position: 4px -1210px;
   background-repeat: no-repeat;
   height: 55px; 
 }
 
 .thumb-search-spoiler {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 12px -1210px;
+  background-position: -15px -748px;
   background-repeat: no-repeat;
-  height: 55px; 
+  height: 105px;
 }
 
 /************************
@@ -1430,6 +1480,8 @@ Search
 
 #results-card {
   padding: 3px 15px 3px 20px;
+  background-color: white;
+  border: 1px solid #e5e5e5;
 }
 
 #results-card .col-md-1 {
@@ -1442,7 +1494,7 @@ Search
 }
 
 #results-accordion .panel-body {
-  background-color: white;
+  background-color: #F5F5F5;
 }
 
 .results-sub {
@@ -1460,6 +1512,16 @@ Search
 
 #submit-col-search {
   padding: 12px;
+}
+
+#search-side-card {
+  background-color: white;
+  border: 1px solid #e5e5e5;
+}
+
+.search-width {
+  margin-left: 30px;
+  margin-right: 30px;
 }
 
 /************************
@@ -1538,7 +1600,7 @@ Mobile
   .user-banner {
     margin-bottom: 0;
     background-position: 0% 0%;
-    padding-top: 0px;
+    padding-top: 5px;
     padding-bottom: 25px;
   }
 
@@ -1635,7 +1697,7 @@ Mobile
 
   .select-dropdown {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 5px;
   }
 }
 
@@ -1664,7 +1726,7 @@ Mobile
     width: 100%;
   }
 
-  #slash, .hidden-mobile, #overview .fa-reddit {
+  .non-mobile-only, #slash, .hidden-mobile, #overview .fa-reddit, .center-back {
     display: none;
   }
 
@@ -1681,13 +1743,8 @@ Mobile
     max-width: 100%;
   }
 
-  #results-card .col-md-1, .table, .table-heads th, .sub-banner .badge-col  {
+  .mobile-center, #results-card .col-md-1, .table, .table-heads th, .sub-banner .badge-col  {
     text-align: center;
-  }
-
-  #table-start .col-md-3 {
-    padding-left: 0;
-    padding-right: 0;
   }
 
   #home-page .table-pad {
@@ -1714,7 +1771,7 @@ Mobile
   }
 
   #overview-table .col-sm-12, .dropdown-col, .sub-table, #table-head, .user-head-nav, #results, .search-content,
-  .activity-table, #results-accordion .panel-body {
+  .activity-table, #results-accordion .panel-body, .table-options {
     padding-left: 0;
     padding-right: 0;
   }
@@ -1753,11 +1810,11 @@ Mobile
     font-size: 18px;
   }
 
-  #more-subs, .badge-row [class*='col-'], .submit-info, #submit-col {
+  #more-subs, .badge-row [class*='col-'], #submit-col {
     padding: 0;
   }
 
-  md-card, .non-badge, #more-subs, #subreddits, .post-page, #submit-card .row  {
+  md-card, .non-badge, #more-subs, #subreddits, .post-page, #submit-card .row, #table-start  {
     margin-left: 0;
     margin-right: 0;
   }
@@ -1766,8 +1823,18 @@ Mobile
     text-align: center;
   }
 
-  .viewing-title, .card-action .post-badge, .card-action h4 {
+  .viewing-title, .card-action .post-badge, .card-action h4, .sort-title {
     padding-left: 15px;
+  }
+
+  .sort-title {
+    border: none;
+    margin: 0;
+  }
+
+  .viewing-row {
+    padding-top: 10px;
+    padding-bottom: 0;
   }
 
   .buttons-mobile {
@@ -1776,11 +1843,7 @@ Mobile
 
   .post-thumbnail {
     border-left: none;
-  }
-
-  .table-note {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 0;
   }
 
   #search-banner {
@@ -1795,6 +1858,34 @@ Mobile
   .profile-img img {
     width: 75px;
     height: 75px;
+  }
+
+  .post-wing {
+    margin-top: 30px;
+  }
+
+  .user-reddit-btn {
+    margin-bottom: 10px;
+  }
+
+  .dropdown-left-col {
+    padding-right: 0px !important;
+  }
+
+  .dropdown-right-col {
+    padding-left: 0px !important;
+  }
+
+  .user-reddit-btn .md-button {
+    width: 100%;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
+  #user-viewing {
+    padding-bottom: 0;
   }
 
  }

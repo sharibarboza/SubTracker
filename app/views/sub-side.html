@@ -1,0 +1,51 @@
+<md-card>
+  <md-card-content>
+    <div class="row no-margin">
+      <div class="col-xs-11 no-padding">
+        <strong class="md-blue"> Last seen
+        <time-ago class="light-gray" from-time='{{ latestPost.created_utc * 1000 }}'></time-ago></strong>
+      </div>
+      <div class="col-xs-1 no-padding" align="right">
+        <i class="fa fa-clock-o" aria-hidden="true"></i>
+      </div>
+    </div>
+  </md-card-content>
+</md-card>
+
+<div ng-repeat="element in highestPosts" ng-if="element.id">
+  <div ng-if="element.type == 'comment'">
+    <div ng-include src="'views/comment-card.html'"></div>
+  </div>
+  <div ng-if="element.type == 'submit'">
+    <div ng-include src="'views/submit-card.html'"></div>
+  </div>
+</div>
+
+<div id="statistics" ng-controller="SubStatsCtrl">
+
+  <md-card>
+    <md-card-title>
+      <h5><strong>Sub Rankings</strong></h5>             
+    </md-card-title>
+    <md-divider></md-divider>
+    <md-card-content>
+      <div>Out of {{ username }}'s <span class="badge">{{ subLength }}</span> subreddits, <strong class="purple">/r/{{ subreddit }}</strong> is ranked:</div>
+      <br>
+
+      <div ng-repeat="(badge, data) in badges">
+        <div class="row no-margin">
+          <div class="col-xs-11 no-padding">
+            <strong class="green" ng-class="{ 'dark-gray' : data.rank > 5, 'green' : data.rank == 1, 'baby-blue' : data.rank <= 5 && data.rank > 1 }">#{{ data.rank }}</strong> <span class="light-gray"><strong>{{ data.name }}</strong></span>
+          </div>
+          <div class="col-xs-1 no-padding" align="right">
+            <i ng-class="data.image" aria-hidden="true"></i>
+          </div>
+
+        </div>
+
+      </div>
+    </md-card-content>
+
+  </md-card>
+
+</div>
