@@ -22,6 +22,8 @@
     var comments = [];
     var submissions = [];
     var subs = {};
+    var subLength;
+    var subNames;
     var commentData = [];
     var submitData = [];
     var subData = {};
@@ -83,7 +85,8 @@
       getLatestPost: getLatestPost,
       compareDates: compareDates,
       getNewestSub: getNewestSub,
-      getRecentPosts: getRecentPosts
+      getRecentPosts: getRecentPosts,
+      getRandomSub: getRandomSub
     };
     return factory;
 
@@ -100,6 +103,9 @@
     function setSubData(response) {
       organizeComments(comments);
       organizeSubmitted(submissions);
+      subNames = Object.keys(subs);
+      subLength = subNames.length;
+
       setTotalUps();
       setDefaultSortedArray();
 
@@ -464,5 +470,13 @@
 
       return posts;
     };
+
+    /*
+     Grab a random subreddit name
+    */
+    function getRandomSub() {
+      var randomNum = Math.floor(Math.random() * subLength);
+      return subNames[randomNum];
+    }
 
   }]);

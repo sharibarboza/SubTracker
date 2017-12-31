@@ -124,6 +124,12 @@
       $anchorScroll.yOffset = 120;
       $anchorScroll();
     };
+
+    $scope.getRandomSub = function() {
+      var randomSub = subFactory.getRandomSub();
+      var url = '#/' + $scope.username + '/' + randomSub + '/';
+      $window.location.href = url;
+    }
   }
 
 ]);
