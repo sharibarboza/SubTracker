@@ -19,7 +19,7 @@
         return $http.get(url).then(function(response) {
           return response.data.data;
         }, function(error) {
-          console.log("Error: " + error);
+          console.log(error);
         });
       }
     };

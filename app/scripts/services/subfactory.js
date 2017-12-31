@@ -145,30 +145,11 @@
     };
 
     /*
-     Make the http request to the Reddit API using JSONP.
+     Make the http request to the Reddit API using HTTP GET request.
     */
     function getJSONP(where) {
       var url = 'https://api.reddit.com/user/'+username+'/'+where+'.json?limit=100&after='+after;
       return $http.get(url);
-    };
-
-    /*
-     Push the comment/submission data to their respective lists
-    */
-    function pushData(response, where) {
-      if (response) {
-        var data = response.children;
-        for (var i = 0; i < data.length; i++) {
-          var item = data[i].data;
-          if (where === 'comments') {
-            item.type = 'comment';
-            comments.push(item);
-          } else {
-            item.type = 'submit';
-            submissions.push(item);
-          }
-        }
-      }
     };
 
     /*
@@ -185,7 +166,7 @@
           return data;
         }
       }, function(error) {
-        console.log("Error: " + error);
+        console.log(error);
       });
       return promise;
     };
@@ -238,6 +219,25 @@
         pushData(response.data, 'submits');
       }
       return submitData;
+    };
+
+    /*
+     Push the comment/submission data to their respective lists
+    */
+    function pushData(response, where) {
+      if (response) {
+        var data = response.children;
+        for (var i = 0; i < data.length; i++) {
+          var item = data[i].data;
+          if (where === 'comments') {
+            item.type = 'comment';
+            comments.push(item);
+          } else {
+            item.type = 'submit';
+            submissions.push(item);
+          }
+        }
+      }
     };
 
     /*
