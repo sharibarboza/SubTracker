@@ -160,7 +160,7 @@
                     <md-card-content>
                       <h4><strong>Post activity distribution across<br><span class="baby-blue">{{ username }}'s</span><br>top {{ chartLimit }} most active subreddits</strong></h4>
                       <span class="small-font">Hover to see the number of posts for that sub.</span>
-                      <donut-chart type="activity" limit="20" align="center"></donut-chart>
+                      <donut-chart type="activity" align="center"></donut-chart>
                       <h5 ng-if="comments == 0">{{ username }} does not have any comments.</h5>
                     </md-card-content>
                   </md-card>
@@ -170,7 +170,7 @@
                     <md-card-content>
                       <h4><strong>Upvote/Point distribution across<br><span class="baby-blue">{{ username }}'s</span><br> top {{ chartLimit }} most upvoted subreddits</strong></h4>
                       <span class="small-font">Hover to see the number of points for that sub.</span>
-                      <donut-chart type="upvotes" limit="20" align="center"></donut-chart>
+                      <donut-chart type="upvotes" align="center"></donut-chart>
                       <h5 ng-if="submissions == 0">{{ username }} does not have any submissions.</h5> 
                     </md-card-content>
                   </md-card>  

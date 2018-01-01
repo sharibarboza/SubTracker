@@ -7,7 +7,7 @@
  * # pieChart
  */
 angular.module('SubSnoopApp')
-  .directive('donutChart', ['d3Service', '$window', 'subFactory', 'sortFactory', '$filter', 'moment', function (d3Service, $window, subFactory, sortFactory, $filter, moment) {
+  .directive('donutChart', ['d3Service', '$window', 'subFactory', '$filter', 'moment', function (d3Service, $window, subFactory, $filter, moment) {
 
   /*
    Based on http://embed.plnkr.co/YICxe0/
@@ -20,8 +20,6 @@ angular.module('SubSnoopApp')
     template: '<div id="donut-chart"></div>',
     link: function(scope, element, attrs) {
       d3Service.d3().then(function(d3) {
-
-        var limit = attrs.limit;
 
         function configChart(scope_chart, window_width) {
           if (window_width < 1200 && window_width > 950) {
