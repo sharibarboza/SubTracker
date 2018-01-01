@@ -150,7 +150,7 @@
     /*
      Make the http request to the Reddit API using HTTP GET request.
     */
-    function getJSONP(where) {
+    function callAPI(where) {
       var url = 'https://api.reddit.com/user/'+username+'/'+where+'.json?limit=100&after='+after;
       return $http.get(url);
     };
@@ -164,7 +164,7 @@
         var data = getDataList(where, response);
 
         if (after) {
-          return getJSONP(where);
+          return callAPI(where);
         } else {
           return data;
         }
@@ -180,7 +180,7 @@
      fetched at a time, making for at most 10 API requests.
     */
     function promiseChain(where) {
-      var promise = getJSONP(where);
+      var promise = callAPI(where);
       for (var i = 0; i < pages; i++) {
         promise = getPromise(where, promise, i);
       }

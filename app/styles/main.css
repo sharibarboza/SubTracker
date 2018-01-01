@@ -579,10 +579,6 @@ Content
   display: none;
 }
 
-.md h1, .md h2, .md h3, .md h4, .md h5 {
-  font-size: 14px !important;
-}
-
 /************************
 Navigation
 ************************/
@@ -723,6 +719,10 @@ Main Page
 
 h2 {
   font-size: 40px;
+}
+
+.md h1, .md h2, .md h3, .md h4, .md h5 {
+  font-size: 14px !important;
 }
 
 /************************
