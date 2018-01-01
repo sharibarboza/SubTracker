@@ -58,10 +58,7 @@ angular.module('SubSnoopApp')
             labelPadding: 50,
             duration: 100,
             margin: {
-              top: 0,
-              right: 70,
-              bottom: 0,
-              left: 70
+              top: 0, right: 70, bottom: 0, left: 70
             }
           };
         }
@@ -75,83 +72,81 @@ angular.module('SubSnoopApp')
             labelPadding: 50,
             duration: 100,
             margin: {
-              top: 0,
-              right: 30,
-              bottom: 0,
-              left: 30
+              top: 0, right: 30, bottom: 0, left: 30
             }
-          };
-        }
-          
-        function getChartData(data, subs) {
-          return {
-            center: {
-              value: function() {
-                if (attrs.type === 'comments') {
-                  return "Recent " + limit + " Comments";
-                } else if (attrs.type === 'submissions') {
-                  return "Recent " + limit + " Posts";
-                }
-              }
-            },
-            values: subs,
-            data: data
           };
         }
 
-        function getData(data) {
-          var subs = {};
-          for (var i = 0; i < data.length; i++) {
-            var item = data[i];
-            var sub = item.subreddit;
-            if (!(item.subreddit in subs)) {
-              subs[sub] = {};
-              subs[sub].count = 0
-            }
-            subs[sub].count += 1;
+        function getPercentages(chartArray, total) {
+          for (var i = 0; i < chartArray.length; i++) {
+            var percent = chartArray[i].value / total;
+            chartArray[i].percent = (percent * 100).toFixed(1);
           }
-          return subs;
         }
 
         function init() {
-          var dataArray = [];
-          var filtered = [];
-          var subs, comments, submissions, sortedKeys;
 
-          if (attrs.type === 'comments') {
-            comments = subFactory.getRecentPosts('comments', limit);
-            subs = getData(comments);
-            sortedKeys = $filter('sortSubs')(Object.keys(subs), 'subName', subs);
-          } else if (attrs.type === 'submissions') {
-            submissions = subFactory.getRecentPosts('submissions', limit);
-            subs = getData(submissions);
-            sortedKeys = $filter('sortSubs')(Object.keys(subs), 'subName', subs);
-          }
+          // --------------------------------------------------------
 
-          for (var i = 0; i < sortedKeys.length; i++) {
-            var key = subs[sortedKeys[i]];
-            dataArray.push(key);
-          }
+          var subs = subFactory.getSubData().subs;
+          var chartArray;
+          var chartData;
 
-          var data = attrs.type === 'comments' ? comments : submissions;
-          var chartData = getChartData(data, dataArray);
-          for (var i = 0; i < sortedKeys.length; i++) {
-            var key = sortedKeys[i];
-            var count;
-            if (attrs.type === 'comments') {
-              count = comments.length;
-            } else {
-              count = submissions.length;
+          if (attrs.type === 'activity') {
+            chartArray = [];
+            chartData = {
+              center: {}
+            };
+
+            chartData.center.value = "Most Active Subs";
+
+            var sortedSubs = $filter('sortSubs')(Object.keys(subs), 'mostActive', subs);
+            var activeArray = sortedSubs.slice(0, 5);
+            var total = 0;
+
+            for (var i = 0; i < activeArray.length; i++) {
+              var sub = subs[activeArray[i]];
+              var posts = sub.comments.length + sub.submissions.length;
+              total += posts;
+
+              var d = {};
+              d.id = i;
+              d.label = activeArray[i];
+              d.value = posts;
+
+              chartArray.push(d);
             }
+            getPercentages(chartArray, total);
+          } else if (attrs.type === 'upvotes') {
+            chartArray = [];
+            chartData = {
+              center: {}
+            };
 
-            var d = subs[key];
-            d.id = i;
-            d.label = key;
+            chartData.center.value = "Most Upvoted Subs";
 
-            d.value = +(d.count);
-            d.percent = +(d.value / (count));
-            d.percent = (d.percent * 100).toFixed(1);
-          };
+            var sortedSubs = $filter('sortSubs')(Object.keys(subs), 'totalUps', subs);
+            var upvotesArray = sortedSubs.slice(0, 5);
+            var total = 0;
+
+            for (var i = 0; i < upvotesArray.length; i++) {
+              var sub = subs[upvotesArray[i]];
+              var points = sub.comment_ups + sub.submission_ups;
+              total += points;
+
+              var d = {};
+              d.id = i;
+              d.label = upvotesArray[i];
+              d.value = points;
+
+              chartArray.push(d);
+            }
+            getPercentages(chartArray, total);
+          }
+
+          chartData.values = chartArray;
+
+          // --------------------------------------------------------
 
           var d3ChartEl = d3.select(element[0]);
           scope.chartConfig.width = scope.chartConfig.width;
@@ -202,7 +197,7 @@ angular.module('SubSnoopApp')
 
           var centerLabel = (!!chartData.center.label) ? chartData.center.label : '';
           var centerValue = (!!chartData.center.value) ? chartData.center.value : '';
-          var numData = "Since " + moment(chartData.data[chartData.data.length-1].created_utc * 1000).format('MMM Do YYYY');
+          var numData = 'Top 5';
 
           var d3ChartEl = d3.select(element[0]);
 
@@ -230,10 +225,10 @@ angular.module('SubSnoopApp')
 
                 d3.select('.center-value-' + attrs.type).text(d.data.label);
                 var line1;
-                if (attrs.type === 'comments') {
-                  line1 = 'Comments: ' + d.data.count;
-                } else if (attrs.type === 'submissions') {
-                  line1 = 'Submissions: ' + d.data.count
+                if (attrs.type === 'activity') {
+                  line1 = 'Posts: ' + d.data.value;
+                } else if (attrs.type === 'upvotes') {
+                  line1 = 'Points: ' + d.data.value;
                 }
 
                 d3.select('.line-1-' + attrs.type)
