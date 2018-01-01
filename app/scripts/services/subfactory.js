@@ -48,6 +48,9 @@
           return matchUser(user, username);
         }
       },
+      getUser: function() {
+        return username;
+      },
       getDefaultSortedArray: function() {
         return defaultSortedArray;
       },

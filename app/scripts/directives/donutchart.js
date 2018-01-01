@@ -12,7 +12,12 @@ angular.module('SubSnoopApp')
   /*
    Based on http://embed.plnkr.co/YICxe0/
   */
+  var username;
   var windowWidth = $window.innerWidth;
+  var colors = ["#80deea", "#FF7817", "#d4e157", "#f50057", "#7e57c2", "#2979ff", "#00c853", "#fdd835", "#FA4E2D", "#9ccc65"];
+
+  var colorData;
+  var colorIndex;
 
   return {
     restrict: 'EA',
@@ -86,6 +91,12 @@ angular.module('SubSnoopApp')
 
           // --------------------------------------------------------
 
+          if (username == null || !subFactory.checkUser(username)) {
+            colorData = {};
+            colorIndex = 0;
+            username = subFactory.getUser();
+          }
+
           var subs = subFactory.getSubData().subs;
           var chartArray;
           var chartData;
@@ -103,16 +114,22 @@ angular.module('SubSnoopApp')
             var total = 0;
 
             for (var i = 0; i < activeArray.length; i++) {
-              var sub = subs[activeArray[i]];
+              var name = activeArray[i];
+              var sub = subs[name];
               var posts = sub.comments.length + sub.submissions.length;
               total += posts;
 
               var d = {};
               d.id = i;
-              d.label = activeArray[i];
+              d.label = name;
               d.value = posts;
 
               chartArray.push(d);
+
+              if (!(name in colorData)) {
+                colorData[name] = colors[colorIndex];
+                ++colorIndex;
+              }
             }
             getPercentages(chartArray, total);
           } else if (attrs.type === 'upvotes') {
@@ -128,20 +145,25 @@ angular.module('SubSnoopApp')
             var total = 0;
 
             for (var i = 0; i < upvotesArray.length; i++) {
-              var sub = subs[upvotesArray[i]];
+              var name = upvotesArray[i];
+              var sub = subs[name];
               var points = sub.comment_ups + sub.submission_ups;
               total += points;
 
               var d = {};
               d.id = i;
-              d.label = upvotesArray[i];
+              d.label = name;
               d.value = points;
 
               chartArray.push(d);
+
+              if (!(name in colorData)) {
+                colorData[name] = colors[colorIndex];
+                ++colorIndex;
+              }
             }
             getPercentages(chartArray, total);
           }
-
           chartData.values = chartArray;
 
           // --------------------------------------------------------
@@ -170,12 +192,6 @@ angular.module('SubSnoopApp')
             height = height - margin.top - margin.bottom,
             radius = Math.min(width, height) / 2,
             labelRadius = radius + chartConfig.labelPadding;
-
-          var color = d3.scale.ordinal()
-            .domain(chartData.values.map(function(item) {
-              return item.label;
-            }))
-            .range(scope.color);
 
           var thickness = chartConfig.thickness || Math.floor(radius / 5);
 
@@ -284,8 +300,8 @@ angular.module('SubSnoopApp')
             .attr('class', 'arc-' + attrs.type);
 
           var partition = arcs.append('svg:path')
-            .style('fill', function(d) {  
-              return color(d.data.label);
+            .style('fill', function(d) { 
+              return colorData[d.data.label];
             })
             .on("mouseover", scope.mouseOverPath)
             .on("mouseout", scope.mouseOutPath)
@@ -353,11 +369,6 @@ angular.module('SubSnoopApp')
             .text(function(d, i) {
               return d.data.percent + '%';
             });
-
-          /* If first arc and last arc are same color, change last arc to the 2nd color */
-          if (chartData.values.length % scope.color.length === 1) {
-            d3.select(partition[0][chartData.values.length-1]).style('fill', scope.color[1]);
-          }
 
         }
 
