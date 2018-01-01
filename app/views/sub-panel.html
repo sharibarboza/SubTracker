@@ -8,7 +8,7 @@
         <span>
           <a ng-if="subElement.subreddit_type != 'user'" class="sub-panel-title purple" ng-href="https://www.reddit.com/r/{{ subElement.display_name }}" target="_blank"><strong><span class="baby-blue">/r/</span>{{ subElement.display_name }}</strong></a>
           <a ng-if="subElement.subreddit_type == 'user'" ng-href="#/{{ subElement.display_name_prefixed | username }}" target="_blank"><strong>/{{ subElement.display_name_prefixed }}</strong></a> &middot <span class="dark-gray wrap-text">{{ subElement.title }}</span>
-          <p class="md-gray wrap-text" ng-bind-html="subElement.public_description_html | sanitize"></p>
+          <p class="md-gray wrap-text sub-desc" ng-bind-html="subElement.public_description_html | sanitize"></p>
         </span>
         <div class="row" id="sub-panel-stats"><strong>
           <div class="col-md-5">
