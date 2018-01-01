@@ -371,7 +371,6 @@ md-toolbar:not(.md-menu-toolbar) {
 
 md-input-container {
   margin: 0 0 10px 0;
-  width: 90% !important;
 }
 
 md-input-container label {

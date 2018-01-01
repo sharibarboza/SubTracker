@@ -17,7 +17,7 @@
     $scope.username = $routeParams.username;
     $scope.main = false; // Prevent hiding of search bar in top-nav
     $scope.page = 'user';
-    $scope.limit = 10;
+    $scope.limit = 20;
     $scope.currentLimit = $scope.limit;
     $scope.open = true;
     $scope.subLength = 0;

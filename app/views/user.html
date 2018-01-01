@@ -68,6 +68,7 @@
 
           <div class="col-md-8 no-padding" id="table-head">
             <div ng-include src="'views/sub-badges.html'"></div>
+            <hr class="margin-pad">
 
             <div id="subreddits" class="margin-pad">
 
@@ -88,12 +89,12 @@
               </div>
 
               <div class="row no-margin">
-                <div class="col-md-6 col-xs-12 no-padding">
+                <div class="col-md-3 col-xs-12 no-padding">
                   <div class="viewing-row" id="user-viewing">
                     <span class="small-font viewing-title">Viewing <strong class="orange">{{ currentLimit }}</strong> of {{ subLength }} subreddits </span>
                   </div>
                 </div>
-                <div class="col-md-6 hidden-xs no-padding" align="right" id="search-subs">
+                <div class="col-md-9 hidden-xs no-padding" id="search-subs">
                   <div class="col-xs-1 no-padding" style="margin-top: 8px;">
                     <i class="fa fa-search icon-gray" aria-hidden="true" style="font-size: 22px;"></i>
                   </div>
