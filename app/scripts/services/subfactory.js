@@ -295,6 +295,8 @@
       subData.count = 0;
       subData.recent_activity = null;
       subData.info = null;
+      subData.comments_today = 0;
+      subData.submits_today = 0;
 
       return subData;
     };
@@ -314,6 +316,10 @@
         subreddit.gilded_comments += 1;
       }
 
+      if ($filter('today')(date)) {
+        subreddit.comments_today += 1;
+      }
+
       subreddit.recent_activity = compareDates(subreddit.recent_activity, comment, true);
     };
 
@@ -330,6 +336,10 @@
 
       if (submission.gilded > 0) {
         subreddit.gilded_submissions += 1;
+      }
+
+      if ($filter('today')(date)) {
+        subreddit.submits_today += 1;
       }
 
       subreddit.recent_activity = compareDates(subreddit.recent_activity, submission, true);

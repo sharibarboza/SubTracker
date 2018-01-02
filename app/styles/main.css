@@ -871,6 +871,12 @@ User Page
   padding: 10px 15px;
 }
 
+.subname-box .badge {
+  margin: -3px 1px 0 1px;
+  font-size: 11px;
+  padding-top: 2px;
+}
+
 .subbox-stats {
   border-left: 1px solid #e5e5e5;
   font-size: 14px;
@@ -1121,6 +1127,11 @@ User Sub Page
   color: #99895F;
   font-size: .9em;
   vertical-align: middle;
+}
+
+.gilded-sub {
+  top: -10px;
+  margin-left: 4px;
 }
 
 .gilded-icon:before {

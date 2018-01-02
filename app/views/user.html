@@ -125,8 +125,8 @@
                   <md-card-title class="sub-box">
                     <div class="col-sm-1 hidden-xs rank-box" align="center">{{ 1 + $index }}</div>
                     <div class="col-sm-5 col-xs-12 subname-box">
-                      <span class="purple sub-name">{{ subreddit }}</span><br>
-                      <span class="gray sub-text"><span ng-bind="subs[subreddit].recent_activity.created_utc * 1000 | amDateFormat:'MMM Do YYYY, h:mm a'"></span></span>                   
+                      <span class="purple sub-name">{{ subreddit }} <span ng-if="subs[subreddit].gilded_comments > 0 || subs[subreddit].gilded_submissions > 0" class="gilded-icon gilded-sub"></span> <span ng-if="subs[subreddit].comments_today > 0" class="badge">{{ subs[subreddit].comments_today }} <i class="glyphicon glyphicon-comment white" aria-hidden="true"></i></span> <span ng-if="subs[subreddit].submits_today > 0" class="badge">{{ subs[subreddit].submits_today }} <i class="glyphicon glyphicon-list-alt white" aria-hidden="true"></i></span></span><br>
+                      <span class="sub-text" ng-class="isToday(subs[subreddit].recent_activity.created_utc * 1000) ? 'green' : 'gray'"><span ng-bind="subs[subreddit].recent_activity.created_utc * 1000 | amDateFormat:'MMM Do YYYY, h:mm a'"></span></span>                   
                     </div>
                     <div class="col-sm-2 hidden-xs subbox-stats subname-box" align="center">
                       <strong class="black">{{ subs[subreddit].comments.length }}</strong><br>

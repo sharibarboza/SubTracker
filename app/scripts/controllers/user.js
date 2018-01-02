@@ -130,6 +130,10 @@
       var url = '#/' + $scope.username + '/' + randomSub + '/';
       $window.location.href = url;
     }
+
+    $scope.isToday = function(date) {
+      return $filter('today')(date);
+    }
   }
 
 ]);
