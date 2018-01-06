@@ -91,7 +91,7 @@
               <div class="row no-margin">
                 <div class="col-md-3 col-xs-12 no-padding">
                   <div class="viewing-row" id="user-viewing">
-                    <span class="small-font viewing-title">Viewing <strong class="orange">{{ currentLimit }}</strong> of {{ subLength }} subreddits </span>
+                    <span class="small-font viewing-title">Viewing <strong class="orange">{{ subLength > currentLimit ? currentLimit : subLength }}</strong> of {{ subLength }} subreddits </span>
                   </div>
                 </div>
                 <div class="col-md-9 hidden-xs no-padding" id="search-subs">
