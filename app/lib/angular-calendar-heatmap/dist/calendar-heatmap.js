@@ -11,7 +11,8 @@ angular.module('g1b.calendar-heatmap', []).
         data: '=',
         color: '=?',
         overview: '=?',
-        handler: '=?'
+        handler: '=?',
+        type: '=?'
       },
       replace: true,
       template: '<div class="calendar-heatmap"></div>',
@@ -30,7 +31,7 @@ angular.module('g1b.calendar-heatmap', []).
         var in_transition = false;
 
         // Tooltip defaults
-        var tooltip_width = 125;
+        var tooltip_width = 175;
         var tooltip_padding = 10;
 
         // Initialize current overview type and history
@@ -213,11 +214,38 @@ angular.module('g1b.calendar-heatmap', []).
                 // Construct tooltip
                 var tooltip_html = '';
                 tooltip_html += '<div class="heatmap-tooltip">';
-                tooltip_html += '<div class="header"><strong>' + (d.total ? scope.formatTime(d.total) : 'No posts') + ' created</strong></div>';
-                tooltip_html += '<div>on ' + moment(d.date).format('dddd') + '</div>';
-                tooltip_html += '<div>' + moment(d.date).format('MMM Do YYYY') + '</div><br>';
-                tooltip_html += '<div><strong>Comments: </strong>' + d.comments + '</div>';
-                tooltip_html += '<div><strong>Submissions: </strong>' + d.submissions + '</div>';
+
+                if (scope.type === 'sub') {
+                  tooltip_html += '<div class="header"><strong>' + scope.formatTotal(d.total, ' posts') + ' created</strong></div>';
+                } else {
+                  tooltip_html += '<div class="header"><strong>Active in ' + scope.formatTotal(d.total, ' subreddits') + '</strong></div>';
+                }
+
+                tooltip_html += '<div>on ' + moment(d.date).format('dddd, MMM Do YYYY') + '</div><br>';
+
+                if (scope.type === 'sub') {
+                  tooltip_html += '<div><strong>Comments: </strong>' + d.comments + '</div>';
+                  tooltip_html += '<div><strong>Submissions: </strong>' + d.submissions + '</div>';
+                } else {
+                  for (var key in d.subs) {
+                    var sub = d.subs[key];
+                    tooltip_html += '<div><strong>' + key + ':</strong> ';
+                    if (sub.comments > 0) {
+                      tooltip_html += scope.formatTotal(sub.comments, ' comments');
+                    }
+
+                    if (sub.comments > 0 && sub.submissions > 0) {
+                      tooltip_html += ', ';
+                    }
+
+                    if (sub.submissions > 0) {
+                      tooltip_html += scope.formatTotal(sub.submissions, ' submissions');
+                    }
+
+                    tooltip_html += '</div>';
+                  }
+                }
+
                 tooltip_html += '</div>';
 
                 // Calculate tooltip position
@@ -489,15 +517,16 @@ angular.module('g1b.calendar-heatmap', []).
 
 
         /**
-         * Helper function to convert seconds to a human readable format
+         * Helper function to convert total to a human readable format
          * @param seconds Integer
          */
-        scope.formatTime = function (value) {
+        scope.formatTotal = function (value, word) {
           var format;
+
           if (value === 1) {
-            format = value + ' post';
+            format = value + word.slice(0, word.length - 1);
           } else {
-            format = value + ' posts';
+            format = value + word;
           }
           return format;
         };

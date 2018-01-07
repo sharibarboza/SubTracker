@@ -6,29 +6,44 @@ describe('test heatmap service', function () {
   beforeEach(module('SubSnoopApp'));
 
   // instantiate service
-  var heatmap, moment, subData;
+  var heatmap, moment, sub1Data, sub2Data, subs;
   beforeEach(inject(function (_heatmap_, _moment_) {
     heatmap = _heatmap_;
     moment = _moment_;
 
-    subData = {
+    var sub1 = 'gaming';
+    var sub2 = 'politics';
+
+    sub1Data = {
       'comments': [
-        {'created_utc': 1506846658 }, // October 1, 2017 8:30 AM
-        {'created_utc': 1506853858 }, // October 1, 2017 10:30 AM
-        {'created_utc': 1506947458 }, // October 2, 2017 12:30 PM
-        {'created_utc': 1507192258}   // October 5, 2017 8:30 AM
+        {'created_utc': 1506846658, 'subreddit' : sub1 }, // October 1, 2017 8:30 AM
+        {'created_utc': 1506853858, 'subreddit' : sub1 }, // October 1, 2017 10:30 AM
+        {'created_utc': 1506947458, 'subreddit' : sub1 }, // October 2, 2017 12:30 PM
+        {'created_utc': 1507192258, 'subreddit' : sub1 }   // October 5, 2017 8:30 AM
       ],
       'submissions': [
-        {'created_utc': 1506861058},  // October 1, 2017 12:30 PM
-        {'created_utc': 1506857458},  // October 1, 2017 11:30 AM
-        {'created_utc': 1507030258},  // October 3, 2017 11:30 AM
-        {'created_utc': 1507102258},  // October 4, 2017 7:30 AM
+        {'created_utc': 1506861058, 'subreddit' : sub1 },  // October 1, 2017 12:30 PM
+        {'created_utc': 1506857458, 'subreddit' : sub1 },  // October 1, 2017 11:30 AM
+        {'created_utc': 1507030258, 'subreddit' : sub1 },  // October 3, 2017 11:30 AM
+        {'created_utc': 1507102258, 'subreddit' : sub1 }  // October 4, 2017 7:30 AM
       ]
     };
+
+    sub2Data = {
+      'comments': [
+        {'created_utc': 1506840300, 'subreddit' : sub2 } // October 1, 2017 6:45 AM
+      ],  
+      'submissions': []
+    }
+
+    subs = {
+      sub1 : sub1Data,
+      sub2 : sub2Data
+    }
   }));
 
-  it('should return proper length', function() {
-    var result = heatmap.getMap(subData, 2017);
+  it('should return proper data for sub maps', function() {
+    var result = heatmap.getSubMap(sub1Data, 2017);
     expect(result.length).toEqual(5);
 
     for (var key in result) {
@@ -50,7 +65,47 @@ describe('test heatmap service', function () {
         expect(obj.submissions).toEqual(0);
       }
     }
+
+    expect(heatmap.getCount()).toEqual(8);
   });
+
+  it('should return proper data for user maps', function() {
+    var result = heatmap.getUserMap(subs, 2017);
+    expect(result.length).toEqual(5);
+
+    for (var key in result) {
+      var obj = result[key];
+      if (obj.date === '2017-10-01') {
+        expect(obj.total).toEqual(2);
+        expect(obj.subs['gaming'].comments).toBe(2);
+        expect(obj.subs['gaming'].submissions).toBe(2);
+        expect(obj.subs['politics'].comments).toBe(1);
+        expect(obj.subs['politics'].submissions).toBe(0);
+      } else if (obj.date === '2017-10-02') {
+        expect(obj.total).toEqual(1);
+        expect(obj.subs['gaming'].comments).toBe(1);
+        expect(obj.subs['gaming'].submissions).toBe(0);
+        expect('politics' in obj.subs).toBeFalsy();
+      } else if (obj.date === '2017-10-03') {
+        expect(obj.total).toEqual(1);
+        expect(obj.subs['gaming'].comments).toBe(0);
+        expect(obj.subs['gaming'].submissions).toBe(1);
+        expect('politics' in obj.subs).toBeFalsy();
+      } else if (obj.date === '2017-10-04') {
+        expect(obj.total).toEqual(1);
+        expect(obj.subs['gaming'].comments).toBe(0);
+        expect(obj.subs['gaming'].submissions).toBe(1);
+        expect('politics' in obj.subs).toBeFalsy();
+      } else if (obj.date === '2017-10-05') {
+        expect(obj.total).toEqual(1);
+        expect(obj.subs['gaming'].comments).toBe(1);
+        expect(obj.subs['gaming'].submissions).toBe(0);
+        expect('politics' in obj.subs).toBeFalsy();
+      }
+    }
+
+    expect(heatmap.getCount()).toEqual(9);
+  }); 
   
 
 });
