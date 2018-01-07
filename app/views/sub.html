@@ -35,13 +35,13 @@
 
     <div class="user-head-nav" align="center">
       <div class="col-sm-3 hidden-xs no-padding" align="left">
-        <a ng-href="#/{{ username }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to subs <i class="fa fa-list" aria-hidden="true"></i></md-button></a>
+        <a ng-href="#/{{ username }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to subs</md-button></a>
       </div>
       <div class="col-sm-2 col-xs-4 post-tab" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">OVERVIEW</strong></div>
       <div class="col-sm-2 col-xs-4 post-tab" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">COMMENTS</strong></div>
       <div class="col-sm-2 col-xs-4 post-tab" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">POSTS</strong></div>
       <div class="col-sm-3 hidden-xs no-padding" align="right">
-        <a ng-href="https://www.reddit.com/r/{{ subreddit }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-reddit-alien" aria-hidden="true"></i> To Reddit page <i class="fa fa-external-link" aria-hidden="true"></i></md-button></a>
+        <a ng-href="https://www.reddit.com/r/{{ subreddit }}"><md-button class="md-raised md-primary visit-btn no-margin">To Reddit page <i class="fa fa-external-link" aria-hidden="true"></i></md-button></a>
       </div>
     </div>
 

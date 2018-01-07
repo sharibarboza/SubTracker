@@ -11,7 +11,7 @@
 
   <div ng-include src="'views/submit-no-thumbnail.html'"></div>
 
-  <accordion class="accordion">
+  <accordion class="accordion" ng-if="element | isContent">
     <accordion-group ng-init="status = {isOpen: open}" is-open="status.isOpen">
       <accordion-heading>
         <div class="center">
