@@ -408,7 +408,18 @@ md-toolbar h1 {
 }
 
 md-card {
-  margin-bottom: 15px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.md-card-margin {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.card-bottom-margin {
+  margin-top: 16px;
+  margin-bottom: 0;
 }
 
 md-card md-card-title {
@@ -1159,8 +1170,9 @@ User Sub Page
 }
 
 .badge-row {
-  margin-left: 0px;
-  margin-right: 0px;
+  margin-left: 8px;
+  margin-right: 8px;
+  margin-top: 10px;
 }
 
 .badge-row [class*='col-'] {

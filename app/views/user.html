@@ -67,9 +67,6 @@
           <div ng-include src="'views/user-last-seen.html'" class="mobile-only"></div>
 
           <div class="col-md-8 no-padding" id="table-head">
-            <div ng-include src="'views/sub-badges.html'"></div>
-            <hr class="margin-pad">
-
             <div id="subreddits" class="margin-pad">
 
               <div class="row" id="subtable-head">
@@ -153,10 +150,8 @@
               </div>
             </div>
 
-            <br>
-            <div ng-include src="'views/user-heatmap.html'"></div>
+            <div ng-include src="'views/user-heatmap.html'" style="padding-top: 10px;"></div>
 
-            <br>
             <div id="statistics">
               <div ng-controller="PiechartCtrl" align="center" id="pies" class="row no-margin">
                 <div class="col-md-6 col-xs-12 no-padding" align="center">
@@ -195,6 +190,7 @@
           </div>
 
           <div align="center" class="mobile-only">
+            <br>
             <back-top></back-top>
             <br><br>
           </div>
