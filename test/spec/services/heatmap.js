@@ -28,7 +28,7 @@ describe('test heatmap service', function () {
   }));
 
   it('should return proper length', function() {
-    var result = heatmap.getMap(subData);
+    var result = heatmap.getMap(subData, 2017);
     expect(result.length).toEqual(5);
 
     for (var key in result) {

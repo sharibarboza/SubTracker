@@ -26,8 +26,8 @@ angular.module('SubSnoopApp')
 
     var sortActivity = function(keys, data) {
       keys.sort(function(a, b) {
-        var num1 = data[a].comments.length + data[a].submissions.length;
-        var num2 = data[b].comments.length + data[b].submissions.length;
+        var num1 = data[a].count;
+        var num2 = data[b].count;
         return sortNum.get(num1, num2, a, b, true, 'alpha');
       });
       return keys;
@@ -47,9 +47,12 @@ angular.module('SubSnoopApp')
         if (where === 'comments') {
           num1 = getAverage(data[a].comment_ups, data[a].comments.length);
           num2 = getAverage(data[b].comment_ups, data[b].comments.length);
-        } else {
+        } else if (where === 'submitted') {
           num1 = getAverage(data[a].submission_ups, data[a].submissions.length);
           num2 = getAverage(data[b].submission_ups, data[b].submissions.length);
+        } else {
+          num1 = getAverage(data[a].total_ups, data[a].count);
+          num2 = getAverage(data[b].total_ups, data[b].count);
         }
         return sortNum.get(num1, num2, a, b, true, 'alpha');
       });
@@ -94,6 +97,8 @@ angular.module('SubSnoopApp')
           sortedData = sortAverage(input, subs, 'comments');
         } else if (attribute === 'avgSubmit') {
           sortedData = sortAverage(input, subs, 'submitted');
+        } else if (attribute === 'avgPost') {
+          sortedData = sortAverage(input, subs, 'posts');
         } else if (attribute === 'mostDown') {
           sortedData = sort(input, subs, 'total_ups', false);
         }

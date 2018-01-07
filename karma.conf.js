@@ -29,6 +29,7 @@ module.exports = function(config) {
       'app/lib/angular-calendar-heatmap/dist/*.js',
       'app/scripts/controllers/*.js',
       'app/scripts/services/*.js',
+      'app/scripts/filters/*.js',
       'test/spec/*/*.js',
     ],
 

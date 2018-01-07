@@ -21,9 +21,14 @@ angular.module('SubSnoopApp')
      amount of submissions per date.
     */
     return {
-      getMap: function(subData) {
+      getMap: function(subData, current_year) {
         resetData();
         data = subData;
+
+        if (year) {
+          year = current_year;
+        }
+
         getData('comments');
         getData('submissions');
         return getDataArray();

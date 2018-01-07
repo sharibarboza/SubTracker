@@ -84,6 +84,7 @@
           {value: 'mostActive', name: 'Most activity'},
           {value: 'avgComment', name: 'Average upvotes per comment'},
           {value: 'avgSubmit', name: 'Average upvotes per submission'},
+          {value: 'avgPost', name: 'Average upvotes per post'},
           {value: 'mostDown', name: 'Most controversial'},
         ],
       };
