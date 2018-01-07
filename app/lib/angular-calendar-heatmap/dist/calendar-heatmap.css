@@ -26,8 +26,6 @@
 
 .parent-tooltip {
   position: relative;
-  width: 125px;
-  max-width: 125px;
 }
 
 .calendar-heatmap .heatmap-tooltip {
@@ -37,7 +35,7 @@
   overflow: hidden;
   padding: 10px;
   font-size: 12px;
-  line-height: 14px;
+  line-height: 16px;
   color: rgb(255, 255, 255);
   font-family: Helvetica, arial, 'Open Sans', sans-serif;
   background: rgba(0, 0, 0, 0.8);
@@ -46,7 +44,6 @@
 
 .calendar-heatmap .heatmap-tooltip .header strong {
   display: inline-block;
-  width: 100px;
 }
 .calendar-heatmap .heatmap-tooltip span {
   display: inline-block;

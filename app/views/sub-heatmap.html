@@ -4,10 +4,11 @@
   </md-card-title>
   <md-divider></md-divider>
   <md-card-content>
-    <div ng-controller="HeatmapCtrl">
+    <div ng-controller="SubHeatmapCtrl">
+      <strong class="baby-blue">{{ count }} {{ count == 1 ? 'post' : 'posts' }} this year</strong>
       <p class="gray small-font">Hover over a circle to see the number of comments and submissions posted on that day.</p>
       <br>
-      <calendar-heatmap data="mapData" color="'#05753B'" overview="'year'" handler="print"></calendar-heatmap>
+      <calendar-heatmap data="mapData" color="'#05753B'" overview="'year'" handler="print" type="'sub'"></calendar-heatmap>
     </div>
   </md-card-content>
 </md-card>

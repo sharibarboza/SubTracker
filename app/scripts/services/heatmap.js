@@ -12,6 +12,7 @@ angular.module('SubSnoopApp')
     var dates = {};
     var data;
     var year = moment().year();
+    var count = 0;
 
     /*
      Sets up the data fro the heat map graph.
@@ -21,17 +22,32 @@ angular.module('SubSnoopApp')
      amount of submissions per date.
     */
     return {
-      getMap: function(subData, current_year) {
+      getSubMap: function(subData, current_year) {
         resetData();
+        setYear(current_year);
         data = subData;
 
-        if (year) {
-          year = current_year;
-        }
-
-        getData('comments');
-        getData('submissions');
+        getData('comments', 'sub');
+        getData('submissions', 'sub');
         return getDataArray();
+      },
+      getUserMap: function(subs, current_year) {
+        resetData();
+        setYear(current_year);
+
+        var keys = Object.keys(subs);
+
+        for (var i = 0; i < keys.length; i++) {
+          var subName = keys[i];
+          data = subs[subName];
+
+          getData('comments', 'user');
+          getData('submissions', 'user');
+        }
+        return getDataArray();
+      },
+      getCount: function() {
+        return count;
       }
     };
 
@@ -40,6 +56,13 @@ angular.module('SubSnoopApp')
     */
     function resetData() {
       dates = {};
+      count = 0;
+    }
+
+    function setYear(current_year) {
+      if (current_year) {
+        year = current_year;
+      }
     }
 
     /*
@@ -59,8 +82,9 @@ angular.module('SubSnoopApp')
      Primary method for configuring the data array.
      param: where - specifies whether to get comments or submissions.
     */
-    function getData(where) {
+    function getData(where, type) {
       var dataArray;
+
       if (where === 'comments') {
         dataArray = data.comments;
       } else {
@@ -72,29 +96,69 @@ angular.module('SubSnoopApp')
         var date = moment(elem.created_utc*1000);
         var commentYear = date.year();
         var dateObj = date.format('YYYY-MM-DD');
-        
+
         if (year === commentYear) {
-          if (!(dateObj in dates)) {
-            dates[dateObj] = {};
-
-            var dayData = dates[dateObj];
-            dayData.date = dateObj;
-            dayData.total = 0;
-            dayData.details = [];
-            dayData.summary = [];
-            dayData.comments = 0;
-            dayData.submissions = 0;
-          }
-
-          dates[dateObj].total += 1;
-          if (where === 'comments') {
-            dates[dateObj].comments += 1;
+          if (type === 'sub') {
+            setSubDay(where, dateObj);
           } else {
-            dates[dateObj].submissions += 1;
+            setUserDay(where, dateObj, elem);
           }
-
+          count += 1;
         }
       
+      }
+    }
+
+    function setUserDay(where, dateObj, subData) {
+      var dayData;
+      var sub = subData.subreddit;
+
+      if (!(dateObj in dates)) {
+        dates[dateObj] = {};
+
+        dayData = dates[dateObj];
+        dayData.date = dateObj;
+        dayData.total = 0;
+        dayData.details = [];
+        dayData.summary = [];
+        dayData.subs = {};
+      } else {
+        dayData = dates[dateObj];
+      }
+
+      if (!(sub in dayData.subs)) {
+        dayData.subs[sub] = {
+          'comments' : 0,
+          'submissions' : 0
+        }
+        dayData.total += 1;
+      }
+
+      if (where === 'comments') {
+        dayData.subs[sub].comments += 1;
+      } else {
+        dayData.subs[sub].submissions += 1;
+      }
+    }
+
+    function setSubDay(where, dateObj) {
+      if (!(dateObj in dates)) {
+        dates[dateObj] = {};
+
+        var dayData = dates[dateObj];
+        dayData.date = dateObj;
+        dayData.total = 0;
+        dayData.details = [];
+        dayData.summary = [];
+        dayData.comments = 0;
+        dayData.submissions = 0;
+      }
+
+      dates[dateObj].total += 1;
+      if (where === 'comments') {
+        dates[dateObj].comments += 1;
+      } else {
+        dates[dateObj].submissions += 1;
       }
     }
   }]);
