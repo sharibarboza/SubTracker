@@ -142,7 +142,7 @@ angular.module('SubSnoopApp')
     */
     var truncateText = function(html, truncate) {
       if (truncate == "true") {
-        return $filter('truncate')(html, 75, false);
+        return $filter('truncate')(html, 200, false);
       } else {
         return html;
       }
