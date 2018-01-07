@@ -32,6 +32,22 @@ input {
   font-weight: bold;
 }
 
+input::-webkit-input-placeholder {
+  color: #6B6B6B !important;
+}
+ 
+input:-moz-placeholder { /* Firefox 18- */
+  color: #6B6B6B !important;  
+}
+ 
+input::-moz-placeholder {  /* Firefox 19+ */
+  color: #6B6B6B !important;  
+}
+ 
+input:-ms-input-placeholder {  
+  color: #6B6B6B !important;  
+}
+
 h5 {
   font-size: 16px;
 }
@@ -106,6 +122,10 @@ h5 {
 
 .md-gray {
   color: #616161;
+}
+
+.placeholder-gray {
+  color: #6B6B6B 
 }
 
 .black {
@@ -318,8 +338,20 @@ blockquote {
   padding-top: 0;
 }
 
+.no-right-pad {
+  padding-right: 0;
+}
+
+.no-left-pad {
+  padding-left: 0;
+}
+
 .no-marginbottom {
   margin-bottom: 0;
+}
+
+.form-control {
+  border-radius: 3px;
 }
 
 /************************
@@ -466,7 +498,7 @@ Dropdown
 .dropdown-menu li:hover {
   color: white;
   font-weight: bold;
-  background-color: black;
+  background-color: #00B1CC;
 }
 
 /************************
@@ -586,6 +618,16 @@ Content
   margin-top: 15px;
 }
 
+#search-subs .col-xs-1 {
+  margin-top: 9px;
+  background-color: #d1d1d1;
+  border: 1px solid #ABABAB;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
 .mobile-only {
   display: none;
 }
@@ -649,16 +691,27 @@ Navigation
   padding-right: 60px;
 }
 
-#search-nav {
+.search-nav {
   padding-top: 8px;
   padding-bottom: 4px;
 }
 
-#search-nav input {
+.search-nav input {
   outline: none;
   border: 1px solid #e5e5e5 !important;
   width: 100%;
   margin-left: 39px;
+}
+
+.sublist-nav {
+  padding-top: 8px;
+  padding-bottom: 4px;
+}
+
+.sublist-nav input {
+  outline: none;
+  border: 1px solid #e5e5e5 !important;
+  width: 100%; 
 }
 
 #nav-button {
@@ -927,7 +980,7 @@ User Page
 }
 
 #user-viewing {
-  padding-bottom: 20px;
+  margin-top: 23px;
 }
 
 /***********************
@@ -1035,14 +1088,24 @@ Subreddit Table
 }
 
 .sort-col {
-  padding-top: 7px;
+  border: 1px solid #e5e5e5;
+  padding-left: 15px;
+  border-radius: 3px;
 }
 
 .sort-title {
-  font-size: 15px;
-  border-top: 1px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
-  padding: 7px 20px 7px 0;
+  padding-top: 6px;
+  padding-bottom: 7px;
+}
+
+.box-title {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.count-title {
+  padding-top: 5px;
+  padding-bottom: 7px;
 }
 
 .card-sub {
@@ -1819,13 +1882,24 @@ Mobile
     text-align: center;
   }
 
-  .viewing-title, .card-action .post-badge, .card-action h4, .sort-title {
+  .card-action .post-badge, .card-action h4 {
     padding-left: 15px;
   }
 
-  .sort-title {
+  .sort-col {
     border: none;
+  }
+
+  .sort-title {
+    padding-bottom: 3px;
+  }
+
+  .box-title {
     margin: 0;
+  }
+
+  #user-viewing {
+    margin-top: 0;
   }
 
   .viewing-row {

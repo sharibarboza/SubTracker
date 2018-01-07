@@ -79,13 +79,13 @@
 
               <!-- Row displaying sorting dropdown menu -->
               <div class="row" id="subtable-head">
-                <div class="col-md-3 no-padding sort-col">
-                  <strong class="sort-title">Sort subreddits by:</strong>
+                <div class="col-md-3 no-padding sort-col sort-title">
+                  <span class="box-title">Sort subreddits by:</span>
                 </div>
-                <div class="col-md-9 col-sm-12 col-xs-12 dropdown-col no-padding">
+                <div class="col-md-9 col-sm-12 col-xs-12 dropdown-col no-right-pad">
                   <div class="btn-group select-dropdown">
                     <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
-                      {{ selected.name }}
+                      <strong class="placeholder-gray">{{ selected.name }}</strong>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                       <li ng-repeat="sort in sortData.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
@@ -96,29 +96,21 @@
 
               <!-- Row displaying subreddit search input -->
               <div class="row no-margin">
-                <div class="col-md-3 col-xs-12 no-padding">
-                  <div class="viewing-row" id="user-viewing">
-                    <span class="small-font viewing-title">Viewing <strong class="orange">{{ subLength > currentLimit ? currentLimit : subLength }}</strong> of {{ subLength }} subreddits </span>
-                  </div>
+                <div class="col-md-3 hidden-xs no-padding sort-col count-title" id="user-viewing">
+                  <span class="small-font box-title viewing-title">Viewing <strong class="orange">{{ subLength > currentLimit ? currentLimit : subLength }}</strong> of {{ subLength }} subs </span>
                 </div>
-                <div class="col-md-9 hidden-xs no-padding" id="search-subs">
-                  <div class="col-xs-1 no-padding" style="margin-top: 8px;">
-                    <i class="fa fa-search icon-gray" aria-hidden="true" style="font-size: 22px;"></i>
-                  </div>
-                  <div class="col-xs-11 no-padding">
-                    <form>
-                      <md-input-container md-no-float class="md-block">
-                        <input type="text" id="testInput"
-                               ng-model="searchSub" ng-change="changeSubs(searchSub)" placeholder="Search for a subreddit ..." md-autofocus>
-                      </md-input-container>
-                      <button type="submit" style="display: none;" ng-controller="SidebarCtrl" ng-click="close()">Go!</button>
-                    </form>
-                  </div>
+                <div class="col-md-9 hidden-xs no-right-pad" id="search-subs">
+                  <form class="sublist-nav">
+                    <input type="text" id="testInput" class="form-control"
+                           ng-model="searchSub" ng-change="changeSubs(searchSub)" placeholder="&#xF002; Search for a sub ..." style="font-family: FontAwesome, Helvetica Neue;" md-autofocus>
+                  </form>
                 </div>
               </div>
 
+              <hr class="non-mobile-only">
+
               <!-- Table column titles -->
-              <div class="table-headers hidden-mobile">
+              <div class="table-headers hidden-mobile row">
                 <div class="col-sm-1">Rank</div>
                 <div class="col-sm-5">Subreddit</div>
                 <div class="col-sm-2">Comments</div>

@@ -110,6 +110,7 @@
     $scope.changeSubs = function(term) {
       $scope.subList = [];
       $scope.subList = search.findSubs($scope.subsArray, term);
+      $scope.currentLimit = $scope.subList.length;
     };
 
     $scope.changeLimit = function() {
