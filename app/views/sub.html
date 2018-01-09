@@ -3,9 +3,12 @@
 <div class="main-content" id="user-sub-page">
   <div class="content" layout="column" ng-cloak>
 
+    <!-- Slide out drawer showing all subreddits -->
     <div ng-include src="'views/sidenav.html'"></div>
 
     <div class="banner-div">
+
+      <!-- Banner showing subreddit icon and other info -->
       <div class="user-banner row" align="center">
         <div class="user-page">
           <div class="avatar-header">
@@ -33,6 +36,7 @@
       </div>
     </div>
 
+    <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
     <div class="user-head-nav" align="center">
       <div class="col-sm-3 hidden-xs no-padding" align="left">
         <a ng-href="#/{{ username }}"><md-button class="md-raised md-primary visit-btn no-margin"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back to subs</md-button></a>
@@ -45,6 +49,7 @@
       </div>
     </div>
 
+    <!-- Different buttons display for mobile -->
     <div class="buttons-mobile">
       <br>
       <div class="col-xs-6 no-padding" align="left">
@@ -58,14 +63,21 @@
     <div class="sub-table column-pad">
       <div class="no-margin row" id="table-head">
 
+        <!-- Left column for displaying subreddit overview -->
         <div ng-if="tab == 2" class="col-md-8 no-padding">
           <div id="overview">
+
+            <!-- Info/description about the subreddit -->
             <div ng-include src="'views/sub-info.html'"></div>
+
+            <!-- Table displaying the user's activity stats in the subreddit -->
             <div ng-include src="'views/sub-table.html'"></div>
           </div>
 
+          <!-- A heatmap showing the subreddit activity in the current year -->
           <div ng-include src="'views/sub-heatmap.html'"></div>
 
+          <!-- A wordcloud showing the most mentioned words in the user's posts -->
           <div ng-include src="'views/sub-wordcloud.html'"></div>
 
           <br>
@@ -75,6 +87,7 @@
           </div>
         </div>
 
+        <!-- For displaying if there are no comments or submissions -->
         <div ng-if="tab == 0 && sub.comments.length == 0" class="col-md-8 no-padding">
           <h4 class="light-gray margin-pad">{{ username }} has no comments in {{ subreddit }}.</h4>
         </div>
@@ -82,10 +95,13 @@
           <h4 class="light-gray margin-pad">{{ username }} has no submissions in {{ subreddit }}.</h4>
         </div>
 
+        <!-- Left column for displaying posts -->
         <div ng-if="(tab == 0 && sub.comments.length > 0) || (tab == 1 && sub.submissions.length > 0)" class="col-md-8 no-padding">
 
           <div class="post-page">
             <div class="row no-margin" id="table-start">
+
+              <!-- Dropdown menu for sorting posts -->
               <div class="col-md-6 no-padding dropdown-left-col">               
                 <div class="btn-group select-dropdown">
                   <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -96,6 +112,8 @@
                   </ul>
                 </div>
               </div>
+
+              <!-- Dropdown menu for displaying the number of posts -->
               <div class="col-md-6 no-padding dropdown-right-col" style="padding-left: 7px;">
                 <div class="btn-group select-dropdown">
                   <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -109,9 +127,13 @@
             </div>
 
             <div class="row no-margin">
+
+              <!-- Display the number of current posts shown -->
               <div class="col-md-6 viewing-row">
                 <span class="small-font viewing-title">Viewing <strong class="orange">{{ slicedArray.length }}</strong> of {{ sub[tabOptions[tab]].length }} {{ tabOptions[tab] }} </span>
               </div>
+
+              <!-- Top Pagination -->
               <div class="col-md-6 no-padding paginate" align="right" id="top-paginate">
                 <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" style="margin: -5px;"></pagination>
               </div>
@@ -120,6 +142,8 @@
           </div>
 
           <div id="{{ tabOptions[tab] }}">
+
+            <!-- Display list of posts (comment or submission) -->
             <div ng-repeat="element in sliceArray()">
               <div ng-if="element.type == 'comment'">
                 <div ng-include src="'views/comment-no-title.html'"></div>
@@ -132,6 +156,8 @@
               <div class="col-md-6 pull-center no-padding center-back" id="back-up">
                 <back-top></back-top>
               </div>
+
+              <!-- Bottom pagination -->
               <div class="col-md-6 paginate no-padding">
                 <pagination total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" ng-change="backUp()" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" id="bottom-paginate"></pagination>
               </div>
@@ -139,6 +165,7 @@
           </div>
         </div>
 
+        <!-- Right side column -->
         <div class="col-md-4 no-padding" ng-class="{ 'hidden-xs' : page == 'comments' || page == 'submissions' }">
           <div ng-include src="'views/sub-side.html'"></div>
         </div>
