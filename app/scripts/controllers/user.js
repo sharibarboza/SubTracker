@@ -67,6 +67,7 @@
     if (subsData && Object.keys(subsData.subs).length > 0) {
       $scope.notfound = false;
       $rootScope.title = $scope.username + ' | Subreddits';
+      $scope.fetchTime = subFactory.getFetchTime();
 
       configUserData(subsData.user);
       configSubData(subsData);

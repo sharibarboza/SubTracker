@@ -28,6 +28,8 @@
     var submitData = [];
     var subData = {};
 
+    var fetchTime;
+
     /*
      User interface for sub factory
     */
@@ -65,6 +67,9 @@
       },
       setSubInfo: function(subreddit, info) {
         subData.subs[subreddit].info = info;
+      },
+      getFetchTime: function() {
+        return fetchTime;
       },
       getFirstPost: getFirstPost,
       getLatestPost: getLatestPost,
@@ -135,6 +140,7 @@
           // Resolve both comment and submission promises together
           var dataPromise = $q.all([commentPromise, submitPromise]).then(function() {
             setSubData(response);
+            setFetchTime();
             return subData;
           });
           return dataPromise;
@@ -146,6 +152,13 @@
       });
       return subPromise;
     };
+
+    /*
+     Set the date and time that the data was fetched from the API
+    */
+    function setFetchTime() {
+      fetchTime = moment();
+    }
 
     /*
      Make the http request to the Reddit API using HTTP GET request.
