@@ -27,7 +27,7 @@
               <strong>Comments</strong>
             </div>
             <div class="profile-img">
-              <img ng-if="redditor.subreddit" ng-src="{{ redditor.subreddit.icon_img }}" class="banner-img img-circle">
+              <img ng-if="redditor.subreddit" ng-src="{{ redditor.subreddit.icon_img | escape }}" class="banner-img img-circle">
               <img ng-if="!redditor.subreddit" ng-src="{{ '../images/sub-icon.png' }}" class="banner-img img-circle">
             </div>
             <div class="post-wing right-wing" align="center" style="border-left: 1px solid #C3D5DB;">
