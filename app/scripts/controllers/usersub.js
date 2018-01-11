@@ -135,7 +135,7 @@ angular.module('SubSnoopApp')
       setArray();
     };
 
-    $scope.sortSelected = {value: 'newest', name: 'Newest'};
+    $scope.sortSelected = sortFactory.getDefaultPostSort();
 
     /*
      Set up the data array to be displayed based on the current tab and sort value.
