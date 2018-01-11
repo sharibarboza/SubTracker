@@ -75,21 +75,7 @@
       /*
        Used for sorting subreddits
       */
-      $scope.sortData = {
-        sortOptions: [
-          {value: 'subName', name: 'Subreddit name'},
-          {value: 'totalComments', name: 'Total comments'},
-          {value: 'totalSubmits', name: 'Total submissions'},
-          {value: 'totalUps', name: 'Total upvotes'},
-          {value: 'lastSeen', name: 'Most recent activity'},
-          {value: 'mostActive', name: 'Most activity'},
-          {value: 'avgComment', name: 'Average upvotes per comment'},
-          {value: 'avgSubmit', name: 'Average upvotes per submission'},
-          {value: 'avgPost', name: 'Average upvotes per post'},
-          {value: 'mostDown', name: 'Most controversial'},
-        ],
-      };
-
+      $scope.sortData = sortFactory.getSubSorting();
       $scope.selected = sortFactory.getSubSort();
 
       /*

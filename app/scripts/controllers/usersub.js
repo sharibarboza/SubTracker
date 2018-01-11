@@ -127,14 +127,7 @@ angular.module('SubSnoopApp')
     /*
      Used for sorting comments/submissions
     */
-    $scope.data = {
-      sortOptions: [
-        {value: 'newest', name: 'Newest'},
-        {value: 'oldest', name: 'Oldest'},
-        {value: 'mostUps', name: 'Most upvoted'},
-        {value: 'mostDowns', name: 'Most controversial'},
-      ]
-    };
+    $scope.data = sortFactory.getPostSorting();
 
     $scope.setSortOption = function(sort) {
       $scope.subPage.current = 1;

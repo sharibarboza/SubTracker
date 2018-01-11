@@ -1,7 +1,7 @@
 <md-card>
   <md-media class="no-pad">
     <div ng-if="subInfo.banner_img" class="banner-box">
-      <img ng-src="{{ subInfo.banner_img }}" class="sub-banner-img" />
+      <img ng-src="{{ subInfo.banner_img | escape }}" class="sub-banner-img" />
       <div class="banner-text">
         <span class="txt-block">Subscribers: <span class="non-bg baby-blue">{{ subInfo.subscribers | number }}</span></span>
       </div>
