@@ -7,17 +7,12 @@
  * # pieChart
  */
 angular.module('SubSnoopApp')
-  .directive('donutChart', ['d3Service', '$window', 'subFactory', '$filter', 'moment', function (d3Service, $window, subFactory, $filter, moment) {
+  .directive('donutChart', ['d3Service', '$window', 'subFactory', '$filter', 'moment', 'pieChart', function (d3Service, $window, subFactory, $filter, moment, pieChart) {
 
   /*
    Based on http://embed.plnkr.co/YICxe0/
   */
-  var username;
   var windowWidth = $window.innerWidth;
-  var colors = ["#80deea", "#FF7817", "#d4e157", "#f50057", "#7e57c2", "#2979ff", "#00c853", "#fdd835", "#FA4E2D", "#9ccc65"];
-
-  var colorData;
-  var colorIndex;
 
   return {
     restrict: 'EA',
@@ -64,7 +59,7 @@ angular.module('SubSnoopApp')
               top: 0, right: 70, bottom: 0, left: 70
             }
           };
-        }
+        };
 
         function changeChartConfig(window_width) {
           return {
@@ -78,93 +73,13 @@ angular.module('SubSnoopApp')
               top: 0, right: 30, bottom: 0, left: 30
             }
           };
-        }
-
-        function getPercentages(chartArray, total) {
-          for (var i = 0; i < chartArray.length; i++) {
-            var percent = chartArray[i].value / total;
-            chartArray[i].percent = (percent * 100).toFixed(1);
-          }
-        }
+        };
 
         function init() {
 
           // --------------------------------------------------------
 
-          if (username == null || !subFactory.checkUser(username)) {
-            colorData = {};
-            colorIndex = 0;
-            username = subFactory.getUser();
-          }
-
-          var subs = subFactory.getSubData().subs;
-          var chartArray;
-          var chartData;
-
-          if (attrs.type === 'activity') {
-            chartArray = [];
-            chartData = {
-              center: {}
-            };
-
-            chartData.center.value = "Most Active Subs";
-
-            var sortedSubs = $filter('sortSubs')(Object.keys(subs), 'mostActive', subs);
-            var activeArray = sortedSubs.slice(0, 5);
-            var total = 0;
-
-            for (var i = 0; i < activeArray.length; i++) {
-              var name = activeArray[i];
-              var sub = subs[name];
-              var posts = sub.comments.length + sub.submissions.length;
-              total += posts;
-
-              var d = {};
-              d.id = i;
-              d.label = name;
-              d.value = posts;
-
-              chartArray.push(d);
-
-              if (!(name in colorData)) {
-                colorData[name] = colors[colorIndex];
-                ++colorIndex;
-              }
-            }
-            getPercentages(chartArray, total);
-          } else if (attrs.type === 'upvotes') {
-            chartArray = [];
-            chartData = {
-              center: {}
-            };
-
-            chartData.center.value = "Most Upvoted Subs";
-
-            var sortedSubs = $filter('sortSubs')(Object.keys(subs), 'totalUps', subs);
-            var upvotesArray = sortedSubs.slice(0, 5);
-            var total = 0;
-
-            for (var i = 0; i < upvotesArray.length; i++) {
-              var name = upvotesArray[i];
-              var sub = subs[name];
-              var points = sub.comment_ups + sub.submission_ups;
-              total += points;
-
-              var d = {};
-              d.id = i;
-              d.label = name;
-              d.value = points;
-
-              chartArray.push(d);
-
-              if (!(name in colorData)) {
-                colorData[name] = colors[colorIndex];
-                ++colorIndex;
-              }
-            }
-            getPercentages(chartArray, total);
-          }
-          chartData.values = chartArray;
+          var chartData = pieChart.getData(subFactory.getUser(), attrs.type);
 
           // --------------------------------------------------------
 
@@ -209,7 +124,6 @@ angular.module('SubSnoopApp')
               return d.value;
             });
 
-          var centerLabel = (!!chartData.center.label) ? chartData.center.label : '';
           var centerValue = (!!chartData.center.value) ? chartData.center.value : '';
           var numData = 'Top 5';
 
@@ -301,7 +215,7 @@ angular.module('SubSnoopApp')
 
           var partition = arcs.append('svg:path')
             .style('fill', function(d) { 
-              return colorData[d.data.label];
+              return chartData.colors[d.data.label];
             })
             .on("mouseover", scope.mouseOverPath)
             .on("mouseout", scope.mouseOutPath)

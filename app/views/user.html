@@ -63,9 +63,14 @@
             <md-tooltip class="tooltip">Posted in at least 100 subreddits</md-tooltip>
           </div>
         </div>
-        <div class="col-md-4 col-md-offset-0 col-xs-12 no-padding mobile-center user-reddit-btn" align="right">
+        <div class="col-md-4 col-md-offset-0 col-xs-12 no-padding non-mobile-only user-reddit-btn" align="right">
           <a ng-href="https://www.reddit.com/user/{{ redditor.name }}"><md-button class="md-raised md-primary visit-btn no-margin">To Reddit page <i class="fa fa-external-link" aria-hidden="true"></i></md-button></a>
         </div>
+      </div>
+
+      <!-- Different buttons display for mobile -->
+      <div class="mobile-only user-reddit-div">
+        <a ng-href="https://www.reddit.com/user/{{ redditor.name }}"><md-button class="md-raised md-primary visit-btn no-margin" style="width: 100%;">To Reddit page <i class="fa fa-external-link" aria-hidden="true"></i></md-button></a>
       </div>
 
       <div class="sub-table column-pad">

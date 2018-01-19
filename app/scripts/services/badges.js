@@ -10,6 +10,7 @@
 angular.module('SubSnoopApp')
   .service('badges', ['$filter', 'rank', 'subFactory', 'subInfo', 'sortFactory', function ($filter, rank, subFactory, subInfo, sortFactory) {
     
+    var user;
     var subs;
     var keys;
     var badges;
@@ -18,7 +19,18 @@ angular.module('SubSnoopApp')
     Used for determining the sub badges such as most active, most upvoted, etc.
     */
     var factory = {
-      getSubs: function() {
+      getSubs: function(current_user) {
+        if (badges && user == current_user) {
+          return badges;
+        } else {
+          user = current_user;
+          return getBadges();
+        }
+      }
+    };
+    return factory;
+
+    function getBadges() {
         badges = {
           'mostActive' : {
             'image' : null,
@@ -53,9 +65,7 @@ angular.module('SubSnoopApp')
         rank.getTopSub(keys, sortFactory.getSubSort().value, subs);
 
         return badges;
-      }
     };
-    return factory;
 
     function setBadge(category) {
       var sub = getSub(category);
