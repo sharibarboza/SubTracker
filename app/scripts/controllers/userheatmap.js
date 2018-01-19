@@ -8,9 +8,9 @@
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('UserHeatmapCtrl', ['$scope', 'heatmap', 'subFactory', function ($scope, heatmap, subFactory) {
+  .controller('UserHeatmapCtrl', ['$scope', 'userHeatmap', 'subFactory', function ($scope, userHeatmap, subFactory) {
     var subs = subFactory.getSubData().subs;
 
-    $scope.mapData = heatmap.getUserMap(subs, null);
-    $scope.count = heatmap.getCount();
+    $scope.mapData = userHeatmap.getUserMap($scope.username, subs, null);
+    $scope.count = userHeatmap.getCount();
   }]);

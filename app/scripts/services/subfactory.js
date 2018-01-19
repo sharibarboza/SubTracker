@@ -28,6 +28,9 @@
     var submitData = [];
     var subData = {};
 
+    var latestPost = null;
+    var firstPost = null;
+
     var fetchTime;
 
     /*
@@ -71,8 +74,12 @@
       getFetchTime: function() {
         return fetchTime;
       },
-      getFirstPost: getFirstPost,
-      getLatestPost: getLatestPost,
+      getFirstPost: function(sub) {
+        return firstPost == null ? getFirstPost(sub) : firstPost
+      },
+      getLatestPost: function(sub) {
+        return latestPost == null ? getLatestPost(sub) : latestPost
+      },
       compareDates: compareDates,
       getNewestSub: getNewestSub,
       getRecentPosts: getRecentPosts,
@@ -125,6 +132,8 @@
       submitData = [];
       subData = {};
       upvotes = 0;
+      latestPost = null;
+      firstPost = null;
     };
 
     /*
