@@ -5,7 +5,7 @@
   <md-divider></md-divider>
   <md-card-content>
     <div ng-controller="UserHeatmapCtrl">
-      <strong class="baby-blue">{{ count }} {{ count == 1 ? 'post' : 'posts' }} this year</strong>
+      <strong class="baby-blue">{{ count | number }} {{ count == 1 ? 'post' : 'posts' }} this year</strong>
       <p class="gray small-font">Hover over a circle to see which subs exhibit activity on that day.</p>
       <br>
       <calendar-heatmap data="mapData" color="'#05753B'" overview="'year'" handler="print" type="'user'"></calendar-heatmap>

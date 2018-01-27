@@ -6,9 +6,10 @@ describe('test heatmap service', function () {
   beforeEach(module('SubSnoopApp'));
 
   // instantiate service
-  var heatmap, moment, sub1Data, sub2Data, subs;
-  beforeEach(inject(function (_heatmap_, _moment_) {
-    heatmap = _heatmap_;
+  var subHeatmap, userHeatmap, moment, sub1Data, sub2Data, subs;
+  beforeEach(inject(function (_subHeatmap_, _userHeatmap_, _moment_) {
+    subHeatmap = _subHeatmap_;
+    userHeatmap = _userHeatmap_;
     moment = _moment_;
 
     var sub1 = 'gaming';
@@ -43,7 +44,7 @@ describe('test heatmap service', function () {
   }));
 
   it('should return proper data for sub maps', function() {
-    var result = heatmap.getSubMap(sub1Data, 2017);
+    var result = subHeatmap.getSubMap('user1', 'gaming', sub1Data, 2017);
     expect(result.length).toEqual(5);
 
     for (var key in result) {
@@ -66,11 +67,11 @@ describe('test heatmap service', function () {
       }
     }
 
-    expect(heatmap.getCount()).toEqual(8);
+    expect(subHeatmap.getCount()).toEqual(8);
   });
 
   it('should return proper data for user maps', function() {
-    var result = heatmap.getUserMap(subs, 2017);
+    var result = userHeatmap.getUserMap('user1', subs, 2017);
     expect(result.length).toEqual(5);
 
     for (var key in result) {
@@ -104,7 +105,7 @@ describe('test heatmap service', function () {
       }
     }
 
-    expect(heatmap.getCount()).toEqual(9);
+    expect(userHeatmap.getCount()).toEqual(9);
   }); 
   
 
