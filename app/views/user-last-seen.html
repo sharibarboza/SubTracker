@@ -12,6 +12,9 @@
   </md-card-content>
   <md-divider></md-divider>
   <md-card-content ng-controller="FetchTimeCtrl">
-    <p class="small-font">The data shown here was last fetched on {{ fetchTime | amDateFormat: 'MMMM Do YYYY, h:mm a' }}. <a href="" ng-click="refresh()">Refresh</a> to get the latest activity.</p>
+    <div class="row">
+      <div class="col-xs-10"><span class="small-font">Data last fetched on {{ fetchTime | amDateFormat: 'MMMM Do YYYY, h:mm a' }}. <a href="" ng-click="refresh()">Refresh</a> to get the latest activity.</span></div>
+      <div class="col-xs-2" align="right"><i class="fa fa-refresh gray" aria-hidden="true"></i></div>
+    </div>
   </md-card-content>
 </md-card>

@@ -17,8 +17,10 @@ angular.module('SubSnoopApp')
     var colorData = {};
     var colorIndex = 0;
 
+    var value2 = "Top 5";
+
     /*
-     Request the Reddit API to get the newest subs
+     Construct data for user pie-charts (most active and most upvoted)
     */
     var factory = {
       getData: function (current_user, current_type) {
@@ -52,6 +54,7 @@ angular.module('SubSnoopApp')
         };
 
         chartData.center.value = "Most Active Subs";
+        chartData.center.value2 = value2;
 
         var sortedSubs = $filter('sortSubs')(Object.keys(subs), 'mostActive', subs);
         var activeArray = sortedSubs.slice(0, 5);
@@ -83,6 +86,7 @@ angular.module('SubSnoopApp')
         };
 
         chartData.center.value = "Most Upvoted Subs";
+        chartData.center.value2 = value2;
 
         var sortedSubs = $filter('sortSubs')(Object.keys(subs), 'totalUps', subs);
         var upvotesArray = sortedSubs.slice(0, 5);
