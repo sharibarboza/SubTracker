@@ -165,12 +165,12 @@
 
             <!-- Subreddit activity pie charts -->
             <div id="statistics">
-              <div ng-controller="PiechartCtrl" align="center" id="pies" class="row no-margin">
+              <div align="center" id="pies" class="row no-margin">
                 <div class="col-md-6 col-xs-12 no-padding" align="center">
                   <md-card ng-if="comments > 0">
                     <md-card-content>
-                      <h4><strong>Post activity distribution across<br><span class="baby-blue">{{ username }}'s</span><br>top {{ chartLimit }} most active subreddits</strong></h4>
-                      <span class="small-font">Hover to see the number of posts for that sub.</span>
+                      <h4><strong>Top 5 Active Subreddits</strong></h4>
+                      <span class="small-font gray">Hover to see the number of posts for that sub.</span>
                       <donut-chart type="activity" align="center"></donut-chart>
                       <h5 ng-if="comments == 0">{{ username }} does not have any comments.</h5>
                     </md-card-content>
@@ -179,8 +179,8 @@
                 <div class="col-md-6 col-xs-12 no-padding" align="center">
                   <md-card ng-if="submissions > 0">
                     <md-card-content>
-                      <h4><strong>Upvote/Point distribution across<br><span class="baby-blue">{{ username }}'s</span><br> top {{ chartLimit }} most upvoted subreddits</strong></h4>
-                      <span class="small-font">Hover to see the number of points for that sub.</span>
+                      <h4><strong>Top 5 Upvoted Subreddits</strong></h4>
+                      <span class="small-font gray">Hover to see the number of points for that sub.</span>
                       <donut-chart type="upvotes" align="center"></donut-chart>
                       <h5 ng-if="submissions == 0">{{ username }} does not have any submissions.</h5> 
                     </md-card-content>

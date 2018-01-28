@@ -7,7 +7,8 @@
  * # pieChart
  */
 angular.module('SubSnoopApp')
-  .directive('donutChart', ['d3Service', '$window', 'subFactory', '$filter', 'moment', 'pieChart', function (d3Service, $window, subFactory, $filter, moment, pieChart) {
+  .directive('donutChart', ['d3Service', '$window', 'subFactory', '$filter', 'moment', 'pieChart', 'sentiMood', 'reaction', 
+    function (d3Service, $window, subFactory, $filter, moment, pieChart, sentiMood, reaction) {
 
   /*
    Based on http://embed.plnkr.co/YICxe0/
@@ -17,9 +18,17 @@ angular.module('SubSnoopApp')
   return {
     restrict: 'EA',
     replace: true,
+    scope: true,
     template: '<div id="donut-chart"></div>',
     link: function(scope, element, attrs) {
       d3Service.d3().then(function(d3) {
+
+        var height;
+        if (attrs.type == 'sentiment' || attrs.type == 'reaction') {
+          height = 375;
+        } else {
+          height = 475;
+        }
 
         function configChart(scope_chart, window_width) {
           if (window_width < 1200 && window_width > 950) {
@@ -50,13 +59,13 @@ angular.module('SubSnoopApp')
 
           return {
             width: chart_width,
-            height: 350,
+            height: height,
             thickness: 30,
             grow: 10,
-            labelPadding: 50,
+            labelPadding: 35,
             duration: 100,
             margin: {
-              top: 0, right: 70, bottom: 0, left: 70
+              top: 50, right: 70, bottom: 0, left: 70
             }
           };
         };
@@ -64,13 +73,13 @@ angular.module('SubSnoopApp')
         function changeChartConfig(window_width) {
           return {
             width: window_width - 750,
-            height: 350,
+            height: height,
             thickness: 30,
             grow: 10,
-            labelPadding: 50,
+            labelPadding: 35,
             duration: 100,
             margin: {
-              top: 0, right: 30, bottom: 0, left: 30
+              top: 50, right: 30, bottom: 0, left: 30
             }
           };
         };
@@ -79,7 +88,14 @@ angular.module('SubSnoopApp')
 
           // --------------------------------------------------------
 
-          var chartData = pieChart.getData(subFactory.getUser(), attrs.type);
+          var user = subFactory.getUser();
+          if (attrs.type == 'activity' || attrs.type == 'upvotes') {
+            var chartData = pieChart.getData(user, attrs.type);
+          } else if (attrs.sub && attrs.type == 'sentiment') {
+            var chartData = sentiMood.getData(attrs.sub);
+          } else if (attrs.sub && attrs.type == 'reaction') {
+            var chartData = reaction.getData(attrs.sub);
+          }
 
           // --------------------------------------------------------
 
@@ -125,10 +141,9 @@ angular.module('SubSnoopApp')
             });
 
           var centerValue = (!!chartData.center.value) ? chartData.center.value : '';
-          var numData = 'Top 5';
+          var centerValue2 = (!!chartData.center.value2) ? chartData.center.value2 : '';
 
           var d3ChartEl = d3.select(element[0]);
-
           d3ChartEl.select('svg').remove();
 
           var gRoot = d3ChartEl.append('svg')
@@ -153,10 +168,10 @@ angular.module('SubSnoopApp')
 
                 d3.select('.center-value-' + attrs.type).text(d.data.label);
                 var line1;
-                if (attrs.type === 'activity') {
-                  line1 = 'Posts: ' + d.data.value;
-                } else if (attrs.type === 'upvotes') {
+                if (attrs.type === 'upvotes') {
                   line1 = 'Points: ' + d.data.value;
+                } else {
+                  line1 = 'Posts: ' + d.data.value;
                 }
 
                 d3.select('.line-1-' + attrs.type)
@@ -179,32 +194,41 @@ angular.module('SubSnoopApp')
               .attr("d", arcOver);
           };
 
-          scope.mouseOutPath = function(d) {
-            d3.select(this)
-              .transition()
-              .attr("d", arc);
-          };
-
-          gRoot.on('mouseleave', function(e) {
-            if (!e) {
-              d3.selectAll('.arc-' + attrs.type).style('opacity', '1');
-              d3.select('.center-value-' + attrs.type).text(centerValue);
-              d3.select('.line-1-' + attrs.type).text(numData);
-              d3.selectAll('.arc-' + attrs.type + ' .legend .percent')
+          scope.reduceArc = function(d) {
+            if (d) {
+              d3.select(this)
                 .transition()
-                .duration(duration)
-                .style("fill-opacity", 0);
+                .attr("d", arc);            
+            } else {
+              d3.selectAll('.arc-' + attrs.type + ' path')
+              .each(function() {
+                d3.select(this)
+                  .transition()
+                  .attr("d", arc);
+              });
             }
-          });
+          }
 
-          middleCircle.on('mouseover', function() {
+          scope.restoreCircle = function() {
             d3.selectAll('.arc-' + attrs.type).style('opacity', '1');
             d3.select('.center-value-' + attrs.type).text(centerValue);
-            d3.select('.line-1-' + attrs.type).text(numData);
+            d3.select('.line-1-' + attrs.type).text(centerValue2);
             d3.selectAll('.arc-' + attrs.type + ' .legend .percent')
               .transition()
               .duration(duration)
               .style("fill-opacity", 0);
+
+            scope.reduceArc();
+          };
+
+          gRoot.on('mouseleave', function(e) {
+            if (!e) {
+              scope.restoreCircle();
+            }
+          });
+
+          middleCircle.on('mouseover', function() {
+            scope.restoreCircle();
           });
 
           var arcs = gRoot.selectAll('g.arc')
@@ -218,13 +242,13 @@ angular.module('SubSnoopApp')
               return chartData.colors[d.data.label];
             })
             .on("mouseover", scope.mouseOverPath)
-            .on("mouseout", scope.mouseOutPath)
             .each(function() {
               this._current = {
                 startAngle: 0,
                 endAngle: 0
               };
             })
+            .on("mouseleave", scope.reduceArc)
             .attr('d', arc)
             .transition()
             .duration(1000)
@@ -253,7 +277,7 @@ angular.module('SubSnoopApp')
             .attr("font-weight", "bold");
 
           centerText.append('tspan')
-            .text(numData)
+            .text(centerValue2)
             .attr('x', 0)
             .attr('dy', '1em')
             .attr("text-anchor", "middle")
@@ -262,7 +286,7 @@ angular.module('SubSnoopApp')
             .attr("fill", "#333")
             .attr("font-weight", "bold");    
 
-          var legend = arcs.append("svg:text")
+          var percents = arcs.append("svg:text")
             .style('fill-opacity', 0)
             .attr('class', 'legend')
             .attr("transform", function(d) {
@@ -274,7 +298,7 @@ angular.module('SubSnoopApp')
                 ((y+5) / height * labelRadius) + ")";
             });
 
-          legend.append('tspan')
+          percents.append('tspan')
             .attr('class', 'percent')
             .attr('x', 0)
             .attr('font-size', '13px')
@@ -283,6 +307,64 @@ angular.module('SubSnoopApp')
             .text(function(d, i) {
               return d.data.percent + '%';
             });
+
+          var legend = gRoot.append('g')
+            .attr('class', 'legend')
+            .selectAll('text')
+            .data(chartData.values)
+              .enter();
+
+          legend.append('rect')
+            .attr('height', 10)
+            .attr('width', 10)
+            .attr('x', function(d) {
+              if (attrs.type == 'sentiment' || attrs.type == 'reaction') {
+                return 0 - radius - 35;
+              } else {
+                return 0 - radius - 20; 
+              }
+            })
+            .attr('y', function(d, i) { 
+              if (attrs.type == 'sentiment' || attrs.type == 'reaction') {
+                return (20 * (i + 1) - 210);
+              } else {
+                return (20 * (i + 1)) - 260; 
+              }
+            })
+            .on('mouseover', function(d, i) {
+              var sel = d3.selectAll('.arc-' + attrs.type).filter(function(d) {
+                return d.data.id == i;
+              });
+              scope.mouseOverPath.call(sel.select('path')[0][0], sel.datum());
+            })
+            .style('fill', function(d) { 
+              return chartData.colors[d.label];
+            });
+
+          legend.append('text')
+            .attr('x', function(d) {
+              if (attrs.type == 'sentiment' || attrs.type == 'reaction') {
+                return 0 - radius - 15;
+              } else {
+                return 0 - radius; 
+              }
+            })
+            .attr('y', function(d, i) { 
+              if (attrs.type == 'sentiment' || attrs.type == 'reaction') {
+                return (20 * (i + 1) - 200);
+              } else {
+                return (20 * (i + 1)) - 250; 
+              }
+            })
+            .attr('font-size', '12px')
+            .attr('fill', '#333')
+            .on('mouseover', function(d, i) {
+              var sel = d3.selectAll('.arc-' + attrs.type).filter(function(d) {
+                return d.data.id == i;
+              });
+              scope.mouseOverPath.call(sel.select('path')[0][0], sel.datum());
+            })
+            .text(function(d) { return d.label; });       
 
         }
 

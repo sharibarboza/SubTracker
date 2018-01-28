@@ -8,7 +8,8 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('subFactory', ['$http', 'userFactory', '$q', 'moment', '$filter', 'rank', function ($http, userFactory, $q, moment, $filter, rank) {
+ .factory('subFactory', ['$http', 'userFactory', '$q', 'moment', '$filter', 'rank', 'sentiMood', 'reaction', 
+  function ($http, userFactory, $q, moment, $filter, rank, sentiMood, reaction) {
     var baseUrl = 'https://www.reddit.com/user/';
     var rawJson = 'raw_json=1';
     var pages = 10;
@@ -109,6 +110,9 @@
 
       setTotalUps();
       setDefaultSortedArray();
+
+      sentiMood.setSubData(subs);
+      reaction.setSubData(subs);
 
       subData = {
         'user': response,

@@ -80,6 +80,27 @@
           <!-- A wordcloud showing the most mentioned words in the user's posts -->
           <div ng-include src="'views/sub-wordcloud.html'"></div>
 
+          <div align="center" id="pies" class="row no-margin">
+            <div class="col-md-6 col-xs-12 no-padding" align="center">
+              <md-card>
+                <md-card-content>
+                  <h4><strong>Sentiment Analysis</strong></h4>
+                  <span class="small-font gray">Hover to see the number of posts for each category.</span>
+                  <donut-chart type="sentiment" sub="{{ subreddit }}" align="center"></donut-chart>
+                </md-card-content>
+              </md-card>
+            </div>
+            <div class="col-md-6 col-xs-12 no-padding" align="center">
+              <md-card>
+                <md-card-content>
+                  <h4><strong>Voting Feedback</strong></h4>
+                  <span class="small-font gray">Hover to see the number of posts for each category.</span>
+                  <donut-chart type="reaction" sub="{{ subreddit }}" align="center"></donut-chart>
+                </md-card-content>
+              </md-card>
+            </div>
+          </div>
+
           <br>
           <div align="center" class="center-back">
             <back-top></back-top>
