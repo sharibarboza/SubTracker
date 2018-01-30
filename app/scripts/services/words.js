@@ -276,7 +276,7 @@ angular.module('SubSnoopApp')
       for (var i = 0; i < words.length; i++) {
         var word = words[i].toLowerCase();
 
-        if (filterWord(word)) {
+        if (word.length > 0 && filterWord(word)) {
           if (word in wordDict) {
             wordDict[word] += 1;
           } else {
@@ -293,7 +293,11 @@ angular.module('SubSnoopApp')
      - Words that are anchor links are excluded
     */
     function filterWord(word) {
-      if (stopWords.indexOf(word) >= 0) {
+      if (word[0] == '-' || word[word.length-1] == '-') {
+        return false;
+      } else if (word[0] == '\'' || word[word.length-1] == '\'') {
+        return false;
+      } else if (stopWords.indexOf(word) >= 0) {
         return false;
       } else if (word.length > 20 || word.length < 3) {
         return false;
