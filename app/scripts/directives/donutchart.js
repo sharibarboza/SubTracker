@@ -169,9 +169,9 @@ angular.module('SubSnoopApp')
                 d3.select('.center-value-' + attrs.type).text(d.data.label);
                 var line1;
                 if (attrs.type === 'upvotes') {
-                  line1 = 'Points: ' + d.data.value;
+                  line1 = 'Points: ' + $filter('number')(d.data.value);
                 } else {
-                  line1 = 'Posts: ' + d.data.value;
+                  line1 = 'Posts: ' + $filter('number')(d.data.value);
                 }
 
                 d3.select('.line-1-' + attrs.type)
