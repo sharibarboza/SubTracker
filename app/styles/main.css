@@ -337,6 +337,10 @@ blockquote {
   border-radius: 3px;
 }
 
+#main-view {
+  background-color: white;
+}
+
 /************************
 Angular Material
 ************************/
