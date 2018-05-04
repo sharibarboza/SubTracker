@@ -7,19 +7,26 @@
 
     <div ng-include src="'views/main-search.html'"></div>
   </div>
-  <div id="sub-panels">
-    <div class="col-md-6">
-      <strong class="sub-panel-title dark-gray">Popular Subreddits</strong>
-      <div ng-repeat="subElement in popularSubs">
-        <div ng-include src="'views/sub-panel.html'"></div>
+  <div class="row no-margin">
+    <div class="row no-margin col-md-10 col-md-push-1 no-padding" id="sub-panels">
+      <div class="col-md-6">
+        <strong class="sub-panel-title dark-gray">Popular Subreddits</strong>
+        <div ng-repeat="subElement in popularSubs">
+          <div ng-include src="'views/sub-panel.html'"></div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <strong class="sub-panel-title dark-gray">New Subreddits</strong>
+        <div ng-repeat="subElement in newSubs">
+          <div ng-include src="'views/sub-panel.html'"></div>
+        </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <strong class="sub-panel-title dark-gray">New Subreddits</strong>
-      <div ng-repeat="subElement in newSubs">
-        <div ng-include src="'views/sub-panel.html'"></div>
-      </div>
-    </div>
+  </div>
+
+  <div align="center" class="center-back">
+    <back-top></back-top>
+    <br><br>
   </div>
 </div>
 

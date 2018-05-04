@@ -1,4 +1,4 @@
-<md-card-content class="pad-card" id="comment-card">
+<md-card-content class="no-pad" id="comment-card">
   <a ng-href="{{ element.link_url }}" target="_blank" class="wrap-text"><strong>{{ element.link_title | escape }}</strong></a> by <a ng-href="#/{{ element.link_author }}" target="_blank">{{ element.link_author }}</a> in <a ng-href="https://www.reddit.com/r/{{ element.subreddit }}" target="_blank">{{ element.subreddit }}</a>
   <br>
   <span class="post-links">
@@ -7,5 +7,5 @@
   <span class="post-links">
     <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMM Do YYYY, h:mm a'" class="post-date"></span>
   </span>
-  <p class="post-body wrap-text" ng-bind-html="element.highlighted_body && page == 'search' ? element.highlighted_body : element.body_html | sanitize | truncate:200:false"></p>
+  <p class="post-body wrap-text" ng-bind-html="element.highlighted_body && page == 'search' ? element.highlighted_body : element.body_html | escape | sanitize | truncate:200:false"></p>
 </md-card-content>

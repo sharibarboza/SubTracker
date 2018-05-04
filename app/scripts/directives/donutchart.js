@@ -34,9 +34,9 @@ angular.module('SubSnoopApp')
           if (window_width < 1200 && window_width > 950) {
             scope_chart = changeChartConfig(window_width);
           } else if (window_width < 550) {
-            scope_chart = setChartConfig(330);
+            scope_chart = setChartConfig(340);
           } else {
-            scope_chart = setChartConfig(350);
+            scope_chart = setChartConfig(360);
           }
           return scope_chart;
         }

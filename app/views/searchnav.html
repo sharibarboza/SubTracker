@@ -20,6 +20,17 @@
       </div>
 
     </div><!--/.nav-collapse -->
+    <div style="padding-bottom: 10px; display: none;" id="mobile-input">
+      <form redirect="{{ true }}" novalidate="novalidate" handle-phone-submit>
+        <div class="input-group" id="search-strip">
+          <input type="text" ng-model="inputname" class="form-control" id="nav-seach" placeholder="Search for another user ..." required>
+          <span class="input-group-btn">
+            <button class="btn btn-info" id="nav-button" type="submit"><i class="glyphicon glyphicon-search" id="nav-icon" aria-hidden="true"></i></button>
+          </span>
+        </div>
+      </form> 
+    </div>
+
   </div>
 </div>
 
