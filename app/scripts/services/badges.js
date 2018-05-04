@@ -32,14 +32,14 @@ angular.module('SubSnoopApp')
 
     function getBadges() {
         badges = {
-          'mostActive' : {
-            'image' : null,
-            'name' : 'MOST ACTIVE SUB',
-            'points' : 0 
-          },
           'mostUpvoted' : {
             'image' : null,
             'name' : 'MOST UPVOTED SUB',
+            'points' : 0 
+          },
+          'mostActive' : {
+            'image' : null,
+            'name' : 'MOST ACTIVE SUB',
             'points' : 0 
           },
           'leastUpvoted' : {
@@ -56,8 +56,8 @@ angular.module('SubSnoopApp')
         subs = subFactory.getSubData().subs;
         keys = subFactory.getDefaultSortedArray();
 
-        setBadge('mostActive');
         setBadge('mostUpvoted');
+        setBadge('mostActive');
         setBadge('leastUpvoted');
         setBadge('newestSub');
 

@@ -7,20 +7,27 @@
       </div>
     </div>
   </md-media>
-  <md-card-content class="no-toppad">
-    <br ng-if="!subInfo.banner_img">
-    <div><strong class="light-gray">ABOUT THIS SUBREDDIT</strong>
-    <br>
-    <p ng-if="subInfo.public_description" ng-bind-html="subInfo.public_description_html | sanitize"></p></div>
-    <p ng-if="!subInfo.public_description">No description available.</p>
-  </md-card-content>
-  <md-divider></md-divider>
-  <md-card-content>
-    <div ng-if="!subInfo.banner_img">
-      <strong class="dark-gray"><i class="fa fa-user-plus" aria-hidden="true"></i>  Subscribers:
-      <span class="baby-blue">{{ subInfo.subscribers | number }}</span></strong>
+  <md-card-content class="no-pad">
+    <div class="row">
+      <div class="col-md-6">
+        <!-- Table displaying the user's activity stats in the subreddit -->
+        <div ng-include src="'views/sub-table.html'"></div>
+      </div>
+      <div class="col-md-6">
+        <div><strong class="light-gray">ABOUT THIS SUBREDDIT</strong>
+        <br>
+        <p ng-if="subInfo.public_description" class="small-font" ng-bind-html="subInfo.public_description_html | sanitize"></p></div>
+        <p ng-if="!subInfo.public_description" class="small-font">No description available.</p>
+
+        <md-card-content class="no-pad">
+          <div ng-if="!subInfo.banner_img">
+            <strong class="dark-gray"><i class="fa fa-user-plus" aria-hidden="true"></i>  Subscribers:
+            <span class="baby-blue">{{ subInfo.subscribers | number }}</span></strong>
+          </div>
+          <strong class="dark-gray"><i class="fa fa-calendar" aria-hidden="true"></i>  Created:
+          <span class="green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></span></strong>
+       </md-card-content>
+      </div>
     </div>
-    <strong class="dark-gray"><i class="fa fa-calendar" aria-hidden="true"></i>  Created:
-    <span class="green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span></strong>
- </md-card-content>
+  </md-card-content>
 </md-card>

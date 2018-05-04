@@ -17,8 +17,7 @@
     $scope.username = $routeParams.username;
     $scope.main = false; // Prevent hiding of search bar in top-nav
     $scope.page = 'user';
-    $scope.limit = 20;
-    $scope.currentLimit = $scope.limit;
+    $scope.currentLimit;
     $scope.open = true;
     $scope.subLength = 0;
 
@@ -27,6 +26,14 @@
     } else {
       $scope.noSubs = true;
     }
+
+    $scope.tab = 0;
+    $scope.tabOptions = ['subreddits', 'timeline', 'stats'];
+
+    $scope.setTab = function(num) {
+      $window.scrollTo(0, 0);
+      $scope.tab = parseInt(num);
+    };
 
     /*
      Gets data from user's reddit about page, primarily for username, link karma, comment karma, etc.
@@ -85,6 +92,7 @@
       */
       var setArray = function() {
         $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.selected.value, $scope.subs);
+        $scope.currentLimit = $scope.subList.length;
       };
       setArray();
 

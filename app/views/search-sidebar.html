@@ -17,7 +17,7 @@
     <br>
     <strong class="black">Only Search In:</strong>
     <br><br>
-    <button class="btn btn-sm" ng-click="deselect()">Deselect All</button>
+    <button class="btn btn-xs btn-primary" ng-click="deselect()">Deselect All</button>
     <div ng-repeat="subname in resultList" class="side-stats">
       <div class="checkbox">
         <label><input type="checkbox" ng-model="checkedSub" ng-value="subname" ng-click="addSub(subname)" ng-checked="checkSub(subname)">{{ subname }}</label>

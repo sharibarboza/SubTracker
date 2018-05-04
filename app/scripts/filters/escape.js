@@ -20,7 +20,7 @@ angular.module('SubSnoopApp')
       if (input) {
         string = string.replace(/&lt;/g, '<');
         string = string.replace(/&gt;/g, '>');
-        string = string.replace(/&amp/g, '&');
+        string = string.replace(/&amp;/g, '&');
         string = string.replace(/&;/g, '&');
         string = string.replace(/&;quot;/g, '"');
         string = string.replace(/&;#39;/g, "'");
