@@ -1667,6 +1667,7 @@ Mobile
 
   .main-banner {
     padding-top: 10px;
+    padding-bottom: 30px;
   }
 
   .search-content, #results {
@@ -1791,7 +1792,7 @@ Mobile
     width: 100%;
   }
 
-  .non-mobile-only, #slash, .hidden-mobile, #overview .fa-reddit, .center-back, .sub-tab,
+  .non-mobile-only, #slash, .hidden-mobile, #overview .fa-reddit, .sub-tab,
    #overview-table i, .hide-break, .accordion-hidden {
     display: none;
   }
@@ -1946,7 +1947,7 @@ Mobile
     padding-left: 0px !important;
   }
 
-  .viewing-title, #table-start, #comments, #submissions, .searches {
+  .viewing-title, #table-start, #comments, #submissions, .searches, #searching {
     padding-left: 15px;
     padding-right: 15px;
   }
@@ -1978,7 +1979,7 @@ Mobile
     margin-left: 0;
   }
 
-  .user-badge-card, .banner-col {
+  .user-badge-card, .banner-col, md-card md-card-title {
     padding-left: 0;
     padding-right: 0;
   }
@@ -1993,6 +1994,10 @@ Mobile
 
   .md-toolbar-tools {
     margin-top: 15px;
+  }
+
+  #testInput {
+    margin-top: 5px;
   }
 
  }

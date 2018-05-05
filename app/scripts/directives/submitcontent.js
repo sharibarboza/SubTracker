@@ -72,6 +72,7 @@ angular.module('SubSnoopApp')
         text = $filter('sanitize')(html);
       }
 
+      text = $filter('escape')(text);
       return truncateText(text, truncate);
     };
 

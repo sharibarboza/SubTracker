@@ -20,7 +20,7 @@
       </div>
 
     </div><!--/.nav-collapse -->
-    <div style="padding-bottom: 10px; display: none;" id="mobile-input">
+    <div ng-if="page != 'home'" style="padding-bottom: 10px; display: none;" id="mobile-input">
       <form redirect="{{ true }}" novalidate="novalidate" handle-phone-submit>
         <div class="input-group" id="search-strip">
           <input type="text" ng-model="inputname" class="form-control" id="nav-seach" placeholder="Search for another user ..." required>

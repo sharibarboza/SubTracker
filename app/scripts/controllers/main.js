@@ -14,7 +14,7 @@
     // Main will determine whether to display the search bar in the nav 
     // Should not be displayed on main page
     $scope.main = true;
-
+    $scope.page = 'home';
     $scope.popularSubs = popularSubs;
     $scope.newSubs = newSubs;
 }]);
