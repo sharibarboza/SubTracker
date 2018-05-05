@@ -14,6 +14,7 @@ body {
   color: #383838;
   background-color: white !important;
   position: relative;
+  font-size: 15px;
 }
 
 a {
@@ -1145,7 +1146,6 @@ User Sub Page
 
 .post-body {
   padding-top: 10px;
-  font-size: 14px;
   color: #383838;
   font-weight: 400;
 }
@@ -1764,6 +1764,7 @@ Mobile
 }
 
 @media screen and (max-width: 768px) {
+
   .content {
     padding-top: 90px;
   }
