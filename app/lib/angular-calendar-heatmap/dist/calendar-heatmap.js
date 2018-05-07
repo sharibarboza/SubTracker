@@ -3,7 +3,7 @@
 /* globals d3 */
 
 angular.module('g1b.calendar-heatmap', []).
-    directive('calendarHeatmap', ['$window', '$timeout', 'd3Service', function ($window, $timeout, d3Service) {
+    directive('calendarHeatmap', ['$window', '$timeout', 'd3Service', '$filter', function ($window, $timeout, d3Service, $filter) {
 
     return {
       restrict: 'E',
@@ -228,7 +228,10 @@ angular.module('g1b.calendar-heatmap', []).
                     tooltip_html += '<div><strong>Comments: </strong>' + d.comments + '</div>';
                     tooltip_html += '<div><strong>Submissions: </strong>' + d.submissions + '</div>';
                   } else {
-                    for (var key in d.subs) {
+                    var sortedSubs = $filter('sortSubs')(Object.keys(d.subs), 'subName', d.subs);
+
+                    for (var i = 0; i < sortedSubs.length; i++) {
+                      var key = sortedSubs[i];
                       var sub = d.subs[key];
                       tooltip_html += '<div><strong>' + key + ':</strong> ';
                       if (sub.comments > 0) {
