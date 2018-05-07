@@ -98,7 +98,6 @@ angular.module('SubSnoopApp')
           setUserDay(where, dateObj, elem);
           count += 1;
         }
-      
       }
     };
 

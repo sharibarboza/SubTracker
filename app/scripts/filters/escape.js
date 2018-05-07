@@ -22,6 +22,7 @@ angular.module('SubSnoopApp')
         string = string.replace(/&gt;/g, '>');
         string = string.replace(/&amp;/g, '&');
         string = string.replace(/&;/g, '&');
+        string = string.replace(/&nbsp;/g, ' ');
         string = string.replace(/&;quot;/g, '"');
         string = string.replace(/&;#39;/g, "'");
         string = string.replace(/&#39;/g, "'");
@@ -33,6 +34,7 @@ angular.module('SubSnoopApp')
         string = string.replace(/%3A/g, ':');
         string = string.replace(/%3D/g, '=');
       }
+      
       return string;
     };
   });

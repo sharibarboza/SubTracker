@@ -8,7 +8,7 @@
  * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .factory('words', ['subFactory', function (subFactory) {
+  .factory('words', ['subFactory', '$filter', function (subFactory, $filter) {
     var wordDict = {};
     var wordArray = [];
 
@@ -253,7 +253,7 @@ angular.module('SubSnoopApp')
       var words = body.split(' ');
 
       for (var i = 0; i < words.length; i++) {
-        var word = words[i];
+        var word = $filter('escape')(words[i]);
         
         if (isNotLink(word)) {
           var splitWords = cleanWord(word);       
