@@ -54,11 +54,12 @@
           <h4><strong class="black">Overview of {{ username }}'s Activity in {{ subreddit }}</strong></h4>
         </md-card>
 
-
+        <!-- Sub banner, information, creation date, etc -->
         <div ng-include src="'views/sub-info.html'"></div>
 
         <hr>
 
+        <!-- Sub calendar displaying post dates -->
         <div ng-include src="'views/sub-heatmap.html'"></div>
 
         <hr>
@@ -85,7 +86,7 @@
         </div>
 
         <hr>
-
+        <!-- Word cloud of most mentioned words in sub -->
         <div ng-include src="'views/sub-wordcloud.html'"></div>
 
         <br>  

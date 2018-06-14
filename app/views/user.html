@@ -45,31 +45,6 @@
             </div>
           </div>
         </div>
-        <!--
-        <div class="user-page">
-          <div class="avatar-header">
-            <div class="post-wing left-wing" align="center" style="border-right: 1px solid #C3D5DB;">
-              {{ comments }}
-              <br>
-              <strong>Comments</strong>
-            </div>
-            <div class="profile-img">
-              <img ng-if="redditor.subreddit" ng-src="{{ redditor.subreddit.icon_img | escape }}" class="banner-img img-circle">
-              <img ng-if="!redditor.subreddit" ng-src="{{ '../images/sub-icon.png' }}" class="banner-img img-circle">
-            </div>
-            <div class="post-wing right-wing" align="center" style="border-left: 1px solid #C3D5DB;">
-              {{ submissions }}
-              <br>
-              <strong>Submitted</strong>
-            </div>
-          </div>
-          <span class="user-name" id="{{ redditor.name }}"><strong><span class="baby-blue2">/u/</span>{{ redditor.name }}</strong></span>
-          <br>
-          <span class="badge num-subs">{{ subLength }} <ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
-          <br><br>
-          Joined Reddit on: <span class="bright-blue" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY'"></span>
-        </div>
-        -->
       </div>
 
       <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
@@ -113,19 +88,6 @@
               <br>
 
               <!-- Row displaying subreddit search input -->
-              <!--
-              <div class="row no-margin">
-                <div class="col-md-3 hidden-xs no-padding sort-col count-title" id="user-viewing">
-                  <span class="small-font box-title viewing-title">Viewing <strong class="orange">{{ subLength > currentLimit ? currentLimit : subLength }}</strong> of {{ subLength }} subs </span>
-                </div>
-                <div class="col-md-9 hidden-xs no-right-pad" id="search-subs">
-                  <form class="sublist-nav">
-                    <input type="text" id="testInput" class="form-control"
-                           ng-model="searchSub" ng-change="changeSubs(searchSub)" placeholder="&#xF002; Search for a sub ..." style="font-family: FontAwesome, Helvetica Neue;" md-autofocus>
-                  </form>
-                </div>
-              </div>
-              -->
               <br>
               <!-- Subreddits table -->
               <div ng-repeat="subreddit in subList" id="sub-row">
@@ -155,15 +117,6 @@
               </div>
             </div>
 
-            <!-- Click to display more subreddits -->
-            <!--
-            <div ng-if="(currentLimit > limit) || (currentLimit == limit && subList.length > limit)" class="non-badge" align="center" id="more-subs" ng-click="changeLimit()">
-              <div>
-                <strong class="light-gray">{{ currentLimit == subLength ? 'See less subreddits' : 'See more subreddits' }}
-                <br><i class="fa fa-2x" ng-class="currentLimit == subLength ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true"></i></strong>
-              </div>
-            </div>
-            -->
             <br>
             <div align="center" class="center-back">
               <back-top></back-top>
@@ -213,14 +166,6 @@
             </div>
 
           </div>
-
-          <!-- Right side-column -->
-          <!--
-          <div class="col-md-4 no-padding">
-            <div ng-include src="'views/user-side.html'"></div>
-          </div>
-          -->
-
         </div>
 
       </div>
