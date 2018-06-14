@@ -21,6 +21,7 @@ angular.module('SubSnoopApp')
     $scope.subreddit = $routeParams.subreddit;
     $scope.username = $routeParams.username;
     $rootScope.title = $scope.username + ' | ' + $scope.subreddit;
+    $scope.latestPost = subFactory.getLatestPost($scope.sub);
 
     /*
      Set up for specific subreddit
@@ -28,43 +29,13 @@ angular.module('SubSnoopApp')
     */
     $scope.subsArray = Object.keys(subsData.subs);
     $scope.sub = subsData.subs[$scope.subreddit];
-    $scope.latestPost = subFactory.getLatestPost($scope.sub);
-    $scope.firstPost = subFactory.getFirstPost($scope.sub);
-
-    /*
-     Call subreddit API and get sub banner and icon
-    */
-    if ($scope.sub.info == null) {
-      $scope.subInfo = subInfo.getData($scope.subreddit).then(function(response) {
-        $scope.subInfo = response;
-        subFactory.setSubInfo($scope.subreddit, response);
-      });
-    } else {
-      $scope.subInfo = $scope.sub.info;
-    }
-
-    /*
-     Get the comment with the most upvoteds
-    */
-    if ($scope.sub.comments.length > 0) {
-      $scope.topPost = rank.getTopPost($scope.sub.comments, 'mostUps');
-    }
-
-    /*
-     Get the submission with the most upvotes
-    */
-    if ($scope.sub.submissions.length > 0) {
-      $scope.topSubmit = rank.getTopPost($scope.sub.submissions, 'mostUps');
-    }
-
-    $scope.highestPosts = [$scope.topSubmit, $scope.topPost];
 
     /*
      Determines how many comments/submissions to display on screen
      Default is set to 25
     */
-    $scope.views = [25, 50, 100, 'All'];
-    var defaultView = 25;
+    $scope.views = [10, 25, 50, 100, 'All'];
+    var defaultView = 10;
 
     /*
      Set up for pagination of comments or submissions
@@ -73,6 +44,101 @@ angular.module('SubSnoopApp')
     $scope.subPage.items = parseInt(defaultView);
     $scope.subPage.max = 7;
     $scope.subPage.current = 1;
+    $scope.sortSelected = sortFactory.getDefaultPostSort();
+    $scope.commentSort = sortFactory.getDefaultPostSort();
+    $scope.submitSort = sortFactory.getDefaultPostSort();
+
+    /*
+     Tab configuration for toggling between comment and submissions display
+    */
+    $scope.anchor = '';
+    $scope.tabOptions = ['comments', 'submissions'];
+    $scope.tab = 2;
+    $scope.open = true;
+
+    $scope.comments = $scope.sub['comments'];
+    $scope.submissions = $scope.sub['submissions'];
+
+    $scope.sliceArray = function(data) {
+      return data.slice((($scope.subPage.current-1)*$scope.subPage.items), 
+        (($scope.subPage.current)*$scope.subPage.items));
+
+    }
+    $scope.slicedArray = [];
+
+    /*
+     Jump back to top of page after changing pages
+    */
+    $scope.backUp = function() {
+      document.getElementById('table-start').scrollIntoView();
+    };
+
+    /*
+     Set up the data array to be displayed based on the current tab and sort value.
+     By default, comments are displayed first and all data is sorted by most recent.
+    */
+    $scope.setArray = function(top) {
+      if ($scope.tab == 0) {
+        $scope.slicedArray = $scope.sliceArray($scope.comments);
+      } else {
+        $scope.slicedArray = $scope.sliceArray($scope.submissions);
+      }
+
+      if (top) {
+        $scope.backUp();
+      }
+    };
+
+    /*
+     Set open/closed status of accordions
+    */
+    $scope.setAccordion = function() {
+      $scope.open = $scope.tab === 2 ? true : false;
+    };
+
+    /*
+     Update tab statics according to what the user clicked on
+     Tab options are Subreddits, Overview, Comments, or Submitted
+    */
+    $scope.setTab = function(num) {
+      $scope.tab = parseInt(num);
+      $scope.subPage.current = 1;
+      $scope.setAccordion();
+      $scope.setPage(num);
+
+      if ($scope.tab == 0) {
+        $scope.sortSelected = $scope.commentSort;
+      } else {
+        $scope.sortSelected = $scope.submitSort;
+      }
+
+      if ($scope.tab < 2) {
+        $scope.setArray();
+      }
+    };
+
+    /*
+     Set the page for pagination
+    */
+    $scope.setPage = function(num) {
+      $scope.page = $scope.pages[num];
+    }
+
+    if ($scope.tab == 2) {
+      /*
+       Call subreddit API and get sub banner and icon
+      */
+      if ($scope.sub.info == null) {
+        $scope.subInfo = subInfo.getData($scope.subreddit).then(function(response) {
+          $scope.subInfo = response;
+          subFactory.setSubInfo($scope.subreddit, response);
+        });
+      } else {
+        $scope.subInfo = $scope.sub.info;
+      }
+
+      $scope.setTab(2);
+    }
 
     /*
      Used for setting how many items to view on screen at a time and also for pagination
@@ -85,39 +151,20 @@ angular.module('SubSnoopApp')
       } else {
         $scope.subPage.items = num;
       }
-      setArray();
+
+      $scope.setArray();
     };
 
     /*
-     Tab configuration for toggling between comment and submissions display
+     Check whether the current tab is a certain number
     */
-    $scope.tab = 2;
-    $scope.anchor = '';
-    $scope.tabOptions = ['comments', 'submissions'];
-    $scope.open = true;
-
-    $scope.setAccordion = function() {
-      $scope.open = $scope.tab === 2 ? true : false;
-    };
-    $scope.setAccordion();
-
-    $scope.setTab = function(num) {
-      $window.scrollTo(0, 0);
-      $scope.tab = parseInt(num);
-      $scope.subPage.current = 1;
-      setArray();
-      $scope.setAccordion();
-      $scope.setPage(num);
-    };
-
-    $scope.setPage = function(num) {
-      $scope.page = $scope.pages[num];
-    }
-
     $scope.isSet = function(num) {
       return $scope.tab === parseInt(num);
     };
 
+    /*
+     Get the current tab
+    */
     $scope.getActive = function(num) {
       if ($scope.isSet(num)) {
         return { 'active': true };
@@ -132,20 +179,17 @@ angular.module('SubSnoopApp')
     $scope.setSortOption = function(sort) {
       $scope.subPage.current = 1;
       $scope.sortSelected = sort;
-      setArray();
-    };
 
-    $scope.sortSelected = sortFactory.getDefaultPostSort();
+      if ($scope.tab == 0) {
+        $scope.comments = $filter('sortPosts')($scope.sub['comments'], sort.value);
+        $scope.commentSort = sort
+      } else {
+        $scope.submissions = $filter('sortPosts')($scope.sub['submissions'], sort.value);
+        $scope.submitSort = sort;
+      }
 
-    /*
-     Set up the data array to be displayed based on the current tab and sort value.
-     By default, comments are displayed first and all data is sorted by most recent.
-    */
-    var setArray = function() {
-      $scope.dataArray = $scope.sub[$scope.tabOptions[$scope.tab]];
-      $scope.elemArray = $filter('sortPosts')($scope.dataArray, $scope.sortSelected.value);
+      $scope.setArray();
     };
-    setArray();
 
     /*
      Sort subreddits when side nav is toggled
@@ -155,19 +199,6 @@ angular.module('SubSnoopApp')
     $scope.changeSubs = function(term) {
       $scope.subList = [];
       $scope.subList = search.findSubs($scope.subsArray, term);
-    };
-
-    /*
-     Jump back to top of page after changing pages
-    */
-    $scope.backUp = function() {
-      document.getElementById('table-start').scrollIntoView();
-    };
-
-    $scope.sliceArray = function() {
-      $scope.slicedArray = $scope.elemArray.slice((($scope.subPage.current-1)*$scope.subPage.items), 
-        (($scope.subPage.current)*$scope.subPage.items));
-      return $scope.slicedArray;
     };
 
   }

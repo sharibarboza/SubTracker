@@ -119,7 +119,6 @@
         'comments' : comments.length,
         'submissions' : submissions.length,
         'subs' : subs,
-        'latest' : [getLatest('submissions'), getLatest('comment')],
         'upvotes' : upvotes
       }
     };
