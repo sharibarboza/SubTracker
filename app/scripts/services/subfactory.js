@@ -102,9 +102,6 @@
       organizeComments(comments);
       organizeSubmitted(submissions);
 
-      // Sort submissions - In Beta, reddit allows submissions to be pinned
-      submissions = $filter('sortPosts')(submissions, 'newest');
-
       subNames = Object.keys(subs);
       subLength = subNames.length;
 

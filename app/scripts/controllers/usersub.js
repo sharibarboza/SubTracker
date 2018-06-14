@@ -15,20 +15,30 @@ angular.module('SubSnoopApp')
     /*
      Initalization
     */
+    $scope.subreddit;
+    $scope.latestPost;
+
     $window.scrollTo(0, 0);
     $scope.pages = ['comments', 'submissions', 'sub'];
     $scope.page = $scope.pages[2];
-    $scope.subreddit = $routeParams.subreddit;
     $scope.username = $routeParams.username;
-    $rootScope.title = $scope.username + ' | ' + $scope.subreddit;
+    $rootScope.title = $scope.username + ' | ' + $routeParams.subreddit;
 
     /*
      Set up for specific subreddit
      $scope.sub contains the comments and submissions arrays
     */
     $scope.subsArray = Object.keys(subsData.subs);
-    $scope.sub = subsData.subs[$scope.subreddit];
-    $scope.latestPost = subFactory.getLatestPost($scope.sub);
+    $scope.sub = subsData.subs[$routeParams.subreddit];
+    $scope.comments = $scope.sub['comments'];
+    $scope.submissions = $scope.sub['submissions'];
+
+    if ($scope.subreddit != $routeParams.subreddit) {
+      console.log('yar!');
+      $scope.subreddit = $routeParams.subreddit;
+      $scope.latestPost = subFactory.getLatestPost($scope.sub);
+      $scope.submissions = $filter('sortPosts')($scope.submissions, 'newest');
+    }
 
     /*
      Determines how many comments/submissions to display on screen
@@ -55,9 +65,6 @@ angular.module('SubSnoopApp')
     $scope.tabOptions = ['comments', 'submissions'];
     $scope.tab = 2;
     $scope.open = true;
-
-    $scope.comments = $scope.sub['comments'];
-    $scope.submissions = $scope.sub['submissions'];
 
     $scope.sliceArray = function(data) {
       return data.slice((($scope.subPage.current-1)*$scope.subPage.items), 
