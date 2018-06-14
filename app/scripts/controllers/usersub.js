@@ -21,7 +21,6 @@ angular.module('SubSnoopApp')
     $scope.subreddit = $routeParams.subreddit;
     $scope.username = $routeParams.username;
     $rootScope.title = $scope.username + ' | ' + $scope.subreddit;
-    $scope.latestPost = subFactory.getLatestPost($scope.sub);
 
     /*
      Set up for specific subreddit
@@ -29,6 +28,7 @@ angular.module('SubSnoopApp')
     */
     $scope.subsArray = Object.keys(subsData.subs);
     $scope.sub = subsData.subs[$scope.subreddit];
+    $scope.latestPost = subFactory.getLatestPost($scope.sub);
 
     /*
      Determines how many comments/submissions to display on screen
