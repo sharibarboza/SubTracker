@@ -1395,14 +1395,15 @@ Submit Post Thumbnails
   background-position: -20px -455px;
   background-repeat: no-repeat;
   height: 105px;
-  margin-left: 15px;
+  width: 100px;
 }
 
 .thumb-beta-default {
   background-image: url('../images/sprite-reddit.png');
-  background-position: 10px -1095px;
+  background-position: 0px -1095px;
   background-repeat: no-repeat;
   height: 55px;
+  width: 70px;
 }
 
 .thumb-search-default {
@@ -1410,6 +1411,7 @@ Submit Post Thumbnails
   background-position: -20px -455px;
   background-repeat: no-repeat;
   height: 105px;
+  width: 100px;
 }
 
 .thumb-self {
@@ -1417,7 +1419,7 @@ Submit Post Thumbnails
   background-position: -20px -895px;
   background-repeat: no-repeat;
   height: 105px;
-  margin-left: 15px;
+  width: 100px;
 }
 
 .thumb-beta-self {
@@ -1425,6 +1427,7 @@ Submit Post Thumbnails
   background-position: 10px -1265px;
   background-repeat: no-repeat;
   height: 55px;
+  width: 70px;
 }
 
 .thumb-search-self {
@@ -1432,6 +1435,7 @@ Submit Post Thumbnails
   background-position: -20px -895px;
   background-repeat: no-repeat;
   height: 105px;
+  width: 100px;
 }
 
 .thumb-image {
@@ -1439,7 +1443,7 @@ Submit Post Thumbnails
   background-position: -20px -310px;
   background-repeat: no-repeat;
   height: 105px;
-  margin-left: 15px;
+  width: 100px;
 }
 
 .thumb-beta-image {
@@ -1447,6 +1451,7 @@ Submit Post Thumbnails
   background-position: 10px -1040px;
   background-repeat: no-repeat;
   height: 55px;
+  width: 70px;
 }
 
 .thumb-search-image {
@@ -1454,6 +1459,7 @@ Submit Post Thumbnails
   background-position: -20px -310px;
   background-repeat: no-repeat;
   height: 105px;
+  width: 100px;
 }
 
 .thumb-nsfw {
@@ -1461,7 +1467,7 @@ Submit Post Thumbnails
   background-position: -20px -603px;
   background-repeat: no-repeat;
   height: 105px;
-  margin-left: 15px;
+  width: 100px;
 }
 
 .thumb-beta-nsfw {
@@ -1469,6 +1475,7 @@ Submit Post Thumbnails
   background-position: 10px -1150px;
   background-repeat: no-repeat;
   height: 55px; 
+  width: 70px;
 }
 
 .thumb-search-nsfw {
@@ -1476,6 +1483,7 @@ Submit Post Thumbnails
   background-position: -20px -603px;
   background-repeat: no-repeat;
   height: 105px;
+  width: 100px;
 }
 
 .thumb-spoiler {
@@ -1483,7 +1491,7 @@ Submit Post Thumbnails
   background-position: -20px -748px;
   background-repeat: no-repeat;
   height: 105px;
-  margin-left: 15px;
+  width: 100px;
 }
 
 .thumb-beta-spoiler {
@@ -1491,6 +1499,7 @@ Submit Post Thumbnails
   background-position: 10px -1210px;
   background-repeat: no-repeat;
   height: 55px; 
+  width: 70px;
 }
 
 .thumb-search-spoiler {
@@ -1498,6 +1507,7 @@ Submit Post Thumbnails
   background-position: -20px -748px;
   background-repeat: no-repeat;
   height: 105px;
+  width: 100px;
 }
 
 /************************

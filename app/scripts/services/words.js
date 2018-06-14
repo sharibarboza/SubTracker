@@ -9,6 +9,7 @@
  */
 angular.module('SubSnoopApp')
   .factory('words', ['subFactory', '$filter', function (subFactory, $filter) {
+    var currentSub;
     var wordDict = {};
     var wordArray = [];
 
@@ -198,20 +199,23 @@ angular.module('SubSnoopApp')
     */
     return {
       getWords: function(sub) {
-        resetData();
+        if (currentSub != sub) {
+          currentSub = sub;
+          resetData();
 
-        var subs = subFactory.getSubData().subs;
-        var comments = subs[sub].comments;
-        var submissions = subs[sub].submissions;
+          var subs = subFactory.getSubData().subs;
+          var comments = subs[sub].comments;
+          var submissions = subs[sub].submissions;
 
-        splitWords(comments, 'comments');
-        splitWords(submissions, 'submits');
+          splitWords(comments, 'comments');
+          splitWords(submissions, 'submits');
 
-        for (var key in wordDict) {
-          var wordObj = {};
-          wordObj.text = key;
-          wordObj.weight = wordDict[key];
-          wordArray.push(wordObj);
+          for (var key in wordDict) {
+            var wordObj = {};
+            wordObj.text = key;
+            wordObj.weight = wordDict[key];
+            wordArray.push(wordObj);
+          }
         }
 
         return wordArray;
