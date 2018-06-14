@@ -17,6 +17,7 @@ angular.module('SubSnoopApp')
     */
     $scope.subreddit;
     $scope.latestPost;
+    $scope.firstPost;
 
     $window.scrollTo(0, 0);
     $scope.pages = ['comments', 'submissions', 'sub'];
@@ -36,6 +37,7 @@ angular.module('SubSnoopApp')
     if ($scope.subreddit != $routeParams.subreddit) {
       $scope.subreddit = $routeParams.subreddit;
       $scope.latestPost = subFactory.getLatestPost($scope.sub);
+      $scope.firstPost = subFactory.getFirstPost($scope.sub);
       $scope.submissions = $filter('sortPosts')($scope.submissions, 'newest');
     }
 
