@@ -36,9 +36,12 @@ angular.module('SubSnoopApp')
 
     if ($scope.subreddit != $routeParams.subreddit) {
       $scope.subreddit = $routeParams.subreddit;
+
+      $scope.comments = $filter('sortPosts')($scope.comments, 'newest');
+      $scope.submissions = $filter('sortPosts')($scope.submissions, 'newest');
+
       $scope.latestPost = subFactory.getLatestPost($scope.sub);
       $scope.firstPost = subFactory.getFirstPost($scope.sub);
-      $scope.submissions = $filter('sortPosts')($scope.submissions, 'newest');
     }
 
     /*

@@ -299,6 +299,10 @@
 
         addSubmission(subs[subreddit], submission);
       }
+
+      for (var sub in subs) {
+        subs[sub].submissions = $filter('sortPosts')(subs[sub].submissions, 'newest');
+      }
     };
 
     /*
