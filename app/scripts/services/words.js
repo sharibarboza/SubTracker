@@ -10,6 +10,7 @@
 angular.module('SubSnoopApp')
   .factory('words', ['subFactory', '$filter', function (subFactory, $filter) {
     var currentSub;
+    var currentUser;
     var wordDict = {};
     var wordArray = [];
 
@@ -198,9 +199,10 @@ angular.module('SubSnoopApp')
      Split comments or submissions for a specific subreddit into words for word cloud
     */
     return {
-      getWords: function(sub) {
-        if (currentSub != sub) {
+      getWords: function(sub, user) {
+        if (currentUser != user || currentSub != sub) {
           currentSub = sub;
+          currentUser = user;
           resetData();
 
           var subs = subFactory.getSubData().subs;
