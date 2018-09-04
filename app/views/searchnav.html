@@ -1,18 +1,18 @@
 <div class="header">
   <div class="navbar navbar-default navbar-fixed-top width-pad" role="navigation">
     <div class="container row">
-      <div class="col-md-3 col-sm-4 col-xs-3"><a class="navbar-brand" ng-href="#/">SubSnoop</a></div>
-      <div ng-hide="main" class="col-md-6 hidden-sm hidden-xs search-nav">
+      <div class="col-md-4 col-sm-4 col-xs-3"><a class="navbar-brand" ng-href="#/">SubSnoop</a></div>
+      <div ng-hide="main" class="col-md-4 hidden-sm hidden-xs search-nav">
         <form redirect="{{ true }}" novalidate="novalidate" handle-phone-submit>
           <div class="input-group" id="search-strip">
-            <input type="text" ng-model="inputname" class="form-control" id="nav-seach" placeholder="Search for another user ..." required>
+            <input type="text" ng-model="inputname" class="form-control" id="nav-seach" placeholder="Search for another user ..." style="margin-left: 0;" required>
             <span class="input-group-btn">
               <button class="btn btn-info" id="nav-button" type="submit"><i class="glyphicon glyphicon-search" id="nav-icon" aria-hidden="true"></i></button>
             </span>
           </div>
         </form>          
       </div>
-      <div ng-hide="noSubs" class="col-md-3 col-sm-8 col-xs-9">
+      <div ng-hide="noSubs" class="col-md-4 col-sm-8 col-xs-9">
         <ul align="right" id="navbar-links">
           <li ng-hide="main" class="nav-pos"><a ng-href="#/{{ username }}/search/" class="nav-link"><i class="fa fa-search" aria-hidden="true"></i> search</a></li>
           <li ng-hide="main" class="nav-pos" ng-controller="SidebarCtrl"><a href class="nav-link" ng-click="toggleRight()"><i class="fa fa-reddit-alien" aria-hidden="true"></i> subreddits</a></li>
