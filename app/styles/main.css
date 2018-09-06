@@ -223,7 +223,7 @@ blockquote {
 }
 
 .accordion .panel-body {
-  border-top: none;
+  border-top: none !important;
   padding-top: 15px;
 }
 
@@ -1012,11 +1012,11 @@ User Page
 .sort-header {
   vertical-align: middle;
   line-height: 30px;
-  font-weight: 500;
+  font-weight: 700;
   border: 1px solid #e5e5e5;
   border-right: none;
   padding-bottom: 2px;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 /***********************
@@ -1415,7 +1415,19 @@ Sub Page Side Bar
 }
 
 #submit-stats {
-  padding-top: 10px;
+  margin: 0;
+}
+
+#submit-stats [class*="col-"] {
+  height: 40px;
+  vertical-align: middle;
+  line-height: 35px;
+}
+
+.accordion-icon {
+  background-color: #F5F5F5;
+  padding-top: 5px;
+  border: 1px solid #e5e5e5;
 }
 
 .rank {
