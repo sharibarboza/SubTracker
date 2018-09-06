@@ -1,5 +1,5 @@
 <a ng-href="{{ element.url }}" target="_blank">
 <strong ng-if="page != 'search' || !element.highlighted_title" class="wrap-text">{{ element.title | escape }}</strong>
 <strong ng-if="page == 'search' && element.highlighted_title" class="wrap-text" ng-bind-html="element.highlighted_title | sanitize"></strong>
-</a> <span ng-if="element.link_flair_text" class="label label-default">{{ element.link_flair_text }}</span> <span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gilded }}</span></span>
+</a> <span ng-if="element.link_flair_text" class="label label-default">{{ element.link_flair_text | escape }}</span> <span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gilded }}</span></span>
 </div>
