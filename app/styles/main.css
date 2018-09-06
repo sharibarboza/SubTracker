@@ -75,7 +75,7 @@ h5 {
 }
 
 .orange {
-  color: #EB582A;
+  color: #ef5350;
 }
 
 .light-orange {
@@ -256,6 +256,31 @@ blockquote {
 
 .badge {
   border-radius: 16px;
+}
+
+.sub-badge {
+  color: #fff;
+  display: inline-block;
+  padding: .25em .4em 0.35em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25rem;
+}
+
+#most-upvoted {  
+  background-color: #28a745;
+}
+
+#most-active {
+  background-color: #ef5350;
+}
+
+#newest {
+  background-color: #17a2b8;
 }
 
 .btn-info {
@@ -654,8 +679,14 @@ Content
 
 .div-box {
   border: 1px solid #e5e5e5;
-  padding: 10px;
+  padding: 10px 15px;
 }
+
+.post-box {
+  margin-top: -5px;
+  padding-bottom: 15px;
+}
+
 
 /************************
 Navigation
@@ -971,8 +1002,11 @@ User Page
 
 .subbox-stats {
   font-size: 14px;
+}
+
+.subbox-stats, .sub-text {
   vertical-align: middle;
-  line-height: 22px;
+  line-height: 30px;
 }
 
 #subreddits {
@@ -1123,6 +1157,8 @@ Subreddit Table
 .sub-name {
   font-size: 18px;
   font-weight: bold;
+  vertical-align: middle;
+  line-height: 30px;
 }
 
 .sub-name:hover {

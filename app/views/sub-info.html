@@ -11,7 +11,7 @@
             <img ng-src="{{ subInfo.banner_img | escape }}" class="sub-banner-img" />
           </div>
           <div class="banner-text">
-            <span class="txt-block">Subscribers: <span class="non-bg baby-blue">{{ subInfo.subscribers | number }}</span></span>
+            <span class="txt-block">Subscribers: <span class="non-bg orange">{{ subInfo.subscribers | number }}</span></span>
           </div>
         </div>
         <div ng-if="!subInfo.banner_img" class="about-box" style="border-left: none;">
@@ -23,7 +23,7 @@
           <md-card-content class="no-pad">
             <div ng-if="!subInfo.banner_img">
               <strong class="dark-gray"><i class="fa fa-user-plus" aria-hidden="true"></i>  Subscribers:
-              <span class="baby-blue">{{ subInfo.subscribers | number }}</span></strong>
+              <span class="purple">{{ subInfo.subscribers | number }}</span></strong>
             </div>
             <strong class="dark-gray"><i class="fa fa-calendar" aria-hidden="true"></i>  Created:
             <span class="green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></span></strong>

@@ -2,8 +2,9 @@
   <strong class="light-gray">POST ACTIVITY THIS YEAR</strong>
   <md-card-content class="no-pad">
     <div ng-controller="SubHeatmapCtrl" align="center">
-      <strong class="baby-blue">{{ count | number }} {{ count == 1 ? 'post' : 'posts' }} this year</strong>
-      <calendar-heatmap style="max-width: 75% !important;" data="mapData" color="'#5552B3'" overview="'year'" handler="print" type="'sub'"></calendar-heatmap>
+      <strong class="purple">{{ count | number }} {{ count == 1 ? 'post' : 'posts' }} this year</strong>
+      <br><br>
+      <calendar-heatmap style="max-width: 75% !important;" data="mapData" color="'#ef5350'" overview="'year'" handler="print" type="'sub'"></calendar-heatmap>
       <br>
       <p class="gray small-font">Hover over a circle to see the number of comments and submissions posted on that day.</p>
     </div>

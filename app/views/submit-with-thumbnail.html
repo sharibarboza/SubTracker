@@ -6,7 +6,7 @@
     <div ng-if="page != 'search'" class="col-md-10 col-xs-9 submit-info">
       <div ng-include src="'views/submit-header.html'"></div>
       <br class="hide-break">
-	  <accordion class="accordion accordion-hidden" ng-if="element | isContent">
+	  <accordion class="accordion accordion-hidden">
 	    <accordion-group ng-init="status = { isOpen: page == 'search' ? true : open }" is-open="status.isOpen">
 	      <accordion-heading>
 
@@ -18,11 +18,8 @@
             <span class="post-links">
               <strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong>
             </span>
-            <span class="post-links">       
-              <a ng-href="https://www.reddit.com{{ element.permalink }}" target="_blank"><ng-pluralize count="element.num_comments" when="{'1': '1 comment', 'other': '{{ element.num_comments | number }} comments'}"></ng-pluralize></a> 
-            </span> 
             <span class="post-links">
-              <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date gray"></span>      
+              <span style="float: right;" ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date gray"></span>      
             </span>
           </div>
         </div>

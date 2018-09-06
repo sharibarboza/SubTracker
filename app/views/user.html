@@ -28,7 +28,7 @@
               </div>
             </div>
             <div class="col-md-7 middle-banner">
-              <span class="user-name" id="{{ redditor.name }}"><strong><span class="baby-blue2">/u/</span>{{ redditor.name }} <a ng-href="https://www.reddit.com/u/{{ redditor.name }}" target="_blank"><button class="btn btn-xs btn-primary profile-btn">Reddit Profile <i class="fa fa-external-link" aria-hidden="true"></i></button></a></strong></span><br>
+              <span class="user-name" id="{{ redditor.name }}"><strong><span class="orange">/u/</span>{{ redditor.name }} <a ng-href="https://www.reddit.com/u/{{ redditor.name }}" target="_blank"><button class="btn btn-xs btn-primary profile-btn">Reddit Profile <i class="fa fa-external-link" aria-hidden="true"></i></button></a></strong></span><br>
               Joined Reddit on: <span class="bright-blue" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY'"></span>         
             </div>
             <div class="col-md-1 col-xs-3 middle-banner">
@@ -58,7 +58,7 @@
         <div class="no-margin row">
 
           <!-- Main left column -->
-          <div ng-if="tab == 0" class="col-md-10 col-md-push-1 no-padding" id="table-head">
+          <div ng-if="tab == 0" class="col-md-10 col-md-push-1 no-padding" id="table-head" ng-controller="UserStatsCtrl">
             <div id="subreddits" class="margin-pad">
 
               <h4><strong class="black">Ranked Subreddits</strong></h4>
@@ -105,6 +105,10 @@
                     <div class="col-sm-1 hidden-xs rank-box subname-box" align="center">{{ 1 + $index }}</div>
                     <div class="col-sm-6 col-xs-12 subname-box">
                       <span class="purple sub-name">{{ subreddit }} <span ng-if="subs[subreddit].gilded_comments > 0 || subs[subreddit].gilded_submissions > 0" class="gilded-icon gilded-sub"></span> <span ng-if="subs[subreddit].comments_today > 0" class="badge">{{ subs[subreddit].comments_today }} <i class="glyphicon glyphicon-comment white" aria-hidden="true"></i></span> <span ng-if="subs[subreddit].submits_today > 0" class="badge">{{ subs[subreddit].submits_today }} <i class="glyphicon glyphicon-list-alt white" aria-hidden="true"></i></span></span>
+
+                      <span ng-if="subreddit == badges.mostUpvoted.sub" class="sub-badge" id="most-upvoted">Most Upvoted</span>
+                      <span ng-if="subreddit == badges.mostActive.sub" class="sub-badge" id="most-active">Most Active</span>
+                      <span ng-if="subreddit == badges.newestSub.sub" class="sub-badge" id="newest">New</span>
                     </div>
                     <div class="col-sm-2 hidden-xs subname-box" ng-init="seen=subs[subreddit].recent_activity.created_utc * 1000">
                       <span class="sub-text"><time-ago from-time='{{ seen }}'></time-ago></span>

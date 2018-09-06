@@ -19,7 +19,7 @@
               </div>
             </div>
             <div class="col-md-8 middle-banner">
-              <span class="user-name" id="{{ redditor.name }}"><strong><span class="baby-blue2">/r/</span>{{ subreddit }} <a ng-href="https://www.reddit.com/r/{{ subreddit }}" target="_blank"><button class="btn btn-xs btn-primary profile-btn">Subreddit Page <i class="fa fa-external-link" aria-hidden="true"></i></button></a></strong></span><br>
+              <span class="user-name" id="{{ redditor.name }}"><strong><span class="orange">/r/</span>{{ subreddit }} <a ng-href="https://www.reddit.com/r/{{ subreddit }}" target="_blank"><button class="btn btn-xs btn-primary profile-btn">Subreddit Page <i class="fa fa-external-link" aria-hidden="true"></i></button></a></strong></span><br>
               Last seen: <time-ago class="bright-blue" from-time='{{ page == "user" ? lastPost * 1000 : latestPost * 1000 }}'></time-ago>       
             </div>
             <div class="col-md-1 col-xs-3 middle-banner">
@@ -150,13 +150,13 @@
                 <pagination ng-change="setArray()" total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" style="margin: -5px;"></pagination>
               </div>
             </div>
-
           </div>
+          <br>
 
           <div id="{{ tabOptions[tab] }}">
 
             <!-- Display list of posts (comment or submission) -->
-            <div ng-repeat="element in slicedArray">
+            <div ng-repeat="element in slicedArray" class="comment-list">
               <div ng-if="element.type == 'comment'">
                 <div ng-include src="'views/comment-no-title.html'"></div>
               </div>
