@@ -338,6 +338,11 @@ blockquote {
   border-radius: 3px;
 }
 
+.sort-dropdown {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
 #main-view {
   background-color: white;
 }
@@ -1086,6 +1091,10 @@ User Page Side Bar
 .visit-btn {
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.heatmap {
+  max-width: 100% !important;
 }
 
 /************************
