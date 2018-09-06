@@ -580,6 +580,12 @@ Content
   width: 100px;
 }
 
+.banner-container {
+  height: 161px; 
+  max-height: 161px; 
+  overflow-y: hidden !important;
+}
+
 .title-heading {
 }
 
@@ -588,6 +594,20 @@ Content
   color: #696969;
   letter-spacing: 1px;
   font-size: 13px;
+}
+
+#overview-table table {
+  margin-bottom: 0;
+}
+
+#overview-table tr {
+  height: 40px;
+  max-height: 40px;
+}
+
+#overview-table td {
+  padding: 10px;
+  border: 1px solid #e5e5e5;
 }
 
 .start-row {
@@ -1284,11 +1304,12 @@ User Sub Page
 .about-box {
   border: 1px solid #e5e5e5;
   padding: 10px;
+  height: 161px;
+  overflow-y: scroll;
 }
 
 .sub-banner-img {
   width: 100%;
-  height: 100%;
   margin-bottom: 10px;
 }
 
@@ -1795,6 +1816,10 @@ Mobile
   #search-page .breadcrumb {
     margin-top: 20px;
   }
+
+  .sub-banner-img {
+    height: 100% !important;
+  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -1826,6 +1851,10 @@ Mobile
   .select-dropdown {
     width: 100%;
     margin-top: 5px;
+  }
+
+  .sub-info {
+    padding-left: 15px !important;
   }
 }
 
@@ -2078,6 +2107,24 @@ Mobile
   #sub-row md-card {
     margin-left: 15px;
     margin-right: 15px;
+  }
+
+  .sub-info {
+    padding-left: 15px !important;
+  }
+
+  .sub-banner-img {
+    height: auto !important;
+  }
+
+  .banner-container {
+    height: auto !important;
+    max-height: auto !important;
+  }
+
+  .word-cloud {
+    height: 300px !important;
+    width: 100% !important;
   }
 
  }
