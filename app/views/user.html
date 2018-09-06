@@ -62,10 +62,12 @@
             <div id="subreddits" class="margin-pad">
 
               <h4><strong class="black">Ranked Subreddits</strong></h4>
+              <br>
 
               <!-- Row displaying sorting dropdown menu -->
               <div class="row" id="subtable-head">
-                <div class="col-md-4 col-sm-12 col-xs-12 dropdown-col no-left-pad">
+                <div class="col-md-1 hidden-xs sort-header" align="center">Sort</div>
+                <div class="col-md-3 col-sm-12 col-xs-12 dropdown-col no-left-pad">
                   <div class="btn-group select-dropdown">
                     <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
                       <strong class="placeholder-gray">{{ selected.name }}</strong>
@@ -75,7 +77,9 @@
                     </ul>
                   </div>
                 </div>
-                <div class="col-md-5 col-sm-12 col-xs-12 no-left-pad">
+                <div class="col-md-2 col-md-offset-3 no-left-pad">
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12 no-right-pad search-sub-col" style="float: right;">
                   <form>
                     <input type="text" id="testInput" class="form-control"
                            ng-model="searchSub" ng-change="changeSubs(searchSub)" placeholder="&#xF002; Search for a sub ..." style="font-family: FontAwesome, Helvetica Neue;" md-autofocus>
@@ -83,33 +87,36 @@
                 </div>
               </div>
 
-              <br>
-              <span class="small-font viewing-title">Viewing <strong class="orange">{{ subLength > currentLimit ? currentLimit : subLength }}</strong> of {{ subLength }} subs </span>
-              <br>
-
               <!-- Row displaying subreddit search input -->
               <br>
+              <div class="row table-header table-subtext gray">
+                <div class="col-sm-1">Rank</div>
+                <div class="col-sm-6" style="text-align: left;">Subreddit</div>
+                <div class="col-sm-2" style="text-align: left;">Last Seen</div>
+                <div class="col-sm-1">Comments</div>
+                <div class="col-sm-1">Submitted</div>
+                <div class="col-sm-1">Points</div>
+              </div>
               <!-- Subreddits table -->
               <div ng-repeat="subreddit in subList" id="sub-row">
                 <a ng-href="#/{{ username }}/{{ subreddit }}/">
                 <md-card>
                   <md-card-title class="sub-box">
-                    <div class="col-sm-1 hidden-xs rank-box" style="border-bottom: 1px solid #F5F5F5;" align="center">{{ 1 + $index }}</div>
-                    <div class="col-sm-5 col-xs-12 subname-box">
-                      <span class="purple sub-name">{{ subreddit }} <span ng-if="subs[subreddit].gilded_comments > 0 || subs[subreddit].gilded_submissions > 0" class="gilded-icon gilded-sub"></span> <span ng-if="subs[subreddit].comments_today > 0" class="badge">{{ subs[subreddit].comments_today }} <i class="glyphicon glyphicon-comment white" aria-hidden="true"></i></span> <span ng-if="subs[subreddit].submits_today > 0" class="badge">{{ subs[subreddit].submits_today }} <i class="glyphicon glyphicon-list-alt white" aria-hidden="true"></i></span></span><br>
-                      <span class="sub-text" ng-class="isToday(subs[subreddit].recent_activity.created_utc * 1000) ? 'green' : 'gray'"><span ng-bind="subs[subreddit].recent_activity.created_utc * 1000 | amDateFormat:'MMM Do YYYY, h:mm a'"></span></span>                   
+                    <div class="col-sm-1 hidden-xs rank-box subname-box" align="center">{{ 1 + $index }}</div>
+                    <div class="col-sm-6 col-xs-12 subname-box">
+                      <span class="purple sub-name">{{ subreddit }} <span ng-if="subs[subreddit].gilded_comments > 0 || subs[subreddit].gilded_submissions > 0" class="gilded-icon gilded-sub"></span> <span ng-if="subs[subreddit].comments_today > 0" class="badge">{{ subs[subreddit].comments_today }} <i class="glyphicon glyphicon-comment white" aria-hidden="true"></i></span> <span ng-if="subs[subreddit].submits_today > 0" class="badge">{{ subs[subreddit].submits_today }} <i class="glyphicon glyphicon-list-alt white" aria-hidden="true"></i></span></span>
                     </div>
-                    <div class="col-sm-2 hidden-xs subbox-stats subname-box" align="center">
-                      <strong class="black">{{ subs[subreddit].comments.length }}</strong><br>
-                      <span class="table-subtext gray">COMMENTS</span>
+                    <div class="col-sm-2 hidden-xs subname-box" ng-init="seen=subs[subreddit].recent_activity.created_utc * 1000">
+                      <span class="sub-text"><time-ago from-time='{{ seen }}'></time-ago></span>
                     </div>
-                    <div class="col-sm-2 hidden-xs subbox-stats subname-box" align="center">
-                      <strong class="black">{{ subs[subreddit].submissions.length }}</strong><br>
-                      <span class="table-subtext gray">SUBMITS</span>
+                    <div class="col-sm-1 hidden-xs subbox-stats subname-box" align="center">
+                      <span class="black">{{ subs[subreddit].comments.length }}</span>
                     </div>
-                    <div class="col-sm-2 hidden-xs subbox-stats subname-box" align="center">
-                      <strong ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'">{{ subs[subreddit].total_ups | number }}</strong><br>
-                      <span class="table-subtext gray">POINTS</span>
+                    <div class="col-sm-1 hidden-xs subbox-stats subname-box" align="center">
+                      <span class="black">{{ subs[subreddit].submissions.length }}</span>
+                    </div>
+                    <div class="col-sm-1 hidden-xs subbox-stats subname-box" align="center">
+                      <span ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'">{{ subs[subreddit].total_ups | number }}</span>
                     </div>
                   </md-card-title>
                 </md-card>

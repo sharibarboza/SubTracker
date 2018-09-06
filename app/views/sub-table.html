@@ -6,26 +6,26 @@
 
     <div class="row no-margin" id="overview-table">
       <table class="table table-bordered">
-        <tr class="table-heads blue-bg">
-          <th class="col-xs-3"></th>
-          <th class="col-xs-3">Comments</th>
-          <th class="col-xs-3">Submitted</th>
-          <th class="col-xs-3">Total</th>
+        <tr class="table-heads">
+          <td class="col-xs-3"></td>
+          <td class="col-xs-3">Comments</td>
+          <td class="col-xs-3">Submitted</td>
+          <td class="col-xs-3">Total</td>
         </tr> 
         <tr>
-          <th class="dark-gray"><i class="glyphicon glyphicon-pencil icon-gray" aria-hidden="true"></i>  Posts</th>
+          <td class="dark-gray start-row"><i class="glyphicon glyphicon-pencil icon-gray" aria-hidden="true"></i>  Posts</td>
           <td>{{ sub.comments.length }}</td>
           <td>{{ sub.submissions.length }}</td>
           <td>{{ (sub.comments.length) + (sub.submissions.length) | number }}</td>
         </tr>
         <tr>
-          <th class="dark-gray"><i class="glyphicon glyphicon-star icon-gray" aria-hidden="true"></i>  Gilded</th>
+          <td class="dark-gray start-row"><i class="glyphicon glyphicon-star icon-gray" aria-hidden="true"></i>  Gilded</td>
           <td>{{ sub.gilded_comments }}</td>
           <td>{{ sub.gilded_submissions }}</td>
           <td>{{ (sub.gilded_comments) + (sub.gilded_submissions) | number }}</td>
         </tr>  
         <tr>
-          <th class="dark-gray"><i class="glyphicon glyphicon-arrow-up icon-gray" aria-hidden="true"></i>  Points</th>
+          <td class="dark-gray start-row"><i class="glyphicon glyphicon-arrow-up icon-gray" aria-hidden="true"></i>  Points</td>
           <td>{{ sub.comment_ups | number }}</td>
           <td>{{ sub.submission_ups | number }}</td>
           <td>{{ (sub.comment_ups) + (sub.submission_ups) | number }}</td>
