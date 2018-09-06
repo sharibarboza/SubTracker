@@ -20,8 +20,8 @@ angular.module('g1b.calendar-heatmap', []).
 
         d3Service.d3().then(function(d3) {
           // Defaults
-          var gutter = 1;
-          var item_gutter = 1;
+          var gutter = 3;
+          var item_gutter = 3;
           var width = 600;
           var max_width = 600;
           var height = 600;

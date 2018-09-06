@@ -90,12 +90,12 @@
               <!-- Row displaying subreddit search input -->
               <br>
               <div class="row table-header table-subtext gray">
-                <div class="col-sm-1">Rank</div>
-                <div class="col-sm-6" style="text-align: left;">Subreddit</div>
-                <div class="col-sm-2" style="text-align: left;">Last Seen</div>
-                <div class="col-sm-1">Comments</div>
-                <div class="col-sm-1">Submitted</div>
-                <div class="col-sm-1">Points</div>
+                <div class="col-md-1">Rank</div>
+                <div class="col-md-6" style="text-align: left;">Subreddit</div>
+                <div class="col-md-2" style="text-align: left;">Last Seen</div>
+                <div class="col-md-1">Comments</div>
+                <div class="col-md-1">Submitted</div>
+                <div class="col-md-1">Points</div>
               </div>
               <!-- Subreddits table -->
               <div ng-repeat="subreddit in subList" id="sub-row">
@@ -139,8 +139,8 @@
             </md-card>
             <br>
 
-            <div id="statistics" ng-controller="UserStatsCtrl">
-              <div class="row no-margin">
+            <div id="statistics" ng-controller="UserStatsCtrl" align="center">
+              <div class="row no-margin" style="width: 80%;">
                 <div ng-repeat="(badge, data) in badges" class="col-md-3 col-xs-6 no-padding" align="center">
                   <a href="#/{{ username }}/{{ data.sub }}/">
                   <md-card class="user-badge-card no-margin">

@@ -507,8 +507,8 @@ Content
 }
 
 .width-pad {
-  padding-left: 50px;
-  padding-right: 50px;
+  padding-left: 11%;
+  padding-right: 11%;
 }
 
 .column-pad {
@@ -1819,6 +1819,10 @@ Mobile
 
   .sub-banner-img {
     height: 100% !important;
+  }
+
+  .dropdown-col {
+    padding-left: 15px;
   }
 }
 

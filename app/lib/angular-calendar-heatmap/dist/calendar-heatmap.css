@@ -40,6 +40,7 @@
   font-family: Helvetica, arial, 'Open Sans', sans-serif;
   background: rgba(0, 0, 0, 0.8);
   border-radius: 5px;
+  text-align: left !important;
 }
 
 .calendar-heatmap .heatmap-tooltip .header strong {

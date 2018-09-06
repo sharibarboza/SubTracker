@@ -36,7 +36,7 @@
 
 <md-card ng-if="subInfo.banner_img" class="md-card-margin">
   <md-card-content class="no-pad">
-    <div class="about-box">
+    <div class="about-box" style="height: auto !important;">
       <strong class="light-gray">ABOUT THIS SUBREDDIT</strong>
 
       <p ng-if="subInfo.public_description" class="small-font" ng-bind-html="subInfo.public_description_html | sanitize"></p>
