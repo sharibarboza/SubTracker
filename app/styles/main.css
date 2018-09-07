@@ -697,6 +697,10 @@ Content
   border-right: none;
 }
 
+.searches .post-box {
+  padding-left: 0;
+  padding-right: 0;
+}
 
 
 /************************
@@ -1665,7 +1669,11 @@ Search
 #results-card {
   padding: 3px 15px 3px 20px;
   background-color: white;
-  border: 1px solid #e5e5e5;
+  margin-bottom: -1px;
+}
+
+.margin-bottom {
+  margin-bottom: 0px !important;
 }
 
 #results-card .col-md-1 {

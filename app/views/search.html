@@ -48,11 +48,11 @@
                 <accordion-group ng-init="results.data[sub].status = open" is-open="results.data[sub].status">
 
                   <accordion-heading>
-                    <div class="row no-margin" id="results-card">
-                      <div class="col-md-11">
+                    <div class="row no-margin" id="results-card" ng-class="$index + 1 == resultList.length ? 'margin-bottom' : 'empty-class'">
+                      <div class="col-md-11 no-padding">
                         <strong class="results-sub">/r/{{ sub }}</strong> <span class="purple results-sub">(<ng-pluralize count="(results.data[sub].comments.length) + (results.data[sub].submissions.length)" when="{'1': '1 result', 'other': '{{ ((results.data[sub].comments.length) + (results.data[sub].submissions.length)) | number }} results'}"></ng-pluralize> found)</span>
                       </div>
-                      <div class="col-md-1" align="center">
+                      <div class="col-md-1 no-padding" align="center">
                         <i class="fa fa-2x gray" ng-class="results.data[sub].status ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true" id="results-chevron"></i>
                       </div>
                     </div>
