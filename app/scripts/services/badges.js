@@ -14,6 +14,7 @@ angular.module('SubSnoopApp')
     var subs;
     var keys;
     var badges;
+    var table_badges;
 
     /*
     Used for determining the sub badges such as most active, most upvoted, etc.
@@ -26,6 +27,19 @@ angular.module('SubSnoopApp')
           user = current_user;
           return getBadges();
         }
+      },
+      getTableBadges: function(current_user) {
+          if (!badges || user != current_user || table_badges == null) {
+              table_badges = {};
+              for (var key in badges) {
+                  table_badges[key] = badges[key];
+              }
+
+              getTableBadges();
+          }
+
+          setBadge('mostUpvoted');
+          return table_badges;
       }
     };
     return factory;
@@ -67,6 +81,12 @@ angular.module('SubSnoopApp')
         return badges;
     };
 
+    function getTableBadges() {
+        table_badges['lastSeen'] = {
+            'sub': getSub('lastSeen')
+        }
+    }
+
     function setBadge(category) {
       var sub = getSub(category);
       badges[category].sub = sub;
@@ -86,7 +106,9 @@ angular.module('SubSnoopApp')
       } else if (category === 'leastUpvoted') {
         sub = rank.getBottomSub(keys, 'totalUps', subs);
       } else if (category === 'mostUpvoted') {
-        sub = rank.getTopSub(keys, 'totalUps', subs);
+          sub = rank.getTopSub(keys, 'totalUps', subs);
+      } else if (category === 'lastSeen') {
+          sub = rank.getTopSub(keys, 'lastSeen', subs);
       } else {
         sub = rank.getTopSub(keys, 'mostActive', subs);
       }

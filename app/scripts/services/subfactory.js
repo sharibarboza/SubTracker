@@ -34,6 +34,9 @@
 
     var fetchTime;
 
+    var topComment = [0, ''];
+    var topSubmit = [0, ''];
+
     /*
      User interface for sub factory
     */
@@ -80,6 +83,12 @@
       },
       getLatestPost: function(sub) {
         return latestPost == null ? getLatestPost(sub) : latestPost
+      },
+      getTopComment: function() {
+        return topComment;
+      },
+      getTopSubmit: function() {
+        return topSubmit;
       },
       compareDates: compareDates,
       getNewestSub: getNewestSub,
@@ -134,6 +143,8 @@
       upvotes = 0;
       latestPost = null;
       firstPost = null;
+      topComment = [0, ''];
+      topSubmit = [0, ''];
     };
 
     /*
@@ -281,7 +292,7 @@
           subs[subreddit] = createNewSub();
         } 
 
-        addComment(subs[subreddit], comment);
+        addComment(subreddit, subs[subreddit], comment);
       }
     };
 
@@ -297,7 +308,7 @@
           subs[subreddit] = createNewSub();
         } 
 
-        addSubmission(subs[subreddit], submission);
+        addSubmission(subreddit, subs[subreddit], submission);
       }
 
       for (var sub in subs) {
@@ -330,13 +341,17 @@
     /*
      Add a new comment to a sub object
     */
-    function addComment(subreddit, comment) {
+    function addComment(name, subreddit, comment) {
       subreddit.comments.push(comment);
       subreddit.count += 1;
 
       var date = $filter('date')(comment);
       subreddit.recent_comment = date;
       subreddit.comment_ups += parseInt(comment.ups);
+
+      if (subreddit.comment_ups > topComment[0]) {
+        topComment = [subreddit.comment_ups, name];
+      }
 
       if (comment.gilded > 0) {
         subreddit.gilded_comments += 1;
@@ -352,13 +367,17 @@
     /*
      Add a new submission to a sub object
     */
-    function addSubmission(subreddit, submission) {
+    function addSubmission(name, subreddit, submission) {
       subreddit.submissions.push(submission);
       subreddit.count += 1;
 
       var date = $filter('date')(submission);
       subreddit.recent_submission = date;
       subreddit.submission_ups += parseInt(submission.ups);
+
+      if (subreddit.submission_ups > topSubmit[0]) {
+        topSubmit = [subreddit.submission_ups, name];
+      }
 
       if (submission.gilded > 0) {
         subreddit.gilded_submissions += 1;

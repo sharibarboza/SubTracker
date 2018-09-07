@@ -214,7 +214,6 @@ blockquote {
 
 .accordion .panel-default {
   background-color: #FAFAFA;
-  border: none;
 }
 
 .accordion .panel-default > .panel-heading {
@@ -271,16 +270,24 @@ blockquote {
   border-radius: .25rem;
 }
 
-#most-upvoted {  
-  background-color: #28a745;
-}
-
 #most-active {
   background-color: #ef5350;
 }
 
 #newest {
   background-color: #17a2b8;
+}
+
+#last-seen {
+  background-color: #ffb300;
+}
+
+#best-comment {
+  background-color: #008CFF;
+}
+
+#best-submit {
+  background-color: #28a745;
 }
 
 .btn-info {
@@ -305,7 +312,7 @@ blockquote {
   z-index: 999;
   font-weight: bold;
   font-size: 18px;
-  color: #EB582A;
+  color: #ef5350;
 }
 
 .loading-bg {
@@ -388,7 +395,7 @@ md-progress-circular {
 }
 
 md-progress-circular path {
-  stroke: #EB582A;
+  stroke: #ef5350;
 }
 
 md-select {
@@ -684,8 +691,12 @@ Content
 
 .post-box {
   margin-top: -5px;
-  padding-bottom: 15px;
+  padding-top: 35px;
+  padding-bottom: 35px;
+  border-left: none;
+  border-right: none;
 }
+
 
 
 /************************
@@ -1348,7 +1359,7 @@ User Sub Page
 
 .about-box {
   border: 1px solid #e5e5e5;
-  padding: 10px;
+  padding: 10px 15px;
   height: 161px;
   overflow-y: scroll;
 }
@@ -1491,9 +1502,8 @@ Sub Page Side Bar
 }
 
 .accordion-icon {
-  background-color: #F5F5F5;
-  padding-top: 5px;
-  border: 1px solid #e5e5e5;
+  vertical-align: middle;
+  line-height: 30px;
 }
 
 .rank {

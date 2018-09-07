@@ -60,6 +60,8 @@
       $scope.subLength = subFactory.getSubLength();
       $scope.lastPost = subFactory.getLatestPost(null);
       $scope.firstPost = subFactory.getFirstPost(null);
+      $scope.topComment = subFactory.getTopComment()[1];
+      $scope.topSubmit = subFactory.getTopSubmit()[1];
     };
 
     $scope.setSortOption = function(sort) {
