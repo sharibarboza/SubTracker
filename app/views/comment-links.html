@@ -3,7 +3,7 @@
     <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMM Do YYYY, h:mm a'" class="post-date"></span>
   </span>
 
-  <div style="float: right;">
+  <div style="float: right;" class="comment-links">
     <span class="post-links"><a ng-href="{{ element.link_permalink }}{{ element.id }}" target="_blank">permalink</a></span>
     <span class="post-links"><a ng-href="{{ element.link_permalink }}{{ element.id }}?context=3" target="_blank">context</a></span>
     <span class="post-links"><a ng-href="{{ element.link_permalink }}" target="_blank">full comments ({{ element.num_comments | number }})</a></span>
