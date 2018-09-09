@@ -62,8 +62,8 @@
 
         <div align="center" id="pies" class="row no-margin">
           <div class="col-md-6 col-xs-12 no-padding" align="center">
-            <md-card class="md-card-margin">
-              <md-card-content class="no-pad div-box">
+            <md-card class="md-card-margin" style="margin-right: 0;">
+              <md-card-content class="no-pad div-box" style="border-right: none;">
                 <strong class="light-gray">SENTIMENT ANALYSIS</strong><br>
                 <span class="small-font gray">Hover to see the number of posts for each category.</span>
                 <donut-chart type="sentiment" sub="{{ subreddit }}" align="center"></donut-chart>
@@ -71,8 +71,8 @@
             </md-card>
           </div>
           <div class="col-md-6 col-xs-12 no-padding" align="center">
-            <md-card class="md-card-margin">
-              <md-card-content class="no-pad div-box">
+            <md-card class="md-card-margin" style="margin-left: 0;">
+              <md-card-content class="no-pad div-box" style="border-left: none;">
                 <strong class="light-gray">VOTING FEEDBACK</strong><br>
                 <span class="small-font gray">Hover to see the number of posts for each category.</span>
                 <donut-chart type="reaction" sub="{{ subreddit }}" align="center"></donut-chart>

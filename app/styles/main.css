@@ -305,7 +305,7 @@ blockquote {
 
 .loading-msg {
   position: fixed;
-  top: 57%;
+  top: 53%;
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
@@ -323,7 +323,7 @@ blockquote {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0,0,0,0.8);
   z-index: 999;
 }
 
@@ -382,6 +382,17 @@ blockquote {
 /************************
 Angular Material
 ************************/
+
+md-progress-linear {
+  position: absolute;
+  overflow: show;
+  top: 50%;
+  left: 35%;
+  bottom: 0;
+  right: 0;
+  width: 30%;
+  z-index: 999;
+}
 
 md-progress-circular {
   position: fixed;
@@ -471,7 +482,7 @@ md-card {
 }
 
 .md-card-margin {
-  margin-top: 16px;
+  margin-top: -1px;
 }
 
 .card-bottom-margin {

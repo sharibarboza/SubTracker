@@ -8,8 +8,8 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('subFactory', ['$http', 'userFactory', '$q', 'moment', '$filter', 'rank', 'sentiMood', 'reaction', 
-  function ($http, userFactory, $q, moment, $filter, rank, sentiMood, reaction) {
+ .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'rank', 'sentiMood', 'reaction',
+  function ($http, $rootScope, userFactory, $q, moment, $filter, rank, sentiMood, reaction) {
     var baseUrl = 'https://www.reddit.com/user/';
     var rawJson = 'raw_json=1';
     var pages = 10;
@@ -37,6 +37,8 @@
     var topComment = [0, ''];
     var topSubmit = [0, ''];
 
+    var i = 0;
+
     /*
      User interface for sub factory
     */
@@ -45,7 +47,8 @@
         resetData();
         username = user;
         var userPromise = userFactory.getData(user);
-        return getSubPromise(userPromise);
+        promise = getSubPromise(userPromise);
+        return promise;
       },
       getSubData: function() {
         return subData;
@@ -145,6 +148,7 @@
       firstPost = null;
       topComment = [0, ''];
       topSubmit = [0, ''];
+      i = 0;
     };
 
     /*
@@ -154,10 +158,11 @@
     function getSubPromise(userPromise) {
       var subPromise = userPromise.then(function(response) {
         if (response && matchUser(response.name, username)) {
+
           var commentPromise = promiseChain('comments', 'commentsCallback');
           var submitPromise = promiseChain('submitted', 'submitsCallback');
-
           // Resolve both comment and submission promises together
+
           var dataPromise = $q.all([commentPromise, submitPromise]).then(function() {
             setSubData(response);
             setFetchTime();
@@ -185,14 +190,15 @@
     */
     function callAPI(where) {
       var url = 'https://api.reddit.com/user/'+username+'/'+where+'.json?limit=100&after='+after;
-      return $http.get(url);
+      var call = $http.get(url);
+      return call;
     };
 
     /*
      Resolve promise and return data if there is no more requests.
      If there is still an after value, chain the next promise.
     */
-    function getPromise(where, promise, index) {
+    function getPromise(where, promise) {
       var promise = promise.then(function(response) {
         var data = getDataList(where, response);
 
@@ -213,9 +219,11 @@
      fetched at a time, making for at most 10 API requests.
     */
     function promiseChain(where) {
+
       var promise = callAPI(where);
+
       for (var i = 0; i < pages; i++) {
-        promise = getPromise(where, promise, i);
+        promise = getPromise(where, promise);
       }
       return promise;
     };
@@ -263,7 +271,9 @@
     function pushData(response, where) {
       if (response) {
         var data = response.children;
-        for (var i = 0; i < data.length; i++) {
+        var count = data.length;
+
+        for (var i = 0; i < count; i++) {
           var item = data[i].data;
           if (where === 'comments') {
             item.type = 'comment';
@@ -272,6 +282,9 @@
             item.type = 'submit';
             submissions.push(item);
           }
+
+          var d = [comments.length + submissions.length, 2000];
+          $rootScope.$emit('subCount', d);
         }
       }
     };

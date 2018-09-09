@@ -30,14 +30,20 @@
       
         <div ng-view="" id="main-view" style="max-width: 100%; overflow-x: hidden;"></div>
 
-        <div ng-include src="'views/footer.html'"></div>
-
         <div ng-show="loadingView" class="loading-bg">
-          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-          <div class="loading-msg" align="center">
-            <span>Fetching from Reddit ...</span>
-          </div>
+            <div ng-controller="ProgressCtrl">
+                <md-progress-linear ng-if="path == 'views/main.html'" md-mode="determinate" ng-value="mainCount"></md-progress-linear>
+            </div>
+
+            <div ng-controller="ProgressSubCtrl">
+                <md-progress-linear ng-if="path == 'views/user.html'" md-mode="determinate" ng-value="subCount"></md-progress-linear>
+                <div class="loading-msg" align="center">
+                    <span ng-if="path == 'views/user.html'">Fetching {{ loadingUser }}'s posts ...</span>
+                </div>
+            </div>
         </div>
+
+        <div ng-if="!loadingView" ng-include src="'views/footer.html'"></div>
       </div>
 
       <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -81,6 +87,8 @@
      <script src="lib/angular-ui.js"></script>
      <script src="lib/angular-jqcloud.js"></script>
      <script src="lib/angular-calendar-heatmap/dist/calendar-heatmap.js"></script>
+     <script src="scripts/controllers/progress.js"></script>
+     <script src="scripts/controllers/subprogress.js"></script>
      <script src="scripts/controllers/main.js"></script>
      <script src="scripts/services/d3service.js"></script>
      <script src="scripts/controllers/user.js"></script>

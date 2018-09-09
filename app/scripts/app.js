@@ -91,19 +91,34 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
     $locationProvider.hashPrefix('');
 }]);
 
-app.run(['$rootScope', '$location', function($rootScope, $location) {
+app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope, $location, $interval, $timeout) {
 
-  $rootScope.$on('$routeChangeStart', function(e, curr, prev) { 
-    if (curr.$$route && curr.$$route.resolve) {
+  $rootScope.$on('$routeChangeStart', function(e, curr, prev) {
+    $rootScope.path = curr.$$route.templateUrl;
+    var loading;
+    if (curr == undefined || prev == undefined) {
+      loading = true;
+    } else if (curr.pathParams.username !== prev.pathParams.username) {
+      loading = true;
+    }
+
+    if (curr.$$route && curr.$$route.resolve && loading) {
       // Show a loading message until promises are not resolved
       $rootScope.loadingView = true;
+      $rootScope.loadingUser = curr.pathParams.username;
     }
   });
 
-  $rootScope.$on('$routeChangeSuccess', function(e, curr, prev) { 
-    // Hide loading message
-    $rootScope.loadingView = false;
-    $rootScope.title = curr.$$route.title;
+  $rootScope.$on('$routeChangeSuccess', function(e, curr, prev) {
+    var d = [2000, 2000];
+    $rootScope.$emit('subCount', d);
+
+    $timeout(function() {
+      $rootScope.loadingView = false;
+      $rootScope.title = curr.$$route.title;
+      $rootScope.subCount = 0;
+      $rootScope.subMsg = 0;
+    }, 500);
   });
 
 }]);
