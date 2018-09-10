@@ -26,24 +26,20 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]-->
 
-      <div class="container">
+      <div class="container ng-cloak">
       
         <div ng-view="" id="main-view" style="max-width: 100%; overflow-x: hidden;"></div>
 
         <div ng-show="loadingView" class="loading-bg">
-            <div ng-controller="ProgressCtrl">
-                <md-progress-linear ng-if="path == 'views/main.html'" md-mode="determinate" ng-value="mainCount"></md-progress-linear>
-            </div>
-
             <div ng-controller="ProgressSubCtrl">
-                <md-progress-linear ng-if="path == 'views/user.html'" md-mode="determinate" ng-value="subCount"></md-progress-linear>
+                <md-progress-linear ng-show="userPath" md-mode="determinate" ng-value="subCount"></md-progress-linear>
                 <div class="loading-msg" align="center">
-                    <span ng-if="path == 'views/user.html'">Fetching {{ loadingUser }}'s posts ...</span>
+                    <span ng-show="userPath">Fetching {{ loadingUser }}'s posts ...</span>
                 </div>
             </div>
         </div>
 
-        <div ng-if="!loadingView" ng-include src="'views/footer.html'"></div>
+        <div ng-show="!loadingView" ng-include src="'views/footer.html'"></div>
       </div>
 
       <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->

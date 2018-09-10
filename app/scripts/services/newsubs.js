@@ -17,7 +17,7 @@ angular.module('SubSnoopApp')
     */
     var factory = {
       getData: function () {
-        return $http.get(url).then(function(response) {
+        $http.get(url).then(function(response) {
           var data;
 
           data = response.data.data.children;
@@ -28,10 +28,12 @@ angular.module('SubSnoopApp')
             var d = [i + 1, count];
             $rootScope.$emit('mainCount', d);
           }
-          return subreddits;
         }, function(error) {
           console.log(error);
         });
+      },
+      getSubs: function() {
+        return subreddits;
       }
     };
     return factory;

@@ -125,6 +125,8 @@ angular.module('SubSnoopApp')
 
       if ($scope.tab < 2) {
         $scope.setArray();
+      } else if ($scope.tab == 3) {
+          $scope.goToSubs();
       }
     };
 
@@ -140,10 +142,10 @@ angular.module('SubSnoopApp')
        Call subreddit API and get sub banner and icon
       */
       if ($scope.sub.info == null) {
-        $scope.subInfo = subInfo.getData($scope.subreddit).then(function(response) {
-          $scope.subInfo = response;
-          subFactory.setSubInfo($scope.subreddit, response);
-        });
+          $scope.subInfo = subInfo.getData($scope.subreddit).then(function(response) {
+            $scope.subInfo = response;
+            subFactory.setSubInfo($scope.subreddit, response);
+          });
       } else {
         $scope.subInfo = $scope.sub.info;
       }
@@ -211,6 +213,10 @@ angular.module('SubSnoopApp')
       $scope.subList = [];
       $scope.subList = search.findSubs($scope.subsArray, term);
     };
+
+    $scope.goToSubs = function() {
+      $window.location.assign('#/' + $scope.username + '/');  // Go to user's main page
+    }
 
   }
 ]);

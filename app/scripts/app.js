@@ -36,20 +36,6 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
   $routeProvider
     .when('/', {
       templateUrl: 'views/main.html',
-      controller: 'MainCtrl',
-      controllerAs: 'main',
-      resolve: {
-        popularSubs: function(popularSubs) {
-          return popularSubs.getData().then(function(response) {
-            return response;
-          });
-        },
-        newSubs: function(newSubs) {
-          return newSubs.getData().then(function(response) {
-            return response;
-          });
-        }
-      },
       title: 'SubSnoop - Track your subreddit activity'
     })
     .when('/:username/', {
@@ -94,14 +80,34 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope, $location, $interval, $timeout) {
 
   $rootScope.$on('$routeChangeStart', function(e, curr, prev) {
+    var userUrls = ['views/user.html', 'views/sub.html', 'views/search.html'];
     $rootScope.path = curr.$$route.templateUrl;
+    $rootScope.userPath = userUrls.indexOf($rootScope.path) >= 0;
+    console.log($rootScope.userPath);
+
+    if (prev !== undefined) {
+      $rootScope.redirect = prev.$$route.redirectTo;
+    }
+
     var loading;
     if (curr == undefined || prev == undefined) {
       loading = true;
-    } else if (curr.pathParams.username !== prev.pathParams.username) {
-      loading = true;
-    }
+    } else {
+      if (curr.pathParams.username !== undefined) {
+          var username1 = curr.pathParams.username.toLowerCase();
+      }
+      if (prev.pathParams.username !== undefined) {
+          var username2 = prev.pathParams.username.toLowerCase();
+      }
 
+      if (username1 !== username2) {
+        loading = true;
+      } else if (username1 == username2 && $rootScope.redirect !== undefined) {
+        loading = true;
+        $rootScope.redirect = undefined;
+      }
+    }
+    console.log(loading);
     if (curr.$$route && curr.$$route.resolve && loading) {
       // Show a loading message until promises are not resolved
       $rootScope.loadingView = true;
