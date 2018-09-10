@@ -83,7 +83,6 @@ app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope
     var userUrls = ['views/user.html', 'views/sub.html', 'views/search.html'];
     $rootScope.path = curr.$$route.templateUrl;
     $rootScope.userPath = userUrls.indexOf($rootScope.path) >= 0;
-    console.log($rootScope.userPath);
 
     if (prev !== undefined) {
       $rootScope.redirect = prev.$$route.redirectTo;
@@ -107,7 +106,7 @@ app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope
         $rootScope.redirect = undefined;
       }
     }
-    console.log(loading);
+
     if (curr.$$route && curr.$$route.resolve && loading) {
       // Show a loading message until promises are not resolved
       $rootScope.loadingView = true;

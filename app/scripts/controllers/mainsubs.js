@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name SubSnoopApp.controller:MainCtrl
+ * @name SubSnoopApp.controller:MainSubsCtrl
  * @description
  * # MainCtrl
  * Controller of the SubSnoopApp
  */
  angular.module('SubSnoopApp')
- .controller('MainCtrl', ['$scope', '$rootScope', 'popularSubs', 'newSubs', 'moment', function ($scope, $rootScope, popularSubs, newSubs, moment) {
+ .controller('MainSubsCtrl', ['$scope', '$rootScope', 'popularSubs', 'newSubs', 'moment', function ($scope, $rootScope, popularSubs, newSubs, moment) {
  	$scope.year = moment().year();
 
     // Main will determine whether to display the search bar in the nav 
