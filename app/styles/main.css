@@ -11,8 +11,7 @@ Utility
 
 body {
   padding: 0;
-  color: #383838;
-  background-color: white !important;
+  color: #4D4D4D;
   position: relative;
   font-size: 15px;
 }
@@ -22,7 +21,7 @@ a {
 }
 
 a:hover {
-  color: #12C5E0;
+  color: #3F51B5;
 }
 
 a:focus, div:focus, span:focus {
@@ -83,7 +82,7 @@ h5 {
 }
 
 .purple {
-  color: #5552B3;
+  color: #3F51B5;
 }
 
 .baby-blue {
@@ -275,7 +274,7 @@ blockquote {
 }
 
 #newest {
-  background-color: #17a2b8;
+  background-color: #ff9100;
 }
 
 #last-seen {
@@ -290,6 +289,10 @@ blockquote {
   background-color: #28a745;
 }
 
+#best-avg {
+  background-color: #9c27b0;
+}
+
 .btn-info {
   background-color: rgb(63,81,181);
   border-color: rgb(63,81,181);
@@ -301,6 +304,14 @@ blockquote {
 
 .reddit-btn {
   color: inherit;
+}
+
+.post-links .fa-arrow-up {
+  color: #1DB3B0;
+}
+
+.post-links .fa-arrow-down {
+  color: #ef5350;
 }
 
 .loading-msg {
@@ -476,6 +487,7 @@ md-toolbar h1 {
 }
 
 md-card {
+  color: #4D4D4D;
   margin-top: 0px;
   margin-bottom: 0px;
   box-shadow: none !important;
@@ -497,6 +509,11 @@ md-card {
 
 .tooltip {
   font-size: 13px !important;
+}
+
+.panel-box {
+    border: 1px solid #e5e5e5;
+    margin-top: -1px;
 }
 
 /************************
@@ -739,13 +756,13 @@ Navigation
 }
 
 .navbar-default .navbar-brand {
-  color: #5552B3;
+  color: #3F51B5;
   font-weight: bold;
   font-size: 2em;
 }
 
 .navbar-default .nav-link {
-  color: #5552B3 !important;
+  color: #3F51B5 !important;
   font-weight: bold;
 }
 
@@ -1016,8 +1033,12 @@ User Page
   font-size: 20px;
 }
 
+.sub-name {
+  color: #337ab7;
+}
+
 .subname-box {
-  padding: 10px;
+  padding: 4px 10px;
 }
 
 .subname-box .badge {
@@ -1085,7 +1106,6 @@ User Page
 }
 
 .table-header {
-  text-align: center;
   text-transform: uppercase;
   padding-bottom: 5px;
 }
@@ -1749,7 +1769,7 @@ Footer
 }
 
 .footer a:hover {
-  color: #12C5E0;
+  color: #ef5350;
 }
 
 /************************
@@ -1778,6 +1798,10 @@ Mobile
 
   md-card md-card-title {
     padding: 25px 8px;
+  }
+
+  .panel-list md-card-title {
+    padding: 20px;
   }
 
   .no-left-pad {
@@ -2248,6 +2272,10 @@ Mobile
   }
 
   .panel {
+    border: none !important;
+  }
+
+  .panel-box {
     border: none !important;
   }
 

@@ -345,6 +345,7 @@
       subData.count = 0;
       subData.recent_activity = null;
       subData.info = null;
+      subData.avg_karma = 0;
 
       return subData;
     };
@@ -400,6 +401,8 @@
       for (var sub in subs) {
         subs[sub].total_ups = subs[sub].comment_ups + subs[sub].submission_ups;
         upvotes += subs[sub].total_ups;
+
+        subs[sub].avg_karma = (subs[sub].total_ups / subs[sub].count);
       }
     };
 

@@ -1,9 +1,8 @@
 <md-card class="heatmap">
-  <strong class="light-gray">SUBREDDIT TIMELINE THIS YEAR</strong>
+  <strong class="light-gray">RECENT ACTIVITY TIMELIME</strong>
+  <br>
   <md-card-content class="no-padding">
     <div ng-controller="UserHeatmapCtrl" align="center">
-      <strong class="purple">{{ count | number }} {{ count == 1 ? 'post' : 'posts' }} this year</strong>
-      <br><br>
       <calendar-heatmap style="max-width: 80% !important;" data="mapData" color="'#ef5350'" overview="'year'" handler="print" type="'user'"></calendar-heatmap>
       <br>
       <p class="gray small-font">Hover over a circle to see which subs exhibit activity on that day.</p>

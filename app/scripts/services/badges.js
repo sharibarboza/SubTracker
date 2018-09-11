@@ -37,9 +37,10 @@ angular.module('SubSnoopApp')
 
               getTableBadges();
           }
-
-          setBadge('mostUpvoted');
           return table_badges;
+      },
+      resetSort: function() {
+        resetSubSort();
       }
     };
     return factory;
@@ -67,6 +68,7 @@ angular.module('SubSnoopApp')
             'points' : 0 
           }
         };
+
         subs = subFactory.getSubData().subs;
         keys = subFactory.getDefaultSortedArray();
 
@@ -75,9 +77,6 @@ angular.module('SubSnoopApp')
         setBadge('leastUpvoted');
         setBadge('newestSub');
 
-        // Reset filters to current sort value
-        rank.getTopSub(keys, sortFactory.getSubSort().value, subs);
-
         return badges;
     };
 
@@ -85,6 +84,14 @@ angular.module('SubSnoopApp')
         table_badges['lastSeen'] = {
             'sub': getSub('lastSeen')
         }
+        table_badges['avgPost'] = {
+            'sub': getSub('avgPost')
+        }
+    }
+
+    function resetSubSort() {
+        // Reset filters to current sort value
+        getSub(sortFactory.getSubSort().value);
     }
 
     function setBadge(category) {
@@ -109,10 +116,11 @@ angular.module('SubSnoopApp')
           sub = rank.getTopSub(keys, 'totalUps', subs);
       } else if (category === 'lastSeen') {
           sub = rank.getTopSub(keys, 'lastSeen', subs);
+      } else if (category === 'avgPost') {
+          sub = rank.getTopSub(keys, 'avgPost', subs);
       } else {
-        sub = rank.getTopSub(keys, 'mostActive', subs);
+        sub = rank.getTopSub(keys, category, subs);
       }
-
       return sub;
     }; 
   }]);

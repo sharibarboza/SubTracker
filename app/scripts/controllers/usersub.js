@@ -22,6 +22,7 @@ angular.module('SubSnoopApp')
     $window.scrollTo(0, 0);
     $scope.pages = ['comments', 'submissions', 'sub'];
     $scope.page = $scope.pages[2];
+    $scope.main = false;
     $scope.username = $routeParams.username;
     $rootScope.title = $scope.username + ' | ' + $routeParams.subreddit;
 

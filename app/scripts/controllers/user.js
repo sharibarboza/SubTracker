@@ -92,6 +92,7 @@
        on the user's main page.
        By default, user's subs are sorted alphabetically by sub name
       */
+
       var setArray = function() {
         $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.selected.value, $scope.subs);
         $scope.currentLimit = $scope.subList.length;

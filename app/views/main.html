@@ -1,4 +1,4 @@
-<div ng-controller="MainSubsCtrl">
+<div>
   <div ng-include src="'views/searchnav.html'"></div>
 
   <div class="main-container">
@@ -11,14 +11,14 @@
     <div class="row no-margin">
       <div class="row no-margin col-md-10 col-md-push-1 no-padding" id="sub-panels">
         <div class="col-md-6">
-          <strong class="sub-panel-title dark-gray">Popular Subreddits</strong>
-          <div ng-repeat="subElement in popularSubs">
+          <h5><strong class="sub-panel-title dark-gray">Popular Subreddits</strong></h5>
+          <div class="panel-list" ng-repeat="subElement in popularSubs">
             <div ng-include src="'views/sub-panel.html'"></div>
           </div>
         </div>
         <div class="col-md-6">
-          <strong class="sub-panel-title dark-gray">New Subreddits</strong>
-          <div ng-repeat="subElement in newSubs">
+          <h5><strong class="sub-panel-title dark-gray">New Subreddits</strong></h5>
+          <div class="panel-list" ng-repeat="subElement in newSubs">
             <div ng-include src="'views/sub-panel.html'"></div>
           </div>
         </div>
