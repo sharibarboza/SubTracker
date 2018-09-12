@@ -215,12 +215,7 @@ angular.module('g1b.calendar-heatmap', []).
                   // Construct tooltip
                   var tooltip_html = '';
                   tooltip_html += '<div class="heatmap-tooltip">';
-
-                  if (scope.type === 'sub') {
-                    tooltip_html += '<div class="header"><strong>' + scope.formatTotal(d.total, ' posts') + ' created</strong></div>';
-                  } else {
-                    tooltip_html += '<div class="header"><strong>Active in ' + scope.formatTotal(d.total, ' subreddits') + '</strong></div>';
-                  }
+                  tooltip_html += '<div class="header"><strong>' + scope.formatTotal(d.total, ' posts') + ' created</strong></div>';
 
                   tooltip_html += '<div>on ' + moment(d.date).format('dddd, MMM Do YYYY') + '</div><br>';
 

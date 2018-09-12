@@ -111,6 +111,7 @@ angular.module('SubSnoopApp')
         dayData = dates[dateObj];
         dayData.date = dateObj;
         dayData.total = 0;
+        dayData.numSubs = 0;
         dayData.details = [];
         dayData.summary = [];
         dayData.subs = {};
@@ -123,13 +124,15 @@ angular.module('SubSnoopApp')
           'comments' : 0,
           'submissions' : 0
         }
-        dayData.total += 1;
+        dayData.numSubs += 1;
       }
 
       if (where === 'comments') {
         dayData.subs[sub].comments += 1;
+        dayData.total += 1;
       } else {
         dayData.subs[sub].submissions += 1;
+        dayData.total += 1;
       }
     };
   }]);
