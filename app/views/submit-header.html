@@ -6,5 +6,13 @@
 <br>
 
 <span class="post-links">       
-  <a ng-href="https://www.reddit.com{{ element.permalink }}" target="_blank"><ng-pluralize count="element.num_comments" when="{'1': '1 comment', 'other': '{{ element.num_comments | number }} comments'}"></ng-pluralize></a> 
+  <a ng-href="https://www.reddit.com{{ element.permalink }}" target="_blank"><ng-pluralize count="element.num_comments" when="{'1': '1 comment', 'other': '{{ element.num_comments | number }} comments'}"></ng-pluralize></a>
+  <span class="mobile-sub-header" style="display: none;">
+    <strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong><br>
+    <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date gray"></span>
+  </span>
+  <span ng-show="page == 'search'" class="mobile-sub-search">
+    &nbsp;&nbsp;<strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong>
+    <span style="float: right;" ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date gray search-sub-date"></span>
+  </span>
 </span> 

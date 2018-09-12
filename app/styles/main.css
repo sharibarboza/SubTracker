@@ -324,6 +324,7 @@ blockquote {
   font-weight: bold;
   font-size: 18px;
   color: #ef5350;
+  width: 90%;
 }
 
 .loading-bg {
@@ -2003,11 +2004,11 @@ Mobile
   }
 
   .non-mobile-only, #slash, .hidden-mobile, #overview .fa-reddit, .sub-tab,
-   #overview-table i, .hide-break, .accordion-hidden {
+   #overview-table i, .hide-break, .accordion-hidden, .mobile-sub-search {
     display: none;
   }
 
-  #since-date a, .mobile-accordion, #mobile-input {
+  #since-date a, .mobile-accordion, #mobile-input, .mobile-sub-header {
     display: block !important;
   }
 
@@ -2237,6 +2238,7 @@ Mobile
     border-right: none !important;
     padding-left: 0;
     padding-right: 0;
+    height: 100%;
   }
 
   .cloud-box .div-box {
@@ -2264,7 +2266,11 @@ Mobile
   }
 
   .loading-msg {
-    margin-top: 20px !important;
+    padding-top: 1vh !important;
+  }
+
+  .calendar-heatmap {
+    max-width: 100% !important;
   }
 
   .post-thumbnail img {

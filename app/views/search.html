@@ -66,15 +66,14 @@
                     <span class="post-links post-badge" ng-if="results.data[sub].submissions.length">
                       <span class="badge results-badge"><ng-pluralize count="results.data[sub].submissions.length" when="{'1': '1 submission', 'other': '{{ results.data[sub].submissions.length | number }} submissions'}"></ng-pluralize></span>
                     </span>
-                    <br><br>
+                    <br>
 
                     <h4 class="black" ng-if="results.data[sub].comments.length"><strong>Comments</strong></h4>
                     <div ng-repeat="element in results.data[sub].comments" class="searches" id="{{ sub }}-comments" ng-if="type != 3">
                       <span class="gray small-font" ng-bind="comment.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>
                       <div ng-include src="'views/comment-no-title.html'"></div>
                     </div>
-
-                    <br>
+                    
                     <h4 class="black"><strong ng-if="results.data[sub].submissions.length">Submitted</strong></h4>
                     <div ng-repeat="element in results.data[sub].submissions" class="searches" id="{{ sub }}-submits" ng-if="type != 2">
                       <div ng-include src="'views/submission.html'" id='results-submit'></div>
