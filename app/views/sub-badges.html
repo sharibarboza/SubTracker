@@ -4,7 +4,7 @@
     <md-card class="user-badge-card no-margin">
       <md-tooltip class="tooltip">{{ data.sub }}: {{ data.points | number }} <i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i></md-tooltip>
       <br>
-      <img ng-src="{{ data.image ? data.image : '../images/logo.png' }}" class="badge-image img-circle" alt="badge">
+      <img lazy-img="{{ data.image ? data.image : '../images/logo.jpg' }}" class="badge-image img-circle" alt="badge">
       <md-card-content>
         <strong class="badge-name"><i class="fa fa-shield green" aria-hidden="true"></i><br>
         r/{{ data.sub | truncate:15:true }}</strong>

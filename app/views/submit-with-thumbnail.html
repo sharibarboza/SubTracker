@@ -6,6 +6,7 @@
     <div ng-if="page != 'search'" class="col-md-10 col-xs-9 submit-info">
       <div ng-include src="'views/submit-header.html'"></div>
       <br class="hide-break">
+
 	  <accordion class="accordion accordion-hidden">
 	    <accordion-group ng-init="status = { isOpen: page == 'search' ? true : open }" is-open="status.isOpen">
 	      <accordion-heading>
@@ -29,6 +30,7 @@
 	      </div>
 	    </accordion-group>
 	  </accordion>
+
     </div>
     <div ng-if="page == 'search'" class="col-md-12 submit-info">
       <div ng-include src="'views/submit-header.html'"></div>

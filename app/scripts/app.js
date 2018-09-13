@@ -18,7 +18,8 @@ var app = angular
     'ui.bootstrap',
     'yaru22.angular-timeago',
     'angular-jqcloud',
-    'g1b.calendar-heatmap'
+    'g1b.calendar-heatmap',
+    'angularLazyImg'
   ]);
 
 var getData = function(route, factory) {
@@ -32,7 +33,7 @@ var getData = function(route, factory) {
   }
 };
 
-app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+app.config(['$routeProvider', '$locationProvider', 'lazyImgConfigProvider', function ($routeProvider, $locationProvider, lazyImgConfigProvider) {
   $routeProvider
     .when('/', {
       templateUrl: 'views/main.html',

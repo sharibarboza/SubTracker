@@ -23,8 +23,8 @@
           <div class="row" style="padding-top: 20px; padding-bottom: 10px;">
             <div class="col-md-2">
               <div class="profile-img">
-                <img ng-if="redditor.subreddit" ng-src="{{ redditor.subreddit.icon_img | escape }}" class="banner-img img-circle">
-                <img ng-if="!redditor.subreddit" ng-src="{{ redditor.icon_img }}" class="banner-img img-circle">
+                <img ng-if="redditor.subreddit" lazy-img="{{ redditor.subreddit.icon_img | escape }}" class="banner-img img-circle">
+                <img ng-if="!redditor.subreddit" lazy-img="{{ redditor.icon_img }}" class="banner-img img-circle">
               </div>
             </div>
             <div class="col-md-7 middle-banner">
@@ -157,7 +157,7 @@
                   <md-card class="user-badge-card no-margin">
                     <md-tooltip class="tooltip">{{ data.sub }}: {{ data.points | number }} <ng-pluralize count="data.points" when="{'1': 'point', 'other': 'points'}"></ng-pluralize></md-tooltip>
                     <br>
-                    <img ng-src="{{ data.image ? data.image : '../images/logo.png' }}" class="badge-image img-circle" alt="badge">
+                    <img lazy-img="{{ data.image ? data.image : '../images/logo.jpg' }}" class="badge-image img-circle" alt="badge">
                     <strong><span class="baby-blue">/r/</span>{{ data.sub | truncate:25:true }}</strong>
                     <strong class="light-gray">{{ data.name }}</strong>    
                     <br>      

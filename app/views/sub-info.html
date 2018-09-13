@@ -8,7 +8,7 @@
       <div class="col-md-7 sub-info" style="padding-left: 0;">
         <div ng-if="subInfo.banner_img" class="banner-box">
           <div class="banner-container">
-            <img ng-src="{{ subInfo.banner_img | escape }}" class="sub-banner-img" />
+            <img lazy-img="{{ subInfo.banner_img | escape }}" class="sub-banner-img" />
           </div>
           <div class="banner-text">
             <span class="txt-block">Subscribers: <span class="non-bg orange">{{ subInfo.subscribers | number }}</span></span>

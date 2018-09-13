@@ -14,8 +14,8 @@
           <div class="row" style="padding-top: 20px; padding-bottom: 10px;">
             <div class="col-md-2">
               <div class="profile-img">
-                <img ng-if="subInfo.icon_img" ng-src="{{ subInfo.icon_img | escape }}" class="banner-img img-circle">
-                <img ng-if="!subInfo.icon_img" ng-src="{{ '../images/logo.png' }}" class="banner-img img-circle">
+                <img ng-if="subInfo.icon_img" lazy-img="{{ subInfo.icon_img | escape }}" class="banner-img img-circle">
+                <img ng-if="!subInfo.icon_img" lazy-img="{{ '../images/logo.jpg' }}" class="banner-img img-circle">
               </div>
             </div>
             <div class="col-md-8 middle-banner">

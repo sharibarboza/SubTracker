@@ -5,3 +5,4 @@
 /app/bower_components
 /test/coverage
 .idea/
+.DS_Store
