@@ -42,12 +42,16 @@ angular.module('SubSnoopApp')
 
     var isMP4 = function(url) {
         return url.indexOf('.mp4') >= 0;
-    }
+    };
+
+    var isImgurGif = function(url) {
+        return isGif(url) && url.indexOf('imgur') >= 0;
+    };
 
     var getImgurUrl = function(url) {
         var gif_i = url.indexOf('.gif');
         return url.slice(0, gif_i);
-    }
+    };
 
     var isImgurAlbum = function(submit) {
       return submit.media && submit.media.oembed && submit.media.oembed.provider_name === "Imgur";
@@ -223,8 +227,15 @@ angular.module('SubSnoopApp')
               var html = '<video width="100%" height="240" class="submit-pic" controls><source src="' + data.url + '" type="video/mp4"></video>';
               content = centerWrap(changeSize(page, html));
             } else if (isGif(data.url)) {
-              var imgur_url = getImgurUrl(data.url);
-              html = '<iframe src="' + imgur_url + '/embed" height="450"></iframe>';
+              var gif_url;
+              var html;
+              if (isImgurGif(data.url)) {
+                gif_url = getImgurUrl(data.url);
+                html = '<iframe src="' + gif_url + '/embed" height="450"></iframe>';
+              } else {
+                gif_url = data.url;
+                html = '<iframe src="' + gif_url + '" height="240"></iframe>';
+              }
               content = centerWrap(changeSize(page, html));
             } else {
               content = '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
