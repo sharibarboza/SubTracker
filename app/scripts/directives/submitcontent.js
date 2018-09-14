@@ -34,11 +34,24 @@ angular.module('SubSnoopApp')
             }
         }
         return false;
+    };
+
+    var isGif = function(url) {
+        return url.indexOf('.gif') >= 0;
+    };
+
+    var isMP4 = function(url) {
+        return url.indexOf('.mp4') >= 0;
+    }
+
+    var getImgurUrl = function(url) {
+        var gif_i = url.indexOf('.gif');
+        return url.slice(0, gif_i);
     }
 
     var isImgurAlbum = function(submit) {
       return submit.media && submit.media.oembed && submit.media.oembed.provider_name === "Imgur";
-    }
+    };
 
     var isVideo = function(url) {
       if (url) {
@@ -53,7 +66,11 @@ angular.module('SubSnoopApp')
      Stripping and using .gif instead will make the video animated.
     */
     var getVideoUrl = function(url) {
-      return url.slice(0, url.length-1);
+      if (isVideo(url)) {
+        return url.slice(0, url.length-1);
+      } else {
+        return url;
+      }
     };
 
     /*
@@ -188,22 +205,26 @@ angular.module('SubSnoopApp')
 
           var getTemplate = function(data, truncate) {
             var content;
-            console.log(data);
             if (data.selftext_html) {
               content = highlightHtml(page, data.selftext_html, data, truncate);
             } else if (data.html) {
               content = highlightHtml(page, data.html, data, truncate);
             } else if (isLinkedImage(data)) {
-              content = getImageClass(page) + 'lazy-img="' + data.url + '">';
+              content = getImageClass(page) + 'lazy-img="' + getVideoUrl(data.url) + '">';
             } else if (data.media && data.media.oembed && data.media.oembed.provider_name != "Imgur") {
               var html = $filter('escape')(secureURLs(data.media.oembed.html));
               content = centerWrap(changeSize(page, html));
             } else if (isPreview(data) && (isAttachedImage(data) || isImgurAlbum(data))) {
               content = getImageClass(page) + 'lazy-img="' + $filter('escape')(getPreview(data)) + '">';
-            } else if (isVideo(data.url)) {
-              content = centerWrap(getImageClass(page) + 'lazy-img="' + getVideoUrl(data.url)) + '">';
             } else if (data.media && 'reddit_video' in data.media && data.media.reddit_video.fallback_url) {
               var html = '<video width="100%" height="240" class="submit-pic" controls><source src="' + data.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
+              content = centerWrap(changeSize(page, html));
+            } else if (isMP4(data.url)) {
+              var html = '<video width="100%" height="240" class="submit-pic" controls><source src="' + data.url + '" type="video/mp4"></video>';
+              content = centerWrap(changeSize(page, html));
+            } else if (isGif(data.url)) {
+              var imgur_url = getImgurUrl(data.url);
+              html = '<iframe src="' + imgur_url + '/embed" height="450"></iframe>';
               content = centerWrap(changeSize(page, html));
             } else {
               content = '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';

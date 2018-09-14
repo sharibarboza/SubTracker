@@ -81,7 +81,10 @@ angular.module('SubSnoopApp')
       var sortedData = {};
 
       if (sortFactory.isSorted(attribute)) {
-        return sortFactory.getSorted(attribute);
+        var sortedList = sortFactory.getSorted(attribute);
+        if (sortedList.length == input.length) {
+          return sortedList;
+        }
       }
 
       var cloned_keys = [].concat(input);
@@ -110,7 +113,7 @@ angular.module('SubSnoopApp')
         }
       }
 
-      sortFactory.addSorted(attribute, sortedData);
+      sortFactory.addSorted(attribute + '-' + sortedData.length, sortedData);
 
       return sortedData;
     };

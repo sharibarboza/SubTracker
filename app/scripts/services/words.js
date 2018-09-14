@@ -201,7 +201,7 @@ angular.module('SubSnoopApp')
     */
     return {
       getWords: function(sub, user) {
-        if (currentUser != user || !(sub in subWords)) {
+        if (currentUser !== user || !(sub in subWords)) {
           currentSub = sub;
           currentUser = user;
           resetData();
@@ -232,7 +232,8 @@ angular.module('SubSnoopApp')
     */
     function resetData() {
       wordDict = {};
-      wordArray = [];     
+      wordArray = [];
+      subWords = {};
     }
 
     /*

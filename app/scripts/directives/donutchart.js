@@ -24,7 +24,7 @@ angular.module('SubSnoopApp')
       d3Service.d3().then(function(d3) {
 
         var height;
-        if (attrs.type == 'sentiment' || attrs.type == 'reaction') {
+        if (attrs.type === 'sentiment' || attrs.type === 'reaction') {
           height = 375;
         } else {
           height = 475;
@@ -89,11 +89,11 @@ angular.module('SubSnoopApp')
           // --------------------------------------------------------
 
           var user = subFactory.getUser();
-          if (attrs.type == 'activity' || attrs.type == 'upvotes') {
+          if (attrs.type === 'activity' || attrs.type === 'upvotes') {
             var chartData = pieChart.getData(user, attrs.type);
-          } else if (attrs.sub && attrs.type == 'sentiment') {
+          } else if (attrs.sub && attrs.type === 'sentiment') {
             var chartData = sentiMood.getData(attrs.sub);
-          } else if (attrs.sub && attrs.type == 'reaction') {
+          } else if (attrs.sub && attrs.type === 'reaction') {
             var chartData = reaction.getData(attrs.sub);
           }
 
@@ -318,14 +318,14 @@ angular.module('SubSnoopApp')
             .attr('height', 10)
             .attr('width', 10)
             .attr('x', function(d) {
-              if (attrs.type == 'sentiment' || attrs.type == 'reaction') {
+              if (attrs.type === 'sentiment' || attrs.type === 'reaction') {
                 return 0 - radius - 35;
               } else {
                 return 0 - radius - 20; 
               }
             })
             .attr('y', function(d, i) { 
-              if (attrs.type == 'sentiment' || attrs.type == 'reaction') {
+              if (attrs.type === 'sentiment' || attrs.type === 'reaction') {
                 return (20 * (i + 1) - 210);
               } else {
                 return (20 * (i + 1)) - 260; 
@@ -333,7 +333,7 @@ angular.module('SubSnoopApp')
             })
             .on('mouseover', function(d, i) {
               var sel = d3.selectAll('.arc-' + attrs.type).filter(function(d) {
-                return d.data.id == i;
+                return d.data.id === i;
               });
               scope.mouseOverPath.call(sel.select('path')[0][0], sel.datum());
             })
@@ -343,24 +343,24 @@ angular.module('SubSnoopApp')
 
           legend.append('text')
             .attr('x', function(d) {
-              if (attrs.type == 'sentiment' || attrs.type == 'reaction') {
+              if (attrs.type === 'sentiment' || attrs.type === 'reaction') {
                 return 0 - radius - 15;
               } else {
                 return 0 - radius; 
               }
             })
             .attr('y', function(d, i) { 
-              if (attrs.type == 'sentiment' || attrs.type == 'reaction') {
+              if (attrs.type === 'sentiment' || attrs.type === 'reaction') {
                 return (20 * (i + 1) - 200);
               } else {
-                return (20 * (i + 1)) - 250; 
+                return (20 * (i + 1)) - 250;
               }
             })
             .attr('font-size', '12px')
             .attr('fill', '#333')
             .on('mouseover', function(d, i) {
               var sel = d3.selectAll('.arc-' + attrs.type).filter(function(d) {
-                return d.data.id == i;
+                return d.data.id === i;
               });
               scope.mouseOverPath.call(sel.select('path')[0][0], sel.datum());
             })

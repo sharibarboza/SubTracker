@@ -59,6 +59,7 @@ angular.module('SubSnoopApp')
       data = {};
       count = 0;
       dataArray = [];
+      subMaps = {};
     };
 
     function setYear(current_year) {

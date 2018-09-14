@@ -228,6 +228,7 @@ angular.module('g1b.calendar-heatmap', []).
                     for (var i = 0; i < sortedSubs.length; i++) {
                       var key = sortedSubs[i];
                       var sub = d.subs[key];
+
                       tooltip_html += '<div><strong>' + key + ':</strong> ';
                       if (sub.comments > 0) {
                         tooltip_html += scope.formatTotal(sub.comments, ' comments');
