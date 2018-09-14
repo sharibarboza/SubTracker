@@ -10,7 +10,8 @@
  */
 angular.module('SubSnoopApp')
   .filter('sortNum', ['$filter', function ($filter) {
-    return function (num1, num2, a, b, reverse, secondary) {
+
+    var sort = function(num1, num2, a, b, reverse, secondary) {
       var val1, val2;
 
       if (!(secondary)) {
@@ -41,5 +42,9 @@ angular.module('SubSnoopApp')
           return sort(num1, num2, a, b, true, 'alpha');
         }
       }
+    }
+
+    return function (num1, num2, a, b, reverse, secondary) {
+      return sort(num1, num2, a, b, reverse, secondary);
     };
   }]);
