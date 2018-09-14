@@ -188,18 +188,18 @@ angular.module('SubSnoopApp')
 
           var getTemplate = function(data, truncate) {
             var content;
-
+            console.log(data);
             if (data.selftext_html) {
               content = highlightHtml(page, data.selftext_html, data, truncate);
             } else if (data.html) {
               content = highlightHtml(page, data.html, data, truncate);
             } else if (isLinkedImage(data)) {
-              content = getImageClass(page) + 'ng-src="' + data.url + '">';
+              content = getImageClass(page) + 'lazy-img="' + data.url + '">';
             } else if (data.media && data.media.oembed && data.media.oembed.provider_name != "Imgur") {
               var html = $filter('escape')(secureURLs(data.media.oembed.html));
               content = centerWrap(changeSize(page, html));
             } else if (isPreview(data) && (isAttachedImage(data) || isImgurAlbum(data))) {
-              content = getImageClass(page) +'lazy-img="' + $filter('escape')(getPreview(data)) + '">';
+              content = getImageClass(page) + 'lazy-img="' + $filter('escape')(getPreview(data)) + '">';
             } else if (isVideo(data.url)) {
               content = centerWrap(getImageClass(page) + 'lazy-img="' + getVideoUrl(data.url)) + '">';
             } else if (data.media && 'reddit_video' in data.media && data.media.reddit_video.fallback_url) {

@@ -12,6 +12,7 @@ angular.module('SubSnoopApp')
 
     var user;
     var sub;
+    var subMaps = {};
 
     var dates = {};
     var data;
@@ -29,7 +30,7 @@ angular.module('SubSnoopApp')
     */
     return {
       getSubMap: function(current_user, current_sub, subData, current_year) {
-        if (!dates || user != current_user || sub != current_sub) {
+        if (!dates || user != current_user || !(current_sub in subMaps)) {
           resetData();
           setYear(current_year);
           data = subData;
@@ -40,8 +41,10 @@ angular.module('SubSnoopApp')
 
           user = current_user;
           sub = current_sub;
+
+          subMaps[current_sub] = dataArray;
         }
-        return dataArray;
+        return subMaps[current_sub];
       },
       getCount: function() {
         return count;

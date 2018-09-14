@@ -5,14 +5,15 @@
  * @name SubSnoopApp.words
  * @description
  * # words
- * Factory in the SubSnoopApp.
+ * Service in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .factory('words', ['subFactory', '$filter', function (subFactory, $filter) {
+  .service('words', ['subFactory', '$filter', function (subFactory, $filter) {
     var currentSub;
     var currentUser;
     var wordDict = {};
     var wordArray = [];
+    var subWords = {};
 
     var stopWords = [
       "a",
@@ -200,7 +201,7 @@ angular.module('SubSnoopApp')
     */
     return {
       getWords: function(sub, user) {
-        if (currentUser != user || currentSub != sub) {
+        if (currentUser != user || !(sub in subWords)) {
           currentSub = sub;
           currentUser = user;
           resetData();
@@ -218,9 +219,11 @@ angular.module('SubSnoopApp')
             wordObj.weight = wordDict[key];
             wordArray.push(wordObj);
           }
+
+          subWords[sub] = wordArray;
         }
 
-        return wordArray;
+        return subWords[sub];
       }
     };
 

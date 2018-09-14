@@ -8,9 +8,9 @@
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('UserSubCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$filter', 'rank', 'subsData', 'search', 
+  .controller('UserSubCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$filter', 'subsData', 'search',
     'subFactory', 'sortFactory', '$anchorScroll', '$location', '$timeout', 'subInfo',
-    function ($rootScope, $scope, $routeParams, $window, $filter, rank, subsData, search, subFactory, sortFactory, $anchorScroll, $location, $timeout, subInfo) {
+    function ($rootScope, $scope, $routeParams, $window, $filter, subsData, search, subFactory, sortFactory, $anchorScroll, $location, $timeout, subInfo) {
   
     /*
      Initalization
@@ -49,8 +49,8 @@ angular.module('SubSnoopApp')
      Determines how many comments/submissions to display on screen
      Default is set to 25
     */
-    $scope.views = [10, 25, 50, 100, 'All'];
-    var defaultView = 10;
+    $scope.views = [25, 50, 100, 'All'];
+    var defaultView = 25;
 
     /*
      Set up for pagination of comments or submissions

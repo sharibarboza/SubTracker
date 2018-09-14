@@ -8,8 +8,8 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'rank', 'sentiMood', 'reaction',
-  function ($http, $rootScope, userFactory, $q, moment, $filter, rank, sentiMood, reaction) {
+ .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sentiMood', 'reaction', 'sortFactory',
+  function ($http, $rootScope, userFactory, $q, moment, $filter, sentiMood, reaction, sortFactory) {
     var baseUrl = 'https://www.reddit.com/user/';
     var rawJson = 'raw_json=1';
     var pages = 10;
@@ -149,6 +149,8 @@
       topComment = [0, ''];
       topSubmit = [0, ''];
       i = 0;
+
+      sortFactory.clearSorted();
     };
 
     /*
@@ -156,6 +158,7 @@
      submissions asynchronously
     */
     function getSubPromise(userPromise) {
+
       var subPromise = userPromise.then(function(response) {
         if (response && matchUser(response.name, username)) {
 
@@ -166,6 +169,7 @@
           var dataPromise = $q.all([commentPromise, submitPromise]).then(function() {
             setSubData(response);
             setFetchTime();
+
             return subData;
           });
           return dataPromise;
@@ -303,10 +307,10 @@
         
         if (!(subreddit in subs)) {
           subs[subreddit] = createNewSub();
-        } 
-
+        }
         addComment(subreddit, subs[subreddit], comment);
       }
+
     };
 
     /*
@@ -507,7 +511,7 @@
         firstPosts.push(compareDates(oldestComment, oldestSubmit, false));
       }
 
-      return rank.getTopPost(firstPosts, 'newest').subreddit;
+      return $filter('rank')('topPost', 'newest', firstPosts, null).subreddit;
     }
 
     /*

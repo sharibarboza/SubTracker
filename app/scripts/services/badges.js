@@ -8,7 +8,7 @@
  * Service in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .service('badges', ['$filter', 'rank', 'subFactory', 'subInfo', 'sortFactory', function ($filter, rank, subFactory, subInfo, sortFactory) {
+  .service('badges', ['$filter', 'subFactory', 'subInfo', 'sortFactory', function ($filter, subFactory, subInfo, sortFactory) {
     
     var user;
     var subs;
@@ -111,15 +111,15 @@ angular.module('SubSnoopApp')
       if (category === 'newestSub') {
         sub = subFactory.getNewestSub();
       } else if (category === 'leastUpvoted') {
-        sub = rank.getBottomSub(keys, 'totalUps', subs);
+        sub = $filter('rank')('bottomSub', 'totalUps', subs, keys);
       } else if (category === 'mostUpvoted') {
-          sub = rank.getTopSub(keys, 'totalUps', subs);
+          sub = $filter('rank')('topSub', 'totalUps', subs, keys);
       } else if (category === 'lastSeen') {
-          sub = rank.getTopSub(keys, 'lastSeen', subs);
+          sub = $filter('rank')('topSub', 'lastSeen', subs, keys);
       } else if (category === 'avgPost') {
-          sub = rank.getTopSub(keys, 'avgPost', subs);
+          sub = $filter('rank')('topSub', 'avgPost', subs, keys);
       } else {
-        sub = rank.getTopSub(keys, category, subs);
+          sub = $filter('rank')('topSub', category, subs, keys);
       }
       return sub;
     }; 

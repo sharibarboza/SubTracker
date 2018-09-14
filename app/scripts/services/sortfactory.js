@@ -34,6 +34,10 @@ angular.module('SubSnoopApp')
       ]
     };
 
+    var sortedSubLists = {
+
+    }
+
     var defaultSubSort = sortSubs.sortOptions[0];
     var subSort = defaultSubSort;
     var defaultPostSort = sortPosts.sortOptions[0];
@@ -56,6 +60,18 @@ angular.module('SubSnoopApp')
       },
       getPostSorting: function() {
         return sortPosts;
+      },
+      isSorted: function(attribute) {
+          return (attribute in sortedSubLists);
+      },
+      addSorted: function(attribute, list) {
+        sortedSubLists[attribute] = list;
+      },
+      clearSorted: function() {
+        sortedSubLists = {};
+      },
+      getSorted: function(attribute) {
+        return sortedSubLists[attribute];
       }
     };
     return factory;

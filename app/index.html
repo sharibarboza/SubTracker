@@ -18,6 +18,7 @@
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="lib/angular-calendar-heatmap/dist/calendar-heatmap.css">
     <!-- endbuild -->
   </head>
   <body>
@@ -40,17 +41,6 @@
 
         <div ng-show="!loadingView" ng-include src="'views/footer.html'"></div>
       </div>
-
-      <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-      <script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-         (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-         r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-     </script>
 
      <!-- build:js(app) scripts/vendor.js -->
      <!-- bower:js -->
@@ -98,9 +88,9 @@
      <script src="scripts/filters/sanitize.js"></script>
      <script src="scripts/filters/redditlink.js"></script>
      <script src="scripts/filters/sortposts.js"></script>
-     <script src="scripts/services/sortnum.js"></script>
-     <script src="scripts/services/sortalpha.js"></script>
-     <script src="scripts/services/rank.js"></script>
+     <script src="scripts/filters/sortnum.js"></script>
+     <script src="scripts/filters/sortalpha.js"></script>
+     <script src="scripts/filters/rank.js"></script>
      <script src="scripts/filters/truncate.js"></script>
      <script src="scripts/directives/thumbnail.js"></script>
      <script src="scripts/directives/submitcontent.js"></script>

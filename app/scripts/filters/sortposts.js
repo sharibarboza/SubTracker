@@ -9,7 +9,7 @@
  * Filter in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .filter('sortPosts', ['moment', 'sortNum', function (moment, sortNum) {
+  .filter('sortPosts', ['moment', '$filter', function (moment, $filter) {
 
     /*
      Used for sorting comments/submission posts
@@ -24,7 +24,7 @@ angular.module('SubSnoopApp')
         num1 = moment(a.created_utc*1000);
         num2 = moment(b.created_utc*1000);
 
-        return sortNum.get(num1, num2, a, b, reverse, null);
+        return $filter('sortNum')(num1, num2, a, b, reverse, null);
       });
       return keys;
     };
@@ -36,13 +36,14 @@ angular.module('SubSnoopApp')
     */
     var sortPoints = function(keys, reverse) {
       keys.sort(function(a, b) {
-        return sortNum.get(a.ups, b.ups, a, b, reverse, 'date');
+        return $filter('sortNum')(a.ups, b.ups, a, b, reverse, 'date');
       });
       return keys;
     };
 
     return function (input, attribute) {
       var sortedData = [];
+
       if (input) {
         if (attribute === 'newest') {
           sortedData = sortDate(input, true);

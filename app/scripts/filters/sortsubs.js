@@ -9,7 +9,7 @@
  * Filter in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .filter('sortSubs', ['sortAlpha', 'sortNum', 'moment', '$filter', function (sortAlpha, sortNum, moment, $filter) {
+  .filter('sortSubs', ['moment', '$filter', 'sortFactory', function (moment, $filter, sortFactory) {
 
     /*
      Used for sorting subreddits
@@ -19,7 +19,7 @@ angular.module('SubSnoopApp')
 
     var sortName = function(keys) {
       keys.sort(function(a, b) {
-        return sortAlpha.get(a, b);
+        return $filter('sortAlpha')(a, b);
       });
       return keys;
     };
@@ -28,7 +28,7 @@ angular.module('SubSnoopApp')
       keys.sort(function(a, b) {
         var num1 = data[a].count;
         var num2 = data[b].count;
-        return sortNum.get(num1, num2, a, b, true, 'alpha');
+        return $filter('sortNum')(num1, num2, a, b, true, 'alpha');
       });
       return keys;
     };
@@ -54,7 +54,7 @@ angular.module('SubSnoopApp')
           num1 = getAverage(data[a].total_ups, data[a].count);
           num2 = getAverage(data[b].total_ups, data[b].count);
         }
-        return sortNum.get(num1, num2, a, b, true, 'alpha');
+        return $filter('sortNum')(num1, num2, a, b, true, 'alpha');
       });
       return keys;
     };
@@ -63,7 +63,7 @@ angular.module('SubSnoopApp')
       keys.sort(function(a, b) {
         var date1 = $filter('date')(data[a].recent_activity);
         var date2 = $filter('date')(data[b].recent_activity);
-        return sortNum.get(date1, date2, a, b, true, 'alpha');
+        return $filter('sortNum')(date1, date2, a, b, true, 'alpha');
       });
       return keys;
     }
@@ -72,37 +72,46 @@ angular.module('SubSnoopApp')
       keys.sort(function(a, b) {
         var num1 = data[a][where];
         var num2 = data[b][where];
-        return sortNum.get(num1, num2, a, b, reverse, 'alpha');
+        return $filter('sortNum')(num1, num2, a, b, reverse, 'alpha');
       });
       return keys;
     };
 
     return function (input, attribute, subs) {
       var sortedData = {};
-      
-      if (input) {
+
+      if (sortFactory.isSorted(attribute)) {
+        return sortFactory.getSorted(attribute);
+      }
+
+      var cloned_keys = [].concat(input);
+
+      if (cloned_keys) {
         if (attribute === 'subName') {
-          sortedData = sortName(input);
+          sortedData = sortName(cloned_keys);
         } else if (attribute === 'totalComments') {
-          sortedData = sort(input, subs, 'comments', true);
+          sortedData = sort(cloned_keys, subs, 'comments', true);
         } else if (attribute === 'totalSubmits') {
-          sortedData = sort(input, subs, 'submissions', true);
+          sortedData = sort(cloned_keys, subs, 'submissions', true);
         } else if (attribute === 'totalUps') {
           sortedData = sort(input, subs, 'total_ups', true);
         } else if (attribute === 'lastSeen') {
-          sortedData = sortRecent(input, subs);
+          sortedData = sortRecent(cloned_keys, subs);
         } else if (attribute === 'mostActive') {
-          sortedData = sortActivity(input, subs);
+          sortedData = sortActivity(cloned_keys, subs);
         } else if (attribute === 'avgComment') {
-          sortedData = sortAverage(input, subs, 'comments');
+          sortedData = sortAverage(cloned_keys, subs, 'comments');
         } else if (attribute === 'avgSubmit') {
-          sortedData = sortAverage(input, subs, 'submitted');
+          sortedData = sortAverage(cloned_keys, subs, 'submitted');
         } else if (attribute === 'avgPost') {
-          sortedData = sortAverage(input, subs, 'posts');
+          sortedData = sortAverage(cloned_keys, subs, 'posts');
         } else if (attribute === 'mostDown') {
-          sortedData = sort(input, subs, 'total_ups', false);
+          sortedData = sort(cloned_keys, subs, 'total_ups', false);
         }
       }
+
+      sortFactory.addSorted(attribute, sortedData);
+
       return sortedData;
     };
 

@@ -6,3 +6,4 @@
 /test/coverage
 .idea/
 .DS_Store
+.firebase/
