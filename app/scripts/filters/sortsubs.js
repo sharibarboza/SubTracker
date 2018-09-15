@@ -46,7 +46,11 @@ angular.module('SubSnoopApp')
      Call the average filter to find average between two numbers
      */
     var getAverage = function(num1, num2) {
-      $filter('average')(num1, num2, 5);
+      if (num2 === 0) {
+        return 0;
+      } else {
+        return (num1 / num2);
+      }
     };
 
     /*
@@ -87,11 +91,11 @@ angular.module('SubSnoopApp')
      where: must be an attribute of the subreddit object
      reverse: if true, sort by lower value
      */
-    var sort = function(keys, data, where, reverse) {
+    var sort = function(keys, data, where, no_reverse) {
       keys.sort(function(a, b) {
         var num1 = data[a][where];
         var num2 = data[b][where];
-        return $filter('sortNum')(num1, num2, a, b, reverse, 'alpha');
+        return $filter('sortNum')(num1, num2, a, b, no_reverse, 'alpha');
       });
       return keys;
     };
@@ -110,7 +114,7 @@ angular.module('SubSnoopApp')
       */
       if (sortFactory.isSorted(attribute)) {
         var sortedList = sortFactory.getSorted(attribute);
-        if (sortedList.length == input.length) {
+        if (sortedList.length === input.length) {
           return sortedList;
         }
       }

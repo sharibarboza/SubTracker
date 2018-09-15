@@ -18,13 +18,13 @@ angular.module('SubSnoopApp')
     /*
      Reverse = true to sort by most recent date
     */
-    var sortDate = function(keys, reverse) {
+    var sortDate = function(keys, no_reverse) {
       keys.sort(function(a, b) {
         var num1, num2;
         num1 = moment(a.created_utc*1000);
         num2 = moment(b.created_utc*1000);
 
-        return $filter('sortNum')(num1, num2, a, b, reverse, null);
+        return $filter('sortNum')(num1, num2, a, b, no_reverse, null);
       });
       return keys;
     };
@@ -34,9 +34,9 @@ angular.module('SubSnoopApp')
      Secondarily sorted by most recent date, so if a post has the same number of 
      points, the most recent post has precedence.
     */
-    var sortPoints = function(keys, reverse) {
+    var sortPoints = function(keys, no_reverse) {
       keys.sort(function(a, b) {
-        return $filter('sortNum')(a.ups, b.ups, a, b, reverse, 'date');
+        return $filter('sortNum')(a.ups, b.ups, a, b, no_reverse, 'date');
       });
       return keys;
     };

@@ -11,14 +11,14 @@
 angular.module('SubSnoopApp')
   .filter('sortNum', ['$filter', function ($filter) {
 
-    var sort = function(num1, num2, a, b, reverse, secondary) {
+    var sort = function(num1, num2, a, b, no_reverse, secondary) {
       var val1, val2;
 
       if (!(secondary)) {
         secondary = 'alpha';
       }
 
-      if (reverse) {
+      if (no_reverse) {
         val1 = 1;
         val2 = -1;
       } else {
@@ -50,10 +50,10 @@ angular.module('SubSnoopApp')
      num2: Second number
      a: The entity the first number belongs to (must contain subreddit)
      b: The entity the second number belongs to (must contain subreddit)
-     reverse: If true, sort by lowest number
+     no_reverse: If true, sort by highest number
      secondary: If two entities have the same number, give a secondary attribute to sort on
      */
-    return function (num1, num2, a, b, reverse, secondary) {
-      return sort(num1, num2, a, b, reverse, secondary);
+    return function (num1, num2, a, b, no_reverse, secondary) {
+      return sort(num1, num2, a, b, no_reverse, secondary);
     };
   }]);
