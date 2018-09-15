@@ -42,8 +42,17 @@ angular.module('SubSnoopApp')
           return sort(num1, num2, a, b, true, 'alpha');
         }
       }
-    }
+    };
 
+    /*
+     Compare two entities based on numerical values
+     num1: First number
+     num2: Second number
+     a: The entity the first number belongs to (must contain subreddit)
+     b: The entity the second number belongs to (must contain subreddit)
+     reverse: If true, sort by lowest number
+     secondary: If two entities have the same number, give a secondary attribute to sort on
+     */
     return function (num1, num2, a, b, reverse, secondary) {
       return sort(num1, num2, a, b, reverse, secondary);
     };

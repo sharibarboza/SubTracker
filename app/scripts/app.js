@@ -22,6 +22,9 @@ var app = angular
     'angularLazyImg'
   ]);
 
+/*
+ Used to get data from the subFactory
+ */
 var getData = function(route, factory) {
   var username = route.current.params.username;
 
@@ -80,6 +83,10 @@ app.config(['$routeProvider', '$locationProvider', 'lazyImgConfigProvider', func
 
 app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope, $location, $interval, $timeout) {
 
+  /*
+   If after searching for a subreddit name, display the loading progress bar
+   before loading the rest of the page
+   */
   $rootScope.$on('$routeChangeStart', function(e, curr, prev) {
     var userUrls = ['views/user.html', 'views/sub.html', 'views/search.html'];
     $rootScope.path = curr.$$route.templateUrl;
@@ -90,7 +97,7 @@ app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope
     }
 
     var loading;
-    if (curr == undefined || prev == undefined) {
+    if (curr === undefined || prev === undefined) {
       loading = true;
     } else {
       if (curr.pathParams.username !== undefined) {
@@ -102,7 +109,7 @@ app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope
 
       if (username1 !== username2) {
         loading = true;
-      } else if (username1 == username2 && $rootScope.redirect !== undefined) {
+      } else if (username1 === username2 && $rootScope.redirect !== undefined) {
         loading = true;
         $rootScope.redirect = undefined;
       }
@@ -115,6 +122,9 @@ app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope
     }
   });
 
+  /*
+   Hide the loading progress bar and display the page
+   */
   $rootScope.$on('$routeChangeSuccess', function(e, curr, prev) {
     var d = [2000, 2000];
     $rootScope.$emit('subCount', d);

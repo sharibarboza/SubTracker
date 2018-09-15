@@ -19,6 +19,7 @@
     popularSubs.getData();
     newSubs.getData();
 
+    // Display popular and new subreddits for front page
     $scope.popularSubs = popularSubs.getSubs();
     $scope.newSubs = newSubs.getSubs();
 }]);

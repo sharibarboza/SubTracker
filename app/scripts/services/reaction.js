@@ -14,7 +14,7 @@ angular.module('SubSnoopApp')
     var value2 = '';
 
     /*
-     Constuct data for sentimood pie chart
+     Construct data for post reaction pie chart (upvoted, downvoted, neutral)
     */
     var factory = {
       setSubData: function(subData) {
@@ -33,12 +33,12 @@ angular.module('SubSnoopApp')
     };
     return factory;
 
-    function getChartData(subData) {     
-      var chartData = {};
-
-      var chartArray = [];
+    /*
+     Set up chart data by getting all posts and calculating percentages
+     */
+    function getChartData(subData) {
       var reactionData = { 'Upvoted' : 0, 'Neutral' : 0, 'Downvoted' : 0 };
-      chartData = {
+      var chartData = {
         center: {}
       };
 
@@ -71,7 +71,7 @@ angular.module('SubSnoopApp')
       chartData.colors = colorData;
       chartData.center.value = "Post Reaction";
 
-      if (total == 1) {
+      if (total === 1) {
         chartData.center.value2 = total + ' post';      
       } else {
         chartData.center.value2 = total + ' posts';
@@ -81,10 +81,13 @@ angular.module('SubSnoopApp')
 
     };
 
+    /*
+     Add the number to the appropriate category
+     */
     function addReaction(data, points) {
       if (points < 1) {
         ++data.Downvoted;
-      } else if (points == 1) {
+      } else if (points === 1) {
         ++data.Neutral;
       } else {
         ++data.Upvoted;
@@ -92,6 +95,9 @@ angular.module('SubSnoopApp')
       return data;
     };
 
+    /*
+     Get the percentage of the number of posts in the category
+     */
     function getPercentages(chartArray, total) {
       for (var i = 0; i < chartArray.length; i++) {
         var percent = chartArray[i].value / total;

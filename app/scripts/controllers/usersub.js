@@ -215,8 +215,11 @@ angular.module('SubSnoopApp')
       $scope.subList = search.findSubs($scope.subsArray, term);
     };
 
+    /*
+     Relocate to user's main page
+     */
     $scope.goToSubs = function() {
-      $window.location.assign('#/' + $scope.username + '/');  // Go to user's main page
+      $window.location.assign('#/' + $scope.username + '/');
     }
 
   }

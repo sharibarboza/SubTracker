@@ -60,13 +60,13 @@ angular.module('SubSnoopApp')
       count = 0;
       dataArray = [];
       subMaps = {};
-    };
+    }
 
     function setYear(current_year) {
       if (current_year) {
         year = current_year;
       }
-    };
+    }
 
     /*
      Get the array of data objects.
@@ -77,7 +77,7 @@ angular.module('SubSnoopApp')
       for (var data in dates) {
         dataArray.push(dates[data]);
       }
-    };
+    }
 
     /*
      Primary method for configuring the data array.
@@ -104,8 +104,11 @@ angular.module('SubSnoopApp')
         }
       
       }
-    };
+    }
 
+    /*
+     Store the data for the day (number of comments and submissions)
+     */
     function setSubDay(where, dateObj) {
       if (!(dateObj in dates)) {
         dates[dateObj] = {};
@@ -125,5 +128,5 @@ angular.module('SubSnoopApp')
       } else {
         dates[dateObj].submissions += 1;
       }
-    };
+    }
   }]);

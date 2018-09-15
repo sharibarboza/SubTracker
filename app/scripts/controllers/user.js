@@ -22,7 +22,7 @@
     $scope.subLength = 0;
 
     if (subsData) {
-      $scope.noSubs = Object.keys(subsData.subs).length == 0;
+      $scope.noSubs = Object.keys(subsData.subs).length === 0;
     } else {
       $scope.noSubs = true;
     }
@@ -64,6 +64,9 @@
       $scope.topSubmit = subFactory.getTopSubmit()[1];
     };
 
+    /*
+     Set the default sort of ranking the subreddits for a user's main page
+     */
     $scope.setSortOption = function(sort) {
       sortFactory.setSubSort(sort);
       $scope.selected = sort;
@@ -76,7 +79,6 @@
     if (subsData && Object.keys(subsData.subs).length > 0) {
       $scope.notfound = false;
       $rootScope.title = $scope.username + ' | Subreddits';
-      $scope.fetchTime = subFactory.getFetchTime();
 
       configUserData(subsData.user);
       configSubData(subsData);
@@ -105,35 +107,14 @@
       $rootScope.title = 'SubSnoop | User not found';
     }
 
+    /*
+     Find the subreddits that match the search query term
+     */
     $scope.changeSubs = function(term) {
       $scope.subList = [];
       $scope.subList = search.findSubs($scope.subsArray, term);
       $scope.currentLimit = $scope.subList.length;
     };
-
-    $scope.changeLimit = function() {
-      if ($scope.currentLimit === $scope.subLength) {
-        $scope.currentLimit = $scope.limit;
-      } else {
-        $scope.currentLimit = $scope.subLength;
-      }
-    };
-
-    $scope.scrollAnchor = function(id) {
-      $location.hash(id);
-      $anchorScroll.yOffset = 120;
-      $anchorScroll();
-    };
-
-    $scope.getRandomSub = function() {
-      var randomSub = subFactory.getRandomSub();
-      var url = '#/' + $scope.username + '/' + randomSub + '/';
-      $window.location.href = url;
-    }
-
-    $scope.isToday = function(date) {
-      return $filter('today')(date);
-    }
   }
 
 ]);

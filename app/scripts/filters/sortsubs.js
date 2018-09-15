@@ -14,9 +14,15 @@ angular.module('SubSnoopApp')
     /*
      Used for sorting subreddits
      All sorting of subs are secondarily sorted by sub name. So if two subreddits are equal,
-     they will then be sorted alphabetically.
+     they will usually then be sorted alphabetically.
+
+     keys: refers to an array of strings containing the subreddit names
+     data: refers to the dictionary containing all subreddit objects (keys will used to extract the object)
     */
 
+    /*
+     Sort subreddits alphabetically
+     */
     var sortName = function(keys) {
       keys.sort(function(a, b) {
         return $filter('sortAlpha')(a, b);
@@ -24,6 +30,9 @@ angular.module('SubSnoopApp')
       return keys;
     };
 
+    /*
+     Sort subreddits numerically by number of posts
+     */
     var sortActivity = function(keys, data) {
       keys.sort(function(a, b) {
         var num1 = data[a].count;
@@ -33,14 +42,16 @@ angular.module('SubSnoopApp')
       return keys;
     };
 
+    /*
+     Call the average filter to find average between two numbers
+     */
     var getAverage = function(num1, num2) {
-      if (num2 === 0) {
-        return 0;
-      } else {
-        return (num1 / num2);
-      }
+      $filter('average')(num1, num2, 5);
     };
 
+    /*
+     Sort subreddits numerically by point average
+     */
     var sortAverage = function(keys, data, where) {
       keys.sort(function(a, b) {
         var num1, num2;
@@ -59,6 +70,9 @@ angular.module('SubSnoopApp')
       return keys;
     };
 
+    /*
+     Sort subreddits by most recent date
+     */
     var sortRecent = function(keys, data) {
       keys.sort(function(a, b) {
         var date1 = $filter('date')(data[a].recent_activity);
@@ -68,6 +82,11 @@ angular.module('SubSnoopApp')
       return keys;
     }
 
+    /*
+     Default function for sorting subreddits
+     where: must be an attribute of the subreddit object
+     reverse: if true, sort by lower value
+     */
     var sort = function(keys, data, where, reverse) {
       keys.sort(function(a, b) {
         var num1 = data[a][where];
@@ -77,9 +96,18 @@ angular.module('SubSnoopApp')
       return keys;
     };
 
+    /*
+     Main function of the filter to sort subreddits
+     input: an array of subreddit names (this is the data structure that will be sorted)
+     attribute: what to sort on (must be an attribute from the sortOptions in the sortFactory service)
+     subs: a dictionary containing all subs and their corresponding data objects
+     */
     return function (input, attribute, subs) {
       var sortedData = {};
 
+     /*
+      Get the cached sorted list to avoid repeating the sorting process
+      */
       if (sortFactory.isSorted(attribute)) {
         var sortedList = sortFactory.getSorted(attribute);
         if (sortedList.length == input.length) {

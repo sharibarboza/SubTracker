@@ -12,20 +12,30 @@ angular.module('SubSnoopApp')
     var windowWidth = $window.innerWidth;
     var defaultVideo = 100;
 
-    /* Submission posts with no preview images */
+    /*
+     Submission posts with no preview images
+    */
     var isLinkedImage = function(submit) {
       return isImage(submit) && !submit.preview;
     };
 
-    /* Submissions posts with a preview image and a link */
+    /*
+     Submissions posts with a preview image and a link
+    */
     var isAttachedImage = function(submit) {
       return isImage(submit) && submit.preview;
     };
 
+    /*
+     Check if submission is an image
+     */
     var isImage = function(submit) {
       return !submit.selftext_html && !submit.html && !submit.media && hasImgFormat(submit.url);
     };
 
+    /*
+     Check if image has .png or .jpg/jpeg format
+     */
     var hasImgFormat = function(url) {
         var formats = ['.png', '.jpg', '.jpeg'];
         for (var i = 0; i < formats.length; i++) {
@@ -36,27 +46,45 @@ angular.module('SubSnoopApp')
         return false;
     };
 
+    /*
+     Check if image is a gif
+     */
     var isGif = function(url) {
         return url.indexOf('.gif') >= 0;
     };
 
+    /*
+     Check if submission is an mp4 video
+     */
     var isMP4 = function(url) {
         return url.indexOf('.mp4') >= 0;
     };
 
+    /*
+     Check if image is a gif from Imgur
+     */
     var isImgurGif = function(url) {
         return isGif(url) && url.indexOf('imgur') >= 0;
     };
 
+    /*
+     Strip the .gif format from the Imgur url
+     */
     var getImgurUrl = function(url) {
         var gif_i = url.indexOf('.gif');
         return url.slice(0, gif_i);
     };
 
+    /*
+     Check if submission belongs to an Imgur album
+     */
     var isImgurAlbum = function(submit) {
       return submit.media && submit.media.oembed && submit.media.oembed.provider_name === "Imgur";
     };
 
+    /*
+     Check if submission has the .gifv format
+     */
     var isVideo = function(url) {
       if (url) {
         return url.indexOf('gifv') >= 0;
@@ -238,6 +266,7 @@ angular.module('SubSnoopApp')
               }
               content = centerWrap(changeSize(page, html));
             } else {
+                console.log(data);
               content = '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
             }
 

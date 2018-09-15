@@ -21,7 +21,7 @@ angular.module('SubSnoopApp')
     */
     var factory = {
       getSubs: function(current_user) {
-        if (badges && user == current_user) {
+        if (badges && user === current_user) {
           return badges;
         } else {
           user = current_user;
@@ -29,7 +29,7 @@ angular.module('SubSnoopApp')
         }
       },
       getTableBadges: function(current_user) {
-          if (!badges || user != current_user || table_badges == null) {
+          if (!badges || user !== current_user || table_badges == null) {
               table_badges = {};
               for (var key in badges) {
                   table_badges[key] = badges[key];
@@ -38,13 +38,13 @@ angular.module('SubSnoopApp')
               getTableBadges();
           }
           return table_badges;
-      },
-      resetSort: function() {
-        resetSubSort();
       }
     };
     return factory;
 
+    /*
+      Get the subreddit statistics for the users's Stats page
+    */
     function getBadges() {
         badges = {
           'mostUpvoted' : {
@@ -80,6 +80,9 @@ angular.module('SubSnoopApp')
         return badges;
     };
 
+    /*
+     The the subreddit statistics for the badges on the users's subreddits table
+    */
     function getTableBadges() {
         table_badges['lastSeen'] = {
             'sub': getSub('lastSeen')
@@ -89,11 +92,10 @@ angular.module('SubSnoopApp')
         }
     }
 
-    function resetSubSort() {
-        // Reset filters to current sort value
-        getSub(sortFactory.getSubSort().value);
-    }
-
+    /*
+     Get the subreddit according to the specific category and
+     make an API request to get the subreddit's information (banner, description, etc.)
+     */
     function setBadge(category) {
       var sub = getSub(category);
       badges[category].sub = sub;
@@ -105,6 +107,9 @@ angular.module('SubSnoopApp')
       });
     };
 
+    /*
+     Use the rank filter to find the specific subreddit based on the category
+     */
     function getSub(category) {
       var sub;
 

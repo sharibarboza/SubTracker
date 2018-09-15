@@ -12,6 +12,7 @@ angular.module('SubSnoopApp')
     $scope.subreddit = $routeParams.subreddit;
     var subs = subFactory.getSubData().subs;
 
+    // Get data for activity heatmap for a user's specific subreddit
     $scope.mapData = subHeatmap.getSubMap($scope.username, $scope.subreddit, subs[$scope.subreddit], null);
     $scope.count = subHeatmap.getCount();
   }]);

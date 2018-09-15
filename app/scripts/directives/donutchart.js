@@ -7,8 +7,8 @@
  * # pieChart
  */
 angular.module('SubSnoopApp')
-  .directive('donutChart', ['d3Service', '$window', 'subFactory', '$filter', 'moment', 'pieChart', 'sentiMood', 'reaction', 
-    function (d3Service, $window, subFactory, $filter, moment, pieChart, sentiMood, reaction) {
+  .directive('donutChart', ['d3Service', '$window', 'subFactory', '$filter', 'moment', 'sentiMood', 'reaction',
+    function (d3Service, $window, subFactory, $filter, moment, sentiMood, reaction) {
 
   /*
    Based on http://embed.plnkr.co/YICxe0/
@@ -23,6 +23,9 @@ angular.module('SubSnoopApp')
     link: function(scope, element, attrs) {
       d3Service.d3().then(function(d3) {
 
+        /*
+         Set dimensions for pie charts
+         */
         var height;
         if (attrs.type === 'sentiment' || attrs.type === 'reaction') {
           height = 375;
@@ -41,6 +44,9 @@ angular.module('SubSnoopApp')
           return scope_chart;
         }
 
+        /*
+         Adjust chart width according to the user's width of the screen
+         */
         scope.chartConfig = configChart(scope.chartConfig, windowWidth);
         
         var w = angular.element($window);
@@ -55,6 +61,9 @@ angular.module('SubSnoopApp')
           scope.chartConfig = configChart(scope.chartConfig, newValue.w);
         }, true);
 
+        /*
+         Default configuration for pie chart
+         */
         function setChartConfig(chart_width) {
 
           return {
@@ -70,6 +79,9 @@ angular.module('SubSnoopApp')
           };
         };
 
+        /*
+         Configuration for smaller screens
+         */
         function changeChartConfig(window_width) {
           return {
             width: window_width - 750,
@@ -88,20 +100,22 @@ angular.module('SubSnoopApp')
 
           // --------------------------------------------------------
 
+          /*
+           Get data to populate pie charts
+           */
           var user = subFactory.getUser();
-          if (attrs.type === 'activity' || attrs.type === 'upvotes') {
-            var chartData = pieChart.getData(user, attrs.type);
-          } else if (attrs.sub && attrs.type === 'sentiment') {
-            var chartData = sentiMood.getData(attrs.sub);
+          var chartData;
+          if (attrs.sub && attrs.type === 'sentiment') {
+            chartData = sentiMood.getData(attrs.sub);
           } else if (attrs.sub && attrs.type === 'reaction') {
-            var chartData = reaction.getData(attrs.sub);
+            chartData = reaction.getData(attrs.sub);
           }
 
           // --------------------------------------------------------
 
           var d3ChartEl = d3.select(element[0]);
-          scope.chartConfig.width = scope.chartConfig.width;
-          scope.chartConfig.height = scope.chartConfig.height;
+          //scope.chartConfig.width = scope.chartConfig.width;
+          //scope.chartConfig.height = scope.chartConfig.height;
           drawChart(chartData, scope.chartConfig);
 
           w.bind('resize', function() {
@@ -110,6 +124,9 @@ angular.module('SubSnoopApp')
           });
         }
 
+        /*
+         Draw the pie chart with center text and mouse over events
+         */
         function drawChart(chartData, chartConfig) {
           var width = chartConfig.width,
             height = chartConfig.height,
@@ -159,6 +176,9 @@ angular.module('SubSnoopApp')
             .attr('r', radius)
             .style('fill', '#fff');
 
+          /*
+           Display percentage and center text statistics when hovering over an arc
+           */
           scope.mouseOverPath = function(d) {
 
             d3.select(this)
@@ -194,6 +214,9 @@ angular.module('SubSnoopApp')
               .attr("d", arcOver);
           };
 
+          /*
+           Shrink the arc back to original width of pie chart ring
+           */
           scope.reduceArc = function(d) {
             if (d) {
               d3.select(this)
@@ -209,6 +232,9 @@ angular.module('SubSnoopApp')
             }
           }
 
+          /*
+           The state of the chart when the mouse is not hovered over it
+           */
           scope.restoreCircle = function() {
             d3.selectAll('.arc-' + attrs.type).style('opacity', '1');
             d3.select('.center-value-' + attrs.type).text(centerValue);
@@ -260,6 +286,9 @@ angular.module('SubSnoopApp')
               };
             });
 
+          /*
+           Set up center text for pie chart with name of chart and number of posts
+           */
           var centerText = gRoot.append('svg:text')
             .attr('class', 'center-label');
 
@@ -314,6 +343,9 @@ angular.module('SubSnoopApp')
             .data(chartData.values)
               .enter();
 
+          /*
+           Displays legend indicating what color represents what category
+           */
           legend.append('rect')
             .attr('height', 10)
             .attr('width', 10)

@@ -10,6 +10,10 @@
 angular.module('SubSnoopApp')
   .factory('sortFactory', function () {
 
+    /*
+     Contains all the categories to sort subreddits and to sort posts
+     */
+
     var sortSubs = {
       sortOptions: [
         {value: 'totalUps', name: 'Total upvotes'},
@@ -34,12 +38,16 @@ angular.module('SubSnoopApp')
       ]
     };
 
-    var sortedSubLists = {
+    // Contains cached sorted lists of subreddits
+    var sortedSubLists = {};
 
-    }
-
+    // The default value for sorting subreddits (totalUps - subreddits with the most points)
     var defaultSubSort = sortSubs.sortOptions[0];
+
+    // The current sorting value of the subreddits
     var subSort = defaultSubSort;
+
+    // The default value for sorting posts (newest - most recent posts)
     var defaultPostSort = sortPosts.sortOptions[0];
 
     var factory = {

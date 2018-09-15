@@ -10,7 +10,10 @@
 angular.module('SubSnoopApp')
   .factory('subInfo', ['$http', function ($http) {
 
-    // Public API here
+    /*
+     Make an API request to Reddit to fetch the information about a subreddit which includes
+     icon, banner, description, creation date, and number of subscribers
+     */
     return {
       getData: function(sub) {
         var url = "https://api.reddit.com/r/" + sub + "/about.json";

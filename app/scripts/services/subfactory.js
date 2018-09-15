@@ -10,8 +10,6 @@
  angular.module('SubSnoopApp')
  .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sentiMood', 'reaction', 'sortFactory',
   function ($http, $rootScope, userFactory, $q, moment, $filter, sentiMood, reaction, sortFactory) {
-    var baseUrl = 'https://www.reddit.com/user/';
-    var rawJson = 'raw_json=1';
     var pages = 10;
     var username;
     var promise;
@@ -23,7 +21,6 @@
     var comments = [];
     var submissions = [];
     var subs = {};
-    var subLength;
     var subNames;
     var commentData = [];
     var submitData = [];
@@ -31,8 +28,6 @@
 
     var latestPost = null;
     var firstPost = null;
-
-    var fetchTime;
 
     var topComment = [0, ''];
     var topSubmit = [0, ''];
@@ -78,9 +73,6 @@
       setSubInfo: function(subreddit, info) {
         subData.subs[subreddit].info = info;
       },
-      getFetchTime: function() {
-        return fetchTime;
-      },
       getFirstPost: function(sub) {
         return firstPost == null ? getFirstPost(sub) : firstPost
       },
@@ -95,8 +87,7 @@
       },
       compareDates: compareDates,
       getNewestSub: getNewestSub,
-      getRecentPosts: getRecentPosts,
-      getRandomSub: getRandomSub
+      getRecentPosts: getRecentPosts
     };
     return factory;
 
@@ -105,6 +96,33 @@
     */
     function matchUser(user1, user2) {
       return user2.toLowerCase().indexOf(user1.toLowerCase()) >= 0;
+    }
+
+    /*
+     Only if user promise resolves, then do promise chaining for comments and
+     submissions asynchronously
+    */
+    function getSubPromise(userPromise) {
+
+      var subPromise = userPromise.then(function(response) {
+        if (response && matchUser(response.name, username)) {
+
+          var commentPromise = promiseChain('comments', 'commentsCallback');
+          var submitPromise = promiseChain('submitted', 'submitsCallback');
+          // Resolve both comment and submission promises together
+
+          var dataPromise = $q.all([commentPromise, submitPromise]).then(function() {
+            setSubData(response);
+            return subData;
+          });
+          return dataPromise;
+        } else {
+          return null;
+        }
+      }, function(error) {
+        return null;
+      });
+      return subPromise;
     }
 
     /*
@@ -130,7 +148,7 @@
         'subs' : subs,
         'upvotes' : upvotes
       }
-    };
+    }
 
     /*
      Reset all data to empty lists (used for getting a new user)
@@ -151,42 +169,6 @@
       i = 0;
 
       sortFactory.clearSorted();
-    };
-
-    /*
-     Only if user promise resolves, then do promise chaining for comments and
-     submissions asynchronously
-    */
-    function getSubPromise(userPromise) {
-
-      var subPromise = userPromise.then(function(response) {
-        if (response && matchUser(response.name, username)) {
-
-          var commentPromise = promiseChain('comments', 'commentsCallback');
-          var submitPromise = promiseChain('submitted', 'submitsCallback');
-          // Resolve both comment and submission promises together
-
-          var dataPromise = $q.all([commentPromise, submitPromise]).then(function() {
-            setSubData(response);
-            setFetchTime();
-
-            return subData;
-          });
-          return dataPromise;
-        } else {
-          return null;
-        }
-      }, function(error) {
-        return null;
-      });
-      return subPromise;
-    };
-
-    /*
-     Set the date and time that the data was fetched from the API
-    */
-    function setFetchTime() {
-      fetchTime = moment();
     }
 
     /*
@@ -196,7 +178,7 @@
       var url = 'https://api.reddit.com/user/'+username+'/'+where+'.json?limit=100&after='+after;
       var call = $http.get(url);
       return call;
-    };
+    }
 
     /*
      Resolve promise and return data if there is no more requests.
@@ -215,7 +197,7 @@
         console.log(error);
       });
       return promise;
-    };
+    }
 
     /*
      Chain data promises for fetching comments or submissions.
@@ -230,7 +212,7 @@
         promise = getPromise(where, promise);
       }
       return promise;
-    };
+    }
 
     /*
      Update comment or submission array data and return the list
@@ -241,7 +223,7 @@
       } else {
         return getSubmitsData(response.data);
       }
-    };
+    }
 
     /*
      If there is a response, get the new comment post data
@@ -254,7 +236,7 @@
         pushData(response.data, 'comments');
       }
       return commentData;
-    };
+    }
 
     /*
      If there is a response, get the new submitted post data
@@ -267,7 +249,7 @@
         pushData(response.data, 'submits');
       }
       return submitData;
-    };
+    }
 
     /*
      Push the comment/submission data to their respective lists
@@ -291,7 +273,7 @@
           $rootScope.$emit('subCount', d);
         }
       }
-    };
+    }
 
     /*
      Grabs the comments and store them in their respective sub object
@@ -311,7 +293,7 @@
         addComment(subreddit, subs[subreddit], comment);
       }
 
-    };
+    }
 
     /*
      Grabs submissions and stores them in their respective sub object
@@ -331,7 +313,7 @@
       for (var sub in subs) {
         subs[sub].submissions = $filter('sortPosts')(subs[sub].submissions, 'newest');
       }
-    };
+    }
 
     /*
      Create and return a new sub object
@@ -352,7 +334,7 @@
       subData.avg_karma = 0;
 
       return subData;
-    };
+    }
 
     /*
      Add a new comment to a sub object
@@ -374,7 +356,7 @@
       }
 
       subreddit.recent_activity = compareDates(subreddit.recent_activity, comment, true);
-    };
+    }
 
     /*
      Add a new submission to a sub object
@@ -408,7 +390,7 @@
 
         subs[sub].avg_karma = (subs[sub].total_ups / subs[sub].count);
       }
-    };
+    }
 
     /*
      Compute the default sorted subreddits alphabetically
@@ -417,7 +399,7 @@
     function setDefaultSortedArray() {
       defaultSortedArray = $filter('sortSubs')(Object.keys(subs), 'subName', subs);
       subLength = defaultSortedArray.length;
-    };
+    }
 
     /*
      Get the most recent comment or submission 
@@ -556,14 +538,6 @@
       }
 
       return posts;
-    };
-
-    /*
-     Grab a random subreddit name
-    */
-    function getRandomSub() {
-      var randomNum = Math.floor(Math.random() * subLength);
-      return subNames[randomNum];
     }
 
   }]);

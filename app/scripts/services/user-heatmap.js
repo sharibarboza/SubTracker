@@ -101,6 +101,10 @@ angular.module('SubSnoopApp')
       }
     };
 
+    /*
+     Set up the data for the day including all the subreddits that had activity
+     on that day and the number of comments and submissions posted that day
+     */
     function setUserDay(where, dateObj, subData) {
       var dayData;
       var sub = subData.subreddit;
