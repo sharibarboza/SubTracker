@@ -1,13 +1,17 @@
-"use strict";
+'use strict';
 
-describe("test sortnum service", function () {
-  var sortNum, sortAlpha, moment;
+describe('Filter: sortNum', function () {
 
-  beforeEach(module("SubSnoopApp"));
+  // load the filter's module
+  beforeEach(module('SubSnoopApp'));
 
-  beforeEach(inject(function (_sortNum_, _sortAlpha_, _moment_) {
-    sortNum = _sortNum_;
-    sortAlpha = _sortAlpha_;
+  // initialize a new instance of the filter before each test
+  var sortNum;
+  var sortAlpha;
+  var moment;
+  beforeEach(inject(function (_sortNumFilter_, _sortAlphaFilter_, _moment_) {
+    sortNum = _sortNumFilter_;
+    sortAlpha = _sortAlphaFilter_;
     moment = _moment_;
   }));
 
@@ -17,7 +21,7 @@ describe("test sortnum service", function () {
 
     var a = 'subA';
     var b = 'subB';
-    var result = sortNum.get(num1, num2, a, b, false, null);
+    var result = sortNum(num1, num2, a, b, false, null);
 
     expect(result).toEqual(1);
   });
@@ -28,7 +32,7 @@ describe("test sortnum service", function () {
 
     var a = 'subA';
     var b = 'subB';
-    var result = sortNum.get(num1, num2, a, b, false, null);
+    var result = sortNum(num1, num2, a, b, false, null);
 
     expect(result).toEqual(-1);
   });
@@ -39,7 +43,7 @@ describe("test sortnum service", function () {
 
     var a = 'subA';
     var b = 'subB';
-    var result = sortNum.get(num1, num2, a, b, true, null);
+    var result = sortNum(num1, num2, a, b, true, null);
 
     expect(result).toEqual(1);
   });
@@ -50,9 +54,9 @@ describe("test sortnum service", function () {
 
     var a = 'subA';
     var b = 'subB';
-    var result = sortNum.get(num1, num2, a, b, true, null); 
-    
-    expect(result).toEqual(-1);  
+    var result = sortNum(num1, num2, a, b, true, null);
+
+    expect(result).toEqual(-1);
   });
 
   it("equal values should sort alphabetically", function () {
@@ -61,8 +65,8 @@ describe("test sortnum service", function () {
 
     var a = 'subA';
     var b = 'subB';
-    var result1 = sortNum.get(num1, num2, a, b, true, 'alpha');
-    var result2 = sortNum.get(num1, num2, a, b, true, null);
+    var result1 = sortNum(num1, num2, a, b, true, 'alpha');
+    var result2 = sortNum(num1, num2, a, b, true, null);
 
     expect(result1).toEqual(-1);
     expect(result2).toEqual(-1);
@@ -80,7 +84,7 @@ describe("test sortnum service", function () {
       created_utc: 1492832281.0,
       subreddit: 'subB'
     };
-    var result = sortNum.get(num1, num2, a, b, true, 'date');
+    var result = sortNum(num1, num2, a, b, true, 'date');
 
     expect(result).toEqual(-1);
   });
@@ -97,7 +101,7 @@ describe("test sortnum service", function () {
       created_utc: 1492900982.0,
       subreddit: 'subB'
     };
-    var result = sortNum.get(num1, num2, a, b, true, 'alpha');
+    var result = sortNum(num1, num2, a, b, true, 'alpha');
 
     expect(result).toEqual(-1);
   });

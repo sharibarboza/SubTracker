@@ -7,11 +7,26 @@ module.exports = function(config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
+    // plugins
+    plugins: [
+      'karma-chrome-launcher',
+      'karma-jasmine',
+      'karma-ng-html2js-preprocessor'
+    ],
+
+    ngHtml2JsPreprocessor: {
+      stripPrefix: 'app/'
+    },
+
+    // preprocess matching files before serving them to the browser
+    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+    preprocessors: {
+      'app/views/*.html': 'ng-html2js'
+    },
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
-
 
     // list of files / patterns to load in the browser
     files: [
@@ -25,11 +40,13 @@ module.exports = function(config) {
       'app/bower_components/bootstrap/dist/css/bootstrap.css',
       'app/bower_components/font-awesome/css/font-awesome.css',
       'app/bower_components/angular-timeago/dist/*.js',
+      'app/bower_components/angular-lazy-img/release/angular-lazy-img.js',
       'app/lib/*.js',
       'app/lib/angular-calendar-heatmap/dist/*.js',
       'app/scripts/controllers/*.js',
       'app/scripts/services/*.js',
       'app/scripts/filters/*.js',
+      'app/views/*.html',
       'test/spec/*/*.js',
     ],
 
@@ -44,13 +61,8 @@ module.exports = function(config) {
       'app/bower_components/angular-moment/tests.js',
       'app/bower_components/angular-timeago/protractor-e2e.conf.js',
       'app/bower_components/pluralize/test.js',
+      'app/bower_components/angular-lazy-img/karma.conf.js'
     ],
-
-
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-    },
 
 
     // test results reporter to use
@@ -74,7 +86,6 @@ module.exports = function(config) {
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
-
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher

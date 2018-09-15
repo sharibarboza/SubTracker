@@ -4,6 +4,7 @@ describe("test user factory", function () {
   var userFactory, httpBackend;
 
   beforeEach(module("SubSnoopApp"));
+  beforeEach(module("views/main.html"));
 
   beforeEach(inject(function (_userFactory_, $httpBackend) {
     userFactory = _userFactory_;
@@ -11,16 +12,21 @@ describe("test user factory", function () {
   }));
 
   it("should return data", function () {
-    var user = 'reddit';
-    httpBackend.whenGET('https://api.reddit.com/user/' + user + '/about.json').respond({
+    var username = 'reddit';
+
+    httpBackend.expectGET('https://api.reddit.com/user/' + username + '/about.json').respond({
         data: {
-          name: user
+          name: username
         }
     });
-    userFactory.getData(user).then(function(response) {
-      expect(response.name).toEqual(user);
+
+    var promise = userFactory.getData(username);
+    promise.then(function(response) {
+      expect(response.name).toEqual(username);
     });
+
     httpBackend.flush();
+
   });
 
 });

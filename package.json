@@ -33,10 +33,11 @@
     "jasmine-core": "^2.7.0",
     "jit-grunt": "^0.9.1",
     "jshint-stylish": "^1.0.0",
-    "karma": "^1.7.0",
+    "karma": "^1.7.1",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.1",
-    "karma-jasmine": "^1.1.0",
+    "karma-jasmine": "^1.1.2",
+    "karma-ng-html2js-preprocessor": "^1.0.0",
     "time-grunt": "^1.0.0"
   },
   "engines": {
@@ -44,6 +45,7 @@
   },
   "dependencies": {
     "angular-moment": "^1.0.1",
+    "karma-cli": "^1.0.1",
     "moment": "^2.18.1"
   }
 }

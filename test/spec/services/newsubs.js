@@ -4,6 +4,7 @@ describe("test new subs factory", function () {
   var newSubs, httpBackend;
 
   beforeEach(module("SubSnoopApp"));
+  beforeEach(module("views/main.html"));
 
   beforeEach(inject(function (_newSubs_, $httpBackend) {
     newSubs = _newSubs_;
@@ -11,7 +12,7 @@ describe("test new subs factory", function () {
   }));
 
   it("should return data", function () {
-    httpBackend.whenGET("https://api.reddit.com/subreddits/new.json").respond({
+    httpBackend.expectGET("https://api.reddit.com/subreddits/new.json").respond({
         data: {
           children: [
             {
@@ -37,11 +38,14 @@ describe("test new subs factory", function () {
           ]
         }
     });
+
     newSubs.getData().then(function(response) {
-      expect(response.length).toEqual(4);
-      expect(response[1].display_name).toEqual("mildyinteresting");
+       expect(response.length).toEqual(4);
+       expect(response[1].display_name).toEqual("mildyinteresting");
     });
+
     httpBackend.flush();
+
   });
 
 });

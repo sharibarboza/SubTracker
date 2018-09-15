@@ -77,7 +77,7 @@ describe('test heatmap service', function () {
     for (var key in result) {
       var obj = result[key];
       if (obj.date === '2017-10-01') {
-        expect(obj.total).toEqual(2);
+        expect(obj.total).toEqual(5);
         expect(obj.subs['gaming'].comments).toBe(2);
         expect(obj.subs['gaming'].submissions).toBe(2);
         expect(obj.subs['politics'].comments).toBe(1);

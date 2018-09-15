@@ -4,6 +4,7 @@ describe("test popular subs factory", function () {
   var popularSubs, httpBackend;
 
   beforeEach(module("SubSnoopApp"));
+  beforeEach(module("views/main.html"));
 
   beforeEach(inject(function (_popularSubs_, $httpBackend) {
     popularSubs = _popularSubs_;
