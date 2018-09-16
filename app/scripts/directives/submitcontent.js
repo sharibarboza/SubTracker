@@ -266,7 +266,6 @@ angular.module('SubSnoopApp')
               }
               content = centerWrap(changeSize(page, html));
             } else {
-                console.log(data);
               content = '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
             }
 

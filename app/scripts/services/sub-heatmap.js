@@ -22,7 +22,7 @@ angular.module('SubSnoopApp')
     var year = moment().year();
 
     /*
-     Sets up the data fro the heat map graph.
+     Sets up the data for the heat map graph.
      Grabs the comments and submissions from a sub and returns an array
      of objects, each object contains: the date, the total amount of 
      posts per date, the total amount of comments per date, and the total

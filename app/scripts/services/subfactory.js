@@ -8,8 +8,8 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sentiMood', 'reaction', 'sortFactory',
-  function ($http, $rootScope, userFactory, $q, moment, $filter, sentiMood, reaction, sortFactory) {
+ .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sortFactory',
+  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory) {
     var pages = 10;
     var username;
     var promise;
@@ -40,9 +40,8 @@
     var factory = {
       getData: function(user) {
         resetData();
-        username = user;
-        var userPromise = userFactory.getData(user);
-        promise = getSubPromise(userPromise);
+        username = user.name;
+        promise = getSubPromise(user);
         return promise;
       },
       getSubData: function() {
@@ -71,7 +70,11 @@
         return submissions;
       },
       setSubInfo: function(subreddit, info) {
-        subData.subs[subreddit].info = info;
+        try {
+          subData.subs[subreddit].info = info;
+        } catch(error) {
+          throw subreddit + ' does not exist in ' + username + '\'s subreddits.';
+        }
       },
       getFirstPost: function(sub) {
         return firstPost == null ? getFirstPost(sub) : firstPost
@@ -86,8 +89,7 @@
         return topSubmit;
       },
       compareDates: compareDates,
-      getNewestSub: getNewestSub,
-      getRecentPosts: getRecentPosts
+      getNewestSub: getNewestSub
     };
     return factory;
 
@@ -102,27 +104,16 @@
      Only if user promise resolves, then do promise chaining for comments and
      submissions asynchronously
     */
-    function getSubPromise(userPromise) {
+    function getSubPromise(user) {
 
-      var subPromise = userPromise.then(function(response) {
-        if (response && matchUser(response.name, username)) {
+      var commentPromise = promiseChain('comments', 'commentsCallback');
+      var submitPromise = promiseChain('submitted', 'submitsCallback');
+      // Resolve both comment and submission promises together
 
-          var commentPromise = promiseChain('comments', 'commentsCallback');
-          var submitPromise = promiseChain('submitted', 'submitsCallback');
-          // Resolve both comment and submission promises together
-
-          var dataPromise = $q.all([commentPromise, submitPromise]).then(function() {
-            setSubData(response);
-            return subData;
-          });
-          return dataPromise;
-        } else {
-          return null;
-        }
-      }, function(error) {
-        return null;
+      return $q.all([commentPromise, submitPromise]).then(function() {
+        setSubData(user);
+        return subData;
       });
-      return subPromise;
     }
 
     /*
@@ -137,9 +128,6 @@
 
       setTotalUps();
       setDefaultSortedArray();
-
-      sentiMood.setSubData(subs);
-      reaction.setSubData(subs);
 
       subData = {
         'user': response,
@@ -402,17 +390,6 @@
     }
 
     /*
-     Get the most recent comment or submission 
-    */
-    function getLatest(where) {
-      if (where === 'comment') {
-        return comments[0];
-      } else {
-        return submissions[0];
-      }
-    }
-
-    /*
      Get the oldest post.
      If sub is null, then get the oldest post out of all the user's subs,
      otherwise, get the oldest post in the sub only.
@@ -522,22 +499,6 @@
 
       // Return the post with either the oldest/newest comment
       return post;
-    }
-
-    /*
-     Get either the most recent comments or submissions out of all user's subs.
-     A limit can be set to return a specific number of posts.
-    */
-    function getRecentPosts(where, limit) {
-      var posts = [];
-      
-      if (where === 'comments') {
-        posts = comments.slice(0, limit);
-      } else {
-        posts = submissions.slice(0, limit);
-      }
-
-      return posts;
     }
 
   }]);

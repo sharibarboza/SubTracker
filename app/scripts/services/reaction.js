@@ -9,6 +9,7 @@
  */
 angular.module('SubSnoopApp')
   .factory('reaction', function () {
+    var username;
     var subs = {};
     var colorData = {'Upvoted' : "#1DB3B0", 'Neutral' : "#5552B3", 'Downvoted' : "#ff6d00"};
     var value2 = '';
@@ -17,10 +18,13 @@ angular.module('SubSnoopApp')
      Construct data for post reaction pie chart (upvoted, downvoted, neutral)
     */
     var factory = {
-      setSubData: function(subData) {
-        subs = {};
-        for (var key in subData) {
-          subs[key] = getChartData(subData[key]);
+      setSubData: function(subData, user) {
+        if (username === undefined || user !== username) {
+          subs = {};
+          for (var key in subData) {
+            subs[key] = getChartData(subData[key]);
+          }
+          username = user;
         }
       },
       getData: function (current_sub) {

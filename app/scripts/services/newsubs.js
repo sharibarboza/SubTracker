@@ -34,7 +34,6 @@ angular.module('SubSnoopApp')
         });
       },
       getSubs: function() {
-          console.log(subreddits);
         return subreddits;
       }
     };

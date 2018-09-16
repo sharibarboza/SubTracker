@@ -15,9 +15,9 @@ angular.module('SubSnoopApp')
     /*
      Initalization
     */
-    $scope.subreddit;
-    $scope.latestPost;
-    $scope.firstPost;
+    $scope.subreddit = null;
+    $scope.latestPost = null;
+    $scope.firstPost = null;
 
     $window.scrollTo(0, 0);
     $scope.pages = ['comments', 'submissions', 'sub'];
@@ -35,7 +35,7 @@ angular.module('SubSnoopApp')
     $scope.comments = $scope.sub['comments'];
     $scope.submissions = $scope.sub['submissions'];
 
-    if ($scope.subreddit != $routeParams.subreddit) {
+    if ($scope.subreddit !== $routeParams.subreddit) {
       $scope.subreddit = $routeParams.subreddit;
 
       $scope.comments = $filter('sortPosts')($scope.comments, 'newest');
@@ -75,7 +75,7 @@ angular.module('SubSnoopApp')
       return data.slice((($scope.subPage.current-1)*$scope.subPage.items), 
         (($scope.subPage.current)*$scope.subPage.items));
 
-    }
+    };
     $scope.slicedArray = [];
 
     /*
@@ -90,7 +90,7 @@ angular.module('SubSnoopApp')
      By default, comments are displayed first and all data is sorted by most recent.
     */
     $scope.setArray = function(top) {
-      if ($scope.tab == 0) {
+      if ($scope.tab === 0) {
         $scope.slicedArray = $scope.sliceArray($scope.comments);
       } else {
         $scope.slicedArray = $scope.sliceArray($scope.submissions);
@@ -105,7 +105,7 @@ angular.module('SubSnoopApp')
      Set open/closed status of accordions
     */
     $scope.setAccordion = function() {
-      $scope.open = $scope.tab === 2 ? true : false;
+      $scope.open = $scope.tab === 2;
     };
 
     /*
@@ -118,7 +118,7 @@ angular.module('SubSnoopApp')
       $scope.setAccordion();
       $scope.setPage(num);
 
-      if ($scope.tab == 0) {
+      if ($scope.tab === 0) {
         $scope.sortSelected = $scope.commentSort;
       } else {
         $scope.sortSelected = $scope.submitSort;
@@ -126,7 +126,7 @@ angular.module('SubSnoopApp')
 
       if ($scope.tab < 2) {
         $scope.setArray();
-      } else if ($scope.tab == 3) {
+      } else if ($scope.tab === 3) {
           $scope.goToSubs();
       }
     };
@@ -138,7 +138,7 @@ angular.module('SubSnoopApp')
       $scope.page = $scope.pages[num];
     }
 
-    if ($scope.tab == 2) {
+    if ($scope.tab === 2) {
       /*
        Call subreddit API and get sub banner and icon
       */
@@ -194,7 +194,7 @@ angular.module('SubSnoopApp')
       $scope.subPage.current = 1;
       $scope.sortSelected = sort;
 
-      if ($scope.tab == 0) {
+      if ($scope.tab === 0) {
         $scope.comments = $filter('sortPosts')($scope.sub['comments'], sort.value);
         $scope.commentSort = sort
       } else {

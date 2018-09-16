@@ -25,14 +25,16 @@ var app = angular
 /*
  Used to get data from the subFactory
  */
-var getData = function(route, factory) {
+var getData = function(route, subFactory, userFactory) {
   var username = route.current.params.username;
 
-  if (factory.checkUser(username)) {
-    return factory.getSubData();
+  if (subFactory.checkUser(username)) {
+    return subFactory.getSubData();
   } else {
-    var promise = factory.getData(username); 
-    return promise;
+    var userPromise = userFactory.getData(username);
+    return userPromise.then(function(response) {
+      return subFactory.getData(response);
+    });
   }
 };
 
@@ -47,8 +49,8 @@ app.config(['$routeProvider', '$locationProvider', 'lazyImgConfigProvider', func
       controller: 'UserCtrl',
       controllerAs: 'user',
       resolve: {
-        subsData: function($q, $route, subFactory) {
-          return getData($route, subFactory); 
+        subsData: function($q, $route, subFactory, userFactory) {
+          return getData($route, subFactory, userFactory);
         }
       }
     })
@@ -57,8 +59,8 @@ app.config(['$routeProvider', '$locationProvider', 'lazyImgConfigProvider', func
       controller: 'SearchCtrl',
       controllerAs: 'search',
       resolve: {
-        subsData: function($route, subFactory) {
-          return getData($route, subFactory);     
+        subsData: function($route, subFactory, userFactory) {
+          return getData($route, subFactory, userFactory);
         }
       }
     })
@@ -67,8 +69,8 @@ app.config(['$routeProvider', '$locationProvider', 'lazyImgConfigProvider', func
       controller: 'UserSubCtrl',
       controllerAs: 'usersub',
       resolve: {
-        subsData: function($route, subFactory) {
-          return getData($route, subFactory);     
+        subsData: function($route, subFactory, userFactory) {
+          return getData($route, subFactory, userFactory);
         }
       }
     })

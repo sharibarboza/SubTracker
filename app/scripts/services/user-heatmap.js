@@ -19,7 +19,7 @@ angular.module('SubSnoopApp')
     var year = moment().year();
 
     /*
-     Sets up the data fro the heat map graph.
+     Sets up the data for the heat map graph.
      Grabs the comments and submissions from a sub and returns an array
      of objects, each object contains: the date, the total amount of 
      posts per date, the total amount of comments per date, and the total
@@ -27,7 +27,7 @@ angular.module('SubSnoopApp')
     */
     return {
       getUserMap: function(current_user, subs, current_year) {
-        if (!dates || user != current_user) {
+        if (!dates || user !== current_user) {
           resetData();
           setYear(current_year);
           var keys = Object.keys(subs);
@@ -49,7 +49,7 @@ angular.module('SubSnoopApp')
     };
 
     /*
-     Reset the dates for a new sub.
+     Reset the dates for a new user.
     */
     function resetData() {
       dates = {};
@@ -62,7 +62,7 @@ angular.module('SubSnoopApp')
       if (current_year) {
         year = current_year;
       }
-    };
+    }
 
     /*
      Get the array of data objects.
@@ -73,7 +73,7 @@ angular.module('SubSnoopApp')
       for (var data in dates) {
         dataArray.push(dates[data]);
       }
-    };
+    }
 
     /*
      Primary method for configuring the data array.
@@ -99,7 +99,7 @@ angular.module('SubSnoopApp')
           count += 1;
         }
       }
-    };
+    }
 
     /*
      Set up the data for the day including all the subreddits that had activity
@@ -127,7 +127,7 @@ angular.module('SubSnoopApp')
         dayData.subs[sub] = {
           'comments' : 0,
           'submissions' : 0
-        }
+        };
         dayData.numSubs += 1;
       }
 
@@ -138,5 +138,5 @@ angular.module('SubSnoopApp')
         dayData.subs[sub].submissions += 1;
         dayData.total += 1;
       }
-    };
+    }
   }]);

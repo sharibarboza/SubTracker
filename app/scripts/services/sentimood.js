@@ -9,6 +9,7 @@
  */
 angular.module('SubSnoopApp')
   .factory('sentiMood', function () {
+    var username;
     var subs = {};
     var colorData = {'Positive' : "#2979ff", 'Neutral' : "#fdd835", 'Negative' : "#f44336"};
     var value2 = '';
@@ -17,10 +18,13 @@ angular.module('SubSnoopApp')
      Constuct data for sentimood pie chart (Positive, Negative, Neutral)
     */
     var factory = {
-      setSubData: function(subData) {
-        subs = {};
-        for (var key in subData) {
-          subs[key] = getChartData(subData[key]);
+      setSubData: function(subData, user) {
+        if (username === undefined || user !== username) {
+          subs = {};
+          for (var key in subData) {
+            subs[key] = getChartData(subData[key]);
+          }
+          username = user;
         }
       },
       getData: function (current_sub) {

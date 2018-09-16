@@ -9,7 +9,8 @@
  */
  angular.module('SubSnoopApp')
   .controller('UserCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', '$window', 'subFactory', 'moment', 'subsData', 'search', 'sortFactory', '$location', '$anchorScroll',
-  function ($rootScope, $scope, $routeParams, $filter, $window, subFactory, moment, subsData, search, sortFactory, $location, $anchorScroll) {
+  'sentiMood', 'reaction',
+  function ($rootScope, $scope, $routeParams, $filter, $window, subFactory, moment, subsData, search, sortFactory, $location, $anchorScroll, sentiMood, reaction) {
     /*
      Initalization
     */
@@ -17,7 +18,7 @@
     $scope.username = $routeParams.username;
     $scope.main = false; // Prevent hiding of search bar in top-nav
     $scope.page = 'user';
-    $scope.currentLimit;
+    $scope.currentLimit = 0;
     $scope.open = true;
     $scope.subLength = 0;
 
@@ -62,6 +63,8 @@
       $scope.firstPost = subFactory.getFirstPost(null);
       $scope.topComment = subFactory.getTopComment()[1];
       $scope.topSubmit = subFactory.getTopSubmit()[1];
+      sentiMood.setSubData($scope.subs, $scope.username);
+      reaction.setSubData($scope.subs, $scope.username);
     };
 
     /*
