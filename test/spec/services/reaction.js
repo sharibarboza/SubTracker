@@ -1,7 +1,8 @@
 "use strict";
 
 describe("test reaction factory", function () {
-  var reaction, httpBackend;
+  var reaction;
+  const username = 'reddit';
 
   beforeEach(module("SubSnoopApp"));
 
@@ -11,13 +12,11 @@ describe("test reaction factory", function () {
 
   it('should return the correct reaction data', function() {
     var subData = {
-      'sub1' : { 
-        'comments' : [{ 'ups' : 1 }, { 'ups' : 100 }, { 'ups' : 0 }, { 'ups' : -50 }, { 'ups' : -25 }],
-        'submissions' : [{ 'ups' : 20 }, { 'ups' : 1 }, { 'ups' : 500 }]
-       }
+      'comments' : [{ 'ups' : 1 }, { 'ups' : 100 }, { 'ups' : 0 }, { 'ups' : -50 }, { 'ups' : -25 }],
+      'submissions' : [{ 'ups' : 20 }, { 'ups' : 1 }, { 'ups' : 500 }]
     };
 
-    reaction.setSubData(subData);
+    reaction.setSubData('sub1', subData, username);
     var result = reaction.getData('sub1');
 
     expect(Object.keys(result).length).toEqual(3);
@@ -37,13 +36,11 @@ describe("test reaction factory", function () {
 
   it('should return data with zero submissions', function() {
     var subData = {
-      'sub1' : {
-        'comments' : [{ 'ups' : 0 }],
-        'submissions' : []
-      }
+      'comments' : [{ 'ups' : 0 }],
+      'submissions' : []
     };
 
-    reaction.setSubData(subData);
+    reaction.setSubData('sub1', subData, username);
     var result = reaction.getData('sub1');
 
     expect(Object.keys(result).length).toEqual(3);

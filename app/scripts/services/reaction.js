@@ -18,13 +18,14 @@ angular.module('SubSnoopApp')
      Construct data for post reaction pie chart (upvoted, downvoted, neutral)
     */
     var factory = {
-      setSubData: function(subData, user) {
+      setSubData: function(subName, subData, user) {
         if (username === undefined || user !== username) {
           subs = {};
-          for (var key in subData) {
-            subs[key] = getChartData(subData[key]);
-          }
           username = user;
+        }
+
+        if (!(subName in subs)) {
+           subs[subName] = getChartData(subData);
         }
       },
       getData: function (current_sub) {

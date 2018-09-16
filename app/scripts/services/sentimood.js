@@ -18,17 +18,21 @@ angular.module('SubSnoopApp')
      Constuct data for sentimood pie chart (Positive, Negative, Neutral)
     */
     var factory = {
-      setSubData: function(subData, user) {
+      setSubData: function(subName, subData, user) {
         if (username === undefined || user !== username) {
           subs = {};
-          for (var key in subData) {
-            subs[key] = getChartData(subData[key]);
-          }
           username = user;
+        }
+        if (!(subName in subs)) {
+           subs[subName] = getChartData(subData);
         }
       },
       getData: function (current_sub) {
-        return subs[current_sub];
+        if (current_sub in subs) {
+          return subs[current_sub];
+        } else {
+          return null;
+        }
       }
     };
     return factory;

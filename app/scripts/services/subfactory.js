@@ -48,7 +48,7 @@
         return subData;
       },
       checkUser: function(user) {
-        if (!username) {
+        if (username === undefined) {
           return false;
         } else {
           return matchUser(user, username);
@@ -97,7 +97,7 @@
      Check to see if two username strings match
     */
     function matchUser(user1, user2) {
-      return user2.toLowerCase().indexOf(user1.toLowerCase()) >= 0;
+      return user2.toLowerCase() === user1.toLowerCase();
     }
 
     /*

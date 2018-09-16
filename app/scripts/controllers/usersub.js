@@ -9,8 +9,8 @@
  */
 angular.module('SubSnoopApp')
   .controller('UserSubCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$filter', 'subsData', 'search',
-    'subFactory', 'sortFactory', '$anchorScroll', '$location', '$timeout', 'subInfo',
-    function ($rootScope, $scope, $routeParams, $window, $filter, subsData, search, subFactory, sortFactory, $anchorScroll, $location, $timeout, subInfo) {
+    'subFactory', 'sortFactory', '$anchorScroll', '$location', '$timeout', 'subInfo', 'sentiMood', 'reaction',
+    function ($rootScope, $scope, $routeParams, $window, $filter, subsData, search, subFactory, sortFactory, $anchorScroll, $location, $timeout, subInfo, sentiMood, reaction) {
   
     /*
      Initalization
@@ -43,6 +43,9 @@ angular.module('SubSnoopApp')
 
       $scope.latestPost = subFactory.getLatestPost($scope.sub);
       $scope.firstPost = subFactory.getFirstPost($scope.sub);
+
+      sentiMood.setSubData($scope.subreddit, $scope.sub, $scope.username);
+      reaction.setSubData($scope.subreddit, $scope.sub, $scope.username);
     }
 
     /*
