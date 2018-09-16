@@ -26,7 +26,7 @@
         </div>
 	      </accordion-heading>
 	      <div id="submit-col" ng-if="status.isOpen">
-	        <submit-content class="wrap-text" data="{{ element }}" page="{{ page }}" truncate="false"></submit-content>
+	        <submit-content class="wrap-text" data="{{ element }}" page="{{ page }}" truncate="false" user="{{ username }}"></submit-content>
 	      </div>
 	    </accordion-group>
 	  </accordion>
@@ -43,7 +43,7 @@
 	        </div>
 	      </accordion-heading>
 	      <div id="submit-col" ng-if="status.isOpen">
-	        <submit-content class="wrap-text" data="{{ element }}" page="{{ page }}" truncate="false"></submit-content>
+	        <submit-content class="wrap-text" data="{{ element }}" page="{{ page }}" truncate="false" user="{{ username }}"></submit-content>
 	      </div>
 	    </accordion-group>
 	  </accordion>
@@ -58,7 +58,7 @@
         </div>
       </accordion-heading>
       <div id="submit-col" ng-if="status.isOpen">
-        <submit-content class="wrap-text" data="{{ element }}" page="{{ page }}" truncate="false"></submit-content>
+        <submit-content class="wrap-text" data="{{ element }}" page="{{ page }}" truncate="false" user="{{ username }}"></submit-content>
       </div>
     </accordion-group>
   </accordion>

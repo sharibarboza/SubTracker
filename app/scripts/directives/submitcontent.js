@@ -7,7 +7,7 @@
  * # submitContent
  */
 angular.module('SubSnoopApp')
-  .directive('submitContent', ['$compile', '$filter', '$window', function ($compile, $filter, $window) {
+  .directive('submitContent', ['$compile', '$filter', '$window', 'submissions', function ($compile, $filter, $window, submissions) {
 
     var windowWidth = $window.innerWidth;
     var defaultVideo = 100;
@@ -111,7 +111,7 @@ angular.module('SubSnoopApp')
     var changeSize = function(page, html) {
       var videoWidth = defaultVideo;
 
-      if (page == 'submissions' && windowWidth > 800) {
+      if (page === 'submissions' && windowWidth > 800) {
         videoWidth = 70;
       }
 
@@ -237,11 +237,14 @@ angular.module('SubSnoopApp')
 
           var getTemplate = function(data, truncate) {
             var content;
-            if (data.selftext_html) {
-              content = highlightHtml(page, data.selftext_html, data, truncate);
-            } else if (data.html) {
-              content = highlightHtml(page, data.html, data, truncate);
-            } else if (isLinkedImage(data)) {
+            var submitID = data.id;
+
+            if (submissions.isStored(submitID, attrs.user)) {
+                content = submissions.getContent(submitID);
+                return secureURLs(content);
+            }
+
+            if (isLinkedImage(data)) {
               content = getImageClass(page) + 'lazy-img="' + getVideoUrl(data.url) + '">';
             } else if (data.media && data.media.oembed && data.media.oembed.provider_name != "Imgur") {
               var html = $filter('escape')(secureURLs(data.media.oembed.html));
@@ -255,19 +258,25 @@ angular.module('SubSnoopApp')
               var html = '<video width="100%" height="240" class="submit-pic" controls><source src="' + data.url + '" type="video/mp4"></video>';
               content = centerWrap(changeSize(page, html));
             } else if (isGif(data.url)) {
-              var gif_url;
-              var html;
-              if (isImgurGif(data.url)) {
-                gif_url = getImgurUrl(data.url);
-                html = '<iframe src="' + gif_url + '/embed" height="450"></iframe>';
-              } else {
-                gif_url = data.url;
-                html = '<iframe src="' + gif_url + '" height="240"></iframe>';
-              }
-              content = centerWrap(changeSize(page, html));
+                var gif_url;
+                var html;
+                if (isImgurGif(data.url)) {
+                    gif_url = getImgurUrl(data.url);
+                    html = '<iframe src="' + gif_url + '/embed" height="450"></iframe>';
+                } else {
+                    gif_url = data.url;
+                    html = '<iframe src="' + gif_url + '" height="240"></iframe>';
+                }
+                content = centerWrap(changeSize(page, html));
+            } else if (data.selftext_html) {
+              content = highlightHtml(page, data.selftext_html, data, truncate);
+            } else if (data.html) {
+              content = highlightHtml(page, data.html, data, truncate);
             } else {
               content = '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
             }
+
+            submissions.setContent(submitID, content, attrs.user);
 
             return secureURLs(content);
           };
