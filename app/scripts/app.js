@@ -33,7 +33,11 @@ var getData = function(route, subFactory, userFactory) {
   } else {
     var userPromise = userFactory.getData(username);
     return userPromise.then(function(response) {
-      return subFactory.getData(response);
+      if (response) {
+        return subFactory.getData(response);
+      } else {
+        return null;
+      }
     });
   }
 };

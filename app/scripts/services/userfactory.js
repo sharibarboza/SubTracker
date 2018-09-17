@@ -21,7 +21,7 @@
           userData = response.data.data;
           return userData;
         }, function(error) {
-          console.log(error);
+          return null;
         });
       },
       getUser: function() {
