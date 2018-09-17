@@ -5,13 +5,13 @@ Utility
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
-  color: #383838;
+  color: #495057;
   padding: 0.2em 0;
 }
 
 body {
   padding: 0;
-  color: #4D4D4D;
+  color: #495057;
   position: relative;
   font-size: 15px;
 }
@@ -720,8 +720,7 @@ Content
 
 .post-box {
   margin-top: -5px;
-  padding-top: 35px;
-  padding-bottom: 35px;
+  padding: 35px 0;
   border-left: none;
   border-right: none;
 }
@@ -1296,7 +1295,7 @@ User Sub Page
 
 .post-body {
   padding-top: 10px;
-  color: #383838;
+  color: #495057;
   font-weight: 400;
 }
 
@@ -1712,12 +1711,12 @@ Search
   margin-bottom: 0px !important;
 }
 
-#results-card .col-md-1 {
+#search-chevron {
   margin-top: 2px;
   text-align: right;
 }
 
-#results-card .col-md-11 {
+#search-title {
   margin-top: 7px;
 }
 
@@ -2102,7 +2101,7 @@ Mobile
   }
 
   .card-action .post-badge, .card-action h4 {
-    padding-left: 15px;
+    padding-left: 0;
   }
 
   .sort-col {
@@ -2158,7 +2157,7 @@ Mobile
     padding-left: 0px !important;
   }
 
-  .viewing-title, #table-start, #comments, #submissions, .searches, #searching {
+  .viewing-title, #table-start, #comments, #submissions, #searching {
     padding-left: 15px;
     padding-right: 15px;
   }
@@ -2255,9 +2254,9 @@ Mobile
     float: left !important;
   }
 
-  #results-card {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+  #results-card, .searches {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   .word-cloud {
@@ -2283,6 +2282,10 @@ Mobile
 
   .panel-box {
     border: none !important;
+  }
+
+  .results-sub {
+    font-size: 0.9em !important;
   }
 
  }
