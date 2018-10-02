@@ -40,14 +40,15 @@ describe("test subs factory", function () {
                       data: {
                           subreddit: 'sub2',
                           ups: -1,
-                          created_utc: date2
+                          created_utc: date2,
+                          gilded: 0
                       }
                   },
                   {
                       data: {
                           subreddit: 'sub1',
                           ups: 2,
-                          gilded: 1,
+                          gilded: 2,
                           created_utc: date1
                       }
                   }
@@ -62,7 +63,8 @@ describe("test subs factory", function () {
                       data: {
                           subreddit: 'sub1',
                           ups: 3,
-                          created_utc: date3
+                          created_utc: date3,
+                          gilded: 0
                       }
                   }
               ]
@@ -89,7 +91,7 @@ describe("test subs factory", function () {
           expect(subData.subs['sub2'].comment_ups).toEqual(-1);
 
           expect(subData.subs['sub1'].submission_ups).toEqual(3);
-          expect(subData.subs['sub1'].gilded_comments).toEqual(1);
+          expect(subData.subs['sub1'].gilded_comments).toEqual(2);
           expect(subData.subs['sub1'].gilded_submissions).toEqual(0);
 
           expect(subFactory.getSubLength()).toEqual(2);

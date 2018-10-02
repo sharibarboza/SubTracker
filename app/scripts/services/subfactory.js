@@ -274,7 +274,7 @@
       for (var i = 0; i < comments.length; i++) {
         var comment = comments[i];
         var subreddit = comment.subreddit;
-        
+
         if (!(subreddit in subs)) {
           subs[subreddit] = createNewSub();
         }
@@ -293,7 +293,7 @@
 
         if (!(subreddit in subs)) {
           subs[subreddit] = createNewSub();
-        } 
+        }
 
         addSubmission(subreddit, subs[subreddit], submission);
       }
@@ -339,10 +339,7 @@
         topComment = [subreddit.comment_ups, name];
       }
 
-      if (comment.gilded > 0) {
-        subreddit.gilded_comments += 1;
-      }
-
+      subreddit.gilded_comments += comment.gilded;
       subreddit.recent_activity = compareDates(subreddit.recent_activity, comment, true);
     }
 
@@ -361,10 +358,7 @@
         topSubmit = [subreddit.submission_ups, name];
       }
 
-      if (submission.gilded > 0) {
-        subreddit.gilded_submissions += 1;
-      }
-
+      subreddit.gilded_submissions += submission.gilded;
       subreddit.recent_activity = compareDates(subreddit.recent_activity, submission, true);
     }
 
@@ -403,7 +397,7 @@
         var subComment, subSubmit;
         if ('comments' in sub) {
           subComment = sub.comments[sub.comments.length-1];
-        } 
+        }
 
         if ('submissions' in sub) {
           subSubmit = sub.submissions[sub.submissions.length-1];
@@ -434,7 +428,7 @@
         var subComment, subSubmit;
         if ('comments' in sub) {
           subComment = sub.comments[0];
-        } 
+        }
 
         if ('submissions' in sub) {
           subSubmit = sub.submissions[0];
@@ -453,7 +447,7 @@
 
     /*
      Get the newest active sub by taking the oldest post from each subreddit,
-     sort the posts by date and get the newest date. Whichever sub this post 
+     sort the posts by date and get the newest date. Whichever sub this post
      belongs to is the new sub.
     */
     function getNewestSub() {
