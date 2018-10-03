@@ -1841,14 +1841,6 @@ Mobile
     border-left: 1px solid #D6D6D6;
     border-right: 1px solid #D6D6D6;
   }
-
-  .dropdown-left-col {
-    padding-right: 0;
-  }
-
-  .dropdown-right-col {
-    padding-left: 0;
-  }
 }
 
 @media screen and (max-width: 768px) {
@@ -1953,11 +1945,6 @@ Mobile
   #results-table {
     padding-left: 0;
     padding-right: 0;
-  }
-
-  .select-dropdown {
-    width: 100%;
-    margin-top: 5px;
   }
 
   .sub-info {
@@ -2162,14 +2149,6 @@ Mobile
 
   .post-wing {
     margin-top: 30px;
-  }
-
-  .dropdown-left-col {
-    padding-right: 0px !important;
-  }
-
-  .dropdown-right-col {
-    padding-left: 0px !important;
   }
 
   .viewing-title, #table-start, #comments, #submissions, #searching {
@@ -2399,5 +2378,18 @@ Mobile
    .word-cloud {
      height: 300px !important;
      width: 100% !important;
+   }
+
+   .select-dropdown {
+     width: 100%;
+     margin-top: 5px;
+   }
+
+   .dropdown-left-col {
+     padding-right: 0px !important;
+   }
+
+   .dropdown-right-col {
+     padding-left: 0px !important;
    }
  }
