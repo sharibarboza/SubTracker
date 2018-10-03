@@ -115,6 +115,8 @@ app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope
 
       if (username1 !== username2) {
         loading = true;
+      } else if ($rootScope.userPath) {
+        loading = false;
       } else if (username1 === username2 && $rootScope.redirect !== undefined) {
         loading = true;
         $rootScope.redirect = undefined;

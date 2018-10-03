@@ -1,11 +1,7 @@
 <md-card>
   <md-card-content class="no-pad">
     <div class="row">
-      <div class="col-md-5 sub-table-col" style="padding-right: 0;">
-        <!-- Table displaying the user's activity stats in the subreddit -->
-        <div ng-include src="'views/sub-table.html'"></div>
-      </div>
-      <div class="col-md-7 sub-info" style="padding-left: 0;">
+      <div class="col-md-7 sub-info" style="padding-right: 0;">
         <div ng-if="subInfo.banner_img" class="banner-box">
           <div class="banner-container">
             <img lazy-img="{{ subInfo.banner_img | escape }}" class="sub-banner-img" />
@@ -14,7 +10,7 @@
             <span class="txt-block">Subscribers: <span class="non-bg orange">{{ subInfo.subscribers | number }}</span></span>
           </div>
         </div>
-        <div ng-if="!subInfo.banner_img" class="about-box" style="border-left: none;">
+        <div ng-if="!subInfo.banner_img" class="about-box" style="border-right: none;">
           <strong class="light-gray">ABOUT THIS SUBREDDIT</strong>
 
           <p ng-if="subInfo.public_description" class="small-font" ng-bind-html="subInfo.public_description_html | sanitize"></p>
@@ -29,6 +25,10 @@
             <span class="green" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></span></strong>
           </md-card-content>
         </div>
+      </div>
+      <div class="col-md-5 sub-table-col" style="padding-left: 0;">
+        <!-- Table displaying the user's activity stats in the subreddit -->
+        <div ng-include src="'views/sub-table.html'"></div>
       </div>
     </div>
   </md-card-content>

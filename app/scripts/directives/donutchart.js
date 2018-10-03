@@ -36,8 +36,10 @@ angular.module('SubSnoopApp')
         function configChart(scope_chart, window_width) {
           if (window_width < 1200 && window_width > 950) {
             scope_chart = changeChartConfig(window_width);
-          } else if (window_width < 550) {
-            scope_chart = setChartConfig(340);
+          } else if (window_width < 400) {
+            scope_chart = setChartConfig(300);
+          } else if (window_width < 700) {
+            scope_chart = setChartConfig(350);
           } else {
             scope_chart = setChartConfig(360);
           }
@@ -48,7 +50,7 @@ angular.module('SubSnoopApp')
          Adjust chart width according to the user's width of the screen
          */
         scope.chartConfig = configChart(scope.chartConfig, windowWidth);
-        
+
         var w = angular.element($window);
         scope.getWindowDimensions = function () {
           return {
@@ -221,7 +223,7 @@ angular.module('SubSnoopApp')
             if (d) {
               d3.select(this)
                 .transition()
-                .attr("d", arc);            
+                .attr("d", arc);
             } else {
               d3.selectAll('.arc-' + attrs.type + ' path')
               .each(function() {
@@ -264,7 +266,7 @@ angular.module('SubSnoopApp')
             .attr('class', 'arc-' + attrs.type);
 
           var partition = arcs.append('svg:path')
-            .style('fill', function(d) { 
+            .style('fill', function(d) {
               return chartData.colors[d.data.label];
             })
             .on("mouseover", scope.mouseOverPath)
@@ -313,7 +315,7 @@ angular.module('SubSnoopApp')
             .attr("class", 'line-1-' + attrs.type)
             .attr("font-size", dataSize)
             .attr("fill", "#333")
-            .attr("font-weight", "bold");    
+            .attr("font-weight", "bold");
 
           var percents = arcs.append("svg:text")
             .style('fill-opacity', 0)
@@ -353,14 +355,14 @@ angular.module('SubSnoopApp')
               if (attrs.type === 'sentiment' || attrs.type === 'reaction') {
                 return 0 - radius - 35;
               } else {
-                return 0 - radius - 20; 
+                return 0 - radius - 20;
               }
             })
-            .attr('y', function(d, i) { 
+            .attr('y', function(d, i) {
               if (attrs.type === 'sentiment' || attrs.type === 'reaction') {
                 return (20 * (i + 1) - 210);
               } else {
-                return (20 * (i + 1)) - 260; 
+                return (20 * (i + 1)) - 260;
               }
             })
             .on('mouseover', function(d, i) {
@@ -369,7 +371,7 @@ angular.module('SubSnoopApp')
               });
               scope.mouseOverPath.call(sel.select('path')[0][0], sel.datum());
             })
-            .style('fill', function(d) { 
+            .style('fill', function(d) {
               return chartData.colors[d.label];
             });
 
@@ -378,10 +380,10 @@ angular.module('SubSnoopApp')
               if (attrs.type === 'sentiment' || attrs.type === 'reaction') {
                 return 0 - radius - 15;
               } else {
-                return 0 - radius; 
+                return 0 - radius;
               }
             })
-            .attr('y', function(d, i) { 
+            .attr('y', function(d, i) {
               if (attrs.type === 'sentiment' || attrs.type === 'reaction') {
                 return (20 * (i + 1) - 200);
               } else {
@@ -396,7 +398,7 @@ angular.module('SubSnoopApp')
               });
               scope.mouseOverPath.call(sel.select('path')[0][0], sel.datum());
             })
-            .text(function(d) { return d.label; });       
+            .text(function(d) { return d.label; });
 
         }
 

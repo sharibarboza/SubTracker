@@ -38,13 +38,13 @@ angular.module('SubSnoopApp')
         scope.type = scope.data.thumbnail;
         scope.url = scope.data.url;
         var page = attrs.page;
-        
+
         var getTemplate = function(data, url, type) {
           if (isThumbnail(data)) {
             return '<img class="thumb thumb-pic" lazy-img="' + type + '">';
-          } else if (page == 'submissions' && windowWidth > 800) {
+          } else if (page == 'submissions' && windowWidth > 750) {
             return '<div class="thumb thumb-' + type + '"></div>';
-          } else if (page == 'search' && windowWidth > 800) {
+          } else if (page == 'search' && windowWidth > 750) {
             return '<div class="thumb thumb-search-' + type + '"></div>';
           } else {
             return '<div class="thumb thumb-beta-' + type + '"></div>';

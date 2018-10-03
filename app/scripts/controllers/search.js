@@ -8,12 +8,13 @@
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('SearchCtrl', ['$rootScope', '$scope', 'searchResults', '$filter', 'search', 'subFactory', '$timeout', 'subsData', 'sortFactory', 
+  .controller('SearchCtrl', ['$rootScope', '$scope', 'searchResults', '$filter', 'search', 'subFactory', '$timeout', 'subsData', 'sortFactory',
   function ($rootScope, $scope, searchResults, $filter, search, subFactory, $timeout, subsData, sortFactory) {
-    /* 
+    /*
       Initalization
     */
     $scope.searching = false;  // For loading progression wheel
+    $scope.main = false;
     $scope.page = 'search';
     $scope.dataSubs = subsData.subs;
     $scope.subsArray = Object.keys($scope.dataSubs);
@@ -23,7 +24,7 @@ angular.module('SubSnoopApp')
     $scope.noResults = "";
     $rootScope.title = $scope.username + ' | Search';
     $scope.statuses = [];
-    
+
     /*
      Reset post-type and subs array to default on new search
     */
@@ -117,7 +118,7 @@ angular.module('SubSnoopApp')
     */
     $scope.searchResults = function() {
       $scope.searching = true;
-      $timeout(function() { 
+      $timeout(function() {
         resetFilters();
         $scope.origResults = searchResults.getData($scope.searchInput, $scope.dataSubs, $scope.type, $scope.subs);
 

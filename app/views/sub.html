@@ -10,23 +10,23 @@
 
       <!-- Banner showing subreddit icon and other info -->
       <div class="user-banner row column-pad">
-        <div class="col-md-10 col-md-push-1 banner-col">
+        <div class="col-md-10 col-md-push-1 col-xs-12 banner-col">
           <div class="row" style="padding-top: 20px; padding-bottom: 10px;">
-            <div class="col-md-2">
+            <div class="col-md-2 col-xs-12">
               <div class="profile-img">
                 <img ng-if="subInfo.icon_img" lazy-img="{{ subInfo.icon_img | escape }}" class="banner-img img-circle">
                 <img ng-if="!subInfo.icon_img" lazy-img="{{ '../images/logo.jpg' }}" class="banner-img img-circle">
               </div>
             </div>
-            <div class="col-md-8 middle-banner">
+            <div class="col-md-8 col-xs-12 middle-banner">
               <span class="user-name" id="{{ redditor.name }}"><strong><span class="orange">/r/</span>{{ subreddit }} <a ng-href="https://www.reddit.com/r/{{ subreddit }}" target="_blank"><button class="btn btn-xs btn-primary profile-btn">Subreddit Page <i class="fa fa-external-link" aria-hidden="true"></i></button></a></strong></span><br>
-              Last seen: <time-ago class="bright-blue" from-time='{{ page == "user" ? lastPost * 1000 : latestPost * 1000 }}'></time-ago>       
+              Last seen: <time-ago class="bright-blue" from-time='{{ page == "user" ? lastPost * 1000 : latestPost * 1000 }}'></time-ago>
             </div>
-            <div class="col-md-1 col-xs-3 middle-banner">
+            <div class="col-md-1 col-xs-6 middle-banner">
               <span class="sub-stat">{{ sub.comments.length }}</span><br>
               Comments
             </div>
-            <div class="col-md-1 col-xs-3 middle-banner">
+            <div class="col-md-1 col-xs-6 middle-banner">
               <span class="sub-stat">{{ sub.submissions.length }}</span><br>
               Submitted
             </div>
@@ -36,16 +36,16 @@
 
     <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
       <div class="user-head-nav col-md-10 col-md-push-1 no-padding column-pad" align="center">
-        <div class="col-md-2 post-tab sub-tab" ng-click="setTab(3)" ng-class="tab == 3 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">SUBREDDITS</strong></div>
-        <div class="col-md-2 col-xs-4 post-tab" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">OVERVIEW</strong></div>
-        <div class="col-md-2 col-xs-4 post-tab" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">COMMENTS</strong></div>
-        <div class="col-md-2 col-xs-4 post-tab" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">SUBMITTED</strong></div>
+        <div class="col-md-2 col-sm-3 post-tab sub-tab" ng-click="setTab(3)" ng-class="tab == 3 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">SUBREDDITS</strong></div>
+        <div class="col-md-2 col-sm-3 col-xs-4 post-tab" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">OVERVIEW</strong></div>
+        <div class="col-md-2 col-sm-3 col-xs-4 post-tab" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">COMMENTS</strong></div>
+        <div class="col-md-2 col-sm-3 col-xs-4 post-tab" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">SUBMITTED</strong></div>
       </div>
     </div>
 
   </div>
 
-  <div class="sub-table column-pad" style="min-height: 100vh;">
+  <div class="sub-table column-pad">
     <div class="no-margin row">
       <br>
 
@@ -60,7 +60,7 @@
         <div align="center" id="pies" class="row no-margin">
           <div class="col-md-6 col-xs-12 no-padding" align="center">
             <md-card class="md-card-margin" style="margin-right: 0;">
-              <md-card-content class="no-pad div-box" style="border-right: none;">
+              <md-card-content class="no-pad div-box left-pie-box" style="border-right: none;">
                 <strong class="light-gray">SENTIMENT ANALYSIS</strong><br>
                 <span class="small-font gray">Hover to see the number of posts for each category.</span>
                 <donut-chart type="sentiment" sub="{{ subreddit }}" align="center"></donut-chart>
@@ -69,7 +69,7 @@
           </div>
           <div class="col-md-6 col-xs-12 no-padding" align="center">
             <md-card class="md-card-margin" style="margin-left: 0;">
-              <md-card-content class="no-pad div-box" style="border-left: none;">
+              <md-card-content class="no-pad div-box right-pie-box" style="border-left: none;">
                 <strong class="light-gray">VOTING FEEDBACK</strong><br>
                 <span class="small-font gray">Hover to see the number of posts for each category.</span>
                 <donut-chart type="reaction" sub="{{ subreddit }}" align="center"></donut-chart>
@@ -81,7 +81,7 @@
         <!-- Word cloud of most mentioned words in sub -->
         <div ng-include src="'views/sub-wordcloud.html'"></div>
 
-        <br>  
+        <br>
 
         <md-card class="no-pad note-card">
           <span class="small-font gray" style="font-weight: 400; margin-bottom: 10px;">Note: Since Reddit only stores the last 1000 comments and the last 1000 submissions of a user, the data shown here only represents the most recent activity since <strong ng-bind="firstPost * 1000 | amDateFormat: 'MMMM Do, YYYY'"></strong></span>
@@ -97,10 +97,10 @@
       <div ng-if="tab < 2">
         <!-- For displaying if there are no comments or submissions -->
         <div ng-if="tab == 0 && sub.comments.length == 0" class="col-md-10 col-md-push-1 no-padding">
-          <h4 class="light-gray margin-pad">{{ username }} has no comments in {{ subreddit }}.</h4>
+          <div class="alert alert-secondary">{{ username }} has no comments in {{ subreddit }}.</div>
         </div>
         <div ng-if="tab == 1 && sub.submissions.length == 0" class="col-md-10 col-md-push-1 no-padding">
-          <h4 class="light-gray margin-pad">{{ username }} has no submissions in {{ subreddit }}.</h4>
+          <div class="alert alert-secondary">{{ username }} has no submissions in {{ subreddit }}.</div>
         </div>
 
         <!-- Left column for displaying posts -->
@@ -110,7 +110,7 @@
             <div class="row no-margin" id="table-start">
 
               <!-- Dropdown menu for sorting posts -->
-              <div class="col-md-2 no-padding dropdown-left-col">               
+              <div class="col-md-2 no-padding dropdown-left-col">
                 <div class="btn-group select-dropdown">
                   <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
                     {{ sortSelected.name }}
@@ -180,4 +180,3 @@
   </div>
 
 </div>
-
