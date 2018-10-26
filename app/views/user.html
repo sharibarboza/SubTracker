@@ -66,8 +66,8 @@
 
               <!-- Row displaying sorting dropdown menu -->
               <div class="row" id="subtable-head">
-                <div class="col-md-1 hidden-xs sort-header placeholder-gray" align="center">Sort</div>
-                <div class="col-md-3 col-sm-12 col-xs-12 dropdown-col no-left-pad">
+                <div class="col-md-1 hidden-sm hidden-xs sort-header placeholder-gray" align="center">Sort</div>
+                <div class="col-md-3 col-sm-6 col-xs-12 dropdown-col no-left-pad">
                   <div class="btn-group select-dropdown">
                     <button type="button" class="form-control sort-dropdown btn btn-default dropdown-toggle" data-toggle="dropdown">
                       <strong class="placeholder-gray">{{ selected.name }}</strong>
@@ -79,7 +79,7 @@
                 </div>
                 <div class="col-md-2 col-md-offset-3 no-left-pad">
                 </div>
-                <div class="col-md-3 col-sm-12 col-xs-12 no-right-pad search-sub-col" style="float: right;">
+                <div class="col-md-3 col-sm-6 col-xs-12 search-sub-col no-right-pad" style="float: right;">
                   <form>
                     <input type="text" id="testInput" class="form-control"
                            ng-model="searchSub" ng-change="changeSubs(searchSub)" placeholder="&#xF002; Search for a sub ..." style="font-family: FontAwesome, Helvetica Neue;" md-autofocus>
