@@ -2290,6 +2290,10 @@ Mobile
   .navbar-default .nav-link:last-child {
     padding-left: 5px;
   }
+
+  .gilded-icon {
+    margin-left: 0;
+  }
  }
 
  @media screen and (max-width: 600px) {

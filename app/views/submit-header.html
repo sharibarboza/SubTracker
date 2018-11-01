@@ -1,18 +1,20 @@
 <a ng-href="{{ element.url }}" target="_blank">
 <strong ng-if="page != 'search' || !element.highlighted_title" class="wrap-text">{{ element.title | escape }}</strong>
 <strong ng-if="page == 'search' && element.highlighted_title" class="wrap-text" ng-bind-html="element.highlighted_title | sanitize"></strong>
-</a> <span ng-if="element.link_flair_text" class="label label-default">{{ element.link_flair_text | escape }}</span><span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gilded }}</span></span>
+</a> <span ng-if="element.link_flair_text" class="label label-default">{{ element.link_flair_text | escape }}</span></span>
 
 <br>
 
-<span class="post-links">       
+<span class="post-links">
   <a ng-href="https://www.reddit.com{{ element.permalink }}" target="_blank"><ng-pluralize count="element.num_comments" when="{'1': '1 comment', 'other': '{{ element.num_comments | number }} comments'}"></ng-pluralize></a>
   <span class="mobile-sub-header" style="display: none;">
     <strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong><br>
     <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date gray"></span>
+    <span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gilded }}</span></span>
   </span>
   <span ng-show="page == 'search'" class="mobile-sub-search">
     &nbsp;&nbsp;<strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong>
     <span style="float: right;" ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date gray search-sub-date"></span>
+    <span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gilded }}</span></span>
   </span>
-</span> 
+</span>

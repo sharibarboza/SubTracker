@@ -408,6 +408,7 @@
       var obj = {};
       obj.id = submission.id;
       obj.type = submission.type;
+      obj.gilded = submission.gilded;
       obj.created_utc = submission.created_utc;
       obj.num_comments = submission.num_comments;
       obj.permalink = submission.permalink;
