@@ -170,7 +170,7 @@
       obj.name = response.name;
 
       obj.subreddit = null;
-      if ('subreddit' in response) {
+      if (response.subreddit) {
         obj.subreddit = {};
         obj.subreddit.icon_img = response.subreddit.icon_img;
       }
