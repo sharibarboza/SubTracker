@@ -61,7 +61,10 @@
           <div ng-if="tab == 0" class="col-md-10 col-md-push-1 no-padding" id="table-head" ng-controller="UserStatsCtrl">
             <div id="subreddits" class="margin-pad">
 
-              <h4><strong class="black">Ranked Subreddits</strong></h4>
+              <div class="row">
+                <div class="col-xs-6 no-pad"><h4><strong class="black">Ranked Subreddits</strong></h4></div>
+                <div class="col-xs-6 no-pad" align="right"><div class="btn btn-default" ng-click="refreshData()"><i class="fa fa-refresh"></i> Refresh Data</div></div>
+              </div>
               <br>
 
               <!-- Row displaying sorting dropdown menu -->
@@ -77,9 +80,7 @@
                     </ul>
                   </div>
                 </div>
-                <div class="col-md-2 col-md-offset-3 no-left-pad">
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12 search-sub-col no-right-pad" style="float: right;">
+                <div class="col-md-3 col-sm-6 col-xs-12 search-sub-col no-right-pad">
                   <form>
                     <input type="text" id="testInput" class="form-control"
                            ng-model="searchSub" ng-change="changeSubs(searchSub)" placeholder="&#xF002; Search for a sub ..." style="font-family: FontAwesome, Helvetica Neue;" md-autofocus>
@@ -144,6 +145,11 @@
           </div>
 
           <div ng-if="tab == 1" class="col-md-10 col-md-push-1 no-padding">
+            <div class="row margin-pad">
+              <div class="col-xs-6 no-pad"><h4><strong class="black">Subreddit Stats</strong></h4></div>
+              <div class="col-xs-6 no-pad" align="right"><div class="btn btn-default" ng-click="refreshData()"><i class="fa fa-refresh"></i> Refresh Data</div></div>
+            </div>
+            <br>
 
             <div id="statistics" ng-controller="UserStatsCtrl" align="center">
               <div class="row no-margin" style="width: 80%;">
@@ -169,7 +175,7 @@
             <div ng-include src="'views/user-heatmap.html'"></div>
 
             <md-card class="no-pad note-card">
-              <span class="small-font gray">Note: Since Reddit only stores the last 1000 comments and the last 1000 submissions of a user, the data shown here only represents the most recent activity since <strong ng-bind="firstPost * 1000 | amDateFormat: 'MMMM Do, YYYY'"></strong></span>
+              <span class="small-font gray">Note: Reddit only stores the last 1000 comments and the last 1000 submissions of a user.</span>
             </md-card>
 
             <br>

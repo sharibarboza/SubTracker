@@ -11,7 +11,7 @@ angular.module('SubSnoopApp')
   .controller('UserSubCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$filter', 'subsData', 'search',
     'subFactory', 'sortFactory', '$anchorScroll', '$location', '$timeout', 'subInfo', 'sentiMood', 'reaction',
     function ($rootScope, $scope, $routeParams, $window, $filter, subsData, search, subFactory, sortFactory, $anchorScroll, $location, $timeout, subInfo, sentiMood, reaction) {
-  
+
     /*
      Initalization
     */
@@ -75,7 +75,7 @@ angular.module('SubSnoopApp')
     $scope.open = true;
 
     $scope.sliceArray = function(data) {
-      return data.slice((($scope.subPage.current-1)*$scope.subPage.items), 
+      return data.slice((($scope.subPage.current-1)*$scope.subPage.items),
         (($scope.subPage.current)*$scope.subPage.items));
 
     };
@@ -223,6 +223,14 @@ angular.module('SubSnoopApp')
      */
     $scope.goToSubs = function() {
       $window.location.assign('#/' + $scope.username + '/');
+    }
+
+    /*
+     Refresh sub data
+    */
+    $scope.refreshData = function() {
+      localStorage.clear();
+      location.reload();
     }
 
   }

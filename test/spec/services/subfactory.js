@@ -71,7 +71,7 @@ describe("test subs factory", function () {
           }
     });
 
-    subFactory.getData(user).then(function(response) {
+    subFactory.getData(user, true).then(function(response) {
         subData = response;
     });
 
@@ -128,12 +128,6 @@ describe("test subs factory", function () {
      }
   });
 
-  it('should return first post date', function() {
-    if (subData) {
-        expect(subFactory.getFirstPost(null)).toEqual(date1);
-    }
-  });
-
   it('should return first post date from sub1', function() {
      if (subData) {
          const sub1 = subData.subs['sub1'];
@@ -145,12 +139,6 @@ describe("test subs factory", function () {
      if (subData) {
          const sub2 = subData.subs['sub2'];
          expect(subFactory.getFirstPost(sub2)).toEqual(date2);
-     }
-  });
-
-  it('should return latest post date', function() {
-     if (subData) {
-         expect(subFactory.getLatestPost(null)).toEqual(date3);
      }
   });
 

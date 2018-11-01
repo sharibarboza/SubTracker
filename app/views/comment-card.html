@@ -4,7 +4,7 @@
       <h5><strong>{{ page == 'user' ? 'Most Recent Comment' : 'Most Upvoted Comment' }}</strong></h5>
     </div>
     <div ng-if="page == 'user'" class="col-xs-5 no-padding card-sub" align="right">
-      <strong class="purple"><a class="purple" ng-href="#/{{ username }}/{{ element.subreddit }}/">/r/{{ element.subreddit | truncate:15:true }}</a></strong>
+      <strong class="purple"><a class="purple" ng-href="#/{{ username }}/{{ subreddit }}/">/r/{{ element.subreddit | truncate:15:true }}</a></strong>
     </div>
   </md-card-title>
   <md-divider></md-divider>

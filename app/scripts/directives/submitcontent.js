@@ -30,7 +30,7 @@ angular.module('SubSnoopApp')
      Check if submission is an image
      */
     var isImage = function(submit) {
-      return !submit.selftext_html && !submit.html && !submit.media && hasImgFormat(submit.url);
+      return !submit.selftext_html && !submit.media && hasImgFormat(submit.url);
     };
 
     /*
@@ -139,13 +139,13 @@ angular.module('SubSnoopApp')
      Check if submision content has preview images
     */
     var isPreview = function(data) {
-      if ('preview' in data && 'images' in data.preview) {
-        var resolutions = data.preview.images[0].resolutions;
+      if (data.preview) {
+        var resolutions = data.preview;
         var index = 3;
 
         if (resolutions.length <= 3) {
           index = resolutions.length-1;
-        }  
+        }
 
         if (resolutions[index] && 'url' in resolutions[index]) {
           return true;
@@ -161,7 +161,7 @@ angular.module('SubSnoopApp')
      Get the preview image with medium-size resolution
     */
     var getPreview = function(data) {
-      var resolutions = data.preview.images[0].resolutions;
+      var resolutions = data.preview;
       var index = 3;
 
       if (resolutions.length <= 3) {
@@ -214,7 +214,7 @@ angular.module('SubSnoopApp')
     var centerWrap = function(html) {
       return '<div align="center">' + html + '</div>';
     }
- 
+
     /*
      Sets up and cleans data for displaying submission content.
      Deals with displaying:

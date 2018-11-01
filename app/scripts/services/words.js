@@ -97,7 +97,9 @@ angular.module('SubSnoopApp')
       "it's",
       "its",
       "itself",
+      "just",
       "let's",
+      "like",
       "me",
       "more",
       "most",
@@ -245,13 +247,13 @@ angular.module('SubSnoopApp')
         var post = data[i], body_words, title_words;
 
         if (where === 'comments') {
-          groupWords(post.body);
+          groupWords(post.body_html);
         } else if (where === 'submits') {
           groupWords(post.title);
 
           if ('selftext' in post) {
             groupWords(post.selftext);
-          } 
+          }
         }
       }
     }
@@ -264,9 +266,9 @@ angular.module('SubSnoopApp')
 
       for (var i = 0; i < words.length; i++) {
         var word = $filter('escape')(words[i]);
-        
+
         if (isNotLink(word)) {
-          var splitWords = cleanWord(word);       
+          var splitWords = cleanWord(word);
           addWords(splitWords);
         }
       }
@@ -321,13 +323,17 @@ angular.module('SubSnoopApp')
     function cleanWord(word) {
       var newWords = [];
       var current = '';
+      var tags = ['div', 'class=', 'blockquote', 'quot', 'href', "\'s"];
+
+      for (var i = 0; i < tags.length; i++) {
+        var re = new RegExp(tags[i], 'g');
+        word = word.replace(re, '');
+      }
+
+      word = word.replace(new RegExp(/.+>/, 'g'), '');
 
       for (var i = 0; i < word.length; i++) {
         var char = word[i];
-
-        if (char == '\u2019') {
-          char = "\'";
-        }
 
         if (char.match(/[A-Za-zÀ-ÿ0-9-\']/i)) {
           current += char;

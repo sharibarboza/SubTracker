@@ -41,7 +41,7 @@ angular.module('SubSnoopApp')
      Set up chart data by getting all posts and calculating percentages
      Use the sentiMood library to generate sentiment analysis scores of a post
      */
-    function getChartData(subData) {     
+    function getChartData(subData) {
       var sentiment = new Sentimood();
 
       var sentimentData = { 'Positive' : 0, 'Neutral' : 0, 'Negative' : 0 };
@@ -89,7 +89,7 @@ angular.module('SubSnoopApp')
       chartData.center.value = "Post Attitude";
 
       if (total === 1) {
-        chartData.center.value2 = total + ' post';      
+        chartData.center.value2 = total + ' post';
       } else {
         chartData.center.value2 = total + ' posts';
       }

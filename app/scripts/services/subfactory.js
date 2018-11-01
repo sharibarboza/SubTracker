@@ -38,10 +38,10 @@
      User interface for sub factory
     */
     var factory = {
-      getData: function(user) {
+      getData: function(user, refresh) {
         resetData();
         username = user.name;
-        promise = getSubPromise(user);
+        promise = getSubPromise(user, refresh);
         return promise;
       },
       getSubData: function() {
@@ -104,16 +104,31 @@
      Only if user promise resolves, then do promise chaining for comments and
      submissions asynchronously
     */
-    function getSubPromise(user) {
+    function getSubPromise(user, refresh) {
+      if (refresh == null) {
+        refresh = false;
+      }
 
-      var commentPromise = promiseChain('comments', 'commentsCallback');
-      var submitPromise = promiseChain('submitted', 'submitsCallback');
-      // Resolve both comment and submission promises together
+      if (refresh || localStorage.getItem('user') != user.name) {
+        localStorage.clear();
+        var commentPromise = promiseChain('comments', 'commentsCallback');
+        var submitPromise = promiseChain('submitted', 'submitsCallback');
+        // Resolve both comment and submission promises together
 
-      return $q.all([commentPromise, submitPromise]).then(function() {
-        setSubData(user);
+        return $q.all([commentPromise, submitPromise]).then(function() {
+          setSubData(user);
+          localStorage.setItem('user', user.name);
+          localStorage.setItem('data', JSON.stringify(subData));
+          return subData;
+        });
+      } else {
+        subData = JSON.parse(localStorage.getItem('data'));
+        subs = subData.subs;
+        subNames = Object.keys(subs);
+        subLength = subNames.length;
+        setDefaultSortedArray();
         return subData;
-      });
+      }
     }
 
     /*
@@ -134,7 +149,9 @@
         'comments' : comments.length,
         'submissions' : submissions.length,
         'subs' : subs,
-        'upvotes' : upvotes
+        'upvotes' : upvotes,
+        'topComment': topComment[1],
+        'topSubmit': topSubmit[1]
       }
     }
 
@@ -328,7 +345,22 @@
      Add a new comment to a sub object
     */
     function addComment(name, subreddit, comment) {
-      subreddit.comments.push(comment);
+      /* Create comment object */
+      var obj = {};
+      obj.id = comment.id;
+      obj.type = comment.type;
+      obj.gilded = comment.gilded;
+      obj.created_utc = comment.created_utc;
+      obj.body_html = comment.body_html;
+      obj.link_permalink = comment.link_permalink;
+      obj.link_title = comment.link_title;
+      obj.link_url = comment.link_url;
+      obj.link_author = comment.link_author;
+      obj.num_comments = comment.num_comments;
+      obj.ups = comment.ups;
+      obj.subreddit = comment.subreddit;
+
+      subreddit.comments.push(obj);
       subreddit.count += 1;
 
       var date = $filter('date')(comment);
@@ -347,7 +379,41 @@
      Add a new submission to a sub object
     */
     function addSubmission(name, subreddit, submission) {
-      subreddit.submissions.push(submission);
+      /* Create submission object */
+      var obj = {};
+      obj.id = submission.id;
+      obj.type = submission.type;
+      obj.created_utc = submission.created_utc;
+      obj.num_comments = submission.num_comments;
+      obj.permalink = submission.permalink;
+      obj.ups = submission.ups;
+      obj.selftext_html = submission.selftext_html;
+      obj.subreddit = submission.subreddit;
+      obj.title = submission.title;
+      obj.url = submission.url;
+      obj.thumbnail = submission.thumbnail;
+      obj.thumbnail_width = submission.thumbnail_width;
+
+      obj.media = null;
+      if (submission.media) {
+        obj.media = {};
+        if ('oembed' in submission.media) {
+          obj.media.oembed = submission.media.oembed;
+        }
+        if ('reddit_video' in submission.media) {
+          obj.media.reddit_video = submission.media.reddit_video;
+        }
+      }
+
+      obj.preview = null;
+      if (submission.preview) {
+        obj.preview = {};
+        if ('images' in submission.preview) {
+          obj.preview = submission.preview.images[0].resolutions;
+        }
+      }
+
+      subreddit.submissions.push(obj);
       subreddit.count += 1;
 
       var date = $filter('date')(submission);
@@ -420,29 +486,22 @@
      otherwise, get the newest post in the sub only.
     */
     function getLatestPost(sub) {
-      if (sub) {
-        if ('latest_post' in sub) {
-          return sub.latest_post;
-        }
-
-        var subComment, subSubmit;
-        if ('comments' in sub) {
-          subComment = sub.comments[0];
-        }
-
-        if ('submissions' in sub) {
-          subSubmit = sub.submissions[0];
-        }
-
-        var latestPost = compareDates(subComment, subSubmit, true);
-        sub.latest_post = latestPost.created_utc;
+      if ('latest_post' in sub) {
         return sub.latest_post;
-      } else {
-        var newestComment = comments[0];
-        var newestSubmit = submissions[0];
-        var newestPost = compareDates(newestComment, newestSubmit, true);
-        return newestPost.created_utc;
       }
+
+      var subComment, subSubmit;
+      if ('comments' in sub) {
+        subComment = sub.comments[0];
+      }
+
+      if ('submissions' in sub) {
+        subSubmit = sub.submissions[0];
+      }
+
+      var latestPost = compareDates(subComment, subSubmit, true);
+      sub.latest_post = latestPost.created_utc;
+      return sub.latest_post;
     }
 
     /*
@@ -463,7 +522,6 @@
 
         firstPosts.push(compareDates(oldestComment, oldestSubmit, false));
       }
-
       return $filter('rank')('topPost', 'newest', firstPosts, null).subreddit;
     }
 

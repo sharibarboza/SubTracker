@@ -10,6 +10,7 @@
  angular.module('SubSnoopApp')
   .controller('UserCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', '$window', 'subFactory', 'moment', 'subsData', 'search', 'sortFactory', '$location', '$anchorScroll',
   function ($rootScope, $scope, $routeParams, $filter, $window, subFactory, moment, subsData, search, sortFactory, $location, $anchorScroll) {
+
     /*
      Initalization
     */
@@ -58,10 +59,8 @@
       $scope.latest = response.latest;
       $scope.subsArray = subFactory.getDefaultSortedArray();
       $scope.subLength = subFactory.getSubLength();
-      $scope.lastPost = subFactory.getLatestPost(null);
-      $scope.firstPost = subFactory.getFirstPost(null);
-      $scope.topComment = subFactory.getTopComment()[1];
-      $scope.topSubmit = subFactory.getTopSubmit()[1];
+      $scope.topComment = subsData.topComment;
+      $scope.topSubmit = subsData.topSubmit;
     };
 
     /*
@@ -115,6 +114,14 @@
       $scope.subList = search.findSubs($scope.subsArray, term);
       $scope.currentLimit = $scope.subList.length;
     };
+
+    /*
+     Refresh sub data
+    */
+    $scope.refreshData = function() {
+      localStorage.clear();
+      location.reload();
+    }
   }
 
 ]);

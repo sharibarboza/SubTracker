@@ -370,6 +370,11 @@ blockquote {
   margin-right: 10px;
 }
 
+.small-pad {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 .no-toppad {
   padding-top: 0;
 }
@@ -1058,11 +1063,6 @@ User Page
 .subbox-stats, .sub-text {
   vertical-align: middle;
   line-height: 30px;
-}
-
-#subreddits {
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 #subreddits .row {

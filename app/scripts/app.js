@@ -103,24 +103,8 @@ app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope
     }
 
     var loading;
-    if (curr === undefined || prev === undefined) {
+    if (localStorage.getItem('user') !== curr.pathParams.username) {
       loading = true;
-    } else {
-      if (curr.pathParams.username !== undefined) {
-          var username1 = curr.pathParams.username.toLowerCase();
-      }
-      if (prev.pathParams.username !== undefined) {
-          var username2 = prev.pathParams.username.toLowerCase();
-      }
-
-      if (username1 !== username2) {
-        loading = true;
-      } else if ($rootScope.userPath) {
-        loading = false;
-      } else if (username1 === username2 && $rootScope.redirect !== undefined) {
-        loading = true;
-        $rootScope.redirect = undefined;
-      }
     }
 
     if (curr.$$route && curr.$$route.resolve && loading) {

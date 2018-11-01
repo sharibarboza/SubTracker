@@ -30,6 +30,7 @@
     "grunt-svgmin": "^2.0.0",
     "grunt-usemin": "^3.0.0",
     "grunt-wiredep": "^2.0.0",
+    "jasmine": "^2.99.0",
     "jasmine-core": "^2.7.0",
     "jit-grunt": "^0.9.1",
     "jshint-stylish": "^1.0.0",
