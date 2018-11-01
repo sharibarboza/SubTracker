@@ -110,15 +110,20 @@
       }
 
       if (refresh || localStorage.getItem('user') != user.name) {
-        localStorage.clear();
         var commentPromise = promiseChain('comments', 'commentsCallback');
         var submitPromise = promiseChain('submitted', 'submitsCallback');
         // Resolve both comment and submission promises together
 
         return $q.all([commentPromise, submitPromise]).then(function() {
           setSubData(user);
-          localStorage.setItem('user', user.name);
-          localStorage.setItem('data', JSON.stringify(subData));
+
+          try {
+            localStorage.clear();
+            localStorage.setItem('user', user.name);
+            localStorage.setItem('data', JSON.stringify(subData));
+          } catch(e) {
+            console.log(e);
+          }
           return subData;
         });
       } else {
@@ -145,7 +150,7 @@
       setDefaultSortedArray();
 
       subData = {
-        'user': response,
+        'user': createUser(response),
         'comments' : comments.length,
         'submissions' : submissions.length,
         'subs' : subs,
@@ -153,6 +158,26 @@
         'topComment': topComment[1],
         'topSubmit': topSubmit[1]
       }
+    }
+
+    /*
+     Create user object
+    */
+    function createUser(response) {
+      var obj = {};
+      obj.created_utc = response.created_utc;
+      obj.icon_img = response.icon_img;
+      obj.name = response.name;
+
+      obj.subreddit = null;
+      if ('subreddit' in response) {
+        obj.subreddit = {};
+        obj.subreddit.icon_img = response.subreddit.icon_img;
+      }
+      obj.comment_karma = response.comment_karma;
+      obj.link_karma = response.link_karma;
+
+      return obj;
     }
 
     /*
