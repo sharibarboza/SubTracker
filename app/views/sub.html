@@ -49,8 +49,8 @@
     <div class="no-margin row">
       <div ng-if="tab == 2" class="col-md-10 col-md-push-1 no-padding">
 
-        <div class="row small-pad">
-          <div class="col-xs-6 no-pad"><h4><strong class="black">{{ username }}'s Overall Activity</strong></h4></div>
+        <div class="row small-pad header-refresh">
+          <div class="col-xs-6 no-pad"><h4><strong class="black">Overall Activity</strong></h4></div>
           <div class="col-xs-6 no-pad" align="right"><div class="btn btn-default" ng-click="refreshData()"><i class="fa fa-refresh"></i> Refresh Data</div></div>
         </div>
         <br>
@@ -111,13 +111,13 @@
         <div ng-if="(tab == 0 && sub.comments.length > 0) || (tab == 1 && sub.submissions.length > 0)" class="col-md-10 col-md-push-1 no-padding">
 
           <div class="post-page">
-            <div class="row small-pad">
-              <div class="col-xs-6 no-pad"><h4><strong class="black">{{ username }}'s {{ tab == 0 ? 'Comments' : 'Submissions' }}</strong></h4></div>
+            <div class="row no-margin header-refresh">
+              <div class="col-xs-6 no-pad"><h4><strong class="black">{{ tab == 0 ? 'Comments' : 'Submissions' }}</strong></h4></div>
               <div class="col-xs-6 no-pad" align="right"><div class="btn btn-default" ng-click="refreshData()"><i class="fa fa-refresh"></i> Refresh Data</div></div>
             </div>
             <br>
 
-            <div class="row small-pad" id="table-start">
+            <div class="row no-margin" id="table-start">
 
               <!-- Dropdown menu for sorting posts -->
               <div class="col-md-2 col-sm-3 col-xs-6 no-padding dropdown-left-col">
@@ -132,7 +132,7 @@
               </div>
 
               <!-- Dropdown menu for displaying the number of posts -->
-              <div class="col-md-2 col-sm-3 no-padding dropdown-right-col">
+              <div class="col-md-2 col-sm-3 col-xs-6 no-padding dropdown-right-col">
                 <div class="btn-group select-dropdown">
                   <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
                     View {{ subPage.items }}

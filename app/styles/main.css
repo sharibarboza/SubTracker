@@ -1066,7 +1066,7 @@ User Page
 }
 
 #subreddits .row {
-  margin: 0 !important;
+  margin: 0;
 }
 
 #sub-row md-card {
@@ -1812,10 +1812,6 @@ Mobile
   .panel-list md-card-title {
     padding: 20px;
   }
-
-  .no-left-pad {
-    padding-left: 0;
-  }
 }
 
 @media screen and (max-width: 1200px) {
@@ -1877,7 +1873,7 @@ Mobile
     margin-right: 0;
   }
 
-  .sub-table, .sub-rows, .user-side, #sidebar {
+  .sub-rows, .user-side, #sidebar {
     padding: 5px;
   }
 
@@ -1960,11 +1956,6 @@ Mobile
   .sub-table-col {
     padding-left: 15px !important;
   }
-
-  #subreddits .row {
-    padding-left: 0;
-    padding-right: 0;
-  }
 }
 
 @media screen and (max-width: 768px) {
@@ -1981,10 +1972,6 @@ Mobile
     padding-right: 15px;
   }
 
-  #table-head {
-    padding-top: 5px;
-  }
-
   .table-pad {
     padding: 10px 5px 20px 5px;
   }
@@ -1995,8 +1982,17 @@ Mobile
     text-align: center;
   }
 
+  .small-pad {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .banner-subtext {
     margin-top: 10px;
+  }
+
+  .header-refresh h4 {
+    font-size: 1.1em;
   }
 
   #subreddits .col-xs-8 {
@@ -2094,9 +2090,14 @@ Mobile
     padding: 0;
   }
 
-  md-card, #subreddits h4 {
+  md-card {
     margin-left: 15px;
     margin-right: 15px;
+  }
+
+  .header-refresh {
+    margin-left: 15px !important;
+    margin-right: 15px !important;
   }
 
   .user-head-nav .last-seen {
@@ -2152,7 +2153,7 @@ Mobile
     margin-top: 30px;
   }
 
-  .viewing-title, #table-start, #comments, #submissions, #searching {
+  .viewing-title, #table-start, #searching {
     padding-left: 15px;
     padding-right: 15px;
   }
@@ -2198,10 +2199,6 @@ Mobile
     margin-top: 15px;
   }
 
-  #testInput {
-    margin-top: 5px;
-  }
-
   #sub-row md-card {
     margin-left: 0;
     margin-right: 0;
@@ -2233,9 +2230,17 @@ Mobile
   .about-box, .sub-table .div-box {
     border-left: none !important;
     border-right: none !important;
+    height: 100%;
+  }
+
+  .about-box, .heatmap-box {
     padding-left: 0;
     padding-right: 0;
-    height: 100%;
+  }
+
+  .post-box {
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   #results-card {
@@ -2296,6 +2301,10 @@ Mobile
      display: none;
    }
 
+   #testInput {
+     margin-top: 5px;
+   }
+
    #mobile-input {
      display: block !important;
    }
@@ -2317,7 +2326,7 @@ Mobile
    }
 
    .nav-link {
-     font-size: 0.8em !important;
+     font-size: 0.95em !important;
    }
 
    .sub-name {

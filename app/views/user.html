@@ -61,7 +61,7 @@
           <div ng-if="tab == 0" class="col-md-10 col-md-push-1 no-padding" id="table-head" ng-controller="UserStatsCtrl">
             <div id="subreddits" class="margin-pad">
 
-              <div class="row">
+              <div class="row header-refresh">
                 <div class="col-xs-6 no-pad"><h4><strong class="black">Ranked Subreddits</strong></h4></div>
                 <div class="col-xs-6 no-pad" align="right"><div class="btn btn-default" ng-click="refreshData()"><i class="fa fa-refresh"></i> Refresh Data</div></div>
               </div>
@@ -145,7 +145,7 @@
           </div>
 
           <div ng-if="tab == 1" class="col-md-10 col-md-push-1 no-padding">
-            <div class="row margin-pad">
+            <div class="row margin-pad header-refresh">
               <div class="col-xs-6 no-pad"><h4><strong class="black">Subreddit Stats</strong></h4></div>
               <div class="col-xs-6 no-pad" align="right"><div class="btn btn-default" ng-click="refreshData()"><i class="fa fa-refresh"></i> Refresh Data</div></div>
             </div>
