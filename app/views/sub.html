@@ -47,7 +47,7 @@
 
   <div class="sub-table column-pad">
     <div class="no-margin row">
-      <div ng-if="tab == 2" class="col-md-10 col-md-push-1 no-padding">
+      <div ng-if="tab == 2" class="col-md-10 col-md-push-1 overview-body">
 
         <div class="row small-pad header-refresh">
           <div class="col-xs-6 no-pad"><h4><strong class="black">Overall Activity</strong></h4></div>
@@ -108,7 +108,7 @@
         </div>
 
         <!-- Left column for displaying posts -->
-        <div ng-if="(tab == 0 && sub.comments.length > 0) || (tab == 1 && sub.submissions.length > 0)" class="col-md-10 col-md-push-1 no-padding">
+        <div ng-if="(tab == 0 && sub.comments.length > 0) || (tab == 1 && sub.submissions.length > 0)" class="col-md-10 col-md-push-1 post-body">
 
           <div class="post-page">
             <div class="row no-margin header-refresh">

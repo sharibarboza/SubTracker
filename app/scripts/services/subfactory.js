@@ -392,8 +392,8 @@
       subreddit.recent_comment = date;
       subreddit.comment_ups += parseInt(comment.ups);
 
-      if (subreddit.comment_ups > topComment[0]) {
-        topComment = [subreddit.comment_ups, name];
+      if (comment.ups > topComment[0]) {
+        topComment = [comment.ups, name];
       }
 
       subreddit.gilded_comments += comment.gilded;
@@ -419,6 +419,7 @@
       obj.url = submission.url;
       obj.thumbnail = submission.thumbnail;
       obj.thumbnail_width = submission.thumbnail_width;
+      obj.link_flair_text = submission.link_flair_text;
 
       obj.media = null;
       if (submission.media) {
@@ -446,8 +447,8 @@
       subreddit.recent_submission = date;
       subreddit.submission_ups += parseInt(submission.ups);
 
-      if (subreddit.submission_ups > topSubmit[0]) {
-        topSubmit = [subreddit.submission_ups, name];
+      if (submission.ups > topSubmit[0]) {
+        topSubmit = [submission.ups, name];
       }
 
       subreddit.gilded_submissions += submission.gilded;

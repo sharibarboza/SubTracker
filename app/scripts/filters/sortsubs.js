@@ -119,7 +119,7 @@ angular.module('SubSnoopApp')
         }
       }
 
-      var cloned_keys = [].concat(input);
+      var cloned_keys = input.slice(0);
 
       if (cloned_keys) {
         if (attribute === 'subName') {

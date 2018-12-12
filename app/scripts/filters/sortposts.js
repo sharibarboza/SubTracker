@@ -31,7 +31,7 @@ angular.module('SubSnoopApp')
 
     /*
      Reverse = true to sort by most points
-     Secondarily sorted by most recent date, so if a post has the same number of 
+     Secondarily sorted by most recent date, so if a post has the same number of
      points, the most recent post has precedence.
     */
     var sortPoints = function(keys, no_reverse) {
@@ -41,8 +41,9 @@ angular.module('SubSnoopApp')
       return keys;
     };
 
-    return function (input, attribute) {
+    return function (originalInput, attribute) {
       var sortedData = [];
+      var input = originalInput.slice(0);
 
       if (input) {
         if (attribute === 'newest') {

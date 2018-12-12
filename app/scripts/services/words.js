@@ -209,25 +209,96 @@ angular.module('SubSnoopApp')
           resetData();
 
           var subs = subFactory.getSubData().subs;
-          var comments = subs[sub].comments;
-          var submissions = subs[sub].submissions;
 
-          splitWords(comments, 'comments');
-          splitWords(submissions, 'submits');
+          var sortedComments = $filter('sortPosts')(subs[sub].comments, 'mostUps');
+          var sortedSubmissions = $filter('sortPosts')(subs[sub].submissions, 'mostUps');
 
-          for (var key in wordDict) {
-            var wordObj = {};
-            wordObj.text = key;
-            wordObj.weight = wordDict[key];
-            wordArray.push(wordObj);
-          }
+          var upvotedComments = filterPosts(sortedComments, 'up');
+          var topComments = upvotedComments.slice(0, 25);
+          var upvotedSubmits = filterPosts(sortedSubmissions, 'up');
+          var topSubmits = upvotedSubmits.slice(0, 25);
 
-          subWords[sub] = wordArray;
+          splitWords(topComments, 'comments');
+          splitWords(topSubmits, 'submits');
+          addWordArray(sub, 'up');
+
+          wordDict = {};
+          wordArray = [];
+
+          var downvotedComments = filterPosts(sortedComments, 'down');
+          var downComments = downvotedComments.slice(-25);
+          var downvotedSubmits = filterPosts(sortedSubmissions, 'down');
+          var downSubmits = downvotedSubmits.slice(-25);
+          splitWords(downComments, 'comments');
+          splitWords(downSubmits, 'submits');
+          addWordArray(sub, 'down');
         }
 
         return subWords[sub];
       }
     };
+
+    /*
+     Add word array to upvoted or downvoted section of a sub's Words
+    */
+    function addWordArray(sub, type) {
+      adjustPluralWords();
+
+      for (var key in wordDict) {
+        var wordObj = {};
+        wordObj.text = key;
+        wordObj.weight = wordDict[key];
+        wordArray.push(wordObj);
+      }
+
+      if (!(sub in subWords)) {
+        subWords[sub] = {};
+      }
+
+      subWords[sub][type] = wordArray;
+    }
+
+    /*
+     Filter posts and check if it's positively or negatively upvoted
+    */
+    function filterPosts(posts, type) {
+      var newPosts = [];
+      for (var i = 0; i < posts.length; i++) {
+        var votes = posts[i].ups;
+        var post = posts[i];
+
+        if (type == 'up' && votes > 1) {
+          newPosts.push(post);
+        } else if (type == 'down' && votes <= 0) {
+          newPosts.push(post);
+        }
+      }
+      return newPosts;
+    }
+
+    /*
+     Check for pluralized words ending in 's' and combine with singles if necessary
+    */
+    function adjustPluralWords() {
+      for (var key in wordDict) {
+        if (key.slice(-1) == 's') {
+          var singleWord = key.slice(0, key.length-1);
+
+          if (singleWord in wordDict) {
+            var singleNum = wordDict[singleWord];
+            var pluralNum = wordDict[key];
+
+            if (singleNum >= pluralNum) {
+              wordDict[singleWord] += pluralNum;
+              delete wordDict[key];
+            } else {
+              wordDict[key] += singleNum;
+              delete wordDict[singleWord];
+            }
+          }
+        }
+      }
+    }
 
     /*
      Reset array and dictionaries for new subreddit
@@ -272,6 +343,22 @@ angular.module('SubSnoopApp')
           addWords(splitWords);
         }
       }
+    }
+
+    /*
+     Sort words alphabetically
+    */
+    function sort(words) {
+     words.sort(function(a, b) {
+       if (a < b) {
+         return -1;
+       } else if (a > b) {
+         return 1;
+       } else {
+         return 0;
+       }
+      });
+      return words;
     }
 
     /*
@@ -323,6 +410,8 @@ angular.module('SubSnoopApp')
     function cleanWord(word) {
       var newWords = [];
       var current = '';
+
+      word = word.replace('\’', "\'");
       var tags = ['div', 'class=', 'blockquote', 'quot', 'href', "\'s"];
 
       for (var i = 0; i < tags.length; i++) {

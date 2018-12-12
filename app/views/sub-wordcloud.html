@@ -1,10 +1,24 @@
 <div ng-controller="WordcloudCtrl" class="border-box cloud-box">
-  <md-card class="md-card-margin no-pad div-box" style="border-top: none;">
-    <strong class="light-gray">MOST MENTIONED WORDS</strong>
-    <md-card-content>
-      <div align="center">
-        <jqcloud words="words" steps="10" colors="{{ colors }}" class="word-cloud" style="width: 80%; height: 85vh;"></jqcloud>
-      </div>
-    </md-card-content>
-  </md-card>
+  <div class="row">
+    <div class="col-md-6 no-right-pad" align="center">
+      <md-card class="md-card-margin no-pad div-box no-right-margin">
+        <strong class="light-gray">MENTIONED WORDS IN MOST UPVOTED POSTS</strong>
+        <md-card-content>
+          <div align="center">
+            <jqcloud words="upWords" steps="10" colors="{{ colors }}" class="word-cloud" style="width: 85%; height: 35vh;"></jqcloud>
+          </div>
+        </md-card-content>
+      </md-card>
+    </div>
+    <div class="col-md-6 no-left-pad" align="center">
+      <md-card class="md-card-margin no-pad div-box no-left-margin" style="border-left: none;">
+        <strong class="light-gray">MENTIONED WORDS IN MOST DOWNVOTED POSTS</strong>
+        <md-card-content>
+          <div align="center">
+            <jqcloud words="downWords" steps="10" colors="{{ downColors }}" class="word-cloud" style="width: 85%; height: 35vh;"></jqcloud>
+          </div>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
 </div>
