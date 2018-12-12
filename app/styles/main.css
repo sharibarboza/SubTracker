@@ -383,6 +383,18 @@ blockquote {
   padding-right: 0;
 }
 
+.no-left-pad {
+  padding-left: 0;
+}
+
+.no-left-margin {
+  margin-left: 0;
+}
+
+.no-right-margin {
+  margin-right: 0;
+}
+
 .no-marginbottom {
   margin-bottom: 0;
 }
@@ -1473,6 +1485,11 @@ User Sub Page
   background-color: white !important;
 }
 
+.overview-body {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 /************************
 Sub Page Side Bar
 ************************/
@@ -1897,10 +1914,6 @@ Mobile
     font-size: 18px;
   }
 
-  .post-date {
-    display: block;
-  }
-
   #results-accordion .panel-body {
     padding: 0;
   }
@@ -1959,6 +1972,14 @@ Mobile
 }
 
 @media screen and (max-width: 768px) {
+
+  #sort-dropdown {
+    padding-left: 15px;
+  }
+
+  .post-body, .overview-body {
+    padding: 0;
+  }
 
   .content {
     padding-top: 50px;
@@ -2233,7 +2254,7 @@ Mobile
     height: 100%;
   }
 
-  .about-box, .heatmap-box {
+  .about-box {
     padding-left: 0;
     padding-right: 0;
   }
@@ -2383,6 +2404,7 @@ Mobile
    .div-box {
      border-left: none !important;
      border-right: none !important;
+     margin: 0;
    }
 
    .search-body {
@@ -2397,5 +2419,21 @@ Mobile
    .select-dropdown {
      width: 100%;
      margin-top: 5px;
+   }
+
+   .no-left-margin {
+     margin-left: 15px;
+   }
+
+   .no-right-margin {
+     margin-right: 15px;
+   }
+
+   .sub-table-col {
+     margin-bottom: 15px;
+   }
+
+   .div-box {
+     border-bottom: none;
    }
  }

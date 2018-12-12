@@ -239,7 +239,7 @@ angular.module('SubSnoopApp')
             var content;
             var submitID = data.id;
 
-            if (submissions.isStored(submitID, attrs.user)) {
+            if (page !== 'search' && submissions.isStored(submitID, attrs.user)) {
                 content = submissions.getContent(submitID);
                 return secureURLs(content);
             }
@@ -276,7 +276,9 @@ angular.module('SubSnoopApp')
               content = '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
             }
 
-            submissions.setContent(submitID, content, attrs.user);
+            if (page !== 'search') {
+              submissions.setContent(submitID, content, attrs.user);
+            }
 
             return secureURLs(content);
           };
