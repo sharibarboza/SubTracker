@@ -61,7 +61,8 @@ module.exports = function(config) {
       'app/bower_components/angular-moment/tests.js',
       'app/bower_components/angular-timeago/protractor-e2e.conf.js',
       'app/bower_components/pluralize/test.js',
-      'app/bower_components/angular-lazy-img/karma.conf.js'
+      'app/bower_components/angular-lazy-img/karma.conf.js',
+      'app/bower_components/firebase/*.js'
     ],
 
 
