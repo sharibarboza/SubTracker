@@ -11,7 +11,6 @@ angular.module('SubSnoopApp')
   .controller('UserSubCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$filter', 'subsData', 'search',
     'subFactory', 'sortFactory', '$anchorScroll', '$location', '$timeout', 'subInfo', 'sentiMood', 'reaction',
     function ($rootScope, $scope, $routeParams, $window, $filter, subsData, search, subFactory, sortFactory, $anchorScroll, $location, $timeout, subInfo, sentiMood, reaction) {
-
     /*
      Initalization
     */
@@ -21,7 +20,6 @@ angular.module('SubSnoopApp')
 
     $window.scrollTo(0, 0);
     $scope.pages = ['comments', 'submissions', 'sub'];
-    $scope.page = $scope.pages[2];
     $scope.main = false;
     $scope.username = $routeParams.username;
     $rootScope.title = $scope.username + ' | ' + $routeParams.subreddit;
@@ -71,8 +69,18 @@ angular.module('SubSnoopApp')
     */
     $scope.anchor = '';
     $scope.tabOptions = ['comments', 'submissions'];
-    $scope.tab = 2;
-    $scope.open = true;
+
+    var baseUrl = '/' + $scope.username + '/' + $scope.subreddit;
+    if ($location.path() === baseUrl + '/overview/') {
+      $scope.tab = 2;
+    } else if ($location.path() === baseUrl + '/submitted/') {
+      $scope.tab = 1;
+    } else if ($location.path() === baseUrl + '/comments/') {
+      $scope.tab = 0;
+    }
+
+    $scope.page = $scope.pages[$scope.tab];
+    $scope.open = false;
 
     $scope.sliceArray = function(data) {
       return data.slice((($scope.subPage.current-1)*$scope.subPage.items),
@@ -127,10 +135,14 @@ angular.module('SubSnoopApp')
         $scope.sortSelected = $scope.submitSort;
       }
 
-      if ($scope.tab < 2) {
-        $scope.setArray();
-      } else if ($scope.tab === 3) {
-          $scope.goToSubs();
+      if (num == 3) {
+        $window.location.assign('#/' + $scope.username + '/subreddits/');  // Go to user's main page
+      } else if (num == 2) {
+        $window.location.assign('#/' + $scope.username + '/' + $scope.subreddit + '/overview/');
+      } else if (num == 1) {
+        $window.location.assign('#/' + $scope.username + '/' + $scope.subreddit + '/submitted');
+      } else if (num == 0) {
+        $window.location.assign('#/' + $scope.username + '/' + $scope.subreddit + '/comments/');
       }
     };
 
@@ -153,8 +165,8 @@ angular.module('SubSnoopApp')
       } else {
         $scope.subInfo = $scope.sub.info;
       }
-
-      $scope.setTab(2);
+    } else if ($scope.tab < 2) {
+      $scope.setArray();
     }
 
     /*

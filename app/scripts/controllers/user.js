@@ -28,12 +28,23 @@
       $scope.noSubs = true;
     }
 
-    $scope.tab = 0;
+    if ($location.path() === '/' + $scope.username + '/subreddits/') {
+      $scope.tab = 0;
+    } else {
+      $scope.tab = 1;
+    }
+
     $scope.tabOptions = ['subreddits', 'timeline', 'stats'];
 
     $scope.setTab = function(num) {
       $window.scrollTo(0, 0);
       $scope.tab = parseInt(num);
+
+      if (num == 0) {
+        $window.location.assign('#/' + $scope.username + '/subreddits/');  // Go to user's main page
+      } else if (num == 1) {
+        $window.location.assign('#/' + $scope.username + '/stats/');
+      }
     };
 
     /*

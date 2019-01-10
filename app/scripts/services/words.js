@@ -346,22 +346,6 @@ angular.module('SubSnoopApp')
     }
 
     /*
-     Sort words alphabetically
-    */
-    function sort(words) {
-     words.sort(function(a, b) {
-       if (a < b) {
-         return -1;
-       } else if (a > b) {
-         return 1;
-       } else {
-         return 0;
-       }
-      });
-      return words;
-    }
-
-    /*
      Checks whether a word is not a link
     */
     function isNotLink(word) {
@@ -420,6 +404,7 @@ angular.module('SubSnoopApp')
       }
 
       word = word.replace(new RegExp(/.+>/, 'g'), '');
+      word = $filter('escape')(word);
 
       for (var i = 0; i < word.length; i++) {
         var char = word[i];

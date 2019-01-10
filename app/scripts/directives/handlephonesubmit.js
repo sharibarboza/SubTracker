@@ -26,7 +26,7 @@ angular.module('SubSnoopApp')
           var username = textFields[0].value;
 
           if (attrs.redirect === 'true') {
-            $window.location.assign('#/' + username + '/');  // Go to user's main page
+            $window.location.assign('#/' + username + '/subreddits/');  // Go to user's main page
             scope.$apply();
           }
         });

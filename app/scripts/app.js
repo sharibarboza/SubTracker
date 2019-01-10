@@ -48,7 +48,17 @@ app.config(['$routeProvider', '$locationProvider', 'lazyImgConfigProvider', func
       templateUrl: 'views/main.html',
       title: 'SubSnoop - Track your subreddit activity'
     })
-    .when('/:username/', {
+    .when('/:username/subreddits/', {
+      templateUrl: 'views/user.html',
+      controller: 'UserCtrl',
+      controllerAs: 'user',
+      resolve: {
+        subsData: function($q, $route, subFactory, userFactory) {
+          return getData($route, subFactory, userFactory);
+        }
+      }
+    })
+    .when('/:username/stats/', {
       templateUrl: 'views/user.html',
       controller: 'UserCtrl',
       controllerAs: 'user',
@@ -68,7 +78,27 @@ app.config(['$routeProvider', '$locationProvider', 'lazyImgConfigProvider', func
         }
       }
     })
-    .when('/:username/:subreddit/', {
+    .when('/:username/:subreddit/overview/', {
+      templateUrl: 'views/sub.html',
+      controller: 'UserSubCtrl',
+      controllerAs: 'usersub',
+      resolve: {
+        subsData: function($route, subFactory, userFactory) {
+          return getData($route, subFactory, userFactory);
+        }
+      }
+    })
+    .when('/:username/:subreddit/comments/', {
+      templateUrl: 'views/sub.html',
+      controller: 'UserSubCtrl',
+      controllerAs: 'usersub',
+      resolve: {
+        subsData: function($route, subFactory, userFactory) {
+          return getData($route, subFactory, userFactory);
+        }
+      }
+    })
+    .when('/:username/:subreddit/submitted/', {
       templateUrl: 'views/sub.html',
       controller: 'UserSubCtrl',
       controllerAs: 'usersub',

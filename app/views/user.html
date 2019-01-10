@@ -101,7 +101,7 @@
               </div>
               <!-- Subreddits table -->
               <div ng-repeat="subreddit in subList" id="sub-row">
-                <a ng-href="#/{{ username }}/{{ subreddit }}/">
+                <a ng-href="#/{{ username }}/{{ subreddit }}/overview/">
                 <md-card>
                   <md-card-title class="sub-box">
                     <div class="col-md-1 col-sm-1 col-xs-2 rank-box subname-box" align="center">{{ 1 + $index }}</div>
@@ -154,7 +154,7 @@
             <div id="statistics" ng-controller="UserStatsCtrl" align="center">
               <div class="row no-margin" style="width: 80%;">
                 <div ng-repeat="(badge, data) in badges" class="col-md-3 col-xs-6 no-padding" align="center">
-                  <a href="#/{{ username }}/{{ data.sub }}/">
+                  <a href="#/{{ username }}/{{ data.sub }}/overview/">
                   <md-card class="user-badge-card no-margin">
                     <md-tooltip class="tooltip">{{ data.sub }}: {{ data.points | number }} <ng-pluralize count="data.points" when="{'1': 'point', 'other': 'points'}"></ng-pluralize></md-tooltip>
                     <br>
