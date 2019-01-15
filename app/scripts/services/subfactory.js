@@ -8,8 +8,8 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sortFactory',
-  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory) {
+ .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sortFactory', 'subInfo',
+  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory, subInfo) {
     var pages = 10;
     var username;
     var promise;
@@ -31,6 +31,9 @@
 
     var topComment = [0, ''];
     var topSubmit = [0, ''];
+
+    var topWeek = {};
+    var topSub = null;
 
     var i = 0;
 
@@ -71,9 +74,23 @@
       },
       setSubInfo: function(subreddit, info) {
         try {
+          if (info.banner_img == "" || info.banner_img == null) {
+            info.banner_img = '../images/icons-bg.jpg';
+          }
           subData.subs[subreddit].info = info;
         } catch(error) {
           throw subreddit + ' does not exist in ' + username + '\'s subreddits.';
+        }
+      },
+      setIcons: function(subreddit, iconImg) {
+        try {
+          if (iconImg !== "" && iconImg !== null) {
+            subData.subs[subreddit].icon = iconImg;
+          } else {
+            subData.subs[subreddit].icon = null;
+          }
+        } catch(error) {
+          throw subreddit + ' does not have an icon image.';
         }
       },
       getFirstPost: function(sub) {
@@ -109,6 +126,9 @@
         refresh = false;
       }
 
+      //delete localStorage.previous;
+      //delete localStorage.prevData;
+
       if (refresh || localStorage.getItem('user') != user.name) {
         var commentPromise = promiseChain('comments', 'commentsCallback');
         var submitPromise = promiseChain('submitted', 'submitsCallback');
@@ -118,12 +138,50 @@
           setSubData(user);
 
           try {
-            localStorage.clear();
+            //localStorage.clear();
             localStorage.setItem('user', user.name);
             localStorage.setItem('data', JSON.stringify(subData));
           } catch(e) {
             console.log(e);
           }
+
+          try {
+            // Store in previous searched users
+            if (!('previous' in localStorage)) {
+              localStorage.setItem('previous', "");
+            }
+
+            if (!('prevData' in localStorage)) {
+              localStorage.setItem('prevData', JSON.stringify({}));
+            }
+
+            var prevUsers = localStorage.getItem('previous').split(',');
+            var prevData = JSON.parse(localStorage.getItem('prevData'));
+
+            if (prevUsers.indexOf(user.name) < 0) {
+              prevUsers.push(user.name);
+
+              var userData = {};
+              userData.avatar = user.icon_img;
+              userData.subs = subLength;
+              prevData[user.name] = userData;
+
+              if (prevUsers.length > 6) {
+                delete prevData[prevUsers[0]];
+                prevUsers = prevUsers.slice(1, 7);
+              }
+            } else {
+              var prevIndex = prevUsers.indexOf(user.name);
+              prevUsers.splice(prevIndex, 1);
+              prevUsers.push(user.name);
+            }
+
+            localStorage.setItem('previous', prevUsers);
+            localStorage.setItem('prevData', JSON.stringify(prevData));
+          } catch(error) {
+            console.log(error);
+          }
+
           return subData;
         });
       } else {
@@ -142,6 +200,7 @@
     function setSubData(response) {
       organizeComments(comments);
       organizeSubmitted(submissions);
+      calculateTopSub();
 
       subNames = Object.keys(subs);
       subLength = subNames.length;
@@ -156,7 +215,21 @@
         'subs' : subs,
         'upvotes' : upvotes,
         'topComment': topComment[1],
-        'topSubmit': topSubmit[1]
+        'topSubmit': topSubmit[1],
+        'topSub': topSub
+      }
+    }
+
+    /*
+     Caclulate the top sub of the week
+    */
+    function calculateTopSub() {
+      var max = null;
+      for (var sub in topWeek) {
+        if (max == null || topWeek[sub] > max) {
+          topSub = sub;
+          max = topWeek[sub];
+        }
       }
     }
 
@@ -196,6 +269,8 @@
       firstPost = null;
       topComment = [0, ''];
       topSubmit = [0, ''];
+      topWeek = {};
+      topSub = null;
       i = 0;
 
       sortFactory.clearSorted();
@@ -321,6 +396,7 @@
           subs[subreddit] = createNewSub();
         }
         addComment(subreddit, subs[subreddit], comment);
+        getTopSub(comment);
       }
 
     }
@@ -338,10 +414,27 @@
         }
 
         addSubmission(subreddit, subs[subreddit], submission);
+        getTopSub(submission);
       }
 
       for (var sub in subs) {
         subs[sub].submissions = $filter('sortPosts')(subs[sub].submissions, 'newest');
+      }
+    }
+
+    /*
+     Calculate the top post in the past week
+    */
+    function getTopSub(post) {
+      var date = moment.utc(post.created_utc * 1000).format();
+      var diff = moment.duration(moment().diff(moment(date))).asDays();
+
+      if (diff <= 7) {
+        if (!(post.subreddit in topWeek)) {
+          topWeek[post.subreddit] = 0;
+        }
+
+        topWeek[post.subreddit] += post.ups;
       }
     }
 
@@ -360,6 +453,7 @@
       subData.gilded_submissions = 0;
       subData.count = 0;
       subData.recent_activity = null;
+      subData.icon = null;
       subData.info = null;
       subData.avg_karma = 0;
 

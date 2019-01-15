@@ -11,7 +11,7 @@ angular.module('SubSnoopApp')
   .factory('reaction', function () {
     var username;
     var subs = {};
-    var colorData = {'Upvoted' : "#1DB3B0", 'Neutral' : "#5552B3", 'Downvoted' : "#ff6d00"};
+    var colorData = {'Upvoted' : "#90C7D6", 'Neutral' : "#D6D6D6", 'Downvoted' : "#ff7043"};
     var value2 = '';
 
     /*
@@ -77,7 +77,7 @@ angular.module('SubSnoopApp')
       chartData.center.value = "Post Reaction";
 
       if (total === 1) {
-        chartData.center.value2 = total + ' post';      
+        chartData.center.value2 = total + ' post';
       } else {
         chartData.center.value2 = total + ' posts';
       }

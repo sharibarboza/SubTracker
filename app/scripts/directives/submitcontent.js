@@ -116,6 +116,10 @@ angular.module('SubSnoopApp')
       }
 
       html = html.replace(/width="\d+"/g, 'width="' + videoWidth + '%"');
+
+      var videoHeight = 250;
+      html = html.replace(/height="\d+"/g, 'height="' + videoHeight + '"');
+
       return html;
     };
 
@@ -252,10 +256,10 @@ angular.module('SubSnoopApp')
             } else if (isPreview(data) && (isAttachedImage(data) || isImgurAlbum(data))) {
               content = getImageClass(page) + 'lazy-img="' + $filter('escape')(getPreview(data)) + '">';
             } else if (data.media && 'reddit_video' in data.media && data.media.reddit_video.fallback_url) {
-              var html = '<video width="100%" height="240" class="submit-pic" controls><source src="' + data.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
+              var html = '<video width="100%" class="submit-pic" controls><source src="' + data.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
               content = centerWrap(changeSize(page, html));
             } else if (isMP4(data.url)) {
-              var html = '<video width="100%" height="240" class="submit-pic" controls><source src="' + data.url + '" type="video/mp4"></video>';
+              var html = '<video width="100%" class="submit-pic" controls><source src="' + data.url + '" type="video/mp4"></video>';
               content = centerWrap(changeSize(page, html));
             } else if (isGif(data.url)) {
                 var gif_url;

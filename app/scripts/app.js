@@ -19,7 +19,9 @@ var app = angular
     'yaru22.angular-timeago',
     'angular-jqcloud',
     'g1b.calendar-heatmap',
-    'angularLazyImg'
+    'angularLazyImg',
+    'ngLocationUpdate',
+    'chart.js'
   ]);
 
 /*
@@ -99,6 +101,16 @@ app.config(['$routeProvider', '$locationProvider', 'lazyImgConfigProvider', func
       }
     })
     .when('/:username/:subreddit/submitted/', {
+      templateUrl: 'views/sub.html',
+      controller: 'UserSubCtrl',
+      controllerAs: 'usersub',
+      resolve: {
+        subsData: function($route, subFactory, userFactory) {
+          return getData($route, subFactory, userFactory);
+        }
+      }
+    })
+    .when('/:username/:subreddit/gilded/', {
       templateUrl: 'views/sub.html',
       controller: 'UserSubCtrl',
       controllerAs: 'usersub',

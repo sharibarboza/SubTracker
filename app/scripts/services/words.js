@@ -209,29 +209,12 @@ angular.module('SubSnoopApp')
           resetData();
 
           var subs = subFactory.getSubData().subs;
+          var comments = subs[sub].comments;
+          var submissions = subs[sub].submissions;
 
-          var sortedComments = $filter('sortPosts')(subs[sub].comments, 'mostUps');
-          var sortedSubmissions = $filter('sortPosts')(subs[sub].submissions, 'mostUps');
-
-          var upvotedComments = filterPosts(sortedComments, 'up');
-          var topComments = upvotedComments.slice(0, 25);
-          var upvotedSubmits = filterPosts(sortedSubmissions, 'up');
-          var topSubmits = upvotedSubmits.slice(0, 25);
-
-          splitWords(topComments, 'comments');
-          splitWords(topSubmits, 'submits');
-          addWordArray(sub, 'up');
-
-          wordDict = {};
-          wordArray = [];
-
-          var downvotedComments = filterPosts(sortedComments, 'down');
-          var downComments = downvotedComments.slice(-25);
-          var downvotedSubmits = filterPosts(sortedSubmissions, 'down');
-          var downSubmits = downvotedSubmits.slice(-25);
-          splitWords(downComments, 'comments');
-          splitWords(downSubmits, 'submits');
-          addWordArray(sub, 'down');
+          splitWords(comments, 'comments');
+          splitWords(submissions, 'submits');
+          addWordArray(sub);
         }
 
         return subWords[sub];
@@ -241,7 +224,7 @@ angular.module('SubSnoopApp')
     /*
      Add word array to upvoted or downvoted section of a sub's Words
     */
-    function addWordArray(sub, type) {
+    function addWordArray(sub) {
       adjustPluralWords();
 
       for (var key in wordDict) {
@@ -255,25 +238,7 @@ angular.module('SubSnoopApp')
         subWords[sub] = {};
       }
 
-      subWords[sub][type] = wordArray;
-    }
-
-    /*
-     Filter posts and check if it's positively or negatively upvoted
-    */
-    function filterPosts(posts, type) {
-      var newPosts = [];
-      for (var i = 0; i < posts.length; i++) {
-        var votes = posts[i].ups;
-        var post = posts[i];
-
-        if (type == 'up' && votes > 1) {
-          newPosts.push(post);
-        } else if (type == 'down' && votes <= 0) {
-          newPosts.push(post);
-        }
-      }
-      return newPosts;
+      subWords[sub] = wordArray;
     }
 
     /*

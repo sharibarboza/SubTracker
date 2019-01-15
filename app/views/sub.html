@@ -7,8 +7,229 @@
     <div ng-include src="'views/sidenav.html'"></div>
 
     <div class="banner-div" style="background-color: #F5F5F5">
+      <!-- User banner containing profile picture, and other user info -->
+      <div class="user-banner column-pad" ng-class="subInfo.banner_img == '../images/icons-bg.jpg' ? 'empty-class' : 'sub-bg'" style="background-image: url({{ subInfo.banner_img | escape }});" align="center">
+        <span ng-if="subInfo.banner_img == '../images/icons-bg.jpg'" class="user-name banner-content" id="{{ redditor.name }}"><strong><span class="orange-text">/r/</span>{{ subreddit }}</strong></span>
+      </div>
 
-      <!-- Banner showing subreddit icon and other info -->
+      <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
+      <div class="user-head-nav no-padding banner-pad" align="center">
+        <div class="row">
+          <div class="col-md-3" style="position: relative;">
+            <div ng-if="sub.info != null && subInfo.icon_img" class="sub-circle" style="background-image: url({{ subInfo.icon_img | escape }});"></div>
+            <div ng-if="!subInfo.icon_img" class="sub-circle img-no-border" style="background-image: url('{{ '../images/logo.jpg' }}');"></div>
+          </div>
+          <div class="col-md-1 tab-col">
+            <div class="post-tab gray-bold-subtitle" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'"><strong>Subreddits</strong></div>
+          </div>
+          <div class="col-md-1 tab-col">
+            <div class="post-tab gray-bold-subtitle" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'"><strong>Overview</strong></div>
+          </div>
+          <div class="col-md-1 tab-col">
+            <div class="post-tab gray-bold-subtitle" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'"><strong>Posts</strong></div>
+          </div>
+          <div class="col-md-1 tab-col">
+            <div class="post-tab gray-bold-subtitle" ng-click="setTab(3)" ng-class="tab == 3 ? 'underline-tab' : 'empty-class'"><strong>Comments</strong></div>
+          </div>
+          <div class="col-md-1 tab-col">
+            <div class="post-tab gray-bold-subtitle" ng-click="setTab(4)" ng-class="tab == 4 ? 'underline-tab' : 'empty-class'"><strong>Gilded <i class="gilded-icon gilded-sub"></i></strong></div>
+          </div>
+          <div class="col-md-1"></div>
+          <div class="col-md-3" style="padding-top: 6px; padding-bottom: 6px;" align="right">
+            <a ng-href="https://www.reddit.com/r/{{ subreddit }}/" target="_blank"><button class="btn orange-btn" style="vertical-align: middle; line-height: 30px; width: 100%;">Visit Subreddit <i class="fa fa-external-link"></i></button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-table" ng-controller="DataCtrl">
+      <div class="no-margin row width-pad">
+
+        <div class="row">
+          <div class="col-md-3 main-col">
+            <div class="card-box">
+              <div class="row">
+                <div class="col-md-8">
+                  <strong class="sub-num">{{ sub.total_ups | number }}</strong>
+                  <ng-pluralize class="gray-bold-subtitle" count="{{ sub.total_ups }}" when="{'1': 'point', 'other': 'points'}"/>
+                </div>
+                <div class="col-md-4" align="right">
+                  <div ng-if="user.subreddit" class="small-sub-circle" style="background-image: url({{ user.subreddit.icon_img | escape }});"></div>
+                  <div ng-if="!user.subreddit" class="small-sub-circle" style="background-image: url('{{ user.icon_img }}');"></div>
+                </div>
+              </div>
+
+              <br>
+              <span class="small-gray-font"><span class="fa fa-calendar"></span> Last seen <strong><time-ago class="orange-text" from-time='{{ page == "user" ? lastPost * 1000 : latestPost * 1000 }}'></time-ago></strong></span>
+              <br>
+              <div style="margin-top: 5px;">
+                <span class="fa fa-comment-o small-icon"></span>&nbsp;<span class="small-gray-font">{{ numComments }}</span>&nbsp;&nbsp;
+                <span class="fa fa-file-text-o small-icon"></span>&nbsp;<span class="small-gray-font">{{ numSubmissions }}</span>
+              </div>
+              <div style="margin-top: 5px;"><span class="badge" style="padding-left: 10px; padding-right: 10px;">Avg. {{ sub.avg_karma | karma }} <span class="glyphicon glyphicon-arrow-up"></span> / entry</span></div>
+
+              <br>
+              <button class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
+            </div>
+
+            <div class="card-box" align="center">
+              <div class="gray-box">
+                <div class="gray-box-content">
+                  <strong>Comment Points</strong>
+                  <div>
+                    <span style="font-size: 15px;">{{ sub.comment_ups | number }}</span>
+                    <span class="small-white-font">
+                      <strong ng-class="sub.comment_ups > 0 ? 'green' : 'orange'"><span ng-class="sub.comment_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+                      (~ {{ sub.comment_ups | average : numComments : 0 }} / comment)
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="gray-box">
+                <div class="gray-box-content">
+                  <strong>Post Points</strong>
+                  <div>
+                    <span style="font-size: 15px;">{{ sub.submission_ups | number }}</span>
+                    <span class="small-white-font">
+                      <strong ng-class="sub.submission_ups > 0 ? 'green' : 'orange'"><span ng-class="sub.submission_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+                      (~ {{ sub.submission_ups | average : numSubmissions : 0 }} / post)
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div ng-if="tab == 1" class="col-md-6 main-col">
+            <div class="card-box" ng-controller="SubChartCtrl">
+              <strong class="purple-heading">Recent Points Per Month</strong>
+              <br>
+              <span class="gray-bold-subtitle">Approx. {{ voteAverage | number }} <ng-pluralize count="{{ voteAverage }}" when="{'1': 'point', 'other': 'points'}"/> per month</span>
+              <br><br>
+              <canvas id="line" class="chart chart-line" chart-data="data"
+              chart-labels="labels" chart-series="series" chart-options="options"
+              chart-dataset-override="datasetOverride" chart-click="onClick">
+              </canvas>
+            </div>
+
+            <div class="card-box">
+              <div ng-include src="'views/sub-heatmap.html'"></div>
+              <div align="center" style="margin-top: 10px; margin-bottom: 20px;">
+                <span class="small-gray-font">Per month statistics start from the oldest post within the last 6 months.</span>
+              </div>
+            </div>
+
+            <div class="card-box" align="center">
+              <div class="row">
+                <div class="col-md-6" align="center">
+                  <strong class="purple-heading">Sentiment Analysis</strong>
+                  <br>
+                  <donut-chart type="sentiment" sub="{{ subreddit }}" align="center"></donut-chart>
+                </div>
+                <div class="col-md-6" align="center">
+                  <strong class="purple-heading">Voting Feedback</strong>
+                  <br>
+                  <donut-chart type="reaction" sub="{{ subreddit }}" align="center"></donut-chart>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-box">
+              <div ng-include src="'views/sub-wordcloud.html'"></div>
+              <div align="center" style="margin-top: 10px; margin-bottom: 20px;">
+                <span class="gray-bold-subtitle">Note: Reddit only stores the last 1000 comments and 1000 posts of a user.</span>
+              </div>
+            </div>
+          </div>
+
+          <div ng-if="tab > 1" class="col-md-6 main-col">
+            <div ng-if="(tab == 2 && numSubmissions > 0) || (tab == 3 && numComments > 0) || (tab == 4 && gilded)">
+              <div id="{{ tabOptions[tab] }}">
+                <div ng-repeat="element in slicedArray | limitTo:limit" class="comment-list card-box list-card-box">
+                  <div ng-if="element.type == 'comment'">
+                    <div ng-include src="'views/comment-no-title.html'"></div>
+                  </div>
+                  <div ng-if="element.type == 'submit'">
+                    <div ng-include src="'views/submission.html'"></div>
+                  </div>
+                </div>
+                <div ng-if="limit < limits[tab]" align="center">
+                  <button style="margin-top: 10px;" ng-click="loadMore()" class="btn gray-btn">Load More</button>
+                </div>
+              </div>
+            </div>
+            <div ng-if="tab == 3 && numComments == 0">
+              <div class="card-box">
+                {{ username }} has no comments in <strong><span class="orange-text">/r/</span>{{ subreddit }}.</strong>
+              </div>
+            </div>
+            <div ng-if="tab == 2 && numSubmissions == 0">
+              <div class="card-box">
+                {{ username }} has no submissions in <strong><span class="orange-text">/r/</span>{{ subreddit }}.</strong>
+              </div>
+            </div>
+            <div ng-if="tab == 4 && !gilded">
+              <div class="card-box">
+                {{ username }} has no gilded posts in <strong><span class="orange-text">/r/</span>{{ subreddit }}.</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3 main-col">
+            <div ng-if="tab == 1" class="card-box">
+              <strong class="purple-heading">About This Subreddit</strong>
+              <br><br>
+              <span class="small-gray-font"><span class="fa fa-calendar"></span> Created <strong class="orange-text" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></strong></span>
+              <div style="margin-top: 5px;">
+                <span class="small-gray-font"><i class="fa fa-user-plus" aria-hidden="true"></i>
+                <span class="gray-bold-subtitle">{{ subInfo.subscribers | number }}</span> subscribers</span>
+              </div>
+              <br>
+              <p ng-if="subInfo.public_description" class="small-font" ng-bind-html="subInfo.public_description_html | sanitize"></p>
+            </div>
+
+            <div ng-if="tab > 1" class="card-box">
+              <strong class="purple-heading" style="text-transform: capitalize;">Filter {{ tabOptions[tab] }}</strong>
+              <br><br>
+              <strong class="gray-bold-subtitle">Sort by:</strong>
+              <br>
+              <div class="btn-group select-dropdown dropdown-margin">
+                <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  {{ sortSelected.name }}
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li ng-repeat="sort in data.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card-box" ng-controller="PreviousUsersCtrl">
+              <strong class="purple-heading">Previous Redditors</strong>&nbsp;&middot;&nbsp;<span class="small-gray=font orange-text" ng-click="clearStorage()">Clear</span>
+              <div ng-repeat="listUser in prevUsers">
+                <a ng-href="#/{{ listUser }}/subreddits/" class="prevRow"><div class="row" style="margin-top: 15px;">
+                  <div class="col-md-3 col-xs-4">
+                    <img class="img-circle prev-img img-responsive" lazy-img="{{ prevData[listUser].avatar | escape }}">
+                  </div>
+                  <div class="col-md-9 col-xs-8">
+                    <strong class="prevName">{{ listUser }}</strong>
+                    <br>
+                    <span class="small-gray-font">{{ prevData[listUser].subs }} <ng-pluralize count="{{ prevData[listUser].subs }}" when="{'1': 'subreddit', 'other': 'subreddits'}"></span>
+                  </div>
+                </div></a>
+              </div>
+              <div ng-if="prevUsers.length == 0">
+                <br>
+                No previously searched users yet.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+      <!--
       <div class="user-banner row column-pad">
         <div class="col-md-10 col-md-push-1 col-xs-12 banner-col">
           <div class="row" style="padding-top: 20px; padding-bottom: 10px;">
@@ -34,7 +255,6 @@
         </div>
       </div>
 
-    <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
       <div class="user-head-nav col-md-10 col-md-push-1 no-padding column-pad" align="center">
         <div class="col-md-2 col-sm-3 post-tab sub-tab" ng-click="setTab(3)" ng-class="tab == 3 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">SUBREDDITS</strong></div>
         <div class="col-md-2 col-sm-3 col-xs-4 post-tab" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">OVERVIEW</strong></div>
@@ -42,151 +262,7 @@
         <div class="col-md-2 col-sm-3 col-xs-4 post-tab" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">SUBMITTED</strong></div>
       </div>
     </div>
-
   </div>
-
-  <div class="sub-table column-pad">
-    <div class="no-margin row">
-      <div ng-if="tab == 2" class="col-md-10 col-md-push-1 overview-body">
-
-        <div class="row small-pad header-refresh">
-          <div class="col-xs-6 no-pad"><h4><strong class="black">Overall Activity</strong></h4></div>
-          <div class="col-xs-6 no-pad" align="right"><div class="btn btn-default" ng-click="refreshData()"><i class="fa fa-refresh"></i> Refresh Data</div></div>
-        </div>
-        <br>
-
-        <!-- Sub banner, information, creation date, etc -->
-        <div ng-include src="'views/sub-info.html'"></div>
-
-        <!-- Sub calendar displaying post dates -->
-        <div ng-include src="'views/sub-heatmap.html'"></div>
-
-        <div align="center" id="pies" class="row no-margin">
-          <div class="col-md-6 col-xs-12 no-padding" align="center">
-            <md-card class="md-card-margin" style="margin-right: 0;">
-              <md-card-content class="no-pad div-box left-pie-box" style="border-right: none;">
-                <strong class="light-gray">SENTIMENT ANALYSIS</strong><br>
-                <span class="small-font gray">Hover to see the number of posts for each category.</span>
-                <donut-chart type="sentiment" sub="{{ subreddit }}" align="center"></donut-chart>
-              </md-card-content>
-            </md-card>
-          </div>
-          <div class="col-md-6 col-xs-12 no-padding" align="center">
-            <md-card class="md-card-margin" style="margin-left: 0;">
-              <md-card-content class="no-pad div-box right-pie-box" style="border-left: none;">
-                <strong class="light-gray">VOTING FEEDBACK</strong><br>
-                <span class="small-font gray">Hover to see the number of posts for each category.</span>
-                <donut-chart type="reaction" sub="{{ subreddit }}" align="center"></donut-chart>
-              </md-card-content>
-            </md-card>
-          </div>
-        </div>
-
-        <!-- Word cloud of most mentioned words in sub -->
-        <div ng-include src="'views/sub-wordcloud.html'"></div>
-
-        <br>
-
-        <md-card class="no-pad note-card">
-          <span class="small-font gray" style="font-weight: 400; margin-bottom: 10px;">Note: Since Reddit only stores the last 1000 comments and the last 1000 submissions of a user, the data shown here only represents the most recent activity since <strong ng-bind="firstPost * 1000 | amDateFormat: 'MMMM Do, YYYY'"></strong></span>
-        </md-card>
-
-        <br>
-        <div align="center" class="center-back">
-          <back-top></back-top>
-          <br><br>
-        </div>
-      </div>
-
-      <div ng-if="tab < 2">
-        <!-- For displaying if there are no comments or submissions -->
-        <div ng-if="tab == 0 && sub.comments.length == 0" class="col-md-10 col-md-push-1 no-padding">
-          <div class="alert alert-secondary">{{ username }} has no comments in {{ subreddit }}.</div>
-        </div>
-        <div ng-if="tab == 1 && sub.submissions.length == 0" class="col-md-10 col-md-push-1 no-padding">
-          <div class="alert alert-secondary">{{ username }} has no submissions in {{ subreddit }}.</div>
-        </div>
-
-        <!-- Left column for displaying posts -->
-        <div ng-if="(tab == 0 && sub.comments.length > 0) || (tab == 1 && sub.submissions.length > 0)" class="col-md-10 col-md-push-1 post-body">
-
-          <div class="post-page">
-            <div class="row no-margin header-refresh">
-              <div class="col-xs-6 no-pad"><h4><strong class="black">{{ tab == 0 ? 'Comments' : 'Submissions' }}</strong></h4></div>
-              <div class="col-xs-6 no-pad" align="right"><div class="btn btn-default" ng-click="refreshData()"><i class="fa fa-refresh"></i> Refresh Data</div></div>
-            </div>
-            <br>
-
-            <div class="row no-margin" id="table-start">
-
-              <!-- Dropdown menu for sorting posts -->
-              <div class="col-md-2 col-sm-3 col-xs-6 no-padding dropdown-left-col">
-                <div class="btn-group select-dropdown">
-                  <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    {{ sortSelected.name }}
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="sort in data.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- Dropdown menu for displaying the number of posts -->
-              <div class="col-md-2 col-sm-3 col-xs-6 no-padding dropdown-right-col">
-                <div class="btn-group select-dropdown">
-                  <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    View {{ subPage.items }}
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="view in views" ng-click="setItemsPerPage(view)">View {{ view }}</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div class="row small-pad">
-
-              <!-- Display the number of current posts shown -->
-              <div class="col-md-6 viewing-row">
-                <span class="small-font viewing-title">Viewing <strong class="orange">{{ slicedArray.length }}</strong> of {{ sub[tabOptions[tab]].length }} {{ tabOptions[tab] }} </span>
-              </div>
-
-              <!-- Top Pagination -->
-              <div class="col-md-6 no-padding paginate" align="right" id="top-paginate">
-                <pagination ng-change="setArray()" total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" style="margin: -5px;"></pagination>
-              </div>
-            </div>
-          </div>
-          <br>
-
-          <div id="{{ tabOptions[tab] }}">
-
-            <!-- Display list of posts (comment or submission) -->
-            <div ng-repeat="element in slicedArray" class="comment-list">
-              <div ng-if="element.type == 'comment'">
-                <div ng-include src="'views/comment-no-title.html'"></div>
-              </div>
-              <div ng-if="element.type == 'submit'">
-                <div ng-include src="'views/submission.html'"></div>
-              </div>
-            </div>
-            <div class="row bottom-pag">
-              <br>
-              <div align="center" class="center-back">
-                <back-top></back-top>
-                <br><br>
-              </div>
-
-              <!-- Bottom pagination -->
-              <div class="no-padding" align="center">
-                <pagination ng-change="setArray(1)" total-items="sub[tabOptions[tab]].length" ng-model="subPage.current" class="pagination-sm" items-per-page="subPage.items" max-size="subPage.max" id="bottom-paginate"></pagination>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
+  -->
 
 </div>
