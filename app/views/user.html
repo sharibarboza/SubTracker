@@ -93,7 +93,7 @@
                 <div class="col-md-9">
                   <div class="row">
                     <div class="col-md-9">
-                      <span class="sub-name">{{ subreddit }}</span> <span ng-if="subs[subreddit].gilded_comments > 0 || subs[subreddit].gilded_submissions > 0" class="gilded-icon gilded-sub"></span>
+                      <span class="sub-name">{{ subreddit }}</span> <span ng-if="subs[subreddit].gilded_comments > 0 || subs[subreddit].gilded_submissions > 0" class="gilded-star gilded-sub"></span>
                       &nbsp;&middot;&nbsp;&nbsp;<span class="small-gray-font" ng-init="seen=subs[subreddit].recent_activity.created_utc * 1000"><time-ago from-time='{{ seen }}'></time-ago></span>
 
                       <br>

@@ -16,6 +16,8 @@ angular.module('SubSnoopApp')
     var count = 0;
     var dataArray = [];
     var subCount = 0;
+    var uniqueSubs = {};
+    var average = null;
 
     var minDate = moment().startOf('day').subtract(7, 'month');
     var diff = (moment.duration(moment().diff(minDate)).asMonths()).toFixed(0);
@@ -40,16 +42,16 @@ angular.module('SubSnoopApp')
             getData('submissions');
           }
           fillDataArray();
+          calculateAverage();
           user = current_user;
         }
-
         return dataArray;
       },
       getCount: function() {
         return count;
       },
       getAverage: function() {
-        return (subCount / diff).toFixed(0);
+        return average;
       }
     };
 
@@ -62,6 +64,8 @@ angular.module('SubSnoopApp')
       count = 0;
       dataArray = [];
       subCount = 0;
+      uniqueSubs = {};
+      average = null;
     };
 
     /*
@@ -73,6 +77,20 @@ angular.module('SubSnoopApp')
       for (var data in dates) {
         dataArray.push(dates[data]);
       }
+    }
+
+    /*
+     Calculate the average of unique subreddits per month.
+    */
+    function calculateAverage() {
+      var totalSubs = 0;
+      for (var key in uniqueSubs) {
+        var subDict = uniqueSubs[key];
+        var length = Object.keys(subDict).length;
+        totalSubs += length;
+      }
+      var totalMonths = Object.keys(uniqueSubs).length;
+      average = (totalSubs / totalMonths).toFixed(0);
     }
 
     /*
@@ -95,6 +113,15 @@ angular.module('SubSnoopApp')
 
         if (date >= minDate) {
           setUserDay(where, dateObj, elem);
+
+          var month = date.month();
+          if (!(month in uniqueSubs)) {
+            uniqueSubs[month] = [];
+          }
+
+          if (!(elem.subreddit in uniqueSubs[month])) {
+            uniqueSubs[month][elem.subreddit] = null;
+          }
         }
       }
     }
@@ -128,7 +155,6 @@ angular.module('SubSnoopApp')
           'submissions' : 0
         };
         dayData.numSubs += 1;
-        subCount += 1;
       }
 
       if (where === 'comments') {

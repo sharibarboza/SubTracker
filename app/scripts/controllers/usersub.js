@@ -193,7 +193,7 @@ angular.module('SubSnoopApp')
       var posts = ($scope.comments).concat($scope.submissions);
 
       for (var i = 0; i < posts.length; i++) {
-        if (posts[i].gilded > 0) {
+        if ($filter('gilded')(posts[i].gildings) > 0) {
           gilded.push(posts[i]);
         }
       }

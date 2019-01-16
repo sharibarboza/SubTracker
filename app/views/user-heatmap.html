@@ -1,6 +1,6 @@
 <md-card class="heatmap"  ng-controller="UserHeatmapCtrl">
   <strong class="purple-heading">Recent Subreddit Activity Per Month</strong>
-  <span class="gray-bold-subtitle">Approx. {{ subAverage }} <ng-pluralize count="{{ subAverage }}" when="{'1': 'subreddit', 'other': 'subreddits'}"/> per month</span>
+  <span class="gray-bold-subtitle">Approx. {{ subAverage }} unique <ng-pluralize count="{{ subAverage }}" when="{'1': 'subreddit', 'other': 'subreddits'}"/> per month</span>
   <br>
   <md-card-content class="no-padding">
     <div align="center">

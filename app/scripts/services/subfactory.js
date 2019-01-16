@@ -44,7 +44,11 @@
       getData: function(user, refresh) {
         resetData();
         username = user.name;
-        promise = getSubPromise(user, refresh);
+        try {
+          promise = getSubPromise(user, refresh);
+        } catch(e) {
+          console.log(e);
+        }
         return promise;
       },
       getSubData: function() {
@@ -128,21 +132,25 @@
 
       //delete localStorage.previous;
       //delete localStorage.prevData;
+      if ('data' in localStorage) {
+        var tempData = JSON.parse(localStorage.getItem('data'));
+      }
 
-      if (refresh || localStorage.getItem('user') != user.name) {
+      if (refresh || !tempData || tempData.user.name != user.name) {
         var commentPromise = promiseChain('comments', 'commentsCallback');
         var submitPromise = promiseChain('submitted', 'submitsCallback');
         // Resolve both comment and submission promises together
 
         return $q.all([commentPromise, submitPromise]).then(function() {
           setSubData(user);
-
+          var saved;
           try {
             //localStorage.clear();
             localStorage.setItem('user', user.name);
             localStorage.setItem('data', JSON.stringify(subData));
+            saved = true;
           } catch(e) {
-            console.log(e);
+            saved = false;
           }
 
           try {
@@ -183,6 +191,8 @@
           }
 
           return subData;
+        }, function(error) {
+          console.log(error);
         });
       } else {
         subData = JSON.parse(localStorage.getItem('data'));
@@ -310,7 +320,6 @@
      fetched at a time, making for at most 10 API requests.
     */
     function promiseChain(where) {
-
       var promise = callAPI(where);
 
       for (var i = 0; i < pages; i++) {
@@ -363,7 +372,6 @@
       if (response) {
         var data = response.children;
         var count = data.length;
-
         for (var i = 0; i < count; i++) {
           var item = data[i].data;
           if (where === 'comments') {
@@ -408,7 +416,6 @@
       for (var i = 0; i < submissions.length; i++) {
         var submission = submissions[i];
         var subreddit = submission.subreddit;
-
         if (!(subreddit in subs)) {
           subs[subreddit] = createNewSub();
         }
@@ -468,7 +475,7 @@
       var obj = {};
       obj.id = comment.id;
       obj.type = comment.type;
-      obj.gilded = comment.gilded;
+      obj.gildings = comment.gildings;
       obj.created_utc = comment.created_utc;
       obj.body_html = comment.body_html;
       obj.link_permalink = comment.link_permalink;
@@ -490,7 +497,7 @@
         topComment = [comment.ups, name];
       }
 
-      subreddit.gilded_comments += comment.gilded;
+      subreddit.gilded_comments += $filter('gilded')(comment.gildings);
       subreddit.recent_activity = compareDates(subreddit.recent_activity, comment, true);
     }
 
@@ -502,7 +509,7 @@
       var obj = {};
       obj.id = submission.id;
       obj.type = submission.type;
-      obj.gilded = submission.gilded;
+      obj.gildings = submission.gildings;
       obj.created_utc = submission.created_utc;
       obj.num_comments = submission.num_comments;
       obj.permalink = submission.permalink;
@@ -545,7 +552,7 @@
         topSubmit = [submission.ups, name];
       }
 
-      subreddit.gilded_submissions += submission.gilded;
+      subreddit.gilded_submissions += $filter('gilded')(submission.gildings);
       subreddit.recent_activity = compareDates(subreddit.recent_activity, submission, true);
     }
 

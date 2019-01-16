@@ -145,7 +145,15 @@ app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope
     }
 
     var loading;
-    if (localStorage.getItem('user') !== curr.pathParams.username) {
+    var paramUser = localStorage.getItem('user').toLowerCase() === curr.pathParams.username.toLowerCase();
+    var storageData = JSON.parse(localStorage.getItem('data'));
+    var dataUser = storageData.user.name.toLowerCase() === curr.pathParams.username.toLowerCase();
+
+    if (!paramUser && dataUser) {
+      loading = false;
+    } else if (!paramUser && !dataUser) {
+      loading = true;
+    } else if (performance.navigation.type == 1) {
       loading = true;
     }
 

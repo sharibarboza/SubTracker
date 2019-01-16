@@ -19,9 +19,6 @@
             <span class="post-links">
               <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date gray"></span>
             </span>
-            <span class="post-links">
-              <span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gilded }}</span></span>
-            </span>
           </div>
           <div class="col-xs-1" align="right">
             <i class="fa fa-2x gray accordion-icon" ng-class="status.isOpen ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true"></i>
