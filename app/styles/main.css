@@ -1147,6 +1147,7 @@ User Page
 
 .underline-tab {
   border-bottom: 3px solid rgb(63,81,181);
+  color: rgb(249, 104, 84);
 }
 
 .post-tab:hover {

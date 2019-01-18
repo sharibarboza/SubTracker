@@ -37,7 +37,6 @@ angular.module('SubSnoopApp')
           subs[sub].submissionData = [0, 0, 0, 0, 0, 0, 0];
           subs[sub].totalUps = 0;
           subs[sub].average = 0;
-
           getComments(subData[sub].comments, sub);
           getSubmissions(subData[sub].submissions, sub);
         }

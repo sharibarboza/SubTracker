@@ -89,9 +89,9 @@ angular.module('SubSnoopApp')
       chartData.center.value = "Post Attitude";
 
       if (total === 1) {
-        chartData.center.value2 = total + ' post';
+        chartData.center.value2 = total + ' entry';
       } else {
-        chartData.center.value2 = total + ' posts';
+        chartData.center.value2 = total + ' entries';
       }
 
       return chartData;

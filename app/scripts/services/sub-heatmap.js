@@ -13,11 +13,7 @@ angular.module('SubSnoopApp')
     var user;
     var sub;
     var subMaps = {};
-
-    var dates = {};
     var data;
-    var count = 0;
-    var dataArray = [];
 
     var minDate = moment().startOf('day').subtract(7, 'month');
     var diff = (moment.duration(moment().diff(minDate)).asMonths()).toFixed(0);
@@ -31,26 +27,28 @@ angular.module('SubSnoopApp')
     */
     return {
       getSubMap: function(current_user, current_sub, subData, current_year) {
-        if (!dates || user != current_user || !(current_sub in subMaps)) {
+        if (user != current_user) {
           resetData();
+          user = current_user;
+        }
+
+        sub = current_sub;
+        if (!(current_sub in subMaps)) {
           data = subData;
+          subMaps[sub] = {};
+          subMaps[sub].count = 0;
+          subMaps[sub].data = [];
+          subMaps[sub].dates = {};
 
           getData('comments');
           getData('submissions');
           fillDataArray();
-
-          user = current_user;
-          sub = current_sub;
-
-          subMaps[current_sub] = dataArray;
         }
-        return subMaps[current_sub];
+
+        return subMaps[current_sub].data;
       },
-      getCount: function() {
-        return count;
-      },
-      getAverage: function() {
-        return (count / diff).toFixed(0);
+      getAverage: function(s) {
+        return (subMaps[s].count / diff).toFixed(0);
       }
     };
 
@@ -58,11 +56,8 @@ angular.module('SubSnoopApp')
      Reset the dates for a new sub.
     */
     function resetData() {
-      dates = {};
-      data = {};
-      count = 0;
-      dataArray = [];
       subMaps = {};
+      data = null;
     }
 
     /*
@@ -71,8 +66,9 @@ angular.module('SubSnoopApp')
      post (comments/submissions) activity for that specific date.
     */
     function fillDataArray() {
-      for (var data in dates) {
-        dataArray.push(dates[data]);
+      var dateData = subMaps[sub].dates;
+      for (var d in dateData) {
+        (subMaps[sub].data).push(dateData[d]);
       }
     }
 
@@ -81,7 +77,7 @@ angular.module('SubSnoopApp')
      param: where - specifies whether to get comments or submissions.
     */
     function getData(where) {
-      var dataArray;
+      var dataArray = [];
 
       if (where === 'comments') {
         dataArray = data.comments;
@@ -96,7 +92,7 @@ angular.module('SubSnoopApp')
 
         if (date >= minDate) {
           setSubDay(where, dateObj);
-          count += 1;
+          subMaps[sub].count += 1;
         }
       }
     }
@@ -105,10 +101,11 @@ angular.module('SubSnoopApp')
      Store the data for the day (number of comments and submissions)
      */
     function setSubDay(where, dateObj) {
-      if (!(dateObj in dates)) {
-        dates[dateObj] = {};
+      var dateData = subMaps[sub].dates;
+      if (!(dateObj in dateData)) {
+        subMaps[sub].dates[dateObj] = {};
 
-        var dayData = dates[dateObj];
+        var dayData = dateData[dateObj];
         dayData.date = dateObj;
         dayData.total = 0;
         dayData.details = [];
@@ -117,11 +114,12 @@ angular.module('SubSnoopApp')
         dayData.submissions = 0;
       }
 
-      dates[dateObj].total += 1;
+      dateData[dateObj].total += 1;
       if (where === 'comments') {
-        dates[dateObj].comments += 1;
+        dateData[dateObj].comments += 1;
       } else {
-        dates[dateObj].submissions += 1;
+        dateData[dateObj].submissions += 1;
       }
+      subMaps[sub].dates = dateData;
     }
   }]);

@@ -194,7 +194,7 @@ angular.module('SubSnoopApp')
                 if (attrs.type === 'upvotes') {
                   line1 = 'Points: ' + $filter('number')(d.data.value);
                 } else {
-                  line1 = 'Posts: ' + $filter('number')(d.data.value);
+                  line1 = 'Entries: ' + $filter('number')(d.data.value);
                 }
 
                 d3.select('.line-1-' + attrs.type)

@@ -9,10 +9,8 @@
  */
 angular.module('SubSnoopApp')
   .service('words', ['subFactory', '$filter', function (subFactory, $filter) {
-    var currentSub;
+    var sub;
     var currentUser;
-    var wordDict = {};
-    var wordArray = [];
     var subWords = {};
 
     var stopWords = [
@@ -202,11 +200,19 @@ angular.module('SubSnoopApp')
      Split comments or submissions for a specific subreddit into words for word cloud
     */
     return {
-      getWords: function(sub, user) {
-        if (currentUser !== user || !(sub in subWords)) {
-          currentSub = sub;
+      getWords: function(currentSub, user) {
+        if (currentUser !== user) {
           currentUser = user;
           resetData();
+        }
+
+        sub = currentSub;
+        if (!(currentSub in subWords)) {
+          if (!(sub in subWords)) {
+            subWords[sub] = {};
+            subWords[sub].wordDict = {};
+            subWords[sub].wordArray = [];
+          }
 
           var subs = subFactory.getSubData().subs;
           var comments = subs[sub].comments;
@@ -217,7 +223,7 @@ angular.module('SubSnoopApp')
           addWordArray(sub);
         }
 
-        return subWords[sub];
+        return subWords[sub].wordArray;
       }
     };
 
@@ -227,50 +233,45 @@ angular.module('SubSnoopApp')
     function addWordArray(sub) {
       adjustPluralWords();
 
-      for (var key in wordDict) {
+      for (var key in subWords[sub].wordDict) {
         var wordObj = {};
         wordObj.text = key;
-        wordObj.weight = wordDict[key];
-        wordArray.push(wordObj);
+        wordObj.weight = subWords[sub].wordDict[key];
+        subWords[sub].wordArray.push(wordObj);
       }
-
-      if (!(sub in subWords)) {
-        subWords[sub] = {};
-      }
-
-      subWords[sub] = wordArray;
     }
 
     /*
      Check for pluralized words ending in 's' and combine with singles if necessary
     */
     function adjustPluralWords() {
-      for (var key in wordDict) {
+      var dataDict = subWords[sub].wordDict;
+
+      for (var key in dataDict) {
         if (key.slice(-1) == 's') {
           var singleWord = key.slice(0, key.length-1);
 
-          if (singleWord in wordDict) {
-            var singleNum = wordDict[singleWord];
-            var pluralNum = wordDict[key];
+          if (singleWord in dataDict) {
+            var singleNum = dataDict[singleWord];
+            var pluralNum = dataDict[key];
 
             if (singleNum >= pluralNum) {
-              wordDict[singleWord] += pluralNum;
-              delete wordDict[key];
+              dataDict[singleWord] += pluralNum;
+              delete dataDict[key];
             } else {
-              wordDict[key] += singleNum;
-              delete wordDict[singleWord];
+              dataDict[key] += singleNum;
+              delete dataDict[singleWord];
             }
           }
         }
       }
+      subWords[sub].wordDict = dataDict;
     }
 
     /*
      Reset array and dictionaries for new subreddit
     */
     function resetData() {
-      wordDict = {};
-      wordArray = [];
       subWords = {};
     }
 
@@ -325,10 +326,10 @@ angular.module('SubSnoopApp')
         var word = words[i].toLowerCase();
 
         if (word.length > 0 && filterWord(word)) {
-          if (word in wordDict) {
-            wordDict[word] += 1;
+          if (word in subWords[sub].wordDict) {
+            subWords[sub].wordDict[word] += 1;
           } else {
-            wordDict[word] = 1;
+            subWords[sub].wordDict[word] = 1;
           }
         }
       }
