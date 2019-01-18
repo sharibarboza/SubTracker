@@ -41,6 +41,7 @@
 
     $scope.setTab = function(num) {
       $scope.tab = parseInt(num);
+      $window.scrollTo(0, 0);
 
       if (num == 0) {
         $location.update_path($scope.username + '/subreddits/');  // Go to user's main page

@@ -1155,18 +1155,8 @@ User Page
   color: rgb(249, 104, 84);
 }
 
-.user-head-nav span {
-  vertical-align: middle;
-  line-height: 50px;
-  font-size: 14px;
-}
-
 .user-head-nav img {
   margin-top: 10px;
-}
-
-.user-head-nav a {
-  color: inherit;
 }
 
 .middle-banner {
@@ -1438,6 +1428,34 @@ Subreddit Table
 
 .card-sub {
   padding-top: 8px;
+}
+
+.top-fix {
+  position: fixed;
+  top: 50px;
+  z-index: 999;
+  width: 100%;
+}
+
+.top-fix .sub-circle {
+  background-color: #000;
+  position: absolute;
+  top: 2px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  background-size: cover;
+  margin-left: -5px;
+}
+
+.top-fix .name-bar {
+  display: block !important;
+  float: left;
+  padding-left: 60px;
+  font-size: 16px !important;
+  vertical-align: middle;
+  line-height: 50px;
 }
 
 /************************

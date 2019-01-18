@@ -15,7 +15,7 @@
       <br>
     </div>
 
-    <div ng-if="!noSubs" class="banner-div card-shadow" style="background-color: white;">
+    <div ng-if="!noSubs" class="banner-div" style="background-color: white;">
 
       <!-- User banner containing profile picture, and other user info -->
       <div class="user-banner column-pad" align="center">
@@ -23,11 +23,12 @@
       </div>
 
       <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
-      <div class="user-head-nav no-padding banner-pad" align="center">
+      <div class="user-head-nav no-padding banner-pad  card-shadow" align="center" sticky-nav="top-fix">
         <div class="row">
           <div class="col-md-3 profile-img" style="position: relative;">
             <div ng-if="redditor.subreddit" class="sub-circle" style="background-image: url({{ redditor.subreddit.icon_img | escape }});"></div>
             <div ng-if="!redditor.subreddit" class="sub-circle" style="background-image: url('{{ redditor.icon_img }}');"></div>
+            <div class="name-bar" style="display: none;"><strong><span class="orange-text">/u/</span><a ng-href="#/{{ username }}/subreddits/">{{ username }}</a></strong></div>
           </div>
           <div class="col-md-1 col-xs-6 tab-col">
             <div class="post-tab gray-bold-subtitle" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'"><strong>Subreddits</strong></div>
