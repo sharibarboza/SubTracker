@@ -217,9 +217,6 @@ angular.module('g1b.calendar-heatmap', []).
                   tooltip_html += '<div class="heatmap-tooltip">';
 
                   var entryType = ' entries';
-                  if (scope.type === 'user') {
-                    entryType = ' subreddits';
-                  }
 
                   tooltip_html += '<div class="header"><strong>' + scope.formatTotal(d.total, entryType) + ' created</strong></div>';
 

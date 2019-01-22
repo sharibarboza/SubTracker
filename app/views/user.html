@@ -23,7 +23,7 @@
       </div>
 
       <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
-      <div class="user-head-nav no-padding banner-pad  card-shadow" align="center" sticky-nav="top-fix">
+      <div class="user-head-nav no-padding banner-pad card-shadow" align="center" sticky-nav="top-fix">
         <div class="row">
           <div class="col-md-3 profile-img" style="position: relative;">
             <div ng-if="redditor.subreddit" class="sub-circle" style="background-image: url({{ redditor.subreddit.icon_img | escape }});"></div>
@@ -36,7 +36,10 @@
           <div class="col-md-1 col-xs-6 tab-col">
             <div class="post-tab gray-bold-subtitle" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'"><strong>Stats</strong></div>
           </div>
-          <div class="col-md-4"></div>
+          <div class="col-md-1 col-xs-6 tab-col">
+            <div class="post-tab gray-bold-subtitle" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'"><strong>Search</strong></div>
+          </div>
+          <div class="col-md-3"></div>
           <div class="col-md-3" style="padding-top: 6px; padding-bottom: 3px;" align="right">
             <a ng-href="https://www.reddit.com/u/{{ redditor.name }}" target="_blank"><button class="btn orange-btn" style="vertical-align: middle; line-height: 30px; width: 100%;">Visit Profile <i class="fa fa-external-link"></i></button></a>
           </div>
@@ -47,9 +50,9 @@
     <div class="sub-table" ng-controller="DataCtrl">
       <div class="no-margin row width-pad">
 
-        <div class="row">
+        <div class="row" ng-controller="UserSearchCtrl">
           <div class="col-md-3 main-col">
-            <div ng-if="tab == 0 || tab == 1" class="card-box">
+            <div class="card-box">
               <strong class="sub-num">{{ subLength }}</strong>
               <span class="gray-bold-subtitle"><ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></span>
 
@@ -63,10 +66,14 @@
               </div>
 
               <br>
+              <span class="small-gray-font">Post Karma:</span> <span class="badge">{{ linkKarma | karma }}</span><br>
+              <span class="small-gray-font">Comment Karma:</span> <span class="badge">{{ commentKarma | karma }}</span><br>
+
+              <br>
               <button class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
             </div>
 
-            <div ng-if="tab == 0 || tab == 1" class="card-box" align="center">
+            <div class="card-box" align="center">
               <div class="gray-box">
                 <div class="gray-box-content">
                   <strong>Top Subreddit This Week</strong>
@@ -74,7 +81,7 @@
                     <span class="small-white-font"><span class="orange-text">/r/</span>{{ topSub }}</span>
                   </div></a>
                   <div ng-if="!topSub">
-                    <span class="small-white-font">No activity last week.</span>
+                    <span class="small-white-font">No activity this week.</span>
                   </div>
                 </div>
               </div>
@@ -98,12 +105,12 @@
                       &nbsp;&middot;&nbsp;&nbsp;<span class="small-gray-font" ng-init="seen=subs[subreddit].recent_activity.created_utc * 1000"><time-ago from-time='{{ seen }}'></time-ago></span>
 
                       <br>
-                      <div style="margin-top: 5px;">
-                        <span class="fa fa-comment-o small-icon"></span>&nbsp;&nbsp;<span class="small-gray-font">{{ subs[subreddit].comments.length }}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span class="fa fa-file-text-o small-icon"></span>&nbsp;&nbsp;<span class="small-gray-font">{{ subs[subreddit].submissions.length }}</span>
+                      <div style="margin-top: 2px;">
+                        <span class="badge"><span class="fa fa-comment small-icon"></span>&nbsp;&nbsp;{{ subs[subreddit].comments.length }}</span>&nbsp;
+                        <span class="badge"><span class="fa fa-file-text small-icon"></span>&nbsp;&nbsp;{{ subs[subreddit].submissions.length }}</span>
                       </div>
 
-                      <div style="margin-top: 2px;">
+                      <div style="margin-top: 7px;">
                       <span ng-if="subreddit == tableBadges.mostActive.sub" class="sub-badge" id="most-active">Most Activity</span>
                       <span ng-if="subreddit == tableBadges.newestSub.sub" class="sub-badge" id="newest">Newest</span>
                       <span ng-if="subreddit == tableBadges.lastSeen.sub" class="sub-badge" id="last-seen">Last Seen</span>
@@ -115,7 +122,7 @@
                     <div class="col-md-3" align="right">
                       <strong style="font-size: 18px;" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'"> {{ subs[subreddit].total_ups | karma }} <span ng-class="subs[subreddit].total_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
                       <br>
-                      <div style="margin-top: 5px;"><span class="badge" style="padding-left: 10px; padding-right: 10px;">{{ subs[subreddit].avg_karma | karma }} / entry</span></div>
+                      <div style="margin-top: 2px;"><span class="badge" style="padding-left: 10px; padding-right: 10px;">{{ subs[subreddit].avg_karma | karma }} / entry</span></div>
                     </div>
                   </div>
                 </div>
@@ -130,7 +137,7 @@
             <div class="card-box" ng-controller="LineChartCtrl" style="padding-left: 20px; padding-right: 20px;">
               <strong class="purple-heading">Recent Points Per Month</strong>
               <br>
-              <span class="gray-bold-subtitle">Approx. {{ voteAverage | number }} <ng-pluralize count="{{ voteAverage }}" when="{'1': 'point', 'other': 'points'}"/> per month</span>
+              <span class="gray-bold-subtitle">Average: {{ voteAverage | number }} <ng-pluralize count="{{ voteAverage }}" when="{'1': 'point', 'other': 'points'}"/> per month</span>
               <br><br>
               <canvas id="line" class="chart chart-line" chart-data="data"
               chart-labels="labels" chart-series="series" chart-options="options"
@@ -163,7 +170,16 @@
             </div>
           </div>
 
+          <div ng-if="tab == 2" class="col-md-6 main-col">
+            <div ng-include src="'views/search.html'"></div>
+          </div>
+
           <div class="col-md-3 main-col">
+            <div ng-if="tab == 2 && hasResults" class="card-box">
+              <strong class="purple-heading">Filter Search Results</strong>
+              <br><br>
+              <div ng-include src="'views/side-search.html'"></div>
+            </div>
 
             <div ng-if="tab == 0" class="card-box">
               <strong class="purple-heading">Filter Subreddits</strong>
@@ -187,7 +203,7 @@
               </form>
             </div>
 
-            <div ng-if="tab == 0 || tab == 1" class="card-box" ng-controller="PreviousUsersCtrl">
+            <div class="card-box" ng-controller="PreviousUsersCtrl">
               <strong class="purple-heading">Previous Redditors</strong>&nbsp;&middot;&nbsp;<span class="small-gray=font orange-text" ng-click="clearStorage()">Clear</span>
               <div ng-repeat="listUser in prevUsers">
                 <a ng-href="#/{{ listUser }}/subreddits/" class="prevRow"><div class="row" style="margin-top: 15px;">

@@ -39,6 +39,7 @@ angular.module('SubSnoopApp')
     $scope.submissions = $scope.sub['submissions'];
     $scope.numComments = $scope.comments.length;
     $scope.numSubmissions = $scope.submissions.length;
+    $scope.total = $scope.numComments + $scope.numSubmissions;
     $scope.limits = [0, 0, $scope.numSubmissions, $scope.numComments, 0];
     $scope.subInfo = null;
     $scope.gilded = $scope.sub.gilded_comments > 0 || $scope.sub.gilded_submissions > 0;
@@ -143,7 +144,7 @@ angular.module('SubSnoopApp')
       } else if (num == 1) {
         $location.update_path($scope.username + '/' + $scope.subreddit + '/overview/');
       } else if (num == 2) {
-        $location.update_path($scope.username + '/' + $scope.subreddit + '/submitted');
+        $location.update_path($scope.username + '/' + $scope.subreddit + '/submitted/');
       } else if (num == 3) {
         $location.update_path($scope.username + '/' + $scope.subreddit + '/comments/');
       } else if (num == 4) {

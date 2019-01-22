@@ -23,9 +23,4 @@
     <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date gray"></span>
     <span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gildings }}</span></span>
   </span>
-  <span ng-show="page == 'search'" class="mobile-sub-search">
-    &nbsp;&nbsp;<strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong>
-    <span style="float: right;" ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date gray search-sub-date"></span>
-    <span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gildings }}</span></span>
-  </span>
 </span>

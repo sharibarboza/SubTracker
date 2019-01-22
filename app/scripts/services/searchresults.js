@@ -10,6 +10,7 @@
 angular.module('SubSnoopApp')
   .factory('searchResults', ['$filter', function ($filter) {
     var searchInput = "";
+    var newData = new Object();
 
     /*
      User interface for search results factory
@@ -18,6 +19,13 @@ angular.module('SubSnoopApp')
       getData: function(input, data) {
         searchInput = input;
         return getResults(data);
+      },
+      getResults: function() {
+        return newData;
+      },
+      resetData: function() {
+        newData = new Object();
+        newData.data = {};
       }
     };
     return factory;
@@ -26,7 +34,7 @@ angular.module('SubSnoopApp')
      Gets the user input terms and processes the search results
     */
     function getResults(data) {
-      var newData = new Object();
+      newData = new Object();
       newData.data = {};
 
       for (var key in data) {
@@ -35,10 +43,12 @@ angular.module('SubSnoopApp')
         /* Add comments data */
         comments = filterData(data[key], key, 'comments');
         resultSub.comments = comments;
+        resultSub.numComments = comments.length;
 
         /* Add submissions data */
         submissions = filterData(data[key], key, 'submissions');
         resultSub.submissions = submissions;
+        resultSub.numSubmissions = submissions.length;
 
         if (comments.length + submissions.length) {
           newData.data[key] = resultSub;
@@ -48,7 +58,7 @@ angular.module('SubSnoopApp')
 
     };
 
-    /* 
+    /*
      Combines the process of searching for matching terms in posts while
      also highlighting them.
     */
@@ -72,7 +82,7 @@ angular.module('SubSnoopApp')
 
         if (where === 'submissions') {
           title = item.title;
-        } 
+        }
 
         /* Reset highlighted html */
         item = resetHighlighted(item);
@@ -142,10 +152,10 @@ angular.module('SubSnoopApp')
     };
 
     /*
-     Keeps track and confirms that all terms are matched in the given text. 
+     Keeps track and confirms that all terms are matched in the given text.
      For comments, multi-word input must be matched for all terms.
      For submissions, the matches can be spread out between the body and the title texts.
-     For example, in a search input with 2 words, the submission post is a match if one word 
+     For example, in a search input with 2 words, the submission post is a match if one word
      only is found in the body but the other word is found in the title.
     */
     function highlightTerms(terms, body, title, where) {

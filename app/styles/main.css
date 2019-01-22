@@ -141,11 +141,15 @@ h5 {
   background-color: #00B1CC;
 }
 
-.badge, .label {
+.badge, .label, .panel-default > .panel-heading .badge {
   background-color: #F5F5F5;
   font-weight: 600 !important;
   font-size: 12px !important;
   color: #333;
+}
+
+#results-card .post-badge {
+  margin-top: 5px;
 }
 
 .label a {
@@ -167,7 +171,7 @@ h5 {
 }
 
 .highlight {
-  background: #FFB675;
+  background: #FFB78A;
 }
 
 /* Make the masthead heading the same height as the navigation */
@@ -220,6 +224,7 @@ blockquote {
 
 .accordion .panel-default {
   background-color: #FAFAFA;
+  border: 0 !important;
 }
 
 .accordion .panel-default > .panel-heading {
@@ -529,6 +534,10 @@ blockquote {
   font-size: 18px;
 }
 
+.main-container {
+  background-color: #f5f5f5;
+}
+
 /************************
 Angular Material
 ************************/
@@ -757,6 +766,17 @@ Content
   width: 100%;
 }
 
+.default-banner {
+  height: 250px;
+  position: relative;
+  color: white;
+  background-size: auto;
+  background-position: center 20%;
+  font-weight: 400;
+  margin-right: 0;
+  width: 100%;
+}
+
 .banner-content {
   vertical-align: middle;
   line-height: 250px;
@@ -769,8 +789,14 @@ Content
 }
 
 .main-banner {
-  padding-top: 50px;
-  padding-bottom: 70px;
+  height: 350px;
+  padding-top: 10vh;
+  background-position: 0 50%;
+}
+
+.search-banner {
+  height: 250px;
+  padding-top: 5vh;
   background-position: 0 50%;
 }
 
@@ -912,6 +938,14 @@ Content
   padding-right: 0;
 }
 
+.searches {
+  margin-bottom: 20px;
+}
+
+#search-tab-bar a {
+  color: #696969;
+}
+
 
 /************************
 Navigation
@@ -1034,7 +1068,7 @@ Main Page
 
 #sub-panels {
   overflow: hidden;
-  padding: 15px 30px;
+  padding: 15px 50px;
 }
 
 #sub-panels .col-md-6 {
@@ -1042,7 +1076,7 @@ Main Page
 }
 
 .sub-panel-content {
-  padding-left: 15px;
+  padding-left: 20px;
 }
 
 .sub-icon {
@@ -1458,6 +1492,10 @@ Subreddit Table
   line-height: 50px;
 }
 
+.top-fix-body {
+  margin-top: 50px;
+}
+
 /************************
 User Sub Page
 ************************/
@@ -1798,14 +1836,6 @@ Submit Post Thumbnails
   width: 70px;
 }
 
-.thumb-search-default {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: -20px -455px;
-  background-repeat: no-repeat;
-  height: 105px;
-  width: 100px;
-}
-
 .thumb-self {
   background-image: url('../images/sprite-reddit.png');
   background-position: -20px -895px;
@@ -1820,14 +1850,6 @@ Submit Post Thumbnails
   background-repeat: no-repeat;
   height: 55px;
   width: 70px;
-}
-
-.thumb-search-self {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: -20px -895px;
-  background-repeat: no-repeat;
-  height: 105px;
-  width: 100px;
 }
 
 .thumb-image {
@@ -1846,14 +1868,6 @@ Submit Post Thumbnails
   width: 70px;
 }
 
-.thumb-search-image {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: -20px -310px;
-  background-repeat: no-repeat;
-  height: 105px;
-  width: 100px;
-}
-
 .thumb-nsfw {
   background-image: url('../images/sprite-reddit.png');
   background-position: -20px -603px;
@@ -1868,14 +1882,6 @@ Submit Post Thumbnails
   background-repeat: no-repeat;
   height: 55px;
   width: 70px;
-}
-
-.thumb-search-nsfw {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: -20px -603px;
-  background-repeat: no-repeat;
-  height: 105px;
-  width: 100px;
 }
 
 .thumb-spoiler {
@@ -1894,14 +1900,6 @@ Submit Post Thumbnails
   width: 70px;
 }
 
-.thumb-search-spoiler {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: -20px -748px;
-  background-repeat: no-repeat;
-  height: 105px;
-  width: 100px;
-}
-
 /************************
 Search
 ************************/
@@ -1918,10 +1916,6 @@ Search
 
 #search-input {
   padding: 10px;
-}
-
-#results-table {
-  margin-top: 20px;
 }
 
 #results-card {
@@ -1953,20 +1947,14 @@ Search
 
 #search-side-card {
   margin-top: 20px;
-  padding: 10px 16px;
 }
 
 #results-card:hover {
-  color: #12C5E0;
+  color: rgb(249, 104, 84);
 }
 
 #submit-col-search {
   padding: 12px;
-}
-
-#search-side-card {
-  background-color: white;
-  border: 1px solid #e5e5e5;
 }
 
 .search-width {

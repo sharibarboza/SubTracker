@@ -8,9 +8,10 @@
 
     <div class="banner-div" style="background-color: #F5F5F5">
       <!-- User banner containing profile picture, and other user info -->
-      <div class="user-banner column-pad" ng-class="subInfo.banner_img == '../images/icons-bg.jpg' ? 'empty-class' : 'sub-bg'" style="background-image: url({{ subInfo.banner_img | escape }});" align="center">
-        <span ng-if="subInfo.banner_img == '../images/icons-bg.jpg'" class="user-name banner-content" id="{{ redditor.name }}"><strong><span class="orange-text">/r/</span>{{ subreddit }}</strong></span>
+      <div ng-if="subInfo.banner_img == '../images/icons-bg.jpg'" class="user-banner column-pad" lazy-img="{{ '../images/icons-bg.jpg' }}" align="center">
+        <span class="user-name banner-content" id="{{ redditor.name }}"><strong><span class="orange-text">/r/</span>{{ subreddit }}</strong></span>
       </div>
+      <div ng-if="subInfo.banner_img != '../images/icons-bg.jpg'" class="default-banner column-pad sub-bg" lazy-img="{{ subInfo.banner_img | escape }}" align="center"></div>
 
       <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
       <div class="user-head-nav no-padding banner-pad card-shadow" align="center" sticky-nav="top-fix">
@@ -67,9 +68,11 @@
                 <span class="fa fa-comment-o small-icon"></span>&nbsp;<span class="small-gray-font">{{ numComments }}</span>&nbsp;&nbsp;
                 <span class="fa fa-file-text-o small-icon"></span>&nbsp;<span class="small-gray-font">{{ numSubmissions }}</span>
               </div>
-              <div style="margin-top: 5px;"><span class="badge" style="padding-left: 10px; padding-right: 10px;">Avg. {{ sub.avg_karma | karma }} <span class="glyphicon glyphicon-arrow-up"></span> / entry</span></div>
-
               <br>
+              <span class="small-gray-font">Total:</span> <span class="badge">{{ total }} <ng-pluralize count="{{ total }}" when="{'1': 'entry', 'other': 'entries'}"/></span><br>
+              <span class="small-gray-font">Average:<span> <span class="badge">{{ sub.avg_karma | karma }} <span class="glyphicon glyphicon-arrow-up"></span> / entry</span>
+
+              <br><br>
               <button class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
             </div>
 
@@ -81,7 +84,7 @@
                     <span style="font-size: 15px;">{{ sub.comment_ups | number }}</span>
                     <span class="small-white-font">
                       <strong ng-class="sub.comment_ups > 0 ? 'green' : 'orange'"><span ng-class="sub.comment_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
-                      (~ {{ sub.comment_ups | average : numComments : 0 }} / comment)
+                      (~ {{ sub.comment_ups | average : numComments : 0 | number }} / comment)
                     </span>
                   </div>
                 </div>
@@ -94,7 +97,7 @@
                     <span style="font-size: 15px;">{{ sub.submission_ups | number }}</span>
                     <span class="small-white-font">
                       <strong ng-class="sub.submission_ups > 0 ? 'green' : 'orange'"><span ng-class="sub.submission_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
-                      (~ {{ sub.submission_ups | average : numSubmissions : 0 }} / post)
+                      (~ {{ sub.submission_ups | average : numSubmissions : 0 | number }} / post)
                     </span>
                   </div>
                 </div>
@@ -106,7 +109,7 @@
             <div class="card-box" ng-controller="SubChartCtrl">
               <strong class="purple-heading">Recent Points Per Month</strong>
               <br>
-              <span class="gray-bold-subtitle">Approx. {{ voteAverage | number }} <ng-pluralize count="{{ voteAverage }}" when="{'1': 'point', 'other': 'points'}"/> per month</span>
+              <span class="gray-bold-subtitle">Average: {{ voteAverage | number }} <ng-pluralize count="{{ voteAverage }}" when="{'1': 'point', 'other': 'points'}"/> per month</span>
               <br><br>
               <canvas id="line" class="chart chart-line" chart-data="data"
               chart-labels="labels" chart-series="series" chart-options="options"
@@ -117,7 +120,7 @@
             <div class="card-box">
               <div ng-include src="'views/sub-heatmap.html'"></div>
               <div align="center" style="margin-top: 10px; margin-bottom: 20px;">
-                <span class="small-gray-font">Per month statistics start from the oldest post within the last 6 months.</span>
+                <span class="small-gray-font">Per month statistics only refer to entries made within the last 6 months.</span>
               </div>
             </div>
 

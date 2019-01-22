@@ -19,7 +19,7 @@
     $scope.main = false; // Prevent hiding of search bar in top-nav
     $scope.page = 'user';
     $scope.currentLimit = 0;
-    $scope.open = true;
+    $scope.open = false;
     $scope.subLength = 0;
 
     var initLimit = 40;
@@ -33,6 +33,8 @@
 
     if ($location.path() === '/' + $scope.username + '/subreddits/') {
       $scope.tab = 0;
+    } else if ($location.path() === '/' + $scope.username + '/search/') {
+      $scope.tab = 2;
     } else {
       $scope.tab = 1;
     }
@@ -47,6 +49,8 @@
         $location.update_path($scope.username + '/subreddits/');  // Go to user's main page
       } else if (num == 1) {
         $location.update_path($scope.username + '/stats/');
+      } else if (num == 2) {
+        $location.update_path($scope.username + '/search/');
       }
     };
 

@@ -71,9 +71,9 @@ app.config(['$routeProvider', '$locationProvider', 'lazyImgConfigProvider', func
       }
     })
     .when('/:username/search/', {
-      templateUrl: 'views/search.html',
-      controller: 'SearchCtrl',
-      controllerAs: 'search',
+      templateUrl: 'views/user.html',
+      controller: 'UserCtrl',
+      controllerAs: 'user',
       resolve: {
         subsData: function($route, subFactory, userFactory) {
           return getData($route, subFactory, userFactory);
@@ -146,23 +146,21 @@ app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope
 
     var loading;
     var paramUser, dataUser;
-    if ('user' in localStorage) {
+    try {
       paramUser = localStorage.getItem('user').toLowerCase() === curr.pathParams.username.toLowerCase();
-    } else {
-      paramUser = true;
+    } catch(e) {
+      paramUser = false;
     }
-    if ('data' in localStorage) {
+    try {
       var storageData = JSON.parse(localStorage.getItem('data'));
       dataUser = storageData.user.name.toLowerCase() === curr.pathParams.username.toLowerCase();
-    } else {
-      dataUser = true;
+    } catch(e) {
+      dataUser = false;
     }
 
     if (!paramUser && dataUser) {
       loading = false;
     } else if (!paramUser && !dataUser) {
-      loading = true;
-    } else if (performance.navigation.type == 1) {
       loading = true;
     }
 
