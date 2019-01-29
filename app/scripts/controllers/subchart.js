@@ -31,9 +31,6 @@
      data.submissionData
    ];
    $scope.voteAverage = subChart.getAverage($scope.subreddit);
-   $scope.onClick = function (points, evt) {
-     console.log(points, evt);
-   };
    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
    $scope.options = {
      scales: {

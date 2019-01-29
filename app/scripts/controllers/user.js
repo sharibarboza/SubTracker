@@ -140,7 +140,7 @@
     /*
      Find the subreddits that match the search query term
      */
-    $scope.changeSubs = function(term) {
+    $scope.changeUserSubs = function(term) {
       $scope.subList = [];
       $scope.subList = search.findSubs($scope.subsArray, term);
       $scope.currentLimit = $scope.subList.length;
