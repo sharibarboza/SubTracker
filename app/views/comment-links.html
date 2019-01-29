@@ -1,7 +1,6 @@
 <md-card-content class="no-pad">
   <span class="post-links">
     <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMM Do YYYY, h:mm a'" class="post-date"></span>
-    <span ng-if="element.gilded > 0" class="post-links gilded-icon gray"> x {{ element.gilded }}</span>
   </span>
 
   <div style="float: right;" class="comment-links">

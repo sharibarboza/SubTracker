@@ -1,11 +1,13 @@
-<md-card class="heatmap">
-  <strong class="light-gray">RECENT ACTIVITY TIMELIME</strong>
+<md-card class="heatmap"  ng-controller="UserHeatmapCtrl">
+  <strong class="purple-heading">Recent Subreddit Activity Per Month</strong>
+  <span class="gray-bold-subtitle">Average: {{ subAverage }} unique <ng-pluralize count="{{ subAverage }}" when="{'1': 'subreddit', 'other': 'subreddits'}"/> per month</span>
   <br>
   <md-card-content class="no-padding">
-    <div ng-controller="UserHeatmapCtrl" align="center">
-      <calendar-heatmap style="max-width: 80%;" data="mapData" color="'#ef5350'" overview="'year'" handler="print" type="'user'"></calendar-heatmap>
-      <br>
-      <p class="gray small-font">Hover over a circle to see which subs exhibit activity on that day.</p>
+    <div align="center">
+      <calendar-heatmap data="mapData" color="'#497887'" overview="'year'" handler="print" type="'user'"></calendar-heatmap>
     </div>
   </md-card-content>
+  <div align="center" style="margin-top: 10px; margin-bottom: 20px;">
+    <span class="small-gray-font">Per month statistics start from the oldest post within the last 6 months.</span>
+  </div>
 </md-card>

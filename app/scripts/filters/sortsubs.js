@@ -9,7 +9,7 @@
  * Filter in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .filter('sortSubs', ['moment', '$filter', 'sortFactory', function (moment, $filter, sortFactory) {
+  .filter('sortSubs', ['moment', '$filter', 'sortFactory', 'subChart', '$routeParams', function (moment, $filter, sortFactory, subChart, $routeParams) {
 
     /*
      Used for sorting subreddits
@@ -101,6 +101,36 @@ angular.module('SubSnoopApp')
     };
 
     /*
+     Sort subs by most gilded posts
+    */
+    var sortGilded = function(keys, data) {
+      keys.sort(function(a, b) {
+        var num1 = data[a].gilded_comments + data[a].gilded_submissions;
+        var num2 = data[b].gilded_comments + data[b].gilded_submissions;
+        return $filter('sortNum')(num1, num2, a, b, true, 'alpha');
+      });
+      return keys;
+    }
+
+    /*
+     Sort by average points per recent months
+    */
+    var sortAvgUps = function(keys, subs) {
+      for (var key in keys) {
+        subChart.getSubChart($routeParams.username, keys[key]);
+      }
+      var data = subChart.getSubs();
+
+      keys.sort(function(a, b) {
+        var num1 = data[a].average;
+        var num2 = data[b].average;
+        return $filter('sortNum')(num1, num2, a, b, true, 'alpha');
+      });
+
+      return keys;
+    }
+
+    /*
      Main function of the filter to sort subreddits
      input: an array of subreddit names (this is the data structure that will be sorted)
      attribute: what to sort on (must be an attribute from the sortOptions in the sortFactory service)
@@ -108,7 +138,6 @@ angular.module('SubSnoopApp')
      */
     return function (input, attribute, subs) {
       var sortedData = {};
-
      /*
       Get the cached sorted list to avoid repeating the sorting process
       */
@@ -122,7 +151,9 @@ angular.module('SubSnoopApp')
       var cloned_keys = input.slice(0);
 
       if (cloned_keys) {
-        if (attribute === 'subName') {
+        if (attribute === 'avgUps') {
+          sortedData = sortAvgUps(cloned_keys);
+        } else if (attribute === 'subName') {
           sortedData = sortName(cloned_keys);
         } else if (attribute === 'totalComments') {
           sortedData = sort(cloned_keys, subs, 'comments', true);
@@ -142,11 +173,12 @@ angular.module('SubSnoopApp')
           sortedData = sortAverage(cloned_keys, subs, 'posts');
         } else if (attribute === 'mostDown') {
           sortedData = sort(cloned_keys, subs, 'total_ups', false);
+        } else if (attribute === 'mostGilded') {
+          sortedData = sortGilded(cloned_keys, subs);
         }
       }
 
       sortFactory.addSorted(attribute + '-' + sortedData.length, sortedData);
-
       return sortedData;
     };
 

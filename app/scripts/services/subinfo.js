@@ -18,7 +18,7 @@ angular.module('SubSnoopApp')
       getData: function(sub) {
         var url = "https://api.reddit.com/r/" + sub + "/about.json";
         return $http.get(url).then(function(response) {
-
+          
           return response.data.data;
         }, function(error) {
           console.log(error);

@@ -16,15 +16,17 @@ angular.module('SubSnoopApp')
 
     var sortSubs = {
       sortOptions: [
-        {value: 'totalUps', name: 'Total upvotes'},
+        {value: 'totalUps', name: 'Total Cumulative Points'},
+        {value: 'avgUps', name: 'Average Points Per Recent Months'},
         {value: 'mostActive', name: 'Most activity'},
         {value: 'lastSeen', name: 'Most recent activity'},
-        {value: 'subName', name: 'Subreddit name'},
+        {value: 'mostGilded', name: 'Most gilded posts'},
         {value: 'totalComments', name: 'Total comments'},
-        {value: 'totalSubmits', name: 'Total submissions'},
+        {value: 'totalSubmits', name: 'Total posts'},
         {value: 'avgComment', name: 'Average upvotes per comment'},
-        {value: 'avgSubmit', name: 'Average upvotes per submission'},
-        {value: 'avgPost', name: 'Average upvotes per post'},
+        {value: 'avgSubmit', name: 'Average upvotes per post'},
+        {value: 'avgPost', name: 'Average upvotes per entry'},
+        {value: 'subName', name: 'Subreddit name'},
         {value: 'mostDown', name: 'Most controversial'},
       ]
     };

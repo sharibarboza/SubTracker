@@ -7,7 +7,7 @@
  * # handlePhoneSubmit
  */
 angular.module('SubSnoopApp')
-  .directive('handlePhoneSubmit', ['$window', function ($window) {
+  .directive('handlePhoneSubmit', ['$window', '$location', function ($window, $location) {
 
     /*
      Ensures that keyboard is automatically closed upon form submit for mobile screens.
@@ -26,7 +26,7 @@ angular.module('SubSnoopApp')
           var username = textFields[0].value;
 
           if (attrs.redirect === 'true') {
-            $window.location.assign('#/' + username + '/subreddits/');  // Go to user's main page
+            $location.path(username + '/subreddits/');  // Go to user's main page
             scope.$apply();
           }
         });

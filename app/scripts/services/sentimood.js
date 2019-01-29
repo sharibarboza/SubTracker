@@ -11,7 +11,7 @@ angular.module('SubSnoopApp')
   .factory('sentiMood', function () {
     var username;
     var subs = {};
-    var colorData = {'Positive' : "#2979ff", 'Neutral' : "#fdd835", 'Negative' : "#f44336"};
+    var colorData = {'Positive' : "#90C7D6", 'Neutral' : "#D6D6D6", 'Negative' : "#ff7043"};
     var value2 = '';
 
     /*
@@ -89,9 +89,9 @@ angular.module('SubSnoopApp')
       chartData.center.value = "Post Attitude";
 
       if (total === 1) {
-        chartData.center.value2 = total + ' post';
+        chartData.center.value2 = total + ' entry';
       } else {
-        chartData.center.value2 = total + ' posts';
+        chartData.center.value2 = total + ' entries';
       }
 
       return chartData;

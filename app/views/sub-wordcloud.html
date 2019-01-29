@@ -1,24 +1,16 @@
 <div ng-controller="WordcloudCtrl" class="border-box cloud-box">
   <div class="row">
-    <div class="col-md-6 no-right-pad" align="center">
-      <md-card class="md-card-margin no-pad div-box no-right-margin">
-        <strong class="light-gray">MENTIONED WORDS IN MOST UPVOTED POSTS</strong>
-        <md-card-content>
-          <div align="center">
-            <jqcloud words="upWords" steps="10" colors="{{ colors }}" class="word-cloud" style="width: 85%; height: 35vh;"></jqcloud>
-          </div>
-        </md-card-content>
-      </md-card>
+    <div class="col-md-12 no-right-pad" align="center">
+      <strong class="purple-heading">Most Mentioned Words</strong>
+      <br><br>
+      <jqcloud words="words" steps="10" colors="{{ colors }}" class="word-cloud" style="width: 90%; height: 30vh; margin-bottom: 15px;"></jqcloud>
     </div>
+    <!--
     <div class="col-md-6 no-left-pad" align="center">
-      <md-card class="md-card-margin no-pad div-box no-left-margin" style="border-left: none;">
-        <strong class="light-gray">MENTIONED WORDS IN MOST DOWNVOTED POSTS</strong>
-        <md-card-content>
-          <div align="center">
-            <jqcloud words="downWords" steps="10" colors="{{ downColors }}" class="word-cloud" style="width: 85%; height: 35vh;"></jqcloud>
-          </div>
-        </md-card-content>
-      </md-card>
+      <strong class="purple-heading">Words in Downvoted Posts</strong>
+      <br><br>
+      <jqcloud words="downWords" steps="10" colors="{{ downColors }}" class="word-cloud" style="width: 95%; height: 32vh;"></jqcloud>
     </div>
+    -->
   </div>
 </div>

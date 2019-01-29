@@ -9,7 +9,7 @@
  */
 angular.module('SubSnoopApp')
   .service('badges', ['$filter', 'subFactory', 'subInfo', 'sortFactory', function ($filter, subFactory, subInfo, sortFactory) {
-    
+
     var user;
     var subs;
     var keys;
@@ -49,23 +49,23 @@ angular.module('SubSnoopApp')
         badges = {
           'mostUpvoted' : {
             'image' : null,
-            'name' : 'MOST UPVOTED SUB',
-            'points' : 0 
+            'name' : 'Most Upvoted Subreddit',
+            'points' : 0
           },
           'mostActive' : {
             'image' : null,
-            'name' : 'MOST ACTIVE SUB',
-            'points' : 0 
+            'name' : 'Most Active Subreddit',
+            'points' : 0
           },
           'leastUpvoted' : {
             'image' : null,
-            'name' : 'LEAST UPVOTED SUB',
-            'points' : 0 
+            'name' : 'Least Upvoted Subreddit',
+            'points' : 0
           },
           'newestSub' : {
-            'image' :null,
-            'name' : 'NEWEST SUB',
-            'points' : 0 
+            'image' : null,
+            'name' : 'Newest Subreddit',
+            'points' : 0
           }
         };
 
@@ -101,7 +101,12 @@ angular.module('SubSnoopApp')
       badges[category].sub = sub;
 
       subInfo.getData(sub).then(function(response) {
-        badges[category].image = $filter('escape')(response.icon_img);
+        if (response.icon_img !== "" && response.icon_img !== null) {
+          badges[category].image = $filter('escape')(response.icon_img);
+        } else {
+          badges[category].image = null;
+        }
+
         badges[category].points = subs[sub].total_ups;
         subFactory.setSubInfo(sub, response);
       });
@@ -127,5 +132,5 @@ angular.module('SubSnoopApp')
           sub = $filter('rank')('topSub', category, subs, keys);
       }
       return sub;
-    }; 
+    };
   }]);

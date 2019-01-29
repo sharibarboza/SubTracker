@@ -56,8 +56,8 @@ angular.module('g1b.calendar-heatmap', []).
             .style('opacity', 0);
 
           var getNumberOfWeeks = function () {
-            var dayIndex = Math.round((moment() - moment().subtract(1, 'year').startOf('week')) / 86400000);
-            var colIndex = Math.trunc(dayIndex / 7);
+            var dayIndex = Math.round((moment() - moment().subtract(6, 'month').startOf('week')) / 86400000);
+            var colIndex = Math.trunc(dayIndex / 6);
             var numWeeks = colIndex + 1;
             return numWeeks;
           }
@@ -110,14 +110,14 @@ angular.module('g1b.calendar-heatmap', []).
               scope.history.push(scope.overview);
             }
 
-            var year_ago = moment().startOf('day').subtract(1, 'year');
+            var year_ago = moment().startOf('day').subtract(6, 'month');
             var max_value = d3.max(scope.data, function (d) {
               return d.total;
             });
 
             // Define start and end date of the selected year
-            var start_of_year = moment(scope.selected.date).startOf('year');
-            var end_of_year = moment(scope.selected.date).endOf('year');
+            var start_of_year = moment().startOf('month').subtract(6, 'month');
+            var end_of_year = moment().endOf('day');
 
             // Filter data down to the selected year
             var year_data = scope.data.filter(function (d) {
@@ -215,7 +215,10 @@ angular.module('g1b.calendar-heatmap', []).
                   // Construct tooltip
                   var tooltip_html = '';
                   tooltip_html += '<div class="heatmap-tooltip">';
-                  tooltip_html += '<div class="header"><strong>' + scope.formatTotal(d.total, ' posts') + ' created</strong></div>';
+
+                  var entryType = ' entries';
+
+                  tooltip_html += '<div class="header"><strong>' + scope.formatTotal(d.total, entryType) + ' created</strong></div>';
 
                   tooltip_html += '<div>on ' + moment(d.date).format('dddd, MMM Do YYYY') + '</div><br>';
 
@@ -522,9 +525,16 @@ angular.module('g1b.calendar-heatmap', []).
            */
           scope.formatTotal = function (value, word) {
             var format;
+            var single;
+
+            if (word.trim() == 'entries') {
+              single = ' entry';
+            } else {
+              single = word.slice(0, word.length - 1);
+            }
 
             if (value === 1) {
-              format = value + word.slice(0, word.length - 1);
+              format = value + single;
             } else {
               format = value + word;
             }

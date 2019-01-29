@@ -8,19 +8,22 @@
  * Controller of the SubSnoopApp
  */
  angular.module('SubSnoopApp')
-  .controller('UserCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', '$window', 'subFactory', 'moment', 'subsData', 'search', 'sortFactory', '$location', '$anchorScroll',
-  function ($rootScope, $scope, $routeParams, $filter, $window, subFactory, moment, subsData, search, sortFactory, $location, $anchorScroll) {
+  .controller('UserCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', '$window', 'subFactory', 'moment', 'subsData', 'search', 'sortFactory', '$location', 'subInfo', '$anchorScroll',
+  function ($rootScope, $scope, $routeParams, $filter, $window, subFactory, moment, subsData, search, sortFactory, $location, subInfo, $anchorScroll) {
 
     /*
      Initalization
     */
     $window.scrollTo(0, 0);
-    $scope.username = $routeParams.username;
+    $scope.username = $routeParams.username.trim();
     $scope.main = false; // Prevent hiding of search bar in top-nav
     $scope.page = 'user';
     $scope.currentLimit = 0;
-    $scope.open = true;
+    $scope.open = false;
     $scope.subLength = 0;
+
+    var initLimit = 40;
+    $scope.limit = initLimit;
 
     if (subsData) {
       $scope.noSubs = Object.keys(subsData.subs).length === 0;
@@ -30,6 +33,8 @@
 
     if ($location.path() === '/' + $scope.username + '/subreddits/') {
       $scope.tab = 0;
+    } else if ($location.path() === '/' + $scope.username + '/search/') {
+      $scope.tab = 2;
     } else {
       $scope.tab = 1;
     }
@@ -37,13 +42,15 @@
     $scope.tabOptions = ['subreddits', 'timeline', 'stats'];
 
     $scope.setTab = function(num) {
-      $window.scrollTo(0, 0);
       $scope.tab = parseInt(num);
+      $window.scrollTo(0, 0);
 
       if (num == 0) {
-        $window.location.assign('#/' + $scope.username + '/subreddits/');  // Go to user's main page
+        $location.update_path($scope.username + '/subreddits/');  // Go to user's main page
       } else if (num == 1) {
-        $window.location.assign('#/' + $scope.username + '/stats/');
+        $location.update_path($scope.username + '/stats/');
+      } else if (num == 2) {
+        $location.update_path($scope.username + '/search/');
       }
     };
 
@@ -72,6 +79,20 @@
       $scope.subLength = subFactory.getSubLength();
       $scope.topComment = subsData.topComment;
       $scope.topSubmit = subsData.topSubmit;
+      $scope.topSub = subsData.topSub;
+      $scope.commentKarma = response.user.comment_karma;
+      $scope.linkKarma = response.user.link_karma;
+
+      for (var key in $scope.subs) {
+        if (!$scope.subs[key].icon) {
+          $scope.subIcons = subInfo.getData(key).then(function(response) {
+            $scope.subIcons = response;
+            subFactory.setIcons(response.display_name, response.icon_img);
+          });
+        }
+      }
+
+      $scope.subs = subFactory.getSubData().subs;
     };
 
     /*
@@ -107,7 +128,6 @@
 
       var setArray = function() {
         $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.selected.value, $scope.subs);
-        $scope.currentLimit = $scope.subList.length;
       };
       setArray();
 
@@ -120,18 +140,21 @@
     /*
      Find the subreddits that match the search query term
      */
-    $scope.changeSubs = function(term) {
+    $scope.changeUserSubs = function(term) {
       $scope.subList = [];
       $scope.subList = search.findSubs($scope.subsArray, term);
       $scope.currentLimit = $scope.subList.length;
     };
 
     /*
-     Refresh sub data
+     Load more subs lazily
     */
-    $scope.refreshData = function() {
-      localStorage.clear();
-      location.reload();
+    $scope.loadMore = function() {
+      if ($scope.limit + initLimit < $scope.subLength) {
+        $scope.limit += initLimit;
+      } else {
+        $scope.limit = $scope.subLength;
+      }
     }
   }
 

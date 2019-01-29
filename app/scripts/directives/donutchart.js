@@ -37,11 +37,11 @@ angular.module('SubSnoopApp')
           if (window_width < 1200 && window_width > 950) {
             scope_chart = changeChartConfig(window_width);
           } else if (window_width < 400) {
-            scope_chart = setChartConfig(300);
+            scope_chart = setChartConfig(250);
           } else if (window_width < 700) {
-            scope_chart = setChartConfig(350);
+            scope_chart = setChartConfig(300);
           } else {
-            scope_chart = setChartConfig(360);
+            scope_chart = setChartConfig(310);
           }
           return scope_chart;
         }
@@ -76,7 +76,7 @@ angular.module('SubSnoopApp')
             labelPadding: 35,
             duration: 100,
             margin: {
-              top: 50, right: 70, bottom: 0, left: 70
+              top: 50, right: 70, bottom: -50, left: 70
             }
           };
         };
@@ -93,7 +93,7 @@ angular.module('SubSnoopApp')
             labelPadding: 35,
             duration: 100,
             margin: {
-              top: 50, right: 30, bottom: 0, left: 30
+              top: 50, right: 30, bottom: -50, left: 30
             }
           };
         };
@@ -116,14 +116,16 @@ angular.module('SubSnoopApp')
           // --------------------------------------------------------
 
           var d3ChartEl = d3.select(element[0]);
-          //scope.chartConfig.width = scope.chartConfig.width;
-          //scope.chartConfig.height = scope.chartConfig.height;
-          drawChart(chartData, scope.chartConfig);
-
-          w.bind('resize', function() {
-            scope.$apply();
+          try {
             drawChart(chartData, scope.chartConfig);
-          });
+
+            w.bind('resize', function() {
+              scope.$apply();
+              drawChart(chartData, scope.chartConfig);
+            });
+          } catch(error) {
+            console.log(error);
+          }
         }
 
         /*
@@ -182,7 +184,6 @@ angular.module('SubSnoopApp')
            Display percentage and center text statistics when hovering over an arc
            */
           scope.mouseOverPath = function(d) {
-
             d3.select(this)
               .transition()
               .duration(duration)
@@ -193,7 +194,7 @@ angular.module('SubSnoopApp')
                 if (attrs.type === 'upvotes') {
                   line1 = 'Points: ' + $filter('number')(d.data.value);
                 } else {
-                  line1 = 'Posts: ' + $filter('number')(d.data.value);
+                  line1 = 'Entries: ' + $filter('number')(d.data.value);
                 }
 
                 d3.select('.line-1-' + attrs.type)
@@ -220,17 +221,21 @@ angular.module('SubSnoopApp')
            Shrink the arc back to original width of pie chart ring
            */
           scope.reduceArc = function(d) {
-            if (d) {
-              d3.select(this)
-                .transition()
-                .attr("d", arc);
-            } else {
-              d3.selectAll('.arc-' + attrs.type + ' path')
-              .each(function() {
+            try {
+              if (d) {
                 d3.select(this)
                   .transition()
                   .attr("d", arc);
-              });
+              } else {
+                d3.selectAll('.arc-' + attrs.type + ' path')
+                .each(function() {
+                  d3.select(this)
+                    .transition()
+                    .attr("d", arc);
+                });
+              }
+            } catch(error) {
+              console.log("Error: " + error);
             }
           }
 
@@ -281,11 +286,15 @@ angular.module('SubSnoopApp')
             .transition()
             .duration(1000)
             .attrTween('d', function(d) {
-              var interpolate = d3.interpolate(this._current, d);
-              this._current = interpolate(0);
-              return function(t) {
-                return arc(interpolate(t));
-              };
+              try {
+                var interpolate = d3.interpolate(this._current, d);
+                this._current = interpolate(0);
+                return function(t) {
+                  return arc(interpolate(t));
+                };
+              } catch(error) {
+                console.log(e);
+              }
             });
 
           /*

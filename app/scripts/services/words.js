@@ -9,10 +9,8 @@
  */
 angular.module('SubSnoopApp')
   .service('words', ['subFactory', '$filter', function (subFactory, $filter) {
-    var currentSub;
+    var sub;
     var currentUser;
-    var wordDict = {};
-    var wordArray = [];
     var subWords = {};
 
     var stopWords = [
@@ -202,110 +200,78 @@ angular.module('SubSnoopApp')
      Split comments or submissions for a specific subreddit into words for word cloud
     */
     return {
-      getWords: function(sub, user) {
-        if (currentUser !== user || !(sub in subWords)) {
-          currentSub = sub;
+      getWords: function(currentSub, user) {
+        if (currentUser !== user) {
           currentUser = user;
           resetData();
-
-          var subs = subFactory.getSubData().subs;
-
-          var sortedComments = $filter('sortPosts')(subs[sub].comments, 'mostUps');
-          var sortedSubmissions = $filter('sortPosts')(subs[sub].submissions, 'mostUps');
-
-          var upvotedComments = filterPosts(sortedComments, 'up');
-          var topComments = upvotedComments.slice(0, 25);
-          var upvotedSubmits = filterPosts(sortedSubmissions, 'up');
-          var topSubmits = upvotedSubmits.slice(0, 25);
-
-          splitWords(topComments, 'comments');
-          splitWords(topSubmits, 'submits');
-          addWordArray(sub, 'up');
-
-          wordDict = {};
-          wordArray = [];
-
-          var downvotedComments = filterPosts(sortedComments, 'down');
-          var downComments = downvotedComments.slice(-25);
-          var downvotedSubmits = filterPosts(sortedSubmissions, 'down');
-          var downSubmits = downvotedSubmits.slice(-25);
-          splitWords(downComments, 'comments');
-          splitWords(downSubmits, 'submits');
-          addWordArray(sub, 'down');
         }
 
-        return subWords[sub];
+        sub = currentSub;
+        if (!(currentSub in subWords)) {
+          if (!(sub in subWords)) {
+            subWords[sub] = {};
+            subWords[sub].wordDict = {};
+            subWords[sub].wordArray = [];
+          }
+
+          var subs = subFactory.getSubData().subs;
+          var comments = subs[sub].comments;
+          var submissions = subs[sub].submissions;
+
+          splitWords(comments, 'comments');
+          splitWords(submissions, 'submits');
+          addWordArray(sub);
+        }
+
+        return subWords[sub].wordArray;
       }
     };
 
     /*
      Add word array to upvoted or downvoted section of a sub's Words
     */
-    function addWordArray(sub, type) {
+    function addWordArray(sub) {
       adjustPluralWords();
 
-      for (var key in wordDict) {
+      for (var key in subWords[sub].wordDict) {
         var wordObj = {};
         wordObj.text = key;
-        wordObj.weight = wordDict[key];
-        wordArray.push(wordObj);
+        wordObj.weight = subWords[sub].wordDict[key];
+        subWords[sub].wordArray.push(wordObj);
       }
-
-      if (!(sub in subWords)) {
-        subWords[sub] = {};
-      }
-
-      subWords[sub][type] = wordArray;
-    }
-
-    /*
-     Filter posts and check if it's positively or negatively upvoted
-    */
-    function filterPosts(posts, type) {
-      var newPosts = [];
-      for (var i = 0; i < posts.length; i++) {
-        var votes = posts[i].ups;
-        var post = posts[i];
-
-        if (type == 'up' && votes > 1) {
-          newPosts.push(post);
-        } else if (type == 'down' && votes <= 0) {
-          newPosts.push(post);
-        }
-      }
-      return newPosts;
     }
 
     /*
      Check for pluralized words ending in 's' and combine with singles if necessary
     */
     function adjustPluralWords() {
-      for (var key in wordDict) {
+      var dataDict = subWords[sub].wordDict;
+
+      for (var key in dataDict) {
         if (key.slice(-1) == 's') {
           var singleWord = key.slice(0, key.length-1);
 
-          if (singleWord in wordDict) {
-            var singleNum = wordDict[singleWord];
-            var pluralNum = wordDict[key];
+          if (singleWord in dataDict) {
+            var singleNum = dataDict[singleWord];
+            var pluralNum = dataDict[key];
 
             if (singleNum >= pluralNum) {
-              wordDict[singleWord] += pluralNum;
-              delete wordDict[key];
+              dataDict[singleWord] += pluralNum;
+              delete dataDict[key];
             } else {
-              wordDict[key] += singleNum;
-              delete wordDict[singleWord];
+              dataDict[key] += singleNum;
+              delete dataDict[singleWord];
             }
           }
         }
       }
+      subWords[sub].wordDict = dataDict;
     }
 
     /*
      Reset array and dictionaries for new subreddit
     */
     function resetData() {
-      wordDict = {};
-      wordArray = [];
       subWords = {};
     }
 
@@ -360,10 +326,10 @@ angular.module('SubSnoopApp')
         var word = words[i].toLowerCase();
 
         if (word.length > 0 && filterWord(word)) {
-          if (word in wordDict) {
-            wordDict[word] += 1;
+          if (word in subWords[sub].wordDict) {
+            subWords[sub].wordDict[word] += 1;
           } else {
-            wordDict[word] = 1;
+            subWords[sub].wordDict[word] = 1;
           }
         }
       }

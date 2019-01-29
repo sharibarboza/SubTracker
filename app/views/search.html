@@ -1,93 +1,85 @@
 <div ng-include src="'views/searchnav.html'"></div>
 
-<div class="main-content" id="search-page">
-
-  <div class="content" layout="column" ng-cloak>
-
-    <div ng-include src="'views/sidenav.html'"></div>
+<div id="search-page">
+  <div class="card-box">
+    <strong class="purple-heading">Search Comments & Submissions</strong>
+    <br><br>
     <div>
-      <div class="user-banner main-banner width-pad" id="search-banner">
-        <br>
-        <strong align="center" class="banner-header"><h3 class="margin-pad">Search in <span class="orange">{{ username }}'s</span> comments &amp submissions</h3></strong>
-        <br>
-        <div id="search-input">
-          <form ng-submit="searchResults()" redirect="{{ false }}" novalidate="novalidate" handle-phone-submit>
-            <div class="input-group col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
-              <input type="text" ng-model="searchInput" class="form-control" placeholder="Enter keywords ..." id="search" required>
-              <span class="input-group-btn">
-                <button class="btn btn-info" type="submit"><i class="glyphicon glyphicon-search" aria-hidden="true"></i></button>
-              </span>
+      <form ng-submit="searchResults()" redirect="{{ false }}" novalidate="novalidate" handle-phone-submit>
+        <div class="input-group">
+          <input type="text" ng-model="searchInput" class="form-control" placeholder="Enter keywords ..." id="search" required>
+          <span class="input-group-btn">
+            <button class="btn btn-info" type="submit"><i class="glyphicon glyphicon-search" aria-hidden="true"></i></button>
+          </span>
+        </div>
+      </form>
+    </div>
+    <br>
+
+    <div ng-if="results.len">
+      <span class="gray">Found {{ results.len }} <ng-pluralize count="results.len" when="{'1': 'result', 'other': 'results'}"></ng-pluralize> in {{ results.subs }} <ng-pluralize count="results.subs" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize>.</span>
+    </div>
+    <div ng-if="results.len == 0">
+      <span class="gray">{{ noResults }}</span>
+    </div>
+  </div>
+
+  <div ng-show="searching">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+
+  <div class="row no-margin" ng-if="resultList.length" id="results">
+
+    <div class="no-right-pad" id="results-table">
+
+      <div ng-repeat="sub in resultList" class="search-body list-card-box" ng-if="results.data[sub].comments.length || results.data[sub].submissions.length">
+        <accordion class="accordion" id="results-accordion">
+          <accordion-group ng-init="results.data[sub].status = open" is-open="results.data[sub].status">
+
+            <accordion-heading>
+              <div class="row no-margin" id="results-card" ng-class="$index + 1 == resultList.length ? 'margin-bottom' : 'empty-class'" ng-click="searchResetLimit()">
+                <div class="col-xs-11 no-padding" id="search-title">
+                  <strong class="results-sub"><span class="orange-text">/r/</span><a>{{ sub }}</a></strong>
+                  <span class="purple results-sub">(<ng-pluralize count="(origResults.data[sub].numComments) + (origResults.data[sub].numSubmissions)" when="{'1': '1 result', 'other': '{{ ((origResults.data[sub].numComments) + (origResults.data[sub].numSubmissions)) | number }} results'}"></ng-pluralize> found)</span>
+                  <span class="post-badge" ng-if="results.data[sub].comments.length">
+                    <span class="badge"><span class="fa fa-comment small-icon"></span> {{ origResults.data[sub].numComments | number }}</span>
+                  </span>
+                  <span class="post-badge" ng-if="results.data[sub].submissions.length">
+                    <span class="badge"><span class="fa fa-file-text small-icon"></span> {{ origResults.data[sub].numSubmissions | number }}</span>
+                  </span>
+                </div>
+                <div class="col-xs-1 no-padding" id="search-chevron" align="center">
+                  <i class="fa fa-2x gray" ng-class="results.data[sub].status ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true" id="results-chevron"></i>
+                </div>
+              </div>
+            </accordion-heading>
+
+            <div class="card-action">
+              <div ng-if="results.data[sub].comments.length">
+                <strong class="orange-text">Comments</strong>
+                <hr>
+              </div>
+              <div ng-repeat="element in results.data[sub].comments | limitTo: searchLimit" class="searches" id="{{ sub }}-comments" ng-if="type != 3">
+                <span class="gray small-font" ng-bind="comment.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>
+                <div ng-include src="'views/comment-no-title.html'"></div>
+              </div>
+              <div ng-if="searchLimit < results.data[sub].comments.length" align="center">
+                <button style="margin-top: 10px;" ng-click="searchLoadMore(sub, 'comments')" class="btn gray-btn">Load More</button>
+              </div>
+
+              <div ng-if="results.data[sub].submissions.length">
+                <strong class="orange-text">Submitted</strong>
+                <hr>
+              </div>
+              <div ng-repeat="element in results.data[sub].submissions | limitTo: searchLimit" class="searches" id="{{ sub }}-submits" ng-if="type != 2">
+                <div ng-include src="'views/submission.html'" id='results-submit'></div>
+              </div>
+              <div ng-if="searchLimit < results.data[sub].submissions.length" align="center">
+                <button style="margin-top: 10px;" ng-click="searchLoadMore(sub, 'submissions')" class="btn gray-btn">Load More</button>
+              </div>
             </div>
-          </form>
-        </div>
-      </div>
-
-      <div ng-show="searching">
-        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-      </div>
-
-      <div class="table-pad search-content width-pad dummy-container">
-
-        <div align="center" ng-if="results.len">
-          <span class="gray">Found {{ results.len }} <ng-pluralize count="results.len" when="{'1': 'result', 'other': 'results'}"></ng-pluralize> in {{ results.subs }} <ng-pluralize count="resultList.length" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize></span>
-        </div>
-        <div align="center" ng-if="results.len == 0">
-          <span class="gray">{{ noResults }}</span>
-        </div>
-
-        <div class="row no-margin" ng-if="resultList.length" id="results">
-
-          <div ng-include src="'views/search-sidebar.html'"></div>
-          <div class="col-md-9 col-sm-8" id="results-table">
-
-            <div ng-repeat="sub in resultList" class="search-body" ng-if="results.data[sub].comments.length || results.data[sub].submissions.length">
-              <accordion class="accordion" id="results-accordion">
-                <accordion-group ng-init="results.data[sub].status = open" is-open="results.data[sub].status">
-
-                  <accordion-heading>
-                    <div class="row no-margin" id="results-card" ng-class="$index + 1 == resultList.length ? 'margin-bottom' : 'empty-class'">
-                      <div class="col-xs-11 no-padding" id="search-title">
-                        <strong class="results-sub">/r/{{ sub }}</strong> <span class="purple results-sub">(<ng-pluralize count="(results.data[sub].comments.length) + (results.data[sub].submissions.length)" when="{'1': '1 result', 'other': '{{ ((results.data[sub].comments.length) + (results.data[sub].submissions.length)) | number }} results'}"></ng-pluralize> found)</span>
-                      </div>
-                      <div class="col-xs-1 no-padding" id="search-chevron" align="center">
-                        <i class="fa fa-2x gray" ng-class="results.data[sub].status ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true" id="results-chevron"></i>
-                      </div>
-                    </div>
-                  </accordion-heading>
-
-                  <div class="card-action">
-                    <span class="post-links post-badge" ng-if="results.data[sub].comments.length">
-                      <span class="badge results-badge"><ng-pluralize count="results.data[sub].comments.length" when="{'1': '1 comment', 'other': '{{ results.data[sub].comments.length | number }} comments'}"></ng-pluralize></span>
-                    </span>
-
-                    <span class="post-links post-badge" ng-if="results.data[sub].submissions.length">
-                      <span class="badge results-badge"><ng-pluralize count="results.data[sub].submissions.length" when="{'1': '1 submission', 'other': '{{ results.data[sub].submissions.length | number }} submissions'}"></ng-pluralize></span>
-                    </span>
-                    <br>
-
-                    <h4 class="black" ng-if="results.data[sub].comments.length"><strong>Comments</strong></h4>
-                    <div ng-repeat="element in results.data[sub].comments" class="searches" id="{{ sub }}-comments" ng-if="type != 3">
-                      <span class="gray small-font" ng-bind="comment.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>
-                      <div ng-include src="'views/comment-no-title.html'"></div>
-                    </div>
-
-                    <h4 class="black"><strong ng-if="results.data[sub].submissions.length">Submitted</strong></h4>
-                    <div ng-repeat="element in results.data[sub].submissions" class="searches" id="{{ sub }}-submits" ng-if="type != 2">
-                      <div ng-include src="'views/submission.html'" id='results-submit'></div>
-                    </div>
-                  </div>
-                </accordion-group>
-              </accordion>
-            </div>
-          </div>
-        </div>
-
-        <br>
-        <div align="center" class="center-back">
-          <back-top></back-top>
-          <br><br>
-        </div>
-
+          </accordion-group>
+        </accordion>
       </div>
     </div>
   </div>

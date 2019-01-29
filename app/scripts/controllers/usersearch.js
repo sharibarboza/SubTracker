@@ -2,28 +2,36 @@
 
 /**
  * @ngdoc function
- * @name SubSnoopApp.controller:SearchCtrl
+ * @name SubSnoopApp.controller:UserSearchCtrl
  * @description
- * # SearchCtrl
+ * # UserSearchCtrl
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('SearchCtrl', ['$rootScope', '$scope', 'searchResults', '$filter', 'search', 'subFactory', '$timeout', 'subsData', 'sortFactory',
-  function ($rootScope, $scope, searchResults, $filter, search, subFactory, $timeout, subsData, sortFactory) {
+  .controller('UserSearchCtrl', ['$rootScope', '$scope', 'searchResults', '$filter', 'search', 'subFactory', '$timeout', 'sortFactory', 'userFactory',
+  function ($rootScope, $scope, searchResults, $filter, search, subFactory, $timeout, sortFactory, userFactory) {
+
     /*
       Initalization
     */
     $scope.searching = false;  // For loading progression wheel
     $scope.main = false;
     $scope.page = 'search';
-    $scope.dataSubs = subsData.subs;
+    $scope.dataSubs = subFactory.getSubData().subs;
     $scope.subsArray = Object.keys($scope.dataSubs);
-    $scope.subList = $scope.subsArray;  // Used for collapsible sidenav
-    $scope.username = subsData.user.name;
+    $scope.searchList = $scope.subsArray;  // Used for collapsible sidenav
     $scope.searchInput = "";
     $scope.noResults = "";
     $rootScope.title = $scope.username + ' | Search';
-    $scope.statuses = [];
+    $scope.user = userFactory.getUser();
+    $scope.results = {'data':{}};
+    $scope.resultList = [];
+    $scope.type = 1;
+    $scope.searchSubs = [];
+    $scope.hasResults = false;
+
+    var initLimit = 10;
+    $scope.searchLimit = initLimit;
 
     /*
      Reset post-type and subs array to default on new search
@@ -32,7 +40,7 @@ angular.module('SubSnoopApp')
       $scope.results = {'data':{}};
       $scope.resultList = [];
       $scope.type = 1;
-      $scope.subs = [];
+      $scope.searchSubs = [];
     };
     resetFilters();
 
@@ -49,12 +57,12 @@ angular.module('SubSnoopApp')
         }
 
         var subStr = '';
-        if ($scope.subs.length > 0) {
+        if ($scope.searchSubs.length > 0) {
           subStr += 'in [';
-          for (var i = 0; i < $scope.subs.length; i++) {
-            var sub = '/r/' + $scope.subs[i];
+          for (var i = 0; i < $scope.searchSubs.length; i++) {
+            var sub = '/r/' + $scope.searchSubs[i];
             subStr += sub;
-            if (i < $scope.subs.length - 1) {
+            if (i < $scope.searchSubs.length - 1) {
               subStr += ', '
             }
           }
@@ -69,11 +77,11 @@ angular.module('SubSnoopApp')
      Checkbox click prompts new sub to be added to filtered subs array
     */
     $scope.addSub = function(sub) {
-      var subIndex = $scope.subs.indexOf(sub);
+      var subIndex = $scope.searchSubs.indexOf(sub);
       if (subIndex < 0) {
-        $scope.subs.push(sub);
+        $scope.searchSubs.push(sub);
       } else {
-        $scope.subs.splice(subIndex, 1);
+        $scope.searchSubs.splice(subIndex, 1);
       }
       $scope.filterResults($scope.type);
     };
@@ -82,7 +90,7 @@ angular.module('SubSnoopApp')
      Empty filtered subs array
     */
     $scope.deselect = function() {
-      $scope.subs = [];
+      $scope.searchSubs = [];
       $scope.filterResults($scope.type);
     };
 
@@ -92,8 +100,7 @@ angular.module('SubSnoopApp')
     */
     $scope.filterResults = function(type) {
       $scope.type = type;
-      $scope.results = $filter('search')($scope.origResults, type, $scope.subs);
-
+      $scope.results = $filter('search')($scope.origResults, type, $scope.searchSubs);
       $scope.resultList = $filter('sortSubs')(Object.keys($scope.results.data), 'subName', $scope.results.data);
       $scope.noResults = getNotFoundMsg();
     };
@@ -109,7 +116,7 @@ angular.module('SubSnoopApp')
      Checks the current checkbox and passes true/false to ng-checked
     */
     $scope.checkSub = function(sub) {
-      return $scope.subs.indexOf(sub) >= 0;
+      return $scope.searchSubs.indexOf(sub) >= 0;
     };
 
     /*
@@ -117,11 +124,12 @@ angular.module('SubSnoopApp')
      Gives a sleep delay of at least 2 seconds every search to simulate loading
     */
     $scope.searchResults = function() {
+      $scope.searchInput = this.searchInput;
       $scope.searching = true;
       $timeout(function() {
         resetFilters();
-        $scope.origResults = searchResults.getData($scope.searchInput, $scope.dataSubs, $scope.type, $scope.subs);
-
+        $scope.origResults = searchResults.getData($scope.searchInput, $scope.dataSubs, $scope.type, $scope.searchSubs);
+        $scope.hasResults = Object.keys($scope.origResults).length > 0;
         $scope.filterResults(1);
         $scope.searching = false;
       }, 200);
@@ -132,8 +140,23 @@ angular.module('SubSnoopApp')
     */
     $scope.sort = sortFactory.getSubSort();
     $scope.changeSubs = function(term) {
-      $scope.subList = [];
-      $scope.subList = search.findSubs($scope.subsArray, term);
+      $scope.searchList = [];
+      $scope.searchList = search.findSubs($scope.subsArray, term);
     };
+
+    /*
+     Load more posts lazily
+    */
+    $scope.searchLoadMore = function(sub, type) {
+      if ($scope.searchLimit + initLimit < $scope.results.data[sub][type].length) {
+        $scope.searchLimit += initLimit;
+      } else {
+        $scope.searchLimit = $scope.results.data[sub][type].length;
+      }
+    }
+
+    $scope.searchResetLimit = function() {
+      $scope.searchLimit = initLimit;
+    }
 
   }]);

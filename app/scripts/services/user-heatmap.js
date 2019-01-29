@@ -15,13 +15,17 @@ angular.module('SubSnoopApp')
     var data;
     var count = 0;
     var dataArray = [];
+    var subCount = 0;
+    var uniqueSubs = {};
+    var average = null;
 
-    var year = moment().year();
+    var minDate = moment().startOf('day').subtract(7, 'month');
+    var diff = (moment.duration(moment().diff(minDate)).asMonths()).toFixed(0);
 
     /*
      Sets up the data for the heat map graph.
      Grabs the comments and submissions from a sub and returns an array
-     of objects, each object contains: the date, the total amount of 
+     of objects, each object contains: the date, the total amount of
      posts per date, the total amount of comments per date, and the total
      amount of submissions per date.
     */
@@ -29,7 +33,6 @@ angular.module('SubSnoopApp')
       getUserMap: function(current_user, subs, current_year) {
         if (!dates || user !== current_user) {
           resetData();
-          setYear(current_year);
           var keys = Object.keys(subs);
 
           for (var i = 0; i < keys.length; i++) {
@@ -39,12 +42,16 @@ angular.module('SubSnoopApp')
             getData('submissions');
           }
           fillDataArray();
+          calculateAverage();
           user = current_user;
         }
         return dataArray;
       },
       getCount: function() {
         return count;
+      },
+      getAverage: function() {
+        return average;
       }
     };
 
@@ -56,13 +63,10 @@ angular.module('SubSnoopApp')
       data = {};
       count = 0;
       dataArray = [];
+      subCount = 0;
+      uniqueSubs = {};
+      average = null;
     };
-
-    function setYear(current_year) {
-      if (current_year) {
-        year = current_year;
-      }
-    }
 
     /*
      Get the array of data objects.
@@ -73,6 +77,20 @@ angular.module('SubSnoopApp')
       for (var data in dates) {
         dataArray.push(dates[data]);
       }
+    }
+
+    /*
+     Calculate the average of unique subreddits per month.
+    */
+    function calculateAverage() {
+      var totalSubs = 0;
+      for (var key in uniqueSubs) {
+        var subDict = uniqueSubs[key];
+        var length = Object.keys(subDict).length;
+        totalSubs += length;
+      }
+      var totalMonths = Object.keys(uniqueSubs).length;
+      average = (totalSubs / totalMonths).toFixed(0);
     }
 
     /*
@@ -91,12 +109,19 @@ angular.module('SubSnoopApp')
       for (var i = 0; i < dataArray.length; i++) {
         var elem = dataArray[i];
         var date = moment(elem.created_utc*1000);
-        var commentYear = date.year();
         var dateObj = date.format('YYYY-MM-DD');
 
-        if (year === commentYear) {
+        if (date >= minDate) {
           setUserDay(where, dateObj, elem);
-          count += 1;
+
+          var month = date.month();
+          if (!(month in uniqueSubs)) {
+            uniqueSubs[month] = [];
+          }
+
+          if (!(elem.subreddit in uniqueSubs[month])) {
+            uniqueSubs[month][elem.subreddit] = null;
+          }
         }
       }
     }
@@ -119,6 +144,7 @@ angular.module('SubSnoopApp')
         dayData.details = [];
         dayData.summary = [];
         dayData.subs = {};
+        count += 1;
       } else {
         dayData = dates[dateObj];
       }

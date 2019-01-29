@@ -141,8 +141,15 @@ h5 {
   background-color: #00B1CC;
 }
 
-.badge, .label {
-  background-color: #6E6E6E;
+.badge, .label, .panel-default > .panel-heading .badge {
+  background-color: #F5F5F5;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  color: #333;
+}
+
+#results-card .post-badge {
+  margin-top: 5px;
 }
 
 .label a {
@@ -164,7 +171,7 @@ h5 {
 }
 
 .highlight {
-  background: #FFB675;
+  background: #FFB78A;
 }
 
 /* Make the masthead heading the same height as the navigation */
@@ -217,6 +224,7 @@ blockquote {
 
 .accordion .panel-default {
   background-color: #FAFAFA;
+  border: 0 !important;
 }
 
 .accordion .panel-default > .panel-heading {
@@ -412,6 +420,124 @@ blockquote {
   background-color: white;
 }
 
+.orange-btn {
+  background-color: rgb(249, 104, 84);
+  border-radius: 0 !important;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 5px !important;
+}
+
+.orange-btn:hover {
+  color: white;
+}
+
+.orange-text {
+  color: rgb(249, 104, 84);
+}
+
+.gray-btn {
+  background-color: rgb(231, 236, 240);
+  border-radius: 0 !important;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #3F51B5;
+  font-size: 13px;
+}
+
+.main-col {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.card-box {
+  border: 1px solid white;
+  background-color: #fff !important;
+  padding: 20px 15px;
+  margin-bottom: 20px;
+}
+
+.list-card-box {
+  margin-bottom: 6px !important;
+}
+
+.sub-num {
+  font-size: 30px;
+  color: #3F51B5;
+}
+
+.purple-heading {
+  font-size: 18px;
+  color: #3F51B5;
+}
+
+.gray-bold-subtitle {
+  color: rgb(79, 104, 122);
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.small-icon {
+  color: #BABABA;
+}
+
+.small-gray-font {
+  color: rgb(79, 104, 122);
+  font-weight: 400;
+  font-size: 1.4rem;
+}
+
+.small-white-font {
+  color: #fff;
+  font-weight: 400;
+  font-size: 1.4rem;
+}
+
+.num-rank {
+  font-size: 20px;
+}
+
+.prev-img {
+  width: 100%;
+}
+
+.prevName {
+  font-size: 15px;
+}
+
+.top-sub-icon {
+  width: 50%;
+}
+
+.gray-box {
+  position: relative;
+  background-image: url('../images/icons-bg.jpg');
+  min-height: 100px;
+  min-width: 100%;
+}
+
+.gray-box-content {
+  color: white;
+  font-size: 18px;
+  position: absolute;
+  top: 25%;
+  text-align: center;
+  width: 100%;
+}
+
+.karma-col {
+  padding-top: 5%;
+}
+
+.karma-col strong {
+  font-size: 18px;
+}
+
+.main-container {
+  background-color: #f5f5f5;
+}
+
 /************************
 Angular Material
 ************************/
@@ -534,8 +660,12 @@ md-card {
 }
 
 .panel-box {
-    border: 1px solid #e5e5e5;
-    margin-top: -1px;
+  border: 1px solid #e5e5e5;
+  margin-top: -1px;
+}
+
+.card-shadow {
+  box-shadow: 0 1px 5px rgba(0,0,0,0.16), 0 1px 6px rgba(0,0,0,0.23);
 }
 
 /************************
@@ -591,11 +721,12 @@ Content
 
 .main-content {
   position: relative;
+  background-color: rgb(243, 244, 245);
 }
 
-.width-pad {
-  padding-left: 11%;
-  padding-right: 11%;
+.width-pad, .banner-pad {
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
 .column-pad {
@@ -624,20 +755,72 @@ Content
 }
 
 .user-banner {
+  height: 250px;
+  position: relative;
   color: white;
   background-image: url('../images/icons-bg.jpg');
   background-size: auto;
-  background-position: 0 15%;
-  padding-top: 5px;
-  padding-bottom: 20px;
+  background-position: center 20%;
   font-weight: 400;
   margin-right: 0;
+  width: 100%;
+}
+
+.default-banner {
+  height: 250px;
+  position: relative;
+  color: white;
+  background-size: auto;
+  background-position: center 20%;
+  font-weight: 400;
+  margin-right: 0;
+  width: 100%;
+}
+
+.banner-content {
+  vertical-align: middle;
+  line-height: 250px;
+}
+
+.sub-bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
 }
 
 .main-banner {
-  padding-top: 50px;
-  padding-bottom: 70px;
+  height: 350px;
+  padding-top: 10vh;
   background-position: 0 50%;
+}
+
+.search-banner {
+  height: 250px;
+  padding-top: 5vh;
+  background-position: 0 50%;
+}
+
+.sub-circle {
+  background-color: #000;
+  position: absolute;
+  top: -15vh;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  background-size: cover;
+}
+
+.small-sub-circle {
+  width: 45px;
+  height: 45px;
+  border: 0;
+  border-radius: 50%;
+  background-size: cover;
+}
+
+.img-no-border {
+  border: 0;
 }
 
 .sub-banner {
@@ -664,7 +847,11 @@ Content
 }
 
 .banner-img {
-  width: 100px;
+  width: 10vw;
+}
+
+.img-border {
+  border: 5px solid #fff;
 }
 
 .banner-container {
@@ -749,6 +936,14 @@ Content
 .searches .post-box {
   padding-left: 0;
   padding-right: 0;
+}
+
+.searches {
+  margin-bottom: 20px;
+}
+
+#search-tab-bar a {
+  color: #696969;
 }
 
 
@@ -873,7 +1068,7 @@ Main Page
 
 #sub-panels {
   overflow: hidden;
-  padding: 15px 30px;
+  padding: 15px 50px;
 }
 
 #sub-panels .col-md-6 {
@@ -881,7 +1076,7 @@ Main Page
 }
 
 .sub-panel-content {
-  padding-left: 15px;
+  padding-left: 20px;
 }
 
 .sub-icon {
@@ -962,8 +1157,9 @@ User Page
 }
 
 .badge-image {
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
 }
 
 .badge-title {
@@ -972,36 +1168,29 @@ User Page
 }
 
 .user-head-nav {
-  background-color: #F5F5F5;
+  background-color: white;
   color: #696969;
   font-size: 14px;
   font-weight: 500;
 }
 
 .post-tab {
-  padding: 15px 20px;
-}
-
-.post-tab:hover {
-  background-color: white;
-}
-
-.user-head-nav span {
-  vertical-align: middle;
-  line-height: 50px;
-  font-size: 14px;
-}
-
-.user-head-nav img {
-  margin-top: 10px;
+  padding: 15px 0;
+  position: relative;
 }
 
 .underline-tab {
   border-bottom: 3px solid rgb(63,81,181);
+  color: rgb(249, 104, 84);
 }
 
-.user-head-nav a {
-  color: inherit;
+.post-tab:hover {
+  background-color: white;
+  color: rgb(249, 104, 84);
+}
+
+.user-head-nav img {
+  margin-top: 10px;
 }
 
 .middle-banner {
@@ -1054,10 +1243,6 @@ User Page
   font-size: 20px;
 }
 
-.sub-name {
-  color: #337ab7;
-}
-
 .subname-box {
   padding: 4px 10px;
 }
@@ -1093,7 +1278,7 @@ User Page
 
 .user-name {
   margin-top: 5px;
-  font-size: 27px;
+  font-size: 30px;
 }
 
 .avatar-header div {
@@ -1206,7 +1391,6 @@ Subreddit Table
 }
 
 #sub-row:hover, .sub-box:hover {
-  background-color: #F5F5F5 !important;
   cursor: pointer !important;
 }
 
@@ -1220,14 +1404,17 @@ Subreddit Table
 }
 
 .sub-name {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
-  vertical-align: middle;
-  line-height: 30px;
 }
 
-.sub-name:hover {
-  color: #12C5E0;
+.prevRow:hover {
+  color: rgb(249, 104, 84) !important;
+}
+
+.sub-icon-list {
+  width: 100%;
+  border-radius: 5px;
 }
 
 #more-subs {
@@ -1277,6 +1464,38 @@ Subreddit Table
   padding-top: 8px;
 }
 
+.top-fix {
+  position: fixed;
+  top: 50px;
+  z-index: 999;
+  width: 100%;
+}
+
+.top-fix .sub-circle {
+  background-color: #000;
+  position: absolute;
+  top: 2px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  background-size: cover;
+  margin-left: -5px;
+}
+
+.top-fix .name-bar {
+  display: block !important;
+  float: left;
+  padding-left: 60px;
+  font-size: 16px !important;
+  vertical-align: middle;
+  line-height: 50px;
+}
+
+.top-fix-body {
+  margin-top: 50px;
+}
+
 /************************
 User Sub Page
 ************************/
@@ -1313,7 +1532,8 @@ User Sub Page
 }
 
 .post-body {
-  padding-top: 10px;
+  padding-top: 20px;
+  padding-bottom: 10px;
   color: #495057;
   font-weight: 400;
 }
@@ -1358,6 +1578,13 @@ User Sub Page
 }
 
 .gilded-icon {
+  display: inline-block;
+  margin: 0;
+  vertical-align: middle;
+  width: 16px;
+}
+
+.gilded-star {
   position: relative;
   display: inline-block;
   margin: 0 0 -15px 8px;
@@ -1367,12 +1594,7 @@ User Sub Page
   vertical-align: middle;
 }
 
-.gilded-sub {
-  top: -10px;
-  margin-left: 4px;
-}
-
-.gilded-icon:before {
+.gilded-star:before {
   display: inline-block;
   content: '';
   background-image: url('../images/sprite-reddit.png');
@@ -1380,8 +1602,17 @@ User Sub Page
   background-repeat: no-repeat;
   height: 14px;
   width: 13px;
-  margin-right: 2px;
   vertical-align: -3px;
+}
+
+.gild-font {
+  color: #99895F;
+  font-size: .9em;
+}
+
+.gilded-sub {
+  top: -10px;
+  margin-left: 4px;
 }
 
 .nav-tabs > li > a {
@@ -1436,6 +1667,10 @@ User Sub Page
   padding: 8px 20px 8px 10px;
   font-weight: 600;
   font-size: 16px;
+}
+
+.dropdown-margin {
+  margin-top: 5px;
 }
 
 .table-heads td {
@@ -1578,11 +1813,11 @@ Submit Post Thumbnails
 }
 
 .post-thumbnail img {
-  width: 60%;
+  width: 100%;
 }
 
 .thumb-pic {
-  width: 60%;
+  width: 100%;
 }
 
 .thumb-default {
@@ -1601,14 +1836,6 @@ Submit Post Thumbnails
   width: 70px;
 }
 
-.thumb-search-default {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: -20px -455px;
-  background-repeat: no-repeat;
-  height: 105px;
-  width: 100px;
-}
-
 .thumb-self {
   background-image: url('../images/sprite-reddit.png');
   background-position: -20px -895px;
@@ -1623,14 +1850,6 @@ Submit Post Thumbnails
   background-repeat: no-repeat;
   height: 55px;
   width: 70px;
-}
-
-.thumb-search-self {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: -20px -895px;
-  background-repeat: no-repeat;
-  height: 105px;
-  width: 100px;
 }
 
 .thumb-image {
@@ -1649,14 +1868,6 @@ Submit Post Thumbnails
   width: 70px;
 }
 
-.thumb-search-image {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: -20px -310px;
-  background-repeat: no-repeat;
-  height: 105px;
-  width: 100px;
-}
-
 .thumb-nsfw {
   background-image: url('../images/sprite-reddit.png');
   background-position: -20px -603px;
@@ -1671,14 +1882,6 @@ Submit Post Thumbnails
   background-repeat: no-repeat;
   height: 55px;
   width: 70px;
-}
-
-.thumb-search-nsfw {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: -20px -603px;
-  background-repeat: no-repeat;
-  height: 105px;
-  width: 100px;
 }
 
 .thumb-spoiler {
@@ -1697,14 +1900,6 @@ Submit Post Thumbnails
   width: 70px;
 }
 
-.thumb-search-spoiler {
-  background-image: url('../images/sprite-reddit.png');
-  background-position: -20px -748px;
-  background-repeat: no-repeat;
-  height: 105px;
-  width: 100px;
-}
-
 /************************
 Search
 ************************/
@@ -1721,10 +1916,6 @@ Search
 
 #search-input {
   padding: 10px;
-}
-
-#results-table {
-  margin-top: 20px;
 }
 
 #results-card {
@@ -1756,20 +1947,14 @@ Search
 
 #search-side-card {
   margin-top: 20px;
-  padding: 10px 16px;
 }
 
 #results-card:hover {
-  color: #12C5E0;
+  color: rgb(249, 104, 84);
 }
 
 #submit-col-search {
   padding: 12px;
-}
-
-#search-side-card {
-  background-color: white;
-  border: 1px solid #e5e5e5;
 }
 
 .search-width {

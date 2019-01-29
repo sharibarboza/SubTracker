@@ -1,26 +1,23 @@
 <md-card-content class="no-pad">
   <div class="row submit-row">
-    <div ng-if="page != 'search'" class="col-md-2 col-xs-3 post-thumbnail" align="center">
+    <div class="col-md-2 col-xs-3 post-thumbnail" align="center">
       <thumbnail data="{{ element }}" page="{{ page }}"></thumbnail>
     </div>
-    <div ng-if="page != 'search'" class="col-md-10 col-xs-9 submit-info">
+    <div class="col-md-10 col-xs-9 submit-info">
       <div ng-include src="'views/submit-header.html'"></div>
       <br class="hide-break">
 
 	  <accordion class="accordion accordion-hidden">
-	    <accordion-group ng-init="status = { isOpen: page == 'search' ? true : open }" is-open="status.isOpen">
+	    <accordion-group ng-init="status = { isOpen: open }" is-open="status.isOpen">
 	      <accordion-heading>
 
-        <div id="submit-stats" class="row">
+        <div id="submit-stats" class="row" style="border: 1px solid #ddd;">
           <div class="col-xs-11">
             <span class="post-links">
               <strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong>
             </span>
             <span class="post-links">
               <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date gray"></span>
-            </span>
-            <span class="post-links">
-              <span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gilded }}</span></span>
             </span>
           </div>
           <div class="col-xs-1" align="right">
@@ -35,26 +32,10 @@
 	  </accordion>
 
     </div>
-    <div ng-if="page == 'search'" class="col-md-12 submit-info">
-      <div ng-include src="'views/submit-header.html'"></div>
-      <br class="hide-break">
-	  <accordion class="accordion accordion-hidden" ng-if="element | isContent">
-	    <accordion-group ng-init="status = { isOpen: page == 'search' ? true : open }" is-open="status.isOpen">
-	      <accordion-heading>
-	        <div class="center">
-	          <i class="fa fa-2x gray" ng-class="status.isOpen ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true"></i>
-	        </div>
-	      </accordion-heading>
-	      <div id="submit-col" ng-if="status.isOpen">
-	        <submit-content class="wrap-text" data="{{ element }}" page="{{ page }}" truncate="false" user="{{ username }}"></submit-content>
-	      </div>
-	    </accordion-group>
-	  </accordion>
-    </div>
   </div>
 
   <accordion class="accordion mobile-accordion" style="display: none;" ng-if="element | isContent">
-    <accordion-group ng-init="status = { isOpen: page == 'search' ? true : open }" is-open="status.isOpen">
+    <accordion-group ng-init="status = { isOpen: open }" is-open="status.isOpen">
       <accordion-heading>
         <div class="center">
           <i class="fa fa-2x gray" ng-class="status.isOpen ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true"></i>

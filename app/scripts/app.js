@@ -19,7 +19,9 @@ var app = angular
     'yaru22.angular-timeago',
     'angular-jqcloud',
     'g1b.calendar-heatmap',
-    'angularLazyImg'
+    'angularLazyImg',
+    'ngLocationUpdate',
+    'chart.js'
   ]);
 
 /*
@@ -69,9 +71,9 @@ app.config(['$routeProvider', '$locationProvider', 'lazyImgConfigProvider', func
       }
     })
     .when('/:username/search/', {
-      templateUrl: 'views/search.html',
-      controller: 'SearchCtrl',
-      controllerAs: 'search',
+      templateUrl: 'views/user.html',
+      controller: 'UserCtrl',
+      controllerAs: 'user',
       resolve: {
         subsData: function($route, subFactory, userFactory) {
           return getData($route, subFactory, userFactory);
@@ -108,6 +110,16 @@ app.config(['$routeProvider', '$locationProvider', 'lazyImgConfigProvider', func
         }
       }
     })
+    .when('/:username/:subreddit/gilded/', {
+      templateUrl: 'views/sub.html',
+      controller: 'UserSubCtrl',
+      controllerAs: 'usersub',
+      resolve: {
+        subsData: function($route, subFactory, userFactory) {
+          return getData($route, subFactory, userFactory);
+        }
+      }
+    })
     .when('/notfound/:username', {
       templateUrl: 'views/not-found.html'
     })
@@ -133,7 +145,22 @@ app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope
     }
 
     var loading;
-    if (localStorage.getItem('user') !== curr.pathParams.username) {
+    var paramUser, dataUser;
+    try {
+      paramUser = localStorage.getItem('user').toLowerCase() === curr.pathParams.username.toLowerCase();
+    } catch(e) {
+      paramUser = false;
+    }
+    try {
+      var storageData = JSON.parse(localStorage.getItem('data'));
+      dataUser = storageData.user.name.toLowerCase() === curr.pathParams.username.toLowerCase();
+    } catch(e) {
+      dataUser = false;
+    }
+
+    if (!paramUser && dataUser) {
+      loading = false;
+    } else if (!paramUser && !dataUser) {
       loading = true;
     }
 

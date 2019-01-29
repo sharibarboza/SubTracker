@@ -44,8 +44,6 @@ angular.module('SubSnoopApp')
             return '<img class="thumb thumb-pic" lazy-img="' + type + '">';
           } else if (page == 'submissions' && windowWidth > 750) {
             return '<div class="thumb thumb-' + type + '"></div>';
-          } else if (page == 'search' && windowWidth > 750) {
-            return '<div class="thumb thumb-search-' + type + '"></div>';
           } else {
             return '<div class="thumb thumb-beta-' + type + '"></div>';
           }

@@ -8,8 +8,8 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sortFactory',
-  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory) {
+ .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sortFactory', 'subInfo',
+  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory, subInfo) {
     var pages = 10;
     var username;
     var promise;
@@ -32,6 +32,9 @@
     var topComment = [0, ''];
     var topSubmit = [0, ''];
 
+    var topWeek = {};
+    var topSub = null;
+
     var i = 0;
 
     /*
@@ -41,7 +44,11 @@
       getData: function(user, refresh) {
         resetData();
         username = user.name;
-        promise = getSubPromise(user, refresh);
+        try {
+          promise = getSubPromise(user, refresh);
+        } catch(e) {
+          console.log(e);
+        }
         return promise;
       },
       getSubData: function() {
@@ -71,9 +78,23 @@
       },
       setSubInfo: function(subreddit, info) {
         try {
+          if (info.banner_img == "" || info.banner_img == null) {
+            info.banner_img = '../images/icons-bg.jpg';
+          }
           subData.subs[subreddit].info = info;
         } catch(error) {
           throw subreddit + ' does not exist in ' + username + '\'s subreddits.';
+        }
+      },
+      setIcons: function(subreddit, iconImg) {
+        try {
+          if (iconImg !== "" && iconImg !== null) {
+            subData.subs[subreddit].icon = iconImg;
+          } else {
+            subData.subs[subreddit].icon = null;
+          }
+        } catch(error) {
+          throw subreddit + ' does not have an icon image.';
         }
       },
       getFirstPost: function(sub) {
@@ -109,22 +130,69 @@
         refresh = false;
       }
 
-      if (refresh || localStorage.getItem('user') != user.name) {
+      //delete localStorage.previous;
+      //delete localStorage.prevData;
+      if ('data' in localStorage) {
+        var tempData = JSON.parse(localStorage.getItem('data'));
+      }
+
+      if (refresh || !tempData || tempData.user.name != user.name) {
         var commentPromise = promiseChain('comments', 'commentsCallback');
         var submitPromise = promiseChain('submitted', 'submitsCallback');
         // Resolve both comment and submission promises together
 
         return $q.all([commentPromise, submitPromise]).then(function() {
           setSubData(user);
-
+          var saved;
           try {
-            localStorage.clear();
+            //localStorage.clear();
             localStorage.setItem('user', user.name);
             localStorage.setItem('data', JSON.stringify(subData));
+            saved = true;
           } catch(e) {
-            console.log(e);
+            saved = false;
           }
+
+          try {
+            // Store in previous searched users
+            if (!('previous' in localStorage)) {
+              localStorage.setItem('previous', "");
+            }
+
+            if (!('prevData' in localStorage)) {
+              localStorage.setItem('prevData', JSON.stringify({}));
+            }
+
+            var prevUsers = localStorage.getItem('previous').split(',');
+            var prevData = JSON.parse(localStorage.getItem('prevData'));
+
+            if (prevUsers.indexOf(user.name) < 0) {
+              prevUsers.push(user.name);
+
+              var userData = {};
+              userData.avatar = user.icon_img;
+              userData.subs = subLength;
+              prevData[user.name] = userData;
+
+              if (prevUsers.length > 6) {
+                delete prevData[prevUsers[0]];
+                prevUsers = prevUsers.slice(1, 7);
+              }
+            } else {
+              var prevIndex = prevUsers.indexOf(user.name);
+              prevUsers.splice(prevIndex, 1);
+              prevUsers.push(user.name);
+            }
+
+            localStorage.setItem('previous', prevUsers);
+            localStorage.setItem('prevData', JSON.stringify(prevData));
+          } catch(error) {
+            console.log(error);
+          }
+
           return subData;
+        }, function(error) {
+          console.log(error);
         });
       } else {
         subData = JSON.parse(localStorage.getItem('data'));
@@ -142,6 +210,7 @@
     function setSubData(response) {
       organizeComments(comments);
       organizeSubmitted(submissions);
+      calculateTopSub();
 
       subNames = Object.keys(subs);
       subLength = subNames.length;
@@ -156,7 +225,21 @@
         'subs' : subs,
         'upvotes' : upvotes,
         'topComment': topComment[1],
-        'topSubmit': topSubmit[1]
+        'topSubmit': topSubmit[1],
+        'topSub': topSub
+      }
+    }
+
+    /*
+     Caclulate the top sub of the week
+    */
+    function calculateTopSub() {
+      var max = null;
+      for (var sub in topWeek) {
+        if (max == null || topWeek[sub] > max) {
+          topSub = sub;
+          max = topWeek[sub];
+        }
       }
     }
 
@@ -196,6 +279,8 @@
       firstPost = null;
       topComment = [0, ''];
       topSubmit = [0, ''];
+      topWeek = {};
+      topSub = null;
       i = 0;
 
       sortFactory.clearSorted();
@@ -235,7 +320,6 @@
      fetched at a time, making for at most 10 API requests.
     */
     function promiseChain(where) {
-
       var promise = callAPI(where);
 
       for (var i = 0; i < pages; i++) {
@@ -288,7 +372,6 @@
       if (response) {
         var data = response.children;
         var count = data.length;
-
         for (var i = 0; i < count; i++) {
           var item = data[i].data;
           if (where === 'comments') {
@@ -321,6 +404,7 @@
           subs[subreddit] = createNewSub();
         }
         addComment(subreddit, subs[subreddit], comment);
+        getTopSub(comment);
       }
 
     }
@@ -332,16 +416,32 @@
       for (var i = 0; i < submissions.length; i++) {
         var submission = submissions[i];
         var subreddit = submission.subreddit;
-
         if (!(subreddit in subs)) {
           subs[subreddit] = createNewSub();
         }
 
         addSubmission(subreddit, subs[subreddit], submission);
+        getTopSub(submission);
       }
 
       for (var sub in subs) {
         subs[sub].submissions = $filter('sortPosts')(subs[sub].submissions, 'newest');
+      }
+    }
+
+    /*
+     Calculate the top post in the past week
+    */
+    function getTopSub(post) {
+      var date = moment.utc(post.created_utc * 1000).format();
+      var diff = moment.duration(moment().diff(moment(date))).asDays();
+
+      if (diff <= 7) {
+        if (!(post.subreddit in topWeek)) {
+          topWeek[post.subreddit] = 0;
+        }
+
+        topWeek[post.subreddit] += post.ups;
       }
     }
 
@@ -360,6 +460,7 @@
       subData.gilded_submissions = 0;
       subData.count = 0;
       subData.recent_activity = null;
+      subData.icon = null;
       subData.info = null;
       subData.avg_karma = 0;
 
@@ -374,7 +475,7 @@
       var obj = {};
       obj.id = comment.id;
       obj.type = comment.type;
-      obj.gilded = comment.gilded;
+      obj.gildings = comment.gildings;
       obj.created_utc = comment.created_utc;
       obj.body_html = comment.body_html;
       obj.link_permalink = comment.link_permalink;
@@ -396,7 +497,7 @@
         topComment = [comment.ups, name];
       }
 
-      subreddit.gilded_comments += comment.gilded;
+      subreddit.gilded_comments += $filter('gilded')(comment.gildings);
       subreddit.recent_activity = compareDates(subreddit.recent_activity, comment, true);
     }
 
@@ -408,7 +509,7 @@
       var obj = {};
       obj.id = submission.id;
       obj.type = submission.type;
-      obj.gilded = submission.gilded;
+      obj.gildings = submission.gildings;
       obj.created_utc = submission.created_utc;
       obj.num_comments = submission.num_comments;
       obj.permalink = submission.permalink;
@@ -451,7 +552,7 @@
         topSubmit = [submission.ups, name];
       }
 
-      subreddit.gilded_submissions += submission.gilded;
+      subreddit.gilded_submissions += $filter('gilded')(submission.gildings);
       subreddit.recent_activity = compareDates(subreddit.recent_activity, submission, true);
     }
 
