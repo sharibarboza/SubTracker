@@ -49,56 +49,59 @@
 
         <div class="row">
           <div class="col-md-3 main-col">
-            <div class="card-box">
-              <div class="row">
-                <div class="col-md-8">
-                  <strong class="sub-num">{{ sub.total_ups | number }}</strong>
-                  <ng-pluralize class="gray-bold-subtitle" count="{{ sub.total_ups }}" when="{'1': 'point', 'other': 'points'}"/>
-                </div>
-                <div class="col-md-4" align="right">
-                  <div ng-if="user.subreddit" class="small-sub-circle" style="background-image: url({{ user.subreddit.icon_img | escape }});"></div>
-                  <div ng-if="!user.subreddit" class="small-sub-circle" style="background-image: url('{{ user.icon_img }}');"></div>
-                </div>
-              </div>
-
-              <br>
-              <span class="small-gray-font"><span class="fa fa-calendar"></span> Last seen <strong><time-ago class="orange-text" from-time='{{ page == "user" ? lastPost * 1000 : latestPost * 1000 }}'></time-ago></strong></span>
-              <br>
-              <div style="margin-top: 5px;">
-                <span class="fa fa-comment-o small-icon"></span>&nbsp;<span class="small-gray-font">{{ numComments }}</span>&nbsp;&nbsp;
-                <span class="fa fa-file-text-o small-icon"></span>&nbsp;<span class="small-gray-font">{{ numSubmissions }}</span>
-              </div>
-              <br>
-              <span class="small-gray-font">Total:</span> <span class="badge">{{ total }} <ng-pluralize count="{{ total }}" when="{'1': 'entry', 'other': 'entries'}"/></span><br>
-              <span class="small-gray-font">Average:<span> <span class="badge">{{ sub.avg_karma | karma }} <span class="glyphicon glyphicon-arrow-up"></span> / entry</span>
-
-              <br><br>
-              <button class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
-            </div>
-
-            <div class="card-box" align="center">
-              <div class="gray-box">
-                <div class="gray-box-content">
-                  <strong>Comment Points</strong>
-                  <div>
-                    <span style="font-size: 15px;">{{ sub.comment_ups | number }}</span>
-                    <span class="small-white-font">
-                      <strong ng-class="sub.comment_ups > 0 ? 'green' : 'orange'"><span ng-class="sub.comment_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
-                      (~ {{ sub.comment_ups | average : numComments : 0 | number }} / comment)
-                    </span>
+            <div sticky-sides="side-fix">
+              <div class="card-box">
+                <div class="row">
+                  <div class="col-md-8">
+                    <strong class="sub-num">{{ sub.total_ups | number }}</strong>
+                    <ng-pluralize class="gray-bold-subtitle" count="{{ sub.total_ups }}" when="{'1': 'point', 'other': 'points'}"/>
+                  </div>
+                  <div class="col-md-4" align="right">
+                    <div ng-if="user.subreddit" class="small-sub-circle" style="background-image: url({{ user.subreddit.icon_img | escape }});"></div>
+                    <div ng-if="!user.subreddit" class="small-sub-circle" style="background-image: url('{{ user.icon_img }}');"></div>
                   </div>
                 </div>
+
+                <br>
+                <span class="small-gray-font"><span class="fa fa-calendar"></span> Last seen <strong><time-ago class="orange-text" from-time='{{ page == "user" ? lastPost * 1000 : latestPost * 1000 }}'></time-ago></strong></span>
+                <br>
+                <div style="margin-top: 5px;">
+                  <span class="fa fa-comment-o small-icon"></span>&nbsp;<span class="small-gray-font">{{ numComments }}</span>&nbsp;&nbsp;
+                  <span class="fa fa-file-text-o small-icon"></span>&nbsp;<span class="small-gray-font">{{ numSubmissions }}</span>
+                </div>
+                <br>
+                <span class="small-gray-font">Total:</span> <span class="badge">{{ total }} <ng-pluralize count="{{ total }}" when="{'1': 'entry', 'other': 'entries'}"/></span><br>
+                <span class="small-gray-font">Average:<span> <span class="badge">{{ sub.avg_karma | karma }} <span class="glyphicon glyphicon-arrow-up"></span> / entry</span>
+
+                <br><br>
+                <button class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
               </div>
-              <br>
-              <div class="gray-box">
-                <div class="gray-box-content">
-                  <strong>Post Points</strong>
-                  <div>
-                    <span style="font-size: 15px;">{{ sub.submission_ups | number }}</span>
-                    <span class="small-white-font">
-                      <strong ng-class="sub.submission_ups > 0 ? 'green' : 'orange'"><span ng-class="sub.submission_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
-                      (~ {{ sub.submission_ups | average : numSubmissions : 0 | number }} / post)
-                    </span>
+
+              <div class="card-box" align="center">
+                <div class="sub-box">
+                  <div class="sub-box-content">
+                    <strong>Comment Points</strong>
+                    <div>
+                      <strong style="font-size: 24px;">{{ sub.comment_ups | number }}</strong>
+                      <br>
+                      <span class="small-white-font">
+                        Average: {{ sub.comment_ups | average : numComments : 0 | number }} <strong ng-class="sub.comment_ups > 0 ? 'green' : 'orange'"><span ng-class="sub.comment_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong> / comment
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="sub-box">
+                  <div class="sub-box-content">
+                    <strong>Post Points</strong>
+                    <div>
+                      <strong style="font-size: 24px;">{{ sub.submission_ups | number }}</strong>
+                      <br>
+                      <span class="small-white-font">
+                        <strong ng-class="sub.submission_ups > 0 ? 'green' : 'orange'"></strong>
+                        Average: {{ sub.submission_ups | average : numSubmissions : 0 | number }} <strong ng-class="sub.submission_ups > 0 ? 'green' : 'orange'"><span ng-class="sub.submission_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong> / post
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -109,7 +112,7 @@
             <div class="card-box" ng-controller="SubChartCtrl">
               <strong class="purple-heading">Recent Points Per Month</strong>
               <br>
-              <span class="gray-bold-subtitle">Average: {{ voteAverage | number }} <ng-pluralize count="{{ voteAverage }}" when="{'1': 'point', 'other': 'points'}"/> per month</span>
+              <span class="gray-bold-subtitle">Average: {{ voteAverage | number }} <ng-pluralize count="{{ voteAverage }}" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per month</span>
               <br><br>
               <canvas id="line" class="chart chart-line" chart-data="data"
               chart-labels="labels" chart-series="series" chart-options="options"
@@ -181,92 +184,40 @@
           </div>
 
           <div class="col-md-3 main-col">
-            <div ng-if="tab == 1" class="card-box">
-              <strong class="purple-heading">About This Subreddit</strong>
-              <br><br>
-              <span class="small-gray-font"><span class="fa fa-calendar"></span> Created <strong class="orange-text" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></strong></span>
-              <div style="margin-top: 5px;">
-                <span class="small-gray-font"><i class="fa fa-user-plus" aria-hidden="true"></i>
-                <span class="gray-bold-subtitle">{{ subInfo.subscribers | number }}</span> subscribers</span>
-              </div>
-              <br>
-              <p ng-if="subInfo.public_description" class="small-font" ng-bind-html="subInfo.public_description_html | sanitize"></p>
-            </div>
-
-            <div ng-if="tab > 1" class="card-box">
-              <strong class="purple-heading" style="text-transform: capitalize;">Filter {{ tabOptions[tab] }}</strong>
-              <br><br>
-              <strong class="gray-bold-subtitle">Sort by:</strong>
-              <br>
-              <div class="btn-group select-dropdown dropdown-margin">
-                <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  {{ sortSelected.name }}
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li ng-repeat="sort in data.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="card-box" ng-controller="PreviousUsersCtrl">
-              <strong class="purple-heading">Previous Redditors</strong>&nbsp;&middot;&nbsp;<span class="small-gray=font orange-text" ng-click="clearStorage()">Clear</span>
-              <div ng-repeat="listUser in prevUsers">
-                <a ng-href="#/{{ listUser }}/subreddits/" class="prevRow"><div class="row" style="margin-top: 15px;">
-                  <div class="col-md-3 col-xs-4">
-                    <img class="img-circle prev-img img-responsive" lazy-img="{{ prevData[listUser].avatar | escape }}">
-                  </div>
-                  <div class="col-md-9 col-xs-8">
-                    <strong class="prevName">{{ listUser }}</strong>
-                    <br>
-                    <span class="small-gray-font">{{ prevData[listUser].subs }} <ng-pluralize count="{{ prevData[listUser].subs }}" when="{'1': 'subreddit', 'other': 'subreddits'}"></span>
-                  </div>
-                </div></a>
-              </div>
-              <div ng-if="prevUsers.length == 0">
+            <div sticky-sides="side-fix">
+              <div ng-if="tab == 1" class="card-box">
+                <strong class="purple-heading">About This Subreddit</strong>
+                <br><br>
+                <span class="small-gray-font"><span class="fa fa-calendar"></span> Created <strong class="orange-text" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></strong></span>
+                <div style="margin-top: 5px;">
+                  <span class="small-gray-font"><i class="fa fa-user-plus" aria-hidden="true"></i>
+                  <span class="gray-bold-subtitle">{{ subInfo.subscribers | number }}</span> subscribers</span>
+                </div>
                 <br>
-                No previously searched users yet.
+                <span ng-if="subInfo.public_description" class="small-font descript" ng-bind-html="subInfo.public_description_html | sanitize"></span>
               </div>
+
+              <div ng-if="tab > 1" class="card-box">
+                <strong class="purple-heading" style="text-transform: capitalize;">Filter {{ tabOptions[tab] }}</strong>
+                <br><br>
+                <strong class="gray-bold-subtitle">Sort by:</strong>
+                <br>
+                <div class="btn-group select-dropdown dropdown-margin">
+                  <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    {{ sortSelected.name }}
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li ng-repeat="sort in data.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div ng-include src="'views/prev-users.html'"></div>
             </div>
           </div>
 
         </div>
-      </div>
-    </div>
-
-      <!--
-      <div class="user-banner row column-pad">
-        <div class="col-md-10 col-md-push-1 col-xs-12 banner-col">
-          <div class="row" style="padding-top: 20px; padding-bottom: 10px;">
-            <div class="col-md-2 col-xs-12">
-              <div class="profile-img">
-                <img ng-if="subInfo.icon_img" lazy-img="{{ subInfo.icon_img | escape }}" class="banner-img img-circle">
-                <img ng-if="!subInfo.icon_img" lazy-img="{{ '../images/logo.jpg' }}" class="banner-img img-circle">
-              </div>
-            </div>
-            <div class="col-md-8 col-xs-12 middle-banner">
-              <span class="user-name" id="{{ redditor.name }}"><strong><span class="orange">/r/</span>{{ subreddit }} <a ng-href="https://www.reddit.com/r/{{ subreddit }}" target="_blank"><button class="btn btn-xs btn-primary profile-btn">Subreddit Page <i class="fa fa-external-link" aria-hidden="true"></i></button></a></strong></span><br>
-              Last seen: <time-ago class="bright-blue" from-time='{{ page == "user" ? lastPost * 1000 : latestPost * 1000 }}'></time-ago>
-            </div>
-            <div class="col-md-1 col-xs-6 middle-banner">
-              <span class="sub-stat">{{ sub.comments.length }}</span><br>
-              Comments
-            </div>
-            <div class="col-md-1 col-xs-6 middle-banner">
-              <span class="sub-stat">{{ sub.submissions.length }}</span><br>
-              Submitted
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="user-head-nav col-md-10 col-md-push-1 no-padding column-pad" align="center">
-        <div class="col-md-2 col-sm-3 post-tab sub-tab" ng-click="setTab(3)" ng-class="tab == 3 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">SUBREDDITS</strong></div>
-        <div class="col-md-2 col-sm-3 col-xs-4 post-tab" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">OVERVIEW</strong></div>
-        <div class="col-md-2 col-sm-3 col-xs-4 post-tab" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">COMMENTS</strong></div>
-        <div class="col-md-2 col-sm-3 col-xs-4 post-tab" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'"><strong class="light-gray">SUBMITTED</strong></div>
       </div>
     </div>
   </div>
-  -->
-
 </div>

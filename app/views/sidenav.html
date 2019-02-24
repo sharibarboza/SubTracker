@@ -1,4 +1,4 @@
-<md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" style="position: fixed;">
+<md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" style="position: fixed; z-index: 1000;">
 
 <md-toolbar>
   <h1 class="md-toolbar-tools user-banner side-banner shadow-text"><strong>{{ username }}'s subreddits</strong></h1>
@@ -20,7 +20,7 @@
     <strong>Sorted by: <span class="purple">{{ selected.name }}</span></strong>
     <br><br>
 
-    <li ng-repeat="subname in subList"><a ng-href="#/{{ username }}/{{ subname }}/overview/"><strong><p class="mobile-list">/r/{{ subname }}</p></strong></a></li>
+    <li ng-repeat="subname in subList"><a ng-href="#/{{ username }}/{{ subname }}/overview/"><strong><p class="mobile-list"><span class="orange">/r/</span>{{ subname }}</p></strong></a></li>
   </ul>
 
   <strong ng-controller="SidebarCtrl" ng-click="close()" class="black"><i class="fa fa-arrow-right gray" aria-hidden="true"></i> Close</strong>
