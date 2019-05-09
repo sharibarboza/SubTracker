@@ -37,8 +37,10 @@ angular.module('SubSnoopApp')
     $scope.submissions = [];
     $scope.comments = $scope.sub['comments'];
     $scope.submissions = $scope.sub['submissions'];
-    $scope.numComments = $scope.comments.length;
-    $scope.numSubmissions = $scope.submissions.length;
+    $scope.numComments = $scope.sub.num_comments;
+    $scope.numSubmissions = $scope.sub.num_submissions;
+    $scope.topComment = subsData.topComment;
+    $scope.topSubmit = subsData.topSubmit;
     $scope.total = $scope.numComments + $scope.numSubmissions;
     $scope.limits = [0, 0, $scope.numSubmissions, $scope.numComments, 0];
     $scope.subInfo = null;
@@ -129,7 +131,6 @@ angular.module('SubSnoopApp')
     $scope.setTab = function(num) {
       $scope.tab = parseInt(num);
       $scope.setAccordion();
-      $window.scrollTo(0, 0);
 
       if ($scope.tab === 3) {
         $scope.sortSelected = $scope.commentSort;
@@ -232,10 +233,6 @@ angular.module('SubSnoopApp')
     */
     $scope.selected = sortFactory.getSubSort();
     $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.selected.value, subsData.subs);
-    $scope.changeSubs = function(term) {
-      $scope.subList = [];
-      $scope.subList = search.findSubs($scope.subsArray, term);
-    };
 
     /*
      Relocate to user's main page
@@ -254,6 +251,15 @@ angular.module('SubSnoopApp')
         $scope.limit = $scope.limits[$scope.tab];
       }
     }
+
+    /*
+     Find the subreddits that match the search query term
+     */
+    $scope.changeUserSubs = function(term) {
+      $scope.subList = [];
+      $scope.subList = search.findSubs($scope.subsArray, term);
+      $scope.currentLimit = $scope.subList.length;
+    };
 
   }
 ]);

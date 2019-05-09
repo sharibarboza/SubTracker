@@ -21,6 +21,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-filerev": "^2.1.2",
     "grunt-google-cdn": "^0.4.3",
+    "grunt-html-validation": "^0.1.18",
     "grunt-jscs": "^1.8.0",
     "grunt-karma": "^2.0.0",
     "grunt-newer": "^1.1.0",
@@ -39,7 +40,7 @@
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "^1.1.2",
     "karma-ng-html2js-preprocessor": "^1.0.0",
-    "time-grunt": "^1.0.0"
+    "time-grunt": "^1.4.0"
   },
   "engines": {
     "node": ">=0.10.0"
