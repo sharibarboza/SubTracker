@@ -22,7 +22,7 @@
         <div class="mobile-avatar row">
           <div class="col-xs-6 col-xs-push-3">
             <div ng-if="redditor.subreddit" class="mobile-circle" style="background-image: url({{ redditor.subreddit.icon_img | escape }});"></div>
-            <div ng-if="!redditor.subreddit" class="mobile-circle" style="background-image: url('{{ redditor.icon_img }}');"></div>
+            <div ng-if="!redditor.subreddit" class="mobile-circle" style="background-image: url({{ redditor.icon_img }});"></div>
           </div>
         </div>
         <div class="banner-content">
@@ -41,7 +41,7 @@
         <div class="row">
           <div class="col-md-3 hidden-xs profile-img" style="position: relative;">
             <div ng-if="redditor.subreddit" class="sub-circle" style="background-image: url({{ redditor.subreddit.icon_img | escape }});"></div>
-            <div ng-if="!redditor.subreddit" class="sub-circle" style="background-image: url('{{ redditor.icon_img }}');"></div>
+            <div ng-if="!redditor.subreddit" class="sub-circle" style="background-image: url({{ redditor.icon_img }});"></div>
             <div class="name-bar" style="display: none;"><strong><span class="orange-text">/u/</span><a ng-href="#/{{ username }}/subreddits/">{{ username }}</a></strong></div>
           </div>
           <div class="col-md-1 col-xs-4 tab-col">
@@ -165,8 +165,7 @@
               chart-dataset-override="datasetOverride" chart-click="onClick">
               </canvas>
             </div>
-            <div class="card-box" ng-include src="'views/user-heatmap.html'">
-            </div>
+            <div class="card-box" ng-include src="'views/user-heatmap.html'"></div>
 
             <div class="card-box" id="statistics" ng-controller="UserStatsCtrl" align="center">
               <div class="row no-margin">

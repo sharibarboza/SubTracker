@@ -430,7 +430,23 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
+    },
+
+    htmlhint: {
+      html1: {
+        options: {
+          'tag-pair': true
+        },
+        src: ['*.html']
+      },
+      html2: {
+        options: {
+          'tag-pair': true
+        },
+        src: ['*.html']
+      }
     }
+
   });
 
 
@@ -487,4 +503,6 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  grunt.loadNpmTasks('grunt-htmlhint');
 };
