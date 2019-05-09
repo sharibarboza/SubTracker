@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-md-8 col-xs-8">
+    <strong class="sub-num">{{ sub.total_ups | number }}</strong>
+    <ng-pluralize class="gray-bold-subtitle" count="{{ sub.total_ups }}" when="{'1': 'point', 'other': 'points'}"/>
+  </div>
+  <div class="col-md-4 col-xs-4" align="right">
+    <div ng-if="user.subreddit" class="small-sub-circle" style="background-image: url({{ user.subreddit.icon_img | escape }});"></div>
+    <div ng-if="!user.subreddit" class="small-sub-circle" style="background-image: url('{{ user.icon_img }}');"></div>
+  </div>
+</div>
+
+<div ng-controller="UserStatsCtrl" style="padding-top: 10px; padding-bottom: 10px;">
+  <span ng-if="subreddit == tableBadges.mostActive.sub" class="sub-badge">Most Activity</span>
+  <span ng-if="subreddit == topComment" class="sub-badge">Best Comment</span>
+  <span ng-if="subreddit == topSubmit" class="sub-badge">Best Post</span>
+  <span ng-if="subreddit == tableBadges.newestSub.sub" class="sub-badge">Newest</span>
+  <span ng-if="subreddit == tableBadges.lastSeen.sub" class="sub-badge">Most Recent</span>
+  <span ng-if="subreddit == tableBadges.avgPost.sub" class="sub-badge">Best Average</span>
+</div>
+
+<div class="row">
+  <div class="col-xs-4">
+    <strong class="badge-num">{{ numComments }}</strong><br>
+    <span class="gray-bold-subtitle karma-font">Comments</span>
+  </div>
+  <div class="col-xs-8">
+    <strong class="badge-num">{{ numSubmissions }}</strong><br>
+    <span class="gray-bold-subtitle karma-font">Posts</span>
+  </div>
+</div>
+
+<br>
+<button class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>

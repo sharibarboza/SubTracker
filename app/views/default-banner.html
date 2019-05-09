@@ -1,0 +1,11 @@
+<div class="default-banner column-pad" align="center">
+  <div class="banner-content">
+    <span class="user-name" id="{{ redditor.name }}">
+      <strong class="sub-shadow"><span class="bright-blue">r/</span>{{ subreddit }}</strong>
+    </span>
+    <br>
+    <strong class="banner-subtitle badge banner-badge" style="font-size: 14px;">
+      <span class="fa fa-clock-o"></span> Last seen <span><time-ago from-time='{{ page == "user" ? lastPost * 1000 : latestPost * 1000 }}'></time-ago></span>
+    </strong>
+  </div>
+</div>

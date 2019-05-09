@@ -1,7 +1,7 @@
 <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" style="position: fixed; z-index: 1000;">
 
 <md-toolbar>
-  <h1 class="md-toolbar-tools user-banner side-banner shadow-text"><strong>{{ username }}'s subreddits</strong></h1>
+  <h1 class="md-toolbar-tools side-banner"><strong>{{ username }}'s subreddits</strong></h1>
 </md-toolbar>
 <md-content layout-padding>
   <br>
@@ -9,7 +9,7 @@
     <md-input-container>
       <label for="testInput"><i class="glyphicon glyphicon-search" aria-hidden="true"></i> Search for a sub</label>
       <input type="text" id="testInput"
-             ng-model="searchSub" ng-change="changeSubs(searchSub)">
+             ng-model="searchSub" ng-change="changeUserSubs(searchSub)">
     </md-input-container>
     <button type="submit" style="display: none;" ng-controller="SidebarCtrl" ng-click="close()">Go!</button>
   </form>

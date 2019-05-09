@@ -18,18 +18,26 @@
     <div ng-if="!noSubs" class="banner-div" style="background-color: white;">
 
       <!-- User banner containing profile picture, and other user info -->
-      <div class="user-banner column-pad" align="center">
+      <div class="default-banner u-banner column-pad user-pad" align="center">
         <div class="mobile-avatar row">
           <div class="col-xs-6 col-xs-push-3">
             <div ng-if="redditor.subreddit" class="mobile-circle" style="background-image: url({{ redditor.subreddit.icon_img | escape }});"></div>
             <div ng-if="!redditor.subreddit" class="mobile-circle" style="background-image: url('{{ redditor.icon_img }}');"></div>
           </div>
         </div>
-        <span class="user-name banner-content" id="{{ username }}"><strong><span class="orange-text">/u/</span>{{ username }}</strong></span>
+        <div class="banner-content">
+          <span class="user-name" id="{{ username }}">
+            <strong class="sub-shadow"><span class="bright-blue">u/</span>{{ username }}</strong>
+          </span>
+          <br>
+          <strong class="banner-subtitle badge banner-badge">
+            <span class="fa fa-calendar"></span> Redditor since <span ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></span>
+          </strong>
+        </div>
       </div>
 
       <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
-      <div class="user-head-nav no-padding banner-pad card-shadow" align="center" sticky-nav="top-fix">
+      <div class="user-head-nav no-padding banner-pad card-shadow" align="center" sticky-nav="top-fix" type="user">
         <div class="row">
           <div class="col-md-3 hidden-xs profile-img" style="position: relative;">
             <div ng-if="redditor.subreddit" class="sub-circle" style="background-image: url({{ redditor.subreddit.icon_img | escape }});"></div>
@@ -47,7 +55,7 @@
           </div>
           <div class="col-md-3 hidden-xs"></div>
           <div class="col-md-3 hidden-xs" style="padding-top: 6px; padding-bottom: 3px;" align="right">
-            <a ng-href="https://www.reddit.com/u/{{ redditor.name }}" target="_blank"><button class="btn orange-btn" style="vertical-align: middle; line-height: 30px; width: 100%;">Visit Profile <i class="fa fa-external-link"></i></button></a>
+            <a ng-href="https://www.reddit.com/u/{{ redditor.name }}" target="_blank"><button class="btn nav-btn" style="vertical-align: middle; line-height: 30px; width: 100%;">Visit Profile <i class="fa fa-external-link"></i></button></a>
           </div>
         </div>
       </div>
@@ -58,34 +66,39 @@
 
         <div class="row" ng-controller="UserSearchCtrl">
           <div class="col-md-3 no-mobile main-col">
-            <div sticky-sides="side-fix">
+            <div sticky-sides="side-fix" type="user">
               <div class="card-box">
-                <strong class="sub-num">{{ subLength }}</strong>
-                <span class="gray-bold-subtitle"><ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></span>
-
-                <br><br>
-
-                <span class="small-gray-font"><span class="fa fa-calendar"></span> Redditor since <strong class="orange-text" ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></strong></span>
-                <br>
-                <div style="margin-top: 5px;">
-                  <span class="fa fa-comment-o small-icon"></span>&nbsp;<span class="small-gray-font">{{ comments }}</span>&nbsp;&nbsp;
-                  <span class="fa fa-file-text-o small-icon"></span>&nbsp;<span class="small-gray-font">{{ submissions }}</span>
-                </div>
-
-                <br>
-                <span class="small-gray-font">Post Karma:</span> <span class="badge">{{ linkKarma | karma }}</span><br>
-                <span class="small-gray-font">Comment Karma:</span> <span class="badge">{{ commentKarma | karma }}</span><br>
-
-                <br>
-                <button class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
+                <div ng-include src="'views/user-card.html'"></div>
               </div>
 
               <div class="card-box no-mobile" align="center">
-                <div class="gray-box">
+                <div class="gray-box comment-box">
+                  <div class="gray-box-content">
+                    <strong>Current Best Comment</strong>
+                    <a ng-href="#/{{ username }}/{{ topComment }}/overview/"><div ng-if="topComment">
+                      <span class="small-white-font">{{ topComment }}</span>
+                    </div></a>
+                    <div ng-if="!topComment">
+                      <span class="small-white-font">No comments.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="gray-box submission-box">
+                  <div class="gray-box-content">
+                    <strong>Current Best Post</strong>
+                    <a ng-href="#/{{ username }}/{{ topSubmit }}/overview/"><div ng-if="topSubmit">
+                      <span class="small-white-font">{{ topSubmit }}</span>
+                    </div></a>
+                    <div ng-if="!topSubmit">
+                      <span class="small-white-font">No posts.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="gray-box top-sub-box">
                   <div class="gray-box-content">
                     <strong>Top Subreddit This Week</strong>
                     <a ng-href="#/{{ username }}/{{ topSub }}/overview/"><div ng-if="topSub">
-                      <span class="small-white-font"><span class="orange-text">/r/</span>{{ topSub }}</span>
+                      <span class="small-white-font">{{ topSub }}</span>
                     </div></a>
                     <div ng-if="!topSub">
                       <span class="small-white-font">No activity this week.</span>
@@ -96,77 +109,39 @@
             </div>
           </div>
 
-          <div ng-if="tab == 0" class="col-md-6 main-col middle-col" ng-controller="UserStatsCtrl">
+          <div ng-if="tab == 0" class="col-md-6 main-col middle-col">
             <div ng-if="tab == 0" class="card-box mobile-filter" style="display: none;">
-              <strong class="purple-heading">Filter Subreddits</strong>
-              <br><br>
-              <strong class="gray-bold-subtitle">Sort by:</strong>
-              <br>
-              <div class="btn-group select-dropdown dropdown-margin">
-                <button type="button" class="form-control sort-dropdown btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  <strong class="placeholder-gray">{{ selected.name }}</strong>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li ng-repeat="sort in sortData.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
-                </ul>
-              </div>
-              <br><br>
-              <strong class="gray-bold-subtitle">Search:</strong>
-              <br>
-              <form class="dropdown-margin">
-                <input type="text" id="testInput" class="form-control"
-                       ng-model="searchSub" ng-change="changeUserSubs(searchSub)" placeholder="&#xF002; &nbsp;Enter sub name ..." style="font-family: FontAwesome, Helvetica Neue;" md-autofocus>
-              </form>
+              <div ng-include src="'views/user-card.html'"></div>
             </div>
 
-            <div ng-repeat="subreddit in subList | limitTo:limit" class="card-box list-card-box" id="sub-row">
+            <div ng-if="tab == 0" class="card-box mobile-filter" style="display: none;">
+              <div ng-include src="'views/filter-subs.html'"></div>
+            </div>
+
+            <div ng-repeat="subreddit in subList | limitTo:limit" class="sub-card-box" id="sub-row">
               <a ng-href="#/{{ username }}/{{ subreddit }}/overview/"><div class="row prevRow">
                 <div class="col-md-1 hidden-xs" align="center">
                   <strong class="num-rank" style="color: #4D4D4D;">{{ 1 + $index }}</strong>
                 </div>
-                <div class="col-md-2 col-sm-3 col-xs-4" align="center">
-                  <img ng-if="subs[subreddit].icon" class="sub-icon-list img-responsive" lazy-img="{{ subs[subreddit].icon | escape }}">
-                  <img ng-if="!subs[subreddit].icon" class="sub-icon-list img-responsive" lazy-img="{{ '../images/logo.jpg' }}">
-                </div>
-                <div class="col-md-9 col-sm-8 col-xs-8">
+                <div class="col-md-11 col-sm-10 col-xs-10">
                   <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-10 no-right-pad">
                       <span class="sub-name">{{ subreddit }}</span> <span ng-if="subs[subreddit].gilded_comments > 0 || subs[subreddit].gilded_submissions > 0" class="gilded-star gilded-sub"></span>
-                      <span class="last-seen">&nbsp;&middot;&nbsp;&nbsp;<span class="small-gray-font" ng-init="seen=subs[subreddit].recent_activity.created_utc * 1000"><time-ago from-time='{{ seen }}'></time-ago></span></span>
+
+                      <span class="badge"><span class="fa fa-comment small-icon"></span>&nbsp;&nbsp;{{ subs[subreddit].num_comments }}</span>
+                      <span class="badge"><span class="fa fa-file-text small-icon"></span>&nbsp;&nbsp;{{ subs[subreddit].num_submissions }}</span>
+
+                      <span class="last-seen">&nbsp;<span class="small-gray-font" style="font-size: 14px;" ng-init="seen=subs[subreddit].recent_activity.created_utc * 1000"><time-ago from-time='{{ seen }}'></time-ago></span></span>
+
                       <div class="mobile-last-seen" style="display: none;">
                         <span class="small-gray-font" ng-init="seen=subs[subreddit].recent_activity.created_utc * 1000"><time-ago from-time='{{ seen }}'></time-ago></span>
                         <br>
                         <strong style="font-size: 18px;" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'"> {{ subs[subreddit].total_ups | karma }} <span ng-class="subs[subreddit].total_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
-
-                        <br>
-                        <span ng-if="subreddit == tableBadges.mostActive.sub" class="sub-badge" id="most-active">Most Activity</span>
-                        <span ng-if="subreddit == tableBadges.newestSub.sub" class="sub-badge" id="newest">Newest</span>
-                        <span ng-if="subreddit == tableBadges.lastSeen.sub" class="sub-badge" id="last-seen">Last Seen</span>
-                        <span ng-if="subreddit == topComment" class="sub-badge" id="best-comment">Best Comment</span>
-                        <span ng-if="subreddit == topSubmit" class="sub-badge" id="best-submit">Best Post</span>
-                        <span ng-if="subreddit == tableBadges.avgPost.sub" class="sub-badge" id="best-avg">Best Average</span>
                       </div>
 
-                      <div class="sub-row-stats">
-                        <div style="margin-top: 2px;">
-                          <span class="badge"><span class="fa fa-comment small-icon"></span>&nbsp;&nbsp;{{ subs[subreddit].comments.length }}</span>&nbsp;
-                          <span class="badge"><span class="fa fa-file-text small-icon"></span>&nbsp;&nbsp;{{ subs[subreddit].submissions.length }}</span>
-                        </div>
-
-                        <div style="margin-top: 7px;">
-                          <span ng-if="subreddit == tableBadges.mostActive.sub" class="sub-badge" id="most-active">Most Activity</span>
-                          <span ng-if="subreddit == tableBadges.newestSub.sub" class="sub-badge" id="newest">Newest</span>
-                          <span ng-if="subreddit == tableBadges.lastSeen.sub" class="sub-badge" id="last-seen">Last Seen</span>
-                          <span ng-if="subreddit == topComment" class="sub-badge" id="best-comment">Best Comment</span>
-                          <span ng-if="subreddit == topSubmit" class="sub-badge" id="best-submit">Best Post</span>
-                          <span ng-if="subreddit == tableBadges.avgPost.sub" class="sub-badge" id="best-avg">Best Average</span>
-                        </div>
-                      </div>
                     </div>
-                    <div class="col-md-3 hidden-xs" align="right">
-                      <strong style="font-size: 18px;" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'"> {{ subs[subreddit].total_ups | karma }} <span ng-class="subs[subreddit].total_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
-                      <br>
-                      <div style="margin-top: 2px;"><span class="badge" style="padding-left: 10px; padding-right: 10px;">{{ subs[subreddit].avg_karma | karma }} / entry</span></div>
+                    <div class="col-md-2 hidden-xs no-left-pad" align="right">
+                      <strong style="font-size: 17px;" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'"> {{ subs[subreddit].total_ups | karma }}<span ng-class="subs[subreddit].total_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
                     </div>
                   </div>
                 </div>
@@ -180,7 +155,7 @@
           </div>
 
           <div ng-if="tab == 1" class="col-md-6 main-col">
-            <div class="card-box" ng-controller="LineChartCtrl" style="padding-left: 20px; padding-right: 20px;">
+            <div class="card-box" ng-controller="LineChartCtrl">
               <strong class="purple-heading">Recent Points Per Month</strong>
               <br>
               <span class="gray-bold-subtitle">Average: {{ voteAverage | number }} <ng-pluralize count="{{ voteAverage }}" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per month</span>
@@ -221,36 +196,22 @@
           </div>
 
           <div class="col-md-3 main-col no-mobile">
-            <div sticky-sides="side-fix">
-              <div ng-if="tab == 2 && hasResults" class="card-box no-mobile">
+            <div sticky-sides="side-fix" type="user">
+              <div ng-if="tab == 2 && hasResults" class="card-box">
                 <strong class="purple-heading">Filter Search Results</strong>
-                <br><br>
+                <br>
                 <div ng-include src="'views/side-search.html'"></div>
               </div>
 
               <div ng-if="tab == 0" class="card-box">
-                <strong class="purple-heading">Filter Subreddits</strong>
-                <br><br>
-                <strong class="gray-bold-subtitle">Sort by:</strong>
-                <br>
-                <div class="btn-group select-dropdown dropdown-margin">
-                  <button type="button" class="form-control sort-dropdown btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <strong class="placeholder-gray">{{ selected.name }}</strong>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat="sort in sortData.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
-                  </ul>
-                </div>
-                <br><br>
-                <strong class="gray-bold-subtitle">Search:</strong>
-                <br>
-                <form class="dropdown-margin">
-                  <input type="text" id="testInput" class="form-control"
-                         ng-model="searchSub" ng-change="changeUserSubs(searchSub)" placeholder="&#xF002; &nbsp;Enter sub name ..." style="font-family: FontAwesome, Helvetica Neue;" md-autofocus>
-                </form>
+                <div ng-include src="'views/filter-subs.html'"></div>
               </div>
 
               <div ng-include src="'views/prev-users.html'"></div>
+
+              <div class="no-mobile" align="center" style="position: relative;">
+                <back-top></back-top>
+              </div>
             </div>
           </div>
 

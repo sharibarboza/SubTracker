@@ -1,0 +1,16 @@
+<strong class="sub-num">{{ subLength }}</strong>
+<span class="gray-bold-subtitle"><ng-pluralize count="subLength" when="{'1': 'subreddit', 'other': 'subreddits'}"></span>
+<br><br>
+
+<div class="row">
+  <div class="col-xs-5">
+    <strong class="badge-num">{{ linkKarma | karma }}</strong><br>
+    <span class="gray-bold-subtitle karma-font">Post Karma</span>
+  </div>
+  <div class="col-xs-7">
+    <strong class="badge-num">{{ commentKarma | karma }}</strong><br>
+    <span class="gray-bold-subtitle karma-font">Comment Karma</span>
+  </div>
+</div>
+<br>
+<button class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
