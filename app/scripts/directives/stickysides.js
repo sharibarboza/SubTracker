@@ -2,25 +2,22 @@
 
 /**
  * @ngdoc directive
- * @name SubSnoopApp.directive:stickyNav
+ * @name SubSnoopApp.directive:stickySides
  * @description
- * # stickyNav
+ * # stickySides
  */
 angular.module('SubSnoopApp')
-  .directive('stickyNav', function ($window) {
+  .directive('stickySides', function ($window) {
     var $win = angular.element($window);
-    var bodyClass = 'top-fix-body';
 
     /*
-     Stick the tab bar to the top after scrolling down
+     Fixes the side box content in position when scrolling down.
     */
     return {
       restrict: 'AE',
       link: function(scope, element, attrs) {
-        var topClass = attrs.stickyNav;
-        var body = angular.element('.sub-table');
+        var topClass = attrs.stickySides;
         var offsetTop = 200;
-        var button = angular.element('.top-btn');
 
         if (attrs.type == "sub") {
           scope.$watch(function() { return angular.element('.bg-banner').is(':visible') }, function() {
@@ -38,15 +35,10 @@ angular.module('SubSnoopApp')
         $win.on('scroll', function (e) {
           if ($win.scrollTop() >= offsetTop) {
             element.addClass(topClass);
-            body.addClass(bodyClass);
-            button.show();
           } else {
             element.removeClass(topClass);
-            body.removeClass(bodyClass);
-            button.hide();
           }
         });
-
       }
     };
   });

@@ -1,0 +1,19 @@
+<div class="card-box" ng-controller="PreviousUsersCtrl">
+  <strong class="purple-heading">Previous Redditors</strong>&nbsp;&middot;&nbsp;<span class="small-gray=font orange-text" ng-click="clearStorage()">Clear</span>
+  <div ng-repeat="listUser in prevUsers">
+    <a ng-href="#/{{ listUser }}/subreddits/" class="prevRow"><div class="row" style="margin-top: 10px;">
+      <div class="col-md-3 col-xs-4">
+        <img class="img-circle prev-img img-responsive" lazy-img="{{ prevData[listUser].avatar | escape }}">
+      </div>
+      <div class="col-md-9 col-xs-8">
+        <strong class="prevName">{{ listUser }}</strong>
+        <br>
+        <span class="small-gray-font">{{ prevData[listUser].subs }} <ng-pluralize count="{{ prevData[listUser].subs }}" when="{'1': 'subreddit', 'other': 'subreddits'}"></span>
+      </div>
+    </div></a>
+  </div>
+  <div ng-if="prevUsers.length == 0">
+    <br>
+    No previously searched users yet.
+  </div>
+</div>

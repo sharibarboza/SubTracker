@@ -17,7 +17,7 @@
     <br>
 
     <div ng-if="results.len">
-      <span class="gray">Found {{ results.len }} <ng-pluralize count="results.len" when="{'1': 'result', 'other': 'results'}"></ng-pluralize> in {{ results.subs }} <ng-pluralize count="results.subs" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize>.</span>
+      <span class="gray">Found {{ results.len }} <ng-pluralize count="results.len" when="{'1': 'entry', 'other': 'entries'}"></ng-pluralize> in {{ results.subs }} <ng-pluralize count="results.subs" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize>.</span>
     </div>
     <div ng-if="results.len == 0">
       <span class="gray">{{ noResults }}</span>
@@ -40,7 +40,7 @@
               <div class="row no-margin" id="results-card" ng-class="$index + 1 == resultList.length ? 'margin-bottom' : 'empty-class'" ng-click="searchResetLimit()">
                 <div class="col-xs-11 no-padding" id="search-title">
                   <strong class="results-sub"><span class="orange-text">/r/</span><a>{{ sub }}</a></strong>
-                  <span class="purple results-sub">(<ng-pluralize count="(origResults.data[sub].numComments) + (origResults.data[sub].numSubmissions)" when="{'1': '1 result', 'other': '{{ ((origResults.data[sub].numComments) + (origResults.data[sub].numSubmissions)) | number }} results'}"></ng-pluralize> found)</span>
+                  <span class="purple results-sub search-results-num">(<ng-pluralize count="(origResults.data[sub].numComments) + (origResults.data[sub].numSubmissions)" when="{'1': '1 entry', 'other': '{{ ((origResults.data[sub].numComments) + (origResults.data[sub].numSubmissions)) | number }} entries'}"></ng-pluralize> found)</span>
                   <span class="post-badge" ng-if="results.data[sub].comments.length">
                     <span class="badge"><span class="fa fa-comment small-icon"></span> {{ origResults.data[sub].numComments | number }}</span>
                   </span>
@@ -54,7 +54,7 @@
               </div>
             </accordion-heading>
 
-            <div class="card-action">
+            <div class="card-action search-panel">
               <div ng-if="results.data[sub].comments.length">
                 <strong class="orange-text">Comments</strong>
                 <hr>

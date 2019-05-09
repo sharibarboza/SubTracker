@@ -2,7 +2,8 @@
   <a ng-href="{{ element.link_url }}" target="_blank" class="wrap-text"><strong>{{ element.link_title | escape }}</strong></a> by <a ng-href="https://www.reddit.com/u/{{ element.link_author }}" target="_blank">{{ element.link_author }}</a>
   <br>
   <span class="post-links">
-    <ng-pluralize class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'" count="element.ups" when="{'1': '1 point', 'other': '{{ element.ups | number }} points'}"></ng-pluralize>
+    <ng-pluralize ng-if="element.ups > 0" class="post-points green" count="element.ups" when="{'1': '1 point', 'other': '{{ element.ups | number }} points'}"></ng-pluralize>
+    <ng-pluralize ng-if="element.ups < 1" class="post-points orange" count="element.ups" when="{'-1': '-1 point', 'other': '{{ element.ups | number }} points'}"></ng-pluralize>
   </span>
   <strong>
     <span>

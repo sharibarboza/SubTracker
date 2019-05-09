@@ -1,0 +1,25 @@
+<div class="sub-box comment-box">
+  <div class="sub-box-content">
+    <strong>Comment Points</strong>
+    <div>
+      <strong style="font-size: 24px;">{{ sub.comment_ups | number }}</strong>
+      <br>
+      <span class="small-white-font">
+        Average: {{ sub.avg_comments | number }} <strong ng-class="sub.avg_comments >= 1 ? 'green' : 'orange'"><span ng-class="sub.avg_comments >= 1 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+      </span>
+    </div>
+  </div>
+</div>
+<div class="sub-box submission-box">
+  <div class="sub-box-content">
+    <strong>Post Points</strong>
+    <div>
+      <strong style="font-size: 24px;">{{ sub.submission_ups | number }}</strong>
+      <br>
+      <span class="small-white-font">
+        <strong ng-class="sub.submission_ups > 0 ? 'green' : 'orange'"></strong>
+        Average: {{ sub.avg_submissions | number }} <strong ng-class="sub.avg_submissions >= 1 ? 'green' : 'orange'"><span ng-class="sub.avg_submissions >= 1 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+      </span>
+    </div>
+  </div>
+</div>

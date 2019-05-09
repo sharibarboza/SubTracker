@@ -23,9 +23,6 @@ angular.module('SubSnoopApp')
         {value: 'mostGilded', name: 'Most gilded posts'},
         {value: 'totalComments', name: 'Total comments'},
         {value: 'totalSubmits', name: 'Total posts'},
-        {value: 'avgComment', name: 'Average upvotes per comment'},
-        {value: 'avgSubmit', name: 'Average upvotes per post'},
-        {value: 'avgPost', name: 'Average upvotes per entry'},
         {value: 'subName', name: 'Subreddit name'},
         {value: 'mostDown', name: 'Most controversial'},
       ]

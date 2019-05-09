@@ -224,7 +224,7 @@ angular.module('g1b.calendar-heatmap', []).
 
                   if (scope.type === 'sub') {
                     tooltip_html += '<div><strong>Comments: </strong>' + d.comments + '</div>';
-                    tooltip_html += '<div><strong>Submissions: </strong>' + d.submissions + '</div>';
+                    tooltip_html += '<div><strong>Posts: </strong>' + d.submissions + '</div>';
                   } else {
                     var sortedSubs = $filter('sortSubs')(Object.keys(d.subs), 'subName', d.subs);
 
@@ -242,7 +242,7 @@ angular.module('g1b.calendar-heatmap', []).
                       }
 
                       if (sub.submissions > 0) {
-                        tooltip_html += scope.formatTotal(sub.submissions, ' submissions');
+                        tooltip_html += scope.formatTotal(sub.submissions, ' posts');
                       }
 
                       tooltip_html += '</div>';

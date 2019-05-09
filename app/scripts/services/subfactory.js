@@ -12,7 +12,7 @@
   function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory, subInfo) {
     var pages = 10;
     var username;
-    var promise;
+    var promise = null;
     var after = "0";
     var subLength = 0;
     var defaultSortedArray = [];
@@ -21,7 +21,7 @@
     var comments = [];
     var submissions = [];
     var subs = {};
-    var subNames;
+    var subNames = {};
     var commentData = [];
     var submitData = [];
     var subData = {};
@@ -79,7 +79,7 @@
       setSubInfo: function(subreddit, info) {
         try {
           if (info.banner_img == "" || info.banner_img == null) {
-            info.banner_img = '../images/icons-bg.jpg';
+            info.banner_img = "";
           }
           subData.subs[subreddit].info = info;
         } catch(error) {
@@ -174,9 +174,9 @@
               userData.subs = subLength;
               prevData[user.name] = userData;
 
-              if (prevUsers.length > 6) {
+              if (prevUsers.length > 5) {
                 delete prevData[prevUsers[0]];
-                prevUsers = prevUsers.slice(1, 7);
+                prevUsers = prevUsers.slice(1, 6);
               }
             } else {
               var prevIndex = prevUsers.indexOf(user.name);
@@ -216,6 +216,7 @@
       subLength = subNames.length;
 
       setTotalUps();
+      setAverages();
       setDefaultSortedArray();
 
       subData = {
@@ -267,20 +268,29 @@
      Reset all data to empty lists (used for getting a new user)
     */
     function resetData() {
+      promise = null;
       after = "0";
+      subLength = 0;
+      defaultSortedArray = [];
+      upvotes = 0;
+
       comments = [];
       submissions = [];
       subs = {};
+      subNames = {};
       commentData = [];
       submitData = [];
       subData = {};
-      upvotes = 0;
+
       latestPost = null;
       firstPost = null;
+
       topComment = [0, ''];
       topSubmit = [0, ''];
+
       topWeek = {};
       topSub = null;
+
       i = 0;
 
       sortFactory.clearSorted();
@@ -451,11 +461,13 @@
     function createNewSub() {
       var subData = {};
       subData.comments = [];
-      subData.recent_comment = null;
-      subData.recent_submission = null;
       subData.comment_ups = 0;
+      subData.recent_comment = null;
+      subData.num_comments = 0;
       subData.submissions = [];
       subData.submission_ups = 0;
+      subData.recent_submission = null;
+      subData.num_submissions = 0;
       subData.gilded_comments = 0;
       subData.gilded_submissions = 0;
       subData.count = 0;
@@ -463,6 +475,8 @@
       subData.icon = null;
       subData.info = null;
       subData.avg_karma = 0;
+      subData.avg_comments = 0;
+      subData.avg_submissions = 0;
 
       return subData;
     }
@@ -488,6 +502,7 @@
 
       subreddit.comments.push(obj);
       subreddit.count += 1;
+      subreddit.num_comments += 1;
 
       var date = $filter('date')(comment);
       subreddit.recent_comment = date;
@@ -543,6 +558,7 @@
 
       subreddit.submissions.push(obj);
       subreddit.count += 1;
+      subreddit.num_submissions += 1;
 
       var date = $filter('date')(submission);
       subreddit.recent_submission = date;
@@ -565,6 +581,16 @@
         upvotes += subs[sub].total_ups;
 
         subs[sub].avg_karma = (subs[sub].total_ups / subs[sub].count);
+      }
+    }
+
+    /*
+     Set average comments up and average submission ups for each subreddit
+    */
+    function setAverages() {
+      for (var sub in subs) {
+        subs[sub].avg_comments = $filter('average')(subs[sub].comment_ups, subs[sub].num_comments, 0);
+        subs[sub].avg_submissions = $filter('average')(subs[sub].submission_ups, subs[sub].num_submissions, 0);
       }
     }
 

@@ -14,5 +14,5 @@ angular.module('SubSnoopApp')
     // Get the most mentioned words from a user's posts in a subreddit
     $scope.words = words.getWords($scope.subreddit, $routeParams.username);
 
-    $scope.colors = ['#ee8b78', '#bc5e52', '#ff7043', '#4DAAB6', '#766c91', '#523b58', '#3f51b5', '#5e35b1', '#65738e'];
+    $scope.colors = ['#f96854', '#645F6B', '#174cba', '#cc5763', '#964276', '#21159e', '#0f80d4', '#578386', '#4a2590'];
   }]);

@@ -23,7 +23,7 @@
    }
 
    subChart.getSubChart($scope.username, $scope.subreddit);
-   $scope.series = ['Comment Upvotes', 'Submission Upvotes'];
+   $scope.series = ['Comment Upvotes', 'Post Upvotes'];
 
    var data = subChart.getData($scope.subreddit);
    $scope.data = [
