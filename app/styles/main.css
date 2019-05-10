@@ -1287,6 +1287,7 @@ User Page
   color: #696969;
   font-size: 14px;
   font-weight: 500;
+  height: 54px;
 }
 
 .post-tab {
@@ -2777,9 +2778,9 @@ Mobile
   }
 
   .top-fix {
-    top: -webkit-calc(100vh - 50px);
-    top: -moz-calc(100vh - 50px);
-    top: calc(100vh - 50px);
+    top: -webkit-calc(100vh - 54px);
+    top: -moz-calc(100vh - 54px);
+    top: calc(100vh - 54px);
   }
 
   .search-panel {
@@ -2841,5 +2842,13 @@ Mobile
 
   .search-results-num {
     display: none;
+  }
+
+  .jumbotron {
+    border: none;
+  }
+
+  .underline-tab {
+    border: none;
   }
 }
