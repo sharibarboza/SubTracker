@@ -156,6 +156,28 @@
           </div>
 
           <div ng-if="tab > 1" class="col-md-6 main-col middle-col">
+            <div class="row post-row">
+              <div class="col-xs-4" style="height: 40px; line-height: 40px;">
+                <span style="font-size: 14px;">
+                  <strong ng-if="tab == 3">{{ numComments }} Comments</strong>
+                  <strong ng-if="tab == 2">{{ numSubmissions }} Posts</strong>
+                  <strong ng-if="tab == 4">{{ numGilded }} Gilded</strong>
+                </span>
+              </div>
+              <div class="col-xs-8" align="right">
+                <div class="sort-row">
+                  <div class="btn-group select-dropdown dropdown-margin">
+                    <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      {{ sortSelected.name }}&nbsp;&nbsp;&nbsp;&nbsp;
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li ng-repeat="sort in data.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div ng-if="(tab == 2 && numSubmissions > 0) || (tab == 3 && numComments > 0) || (tab == 4 && gilded)">
               <div id="{{ tabOptions[tab] }}">
                 <div ng-repeat="element in slicedArray | limitTo:limit" class="comment-list card-box list-card-box">
@@ -189,23 +211,8 @@
           </div>
 
           <div class="col-md-3 main-col no-mobile">
-            <div ng-if="tab == 1" class="card-box" id="about-card">
+            <div ng-if="tab > 1" class="card-box" id="about-card">
               <div ng-include src="'views/sub-about.html'"></div>
-            </div>
-
-            <div ng-if="tab > 1" class="card-box">
-              <strong class="purple-heading" style="text-transform: capitalize;">Filter {{ tabOptions[tab] }}</strong>
-              <br><br>
-              <strong class="gray-bold-subtitle">Sort by:</strong>
-              <br>
-              <div class="btn-group select-dropdown dropdown-margin">
-                <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  {{ sortSelected.name }}
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li ng-repeat="sort in data.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
-                </ul>
-              </div>
             </div>
 
             <div ng-include src="'views/prev-users.html'"></div>

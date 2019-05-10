@@ -45,6 +45,7 @@ angular.module('SubSnoopApp')
     $scope.limits = [0, 0, $scope.numSubmissions, $scope.numComments, 0];
     $scope.subInfo = null;
     $scope.gilded = $scope.sub.gilded_comments > 0 || $scope.sub.gilded_submissions > 0;
+    $scope.numGilded = $scope.sub.gilded_comments + $scope.sub.gilded_submissions;
     $scope.gilds = getGildedPosts();
 
     if ($scope.subreddit !== $routeParams.subreddit) {

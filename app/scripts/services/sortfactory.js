@@ -32,8 +32,8 @@ angular.module('SubSnoopApp')
       sortOptions: [
         {value: 'newest', name: 'Newest'},
         {value: 'oldest', name: 'Oldest'},
-        {value: 'mostUps', name: 'Most upvoted'},
-        {value: 'mostDowns', name: 'Most controversial'},
+        {value: 'mostUps', name: 'Upvoted'},
+        {value: 'mostDowns', name: 'Controversial'},
       ]
     };
 
