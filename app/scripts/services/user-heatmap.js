@@ -18,6 +18,7 @@ angular.module('SubSnoopApp')
     var subCount = 0;
     var uniqueSubs = {};
     var average = null;
+    var dateLimit = true;
 
     var minDate = moment().startOf('day').subtract(7, 'month');
     var diff = (moment.duration(moment().diff(minDate)).asMonths()).toFixed(0);
@@ -30,10 +31,14 @@ angular.module('SubSnoopApp')
      amount of submissions per date.
     */
     return {
-      getUserMap: function(current_user, subs, current_year) {
+      getUserMap: function(current_user, subs, current_year, limit) {
         if (!dates || user !== current_user) {
           resetData();
           var keys = Object.keys(subs);
+
+          if (limit == false) {
+            dateLimit = limit;
+          }
 
           for (var i = 0; i < keys.length; i++) {
             var subName = keys[i];
@@ -111,7 +116,7 @@ angular.module('SubSnoopApp')
         var date = moment(elem.created_utc*1000);
         var dateObj = date.format('YYYY-MM-DD');
 
-        if (date >= minDate) {
+        if (!dateLimit || date >= minDate) {
           setUserDay(where, dateObj, elem);
 
           var month = date.month();

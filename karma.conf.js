@@ -11,25 +11,21 @@ module.exports = function(config) {
     plugins: [
       'karma-chrome-launcher',
       'karma-jasmine',
-      'karma-ng-html2js-preprocessor'
+      'karma-ng-html2js-preprocessor',
+      'karma-browserify'
     ],
 
     ngHtml2JsPreprocessor: {
       stripPrefix: 'app/'
     },
 
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-    preprocessors: {
-      'app/views/*.html': 'ng-html2js'
-    },
-
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['browserify', 'jasmine'],
 
     // list of files / patterns to load in the browser
     files: [
+      'app/bower_components/chart.js/dist/*.js',
       'app/bower_components/angular/angular.js',
       'app/bower_components/moment/moment.js',
       'app/scripts/app.js',
@@ -41,6 +37,7 @@ module.exports = function(config) {
       'app/bower_components/font-awesome/css/font-awesome.css',
       'app/bower_components/angular-timeago/dist/*.js',
       'app/bower_components/angular-lazy-img/release/angular-lazy-img.js',
+      'app/bower_components/angular-chart.js/dist/*.js',
       'app/lib/*.js',
       'app/lib/angular-calendar-heatmap/dist/*.js',
       'app/scripts/controllers/*.js',
@@ -62,9 +59,20 @@ module.exports = function(config) {
       'app/bower_components/angular-timeago/protractor-e2e.conf.js',
       'app/bower_components/pluralize/test.js',
       'app/bower_components/angular-lazy-img/karma.conf.js',
-      'app/bower_components/firebase/*.js'
+      'app/bower_components/firebase/*.js',
+      'app/bower_components/angular-chart.js/gulpfile.js',
+      'app/bower_components/chart.js/gulpfile.js'
     ],
 
+    // preprocess matching files before serving them to the browser
+    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+    preprocessors: {
+      'app/views/*.html': 'ng-html2js'
+    },
+
+    browserify: {
+      debug: true
+    },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'

@@ -33,7 +33,7 @@ describe('test heatmap service', function () {
     sub2Data = {
       'comments': [
         {'created_utc': 1506840300, 'subreddit' : sub2 } // October 1, 2017 6:45 AM
-      ],  
+      ],
       'submissions': []
     }
 
@@ -44,7 +44,7 @@ describe('test heatmap service', function () {
   }));
 
   it('should return proper data for sub maps', function() {
-    var result = subHeatmap.getSubMap('user1', 'gaming', sub1Data, 2017);
+    var result = subHeatmap.getSubMap('user1', 'gaming', sub1Data, 2017, false);
     expect(result.length).toEqual(5);
 
     for (var key in result) {
@@ -66,12 +66,10 @@ describe('test heatmap service', function () {
         expect(obj.submissions).toEqual(0);
       }
     }
-
-    expect(subHeatmap.getCount()).toEqual(8);
   });
 
   it('should return proper data for user maps', function() {
-    var result = userHeatmap.getUserMap('user1', subs, 2017);
+    var result = userHeatmap.getUserMap('user1', subs, 2017, false);
     expect(result.length).toEqual(5);
 
     for (var key in result) {
@@ -104,9 +102,7 @@ describe('test heatmap service', function () {
         expect('politics' in obj.subs).toBeFalsy();
       }
     }
+  });
 
-    expect(userHeatmap.getCount()).toEqual(9);
-  }); 
-  
 
 });

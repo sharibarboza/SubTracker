@@ -41,14 +41,18 @@ describe("test subs factory", function () {
                           subreddit: 'sub2',
                           ups: -1,
                           created_utc: date2,
-                          gilded: 0
+                          gildings: {}
                       }
                   },
                   {
                       data: {
                           subreddit: 'sub1',
                           ups: 2,
-                          gilded: 2,
+                          gildings: {
+                            'gid_1': 1,
+                            'gid_2': 1,
+                            'gid_3': 0
+                          },
                           created_utc: date1
                       }
                   }
