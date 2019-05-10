@@ -2819,7 +2819,7 @@ Mobile
   }
 
   .user-pad {
-    padding-top: 30px;
+    padding-top: 35px;
   }
 
   .u-banner .banner-content {
@@ -2850,5 +2850,13 @@ Mobile
 
   .underline-tab {
     border: none;
+  }
+
+  .s-banner, .short-banner {
+    height: 240px;
+  }
+
+  .s-banner .banner-content {
+    padding-top: 40px;
   }
 }

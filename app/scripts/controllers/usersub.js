@@ -131,6 +131,7 @@ angular.module('SubSnoopApp')
     $scope.setTab = function(num) {
       $scope.tab = parseInt(num);
       $scope.setAccordion();
+      $window.scrollTo(0, 0);
 
       if ($scope.tab === 3) {
         $scope.sortSelected = $scope.commentSort;

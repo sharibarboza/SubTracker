@@ -1,5 +1,11 @@
-<div class="default-banner column-pad" align="center">
+<div class="default-banner s-banner column-pad" align="center">
   <div class="banner-content">
+    <div class="mobile-avatar row">
+      <div class="col-xs-6 col-xs-push-3">
+        <div ng-if="sub.info != null && subInfo.icon_img" class="mobile-circle" style="background-image: url({{ subInfo.icon_img | escape }});"></div>
+        <div ng-if="!subInfo.icon_img" class="mobile-circle img-no-border" style="background-image: url('{{ '../images/logo.jpg' }}'); border: none;"></div>
+      </div>
+    </div>
     <span class="user-name" id="{{ redditor.name }}">
       <strong class="sub-shadow"><span class="bright-blue">r/</span>{{ subreddit }}</strong>
     </span>
