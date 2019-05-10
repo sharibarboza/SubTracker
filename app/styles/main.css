@@ -2846,6 +2846,7 @@ Mobile
 
   .jumbotron {
     border: none;
+    margin-bottom: 10px;
   }
 
   .underline-tab {

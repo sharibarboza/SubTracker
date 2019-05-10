@@ -108,6 +108,10 @@
 
           <div ng-if="tab == 1" class="col-md-6 main-col middle-col">
             <div ng-if="tab == 1" class="card-box mobile-filter" style="display: none;">
+              <div ng-include src="'views/sub-about.html'"></div>
+            </div>
+
+            <div ng-if="tab == 1" class="card-box mobile-filter" style="display: none;">
               <div ng-include src="'views/sub-card.html'"></div>
             </div>
 
@@ -186,15 +190,7 @@
 
           <div class="col-md-3 main-col no-mobile">
             <div ng-if="tab == 1" class="card-box" id="about-card">
-              <strong class="purple-heading">About This Subreddit</strong>
-              <br><br>
-              <span class="small-gray-font"><span class="fa fa-calendar"></span> Created <strong class="orange-text" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></strong></span>
-              <div style="margin-top: 5px;">
-                <span class="small-gray-font"><i class="fa fa-user-plus" aria-hidden="true"></i>
-                <span class="gray-bold-subtitle">{{ subInfo.subscribers | number }}</span> subscribers</span>
-              </div>
-              <br>
-              <span ng-if="subInfo.public_description" class="small-font descript" ng-bind-html="subInfo.public_description_html | sanitize"></span>
+              <div ng-include src="'views/sub-about.html'"></div>
             </div>
 
             <div ng-if="tab > 1" class="card-box">
