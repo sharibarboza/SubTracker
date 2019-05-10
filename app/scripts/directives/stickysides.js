@@ -20,7 +20,7 @@ angular.module('SubSnoopApp')
         var offsetTop = 200;
 
         if (attrs.type == "sub") {
-          scope.$watch(function() { return angular.element('.bg-banner').is(':visible') }, function() {
+          var listener = scope.$watch(function() { return angular.element('.bg-banner').is(':visible') }, function() {
             var banner = angular.element('.bg-banner');
 
             if (banner.length > 0) {
@@ -29,6 +29,7 @@ angular.module('SubSnoopApp')
                 offsetTop = height;
               }
             }
+            listener();
           });
         }
 
