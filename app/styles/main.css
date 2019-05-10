@@ -2187,7 +2187,7 @@ Mobile
   }
 
   .main-banner {
-    padding-top: 30px;
+    padding-top: 70px;
     padding-bottom: 60px;
   }
 
@@ -2777,7 +2777,9 @@ Mobile
   }
 
   .top-fix {
-    top: 90px;
+    top: -webkit-calc(100vh - 50px);
+    top: -moz-calc(100vh - 50px);
+    top: calc(100vh - 50px);
   }
 
   .search-panel {
