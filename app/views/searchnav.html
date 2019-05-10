@@ -19,7 +19,7 @@
       </div>
 
     </div><!--/.nav-collapse -->
-    <div ng-if="!notfound" style="padding-bottom: 10px; display: none;" id="mobile-input">
+    <div ng-if="!notfound && !main" style="padding-bottom: 10px; display: none;" id="mobile-input">
       <form redirect="{{ true }}" novalidate="novalidate" handle-phone-submit>
         <div class="input-group" id="search-strip">
           <input type="text" ng-model="inputname" class="form-control" id="nav-seach" placeholder="Search for another Redditor ..." required>
