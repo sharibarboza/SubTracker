@@ -8,19 +8,8 @@
  * Controller of the SubSnoopApp
  */
  angular.module('SubSnoopApp')
- .controller('LineChartCtrl', ['$scope', 'moment', 'userChart', 'subFactory', function ($scope, moment, userChart, subFactory) {
-   var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-   $scope.labels = [];
-
-   var today = new Date();
-   var d;
-   var month;
-
-   for(var i = 6; i >= 0; i -= 1) {
-     d = new Date(today.getFullYear(), today.getMonth() - i, 1);
-     month = monthNames[d.getMonth()];
-     $scope.labels.push(month);
-   }
+ .controller('LineChartCtrl', ['$scope', 'moment', 'userChart', 'subFactory', 'months', function ($scope, moment, userChart, subFactory, months) {
+   $scope.labels = months.getLabels();
 
    userChart.getUserChart($scope.username);
 

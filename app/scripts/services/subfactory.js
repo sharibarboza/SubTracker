@@ -21,7 +21,7 @@
     var comments = [];
     var submissions = [];
     var subs = {};
-    var subNames = {};
+    var subNames = [];
     var commentData = [];
     var submitData = [];
     var subData = {};
@@ -63,6 +63,9 @@
       },
       getUser: function() {
         return username;
+      },
+      getSubNames: function() {
+        return subNames;
       },
       getDefaultSortedArray: function() {
         return defaultSortedArray;
@@ -277,7 +280,7 @@
       comments = [];
       submissions = [];
       subs = {};
-      subNames = {};
+      subNames = [];
       commentData = [];
       submitData = [];
       subData = {};
@@ -599,7 +602,7 @@
      Also, get the length
     */
     function setDefaultSortedArray() {
-      defaultSortedArray = $filter('sortSubs')(Object.keys(subs), 'subName', subs);
+      defaultSortedArray = $filter('sortSubs')(Object.keys(subs), 'totalUps', subs);
       subLength = defaultSortedArray.length;
     }
 

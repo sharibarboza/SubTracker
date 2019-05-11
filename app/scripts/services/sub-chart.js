@@ -36,13 +36,8 @@ angular.module('SubSnoopApp')
           subs[sub].commentData = [0, 0, 0, 0, 0, 0, 0];
           subs[sub].submissionData = [0, 0, 0, 0, 0, 0, 0];
           subs[sub].totalUps = 0;
-          subs[sub].average = 0;
           getComments(subData[sub].comments, sub);
           getSubmissions(subData[sub].submissions, sub);
-        }
-
-        for (var key in subs) {
-          subs[sub].average = parseInt((subs[sub].totalUps / diff).toFixed(0));
         }
       },
       getSubs: function() {
@@ -50,9 +45,6 @@ angular.module('SubSnoopApp')
       },
       getData: function(sub) {
         return subs[sub];
-      },
-      getAverage: function(sub) {
-        return subs[sub].average;
       }
     };
 

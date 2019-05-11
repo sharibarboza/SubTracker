@@ -30,12 +30,12 @@ angular.module('SubSnoopApp')
       },
       getTableBadges: function(current_user) {
           if (!badges || user !== current_user || table_badges == null) {
-              table_badges = {};
-              for (var key in badges) {
-                  table_badges[key] = badges[key];
-              }
+            table_badges = {};
+            for (var key in badges) {
+              table_badges[key] = badges[key];
+            }
 
-              getTableBadges();
+            getTableBadges();
           }
           return table_badges;
       }

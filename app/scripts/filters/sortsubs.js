@@ -137,10 +137,11 @@ angular.module('SubSnoopApp')
      subs: a dictionary containing all subs and their corresponding data objects
      */
     return function (input, attribute, subs) {
-      var sortedData = {};
+      var sortedData = [];
      /*
       Get the cached sorted list to avoid repeating the sorting process
       */
+
       if (sortFactory.isSorted(attribute)) {
         var sortedList = sortFactory.getSorted(attribute);
         if (sortedList.length === input.length) {
@@ -178,7 +179,7 @@ angular.module('SubSnoopApp')
         }
       }
 
-      sortFactory.addSorted(attribute + '-' + sortedData.length, sortedData);
+      sortFactory.addSorted(attribute, sortedData);
       return sortedData;
     };
 

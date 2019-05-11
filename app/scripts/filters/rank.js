@@ -26,13 +26,13 @@ angular.module('SubSnoopApp')
         return $filter('sortSubs')(keys, attribute, data)[keys.length-1];
       };
 
-    return function (type, attribute, data, keys) {
-      if (type === 'topPost') {
+      return function (type, attribute, data, keys) {
+        if (type === 'topPost') {
           return getTopPost(data, attribute);
-      } else if (type === 'topSub') {
+        } else if (type === 'topSub') {
           return getTopSub(keys, attribute, data);
-      } else if (type === 'bottomSub') {
+        } else if (type === 'bottomSub') {
           return getBottomSub(keys, attribute, data);
-      }
-    };
+        }
+      };
   }]);

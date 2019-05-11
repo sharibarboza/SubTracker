@@ -56,11 +56,6 @@ angular.module('SubSnoopApp')
           };
         };
 
-        scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
-          scope.windowWidth = newValue.w;
-          scope.chartConfig = configChart(scope.chartConfig, newValue.w);
-        }, true);
-
         /*
          Default configuration for pie chart
          */
@@ -72,7 +67,7 @@ angular.module('SubSnoopApp')
             thickness: 30,
             grow: 10,
             labelPadding: 35,
-            duration: 100,
+            duration: 0,
             margin: {
               top: 50, right: 70, bottom: -50, left: 70
             }
@@ -89,7 +84,7 @@ angular.module('SubSnoopApp')
             thickness: 30,
             grow: 10,
             labelPadding: 35,
-            duration: 100,
+            duration: 0,
             margin: {
               top: 50, right: 30, bottom: -50, left: 30
             }
@@ -282,7 +277,7 @@ angular.module('SubSnoopApp')
             .on("mouseleave", scope.reduceArc)
             .attr('d', arc)
             .transition()
-            .duration(1000)
+            .duration(duration)
             .attrTween('d', function(d) {
               try {
                 var interpolate = d3.interpolate(this._current, d);

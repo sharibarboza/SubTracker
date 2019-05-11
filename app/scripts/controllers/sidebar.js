@@ -12,7 +12,6 @@ angular.module('SubSnoopApp')
 
     $scope.toggleRight = function () {
       buildToggler('right');
-      window.scrollTo(0,0);
     };
 
     $scope.close = function () {

@@ -29,7 +29,6 @@ angular.module('SubSnoopApp')
                 offsetTop = height;
               }
             }
-            listener();
           });
         }
 
