@@ -604,6 +604,11 @@ blockquote {
   margin-bottom: 10px;
 }
 
+.post-count {
+  height: 40px;
+  line-height: 40px;
+}
+
 /************************
 Angular Material
 ************************/
@@ -2876,5 +2881,9 @@ Mobile
   .post-row {
     margin-left: 15px;
     margin-right: 15px;
+  }
+
+  .post-count {
+    line-height: 20px;
   }
 }

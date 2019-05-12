@@ -153,14 +153,14 @@
 
           <div ng-if="tab > 1" class="col-md-6 main-col middle-col">
             <div class="row post-row">
-              <div class="col-xs-6" style="height: 40px; line-height: 40px;">
+              <div class="col-sm-3 col-xs-2 post-count no-right-pad">
                 <span style="font-size: 14px;">
-                  <strong ng-if="tab == 3">{{ numComments }} Comments</strong>
-                  <strong ng-if="tab == 2">{{ numSubmissions }} Posts</strong>
-                  <strong ng-if="tab == 4">{{ gilds.length }} Gilded</strong>
+                  <strong ng-if="tab == 3">{{ numComments }} <span>{{ numComments == 1 ? 'Comment' : 'Comments' }}</span></strong>
+                  <strong ng-if="tab == 2">{{ numSubmissions }} <span>{{ numSubmissions == 1 ? 'Post' : 'Posts' }}</span></strong>
+                  <strong ng-if="tab == 4">{{ numGilds }} Gilded</strong>
                 </span>
               </div>
-              <div class="col-xs-6" align="right">
+              <div class="col-sm-9 col-xs-10 no-left-pad" align="right">
                 <div class="sort-row">
                   <div class="btn-group select-dropdown dropdown-margin">
                     <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -168,6 +168,14 @@
                     </button>
                     <ul class="dropdown-menu" role="menu">
                       <li ng-repeat="sort in data.sortOptions" ng-click="setSortOption(sort)">{{ sort.name }}</li>
+                    </ul>
+                  </div>
+                  <div class="btn-group select-dropdown dropdown-margin">
+                    <button type="button" class="form-control btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      {{ filterVal.name }}&nbsp;&nbsp;&nbsp;&nbsp;
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li ng-repeat="filtersort in filterPosts.sortOptions" ng-click="setFilterOption(filtersort)">{{ filtersort.name }}</li>
                     </ul>
                   </div>
                 </div>
@@ -191,17 +199,17 @@
             </div>
             <div ng-if="tab == 3 && numComments == 0">
               <div class="card-box">
-                {{ username }} has no comments in <strong><span class="orange-text">/r/</span>{{ subreddit }}.</strong>
+                There are <strong><span class="orange-text">0</span> comments</strong> to display.
               </div>
             </div>
             <div ng-if="tab == 2 && numSubmissions == 0">
               <div class="card-box">
-                {{ username }} has no submissions in <strong><span class="orange-text">/r/</span>{{ subreddit }}.</strong>
+                There are <strong><span class="orange-text">0</span> posts</strong> to display.
               </div>
             </div>
-            <div ng-if="tab == 4 && !gilded">
+            <div ng-if="tab == 4 && numGilds == 0">
               <div class="card-box">
-                {{ username }} has no gilded posts in <strong><span class="orange-text">/r/</span>{{ subreddit }}.</strong>
+                There are <strong><span class="orange-text">0</span> gilded</strong> entries to display.
               </div>
             </div>
           </div>

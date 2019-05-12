@@ -6,33 +6,35 @@ describe('test heatmap service', function () {
   beforeEach(module('SubSnoopApp'));
 
   // instantiate service
-  var subHeatmap, userHeatmap, moment, sub1Data, sub2Data, subs;
+  var currentYear, subHeatmap, userHeatmap, moment, sub1Data, sub2Data, subs;
   beforeEach(inject(function (_subHeatmap_, _userHeatmap_, _moment_) {
     subHeatmap = _subHeatmap_;
     userHeatmap = _userHeatmap_;
     moment = _moment_;
+
+    currentYear = moment().year();
 
     var sub1 = 'gaming';
     var sub2 = 'politics';
 
     sub1Data = {
       'comments': [
-        {'created_utc': 1506846658, 'subreddit' : sub1 }, // October 1, 2017 8:30 AM
-        {'created_utc': 1506853858, 'subreddit' : sub1 }, // October 1, 2017 10:30 AM
-        {'created_utc': 1506947458, 'subreddit' : sub1 }, // October 2, 2017 12:30 PM
-        {'created_utc': 1507192258, 'subreddit' : sub1 }   // October 5, 2017 8:30 AM
+        {'created_utc': moment().subtract(5, 'day').subtract(1, 'hour').unix(), 'subreddit' : sub1 },
+        {'created_utc': moment().subtract(5, 'day').subtract(2, 'hour').unix(), 'subreddit' : sub1 },
+        {'created_utc': moment().subtract(3, 'day').unix(), 'subreddit' : sub1 },
+        {'created_utc': moment().subtract(1, 'day').unix(), 'subreddit' : sub1 }
       ],
       'submissions': [
-        {'created_utc': 1506861058, 'subreddit' : sub1 },  // October 1, 2017 12:30 PM
-        {'created_utc': 1506857458, 'subreddit' : sub1 },  // October 1, 2017 11:30 AM
-        {'created_utc': 1507030258, 'subreddit' : sub1 },  // October 3, 2017 11:30 AM
-        {'created_utc': 1507102258, 'subreddit' : sub1 }  // October 4, 2017 7:30 AM
+        {'created_utc': moment().subtract(5, 'day').subtract(1, 'hour').unix(), 'subreddit' : sub1 },
+        {'created_utc': moment().subtract(5, 'day').subtract(2, 'hour').unix(), 'subreddit' : sub1 },
+        {'created_utc': moment().subtract(2, 'day').unix(), 'subreddit' : sub1 },
+        {'created_utc': moment().subtract(4, 'day').unix(), 'subreddit' : sub1 }
       ]
     };
 
     sub2Data = {
       'comments': [
-        {'created_utc': 1506840300, 'subreddit' : sub2 } // October 1, 2017 6:45 AM
+        {'created_utc': moment().subtract(5, 'day').unix(), 'subreddit' : sub2 } // October 1, 2017 6:45 AM
       ],
       'submissions': []
     }
@@ -44,7 +46,7 @@ describe('test heatmap service', function () {
   }));
 
   it('should return proper data for sub maps', function() {
-    var result = subHeatmap.getSubMap('user1', 'gaming', sub1Data, 2017, false);
+    var result = subHeatmap.getSubMap('user1', 'gaming', sub1Data, currentYear);
     expect(result.length).toEqual(5);
 
     for (var key in result) {
@@ -69,7 +71,7 @@ describe('test heatmap service', function () {
   });
 
   it('should return proper data for user maps', function() {
-    var result = userHeatmap.getUserMap('user1', subs, 2017, false);
+    var result = userHeatmap.getUserMap('user1', subs, currentYear);
     expect(result.length).toEqual(5);
 
     for (var key in result) {

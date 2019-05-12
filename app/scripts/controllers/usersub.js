@@ -9,8 +9,8 @@
  */
 angular.module('SubSnoopApp')
   .controller('UserSubCtrl', ['$rootScope', '$scope', '$routeParams', '$window', '$filter', 'subsData', 'search',
-    'subFactory', 'sortFactory', '$anchorScroll', '$location', '$timeout', 'subInfo', 'sentiMood', 'reaction', 'userFactory', 'recentTimes',
-    function ($rootScope, $scope, $routeParams, $window, $filter, subsData, search, subFactory, sortFactory, $anchorScroll, $location, $timeout, subInfo, sentiMood, reaction, userFactory, recentTimes) {
+    'subFactory', 'sortFactory', '$anchorScroll', '$location', '$timeout', 'subInfo', 'sentiMood', 'reaction', 'userFactory', 'recentTimes', 'filterPosts', 'gilded',
+    function ($rootScope, $scope, $routeParams, $window, $filter, subsData, search, subFactory, sortFactory, $anchorScroll, $location, $timeout, subInfo, sentiMood, reaction, userFactory, recentTimes, filterPosts, gilded) {
     /*
      Initalization
     */
@@ -30,10 +30,10 @@ angular.module('SubSnoopApp')
     */
     $scope.subsArray = subFactory.getSubNames();
     $scope.sub = subsData.subs[$routeParams.subreddit];
-    $scope.comments = [];
-    $scope.submissions = [];
     $scope.comments = $scope.sub['comments'];
     $scope.submissions = $scope.sub['submissions'];
+    $scope.initComments = $scope.comments.length;
+    $scope.initSubmits = $scope.submissions.length;
     $scope.numComments = $scope.sub.num_comments;
     $scope.numSubmissions = $scope.sub.num_submissions;
     $scope.topComment = subsData.topComment;
@@ -46,14 +46,6 @@ angular.module('SubSnoopApp')
     $scope.latestPost = recentTimes.getData($scope.username, $scope.subreddit, $scope.sub);
     sentiMood.setSubData($scope.subreddit, $scope.sub, $scope.username);
     reaction.setSubData($scope.subreddit, $scope.sub, $scope.username);
-
-    /*
-     Set up for pagination of comments or submissions
-    */
-    $scope.sortSelected = sortFactory.getDefaultPostSort();
-    $scope.commentSort = sortFactory.getDefaultPostSort();
-    $scope.submitSort = sortFactory.getDefaultPostSort();
-    $scope.gildSort = sortFactory.getDefaultPostSort();
 
     /*
      Tab configuration for toggling between comment and submissions display
@@ -70,6 +62,7 @@ angular.module('SubSnoopApp')
       $scope.tab = 3;
     } else if ($location.path() === baseUrl + '/gilded/') {
       $scope.tab = 4;
+      setUpGilded();
     }
 
     if ($scope.tab > 0) {
@@ -84,10 +77,6 @@ angular.module('SubSnoopApp')
       } else {
         $scope.subInfo = $scope.sub.info;
       }
-    }
-
-    if ($scope.tab > 1) {
-      $scope.setArray();
     }
 
     $scope.open = false;
@@ -122,6 +111,10 @@ angular.module('SubSnoopApp')
       }
     };
 
+    if ($scope.tab > 1) {
+      $scope.setArray();
+    }
+
     /*
      Set open/closed status of accordions
     */
@@ -140,11 +133,14 @@ angular.module('SubSnoopApp')
 
       if ($scope.tab === 3) {
         $scope.sortSelected = $scope.commentSort;
+        $scope.filterVal = $scope.commentFilter;
       } else if ($scope.tab === 2) {
         $scope.sortSelected = $scope.submitSort;
+        $scope.filterVal = $scope.submitFilter;
       } else if ($scope.tab === 4) {
         $scope.sortSelected = $scope.gildSort;
-        $scope.gilds = getGildedPosts();
+        $scope.filterVal = $scope.gildFilter;
+        setUpGilded();
       }
 
       if (num == 0) {
@@ -183,24 +179,52 @@ angular.module('SubSnoopApp')
     /*
      Used for sorting comments/submissions
     */
-    $scope.data = sortFactory.getPostSorting();
+    $scope.sortSelected = sortFactory.getDefaultPostSort();
+    $scope.commentSort = $scope.sortSelected;
+    $scope.submitSort = $scope.sortSelected;
+    $scope.gildSort = $scope.sortSelected;
 
+    $scope.data = sortFactory.getPostSorting();
     $scope.setSortOption = function(sort) {
       $scope.sortSelected = sort;
 
       if ($scope.tab === 3) {
-        $scope.comments = $filter('sortPosts')($scope.sub['comments'], sort.value);
+        $scope.comments = $filter('sortPosts')($scope.comments, sort.value);
         $scope.commentSort = sort;
       } else if ($scope.tab === 2) {
-        $scope.submissions = $filter('sortPosts')($scope.sub['submissions'], sort.value);
+        $scope.submissions = $filter('sortPosts')($scope.submissions, sort.value);
         $scope.submitSort = sort;
       } else if ($scope.tab === 4) {
-        $scope.gilds = $filter('sortPosts')(getGildedPosts(), sort.value);
+        $scope.gilds = $filter('sortPosts')($scope.gilds, sort.value);
         $scope.gildSort = sort;
       }
 
       $scope.setArray();
     };
+
+    /*
+     Filter posts based on time
+    */
+    $scope.filterVal = filterPosts.getDefaultFilter();
+    $scope.commentFilter = $scope.filterVal;
+    $scope.submitFilter = $scope.filterVal;
+    $scope.gildFilter = $scope.filterVal;
+
+    $scope.filterPosts = filterPosts.getOptions();
+    $scope.setFilterOption = function(filter) {
+      filterPosts.setFilter(filter);
+      $scope.filterVal = filter;
+
+      if ($scope.tab === 3) {
+        filterComments(filter);
+      } else if ($scope.tab === 2) {
+        filterSubmits(filter);
+      } else if ($scope.tab === 4) {
+        filterGilded(filter);
+      }
+
+      $scope.setSortOption($scope.sortSelected);
+    }
 
     /*
      Relocate to user's main page
@@ -230,23 +254,67 @@ angular.module('SubSnoopApp')
     };
 
     /*
-     Get all the gilded posts in the sub
+     Set subs list for toggle sidebar
     */
-    function getGildedPosts() {
-      var gilded = [];
-      var posts = ($scope.comments).concat($scope.submissions);
-
-      for (var i = 0; i < posts.length; i++) {
-        if ($filter('gilded')(posts[i].gildings) > 0) {
-          gilded.push(posts[i]);
-        }
-      }
-      return gilded;
-    }
-
     $scope.subList = sortFactory.getSorted(sortFactory.getSubSort().value);
     if (!$scope.subList) {
       $scope.subList = $scope.subsArray;
+    }
+
+    /*
+     Filter comments based on time
+    */
+    function filterComments(filter) {
+      if (filter.value === 'all') {
+        $scope.comments = $scope.sub['comments'];
+        $scope.numComments = $scope.sub.num_comments;
+      } else {
+        $scope.comments = filterPosts.getData(filter.value, $scope.sub['comments']);
+        $scope.numComments = $scope.comments.length;
+      }
+      $scope.commentFilter = filter;
+      $scope.limits[3] = $scope.numComments;
+    }
+
+    /*
+     Filter submissions based on time
+    */
+    function filterSubmits(filter) {
+      if (filter.value === 'all') {
+        $scope.submissions = $scope.sub['submissions'];
+        $scope.numSubmissions = $scope.sub.num_submissions;
+      } else {
+        $scope.submissions = filterPosts.getData(filter.value, $scope.sub['submissions']);
+        $scope.numSubmissions = $scope.submissions.length;
+      }
+      $scope.submitFilter = filter;
+      $scope.limits[2] = $scope.numSubmissions;
+    }
+
+    /*
+     Filter gilded posts based on time
+    */
+    function filterGilded(filter) {
+      if (filter.value === 'all') {
+        setUpGilded();
+      } else {
+        $scope.gilds = filterPosts.getData(filter.value, gilded.getData($scope.subreddit));
+        $scope.numGilds = $scope.gilds.length;
+      }
+      $scope.gildFilter = filter;
+    }
+
+    /*
+     Set up gilded posts
+    */
+    function setUpGilded() {
+      if ($scope.gilds == undefined) {
+        var gildList = $scope.sub['comments'].concat($scope.sub['submissions']);
+        gilded.setData($scope.subreddit, gildList);
+        $scope.gilds = gilded.getData($scope.subreddit);
+      }
+
+      $scope.numGilds = $scope.gilds.length;
     }
 
   }
