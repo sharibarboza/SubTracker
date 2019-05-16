@@ -113,24 +113,6 @@ angular.module('SubSnoopApp')
     }
 
     /*
-     Sort by average points per recent months
-    */
-    var sortAvgUps = function(keys, subs) {
-      for (var key in keys) {
-        subChart.getSubChart($routeParams.username, keys[key]);
-      }
-      var data = subChart.getSubs();
-
-      keys.sort(function(a, b) {
-        var num1 = data[a].average;
-        var num2 = data[b].average;
-        return $filter('sortNum')(num1, num2, a, b, true, 'alpha');
-      });
-
-      return keys;
-    }
-
-    /*
      Main function of the filter to sort subreddits
      input: an array of subreddit names (this is the data structure that will be sorted)
      attribute: what to sort on (must be an attribute from the sortOptions in the sortFactory service)
@@ -152,9 +134,7 @@ angular.module('SubSnoopApp')
       var cloned_keys = input.slice(0);
 
       if (cloned_keys) {
-        if (attribute === 'avgUps') {
-          sortedData = sortAvgUps(cloned_keys);
-        } else if (attribute === 'subName') {
+        if (attribute === 'subName') {
           sortedData = sortName(cloned_keys);
         } else if (attribute === 'totalComments') {
           sortedData = sort(cloned_keys, subs, 'comments', true);

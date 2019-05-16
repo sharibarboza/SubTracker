@@ -58,17 +58,17 @@ angular.module('SubSnoopApp')
       clearFilters: function() {
         filterLists = {};
       },
-      getData: function(filter, data) {
+      getData: function(filter, data, gilded) {
         if (filter === 'all') {
           return data;
         } else {
-          return filterData(data, limits[filter]);
+          return filterData(data, limits[filter], gilded);
         }
       }
     };
     return factory;
 
-    function filterData(data, limit) {
+    function filterData(data, limit, gilded) {
       var dataList = [];
 
       for (var i = 0; i < data.length; i++) {
@@ -77,7 +77,7 @@ angular.module('SubSnoopApp')
 
         if (time >= limit) {
           dataList.push(node);
-        } else {
+        } else if (gilded && node.type === 'submitted') {
           break;
         }
       }

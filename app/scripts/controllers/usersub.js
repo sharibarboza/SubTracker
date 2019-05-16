@@ -298,7 +298,7 @@ angular.module('SubSnoopApp')
       if (filter.value === 'all') {
         setUpGilded();
       } else {
-        $scope.gilds = filterPosts.getData(filter.value, gilded.getData($scope.subreddit));
+        $scope.gilds = filterPosts.getData(filter.value, gilded.getData($scope.subreddit), true);
         $scope.numGilds = $scope.gilds.length;
       }
       $scope.gildFilter = filter;
