@@ -910,7 +910,7 @@ Content
 
 .main-banner {
   height: 350px;
-  padding-top: 10vh;
+  padding-top: 90px;
   background-position: 0 50%;
 }
 
@@ -2161,6 +2161,9 @@ Mobile
   #subreddits .table-header {
     display: none;
   }
+  .no-mobile {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -2188,6 +2191,39 @@ Mobile
   }
 }
 
+@media screen and (min-width: 992px) and (max-width: 1292px) {
+  .gray-box {
+    height: 8.5vh;
+  }
+  .gray-box-content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .mobile-card {
+    display: block !important;
+    height: 230px;
+  }
+  .ipad-user-card {
+    padding-right: 0;
+  }
+  .ipad-filter-card {
+    padding-left: 0;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  #sub-panels {
+    padding: 15px 0 !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .main-banner {
+    padding-top: 50px;
+    padding-bottom: 60px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .navbar-default, #searchbar, .search-content .breadcrumb, #sub-panels {
     padding-left: 16px;
@@ -2199,11 +2235,6 @@ Mobile
     height: 190px;
     background-position: 0% 0%;
     padding-bottom: 20px;
-  }
-
-  .main-banner {
-    padding-top: 50px;
-    padding-bottom: 60px;
   }
 
   .search-content {
@@ -2640,9 +2671,29 @@ Mobile
   }
  }
 
- @media screen and (max-width: 600px) {
+ @media screen and (max-width: 1200px) {
+   .best-posts {
+     display: none;
+   }
+ }
+
+ @media screen and (max-width: 1200px) and (min-width: 1024px) {
+   .main-col {
+     padding: 0;
+   }
+   .width-pad, .banner-pad {
+     padding-left: 15%;
+     padding-right: 15%;
+   }
+ }
+
+ @media screen and (max-width: 1023px) {
    .content {
      padding-top: 90px;
+   }
+
+   #mobile-input {
+     display: block !important;
    }
 
    .sub-tab {
@@ -2651,10 +2702,6 @@ Mobile
 
    #testInput {
      margin-top: 5px;
-   }
-
-   #mobile-input {
-     display: block !important;
    }
 
    .middle-banner {
@@ -2763,7 +2810,7 @@ Mobile
      border-bottom: none;
    }
 
-   .default-banner .sub-circle, .last-seen, .sub-row-stats, .no-mobile {
+   .default-banner .sub-circle, .last-seen, .sub-row-stats {
      display: none;
    }
 

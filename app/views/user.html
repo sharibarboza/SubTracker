@@ -20,7 +20,7 @@
       <!-- User banner containing profile picture, and other user info -->
       <div class="default-banner u-banner column-pad user-pad" align="center">
         <div class="mobile-avatar row">
-          <div class="col-xs-6 col-xs-push-3">
+          <div class="col-md-6 col-md-push-3">
             <div ng-if="redditor.subreddit" class="mobile-circle" style="background-image: url({{ redditor.subreddit.icon_img | escape }});"></div>
             <div ng-if="!redditor.subreddit" class="mobile-circle" style="background-image: url({{ redditor.icon_img }});"></div>
           </div>
@@ -39,22 +39,22 @@
       <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
       <div class="user-head-nav no-padding banner-pad card-shadow" align="center" sticky-nav="top-fix" type="user">
         <div class="row">
-          <div class="col-md-3 hidden-xs profile-img" style="position: relative;">
+          <div class="col-lg-3 hidden-md hidden-sm hidden-xs profile-img" style="position: relative;">
             <div ng-if="redditor.subreddit" class="sub-circle" style="background-image: url({{ redditor.subreddit.icon_img | escape }});"></div>
             <div ng-if="!redditor.subreddit" class="sub-circle" style="background-image: url({{ redditor.icon_img }});"></div>
             <div class="name-bar" style="display: none;"><strong><span class="orange-text">/u/</span><a ng-href="#/{{ username }}/subreddits/">{{ username }}</a></strong></div>
           </div>
-          <div class="col-md-1 col-xs-4 tab-col">
+          <div class="col-lg-1 col-md-4 col-sm-4 col-xs-4 tab-col">
             <div class="post-tab gray-bold-subtitle" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'"><strong>Subreddits</strong></div>
           </div>
-          <div class="col-md-1 col-xs-4 tab-col">
+          <div class="col-lg-1 col-md-4 col-sm-4 col-xs-4 tab-col">
             <div class="post-tab gray-bold-subtitle" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'"><strong>Stats</strong></div>
           </div>
-          <div class="col-md-1 col-xs-4 tab-col">
+          <div class="col-lg-1 col-md-4 col-sm-4 col-xs-4 tab-col">
             <div class="post-tab gray-bold-subtitle" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'"><strong>Search</strong></div>
           </div>
-          <div class="col-md-3 hidden-xs"></div>
-          <div class="col-md-3 hidden-xs" style="padding-top: 6px; padding-bottom: 3px;" align="right">
+          <div class="col-lg-3 hidden-md hidden-sm hidden-xs"></div>
+          <div class="col-lg-3 hidden-md hidden-sm hidden-xs" style="padding-top: 6px; padding-bottom: 3px;" align="right">
             <a ng-href="https://www.reddit.com/u/{{ redditor.name }}" target="_blank"><button class="btn nav-btn" style="vertical-align: middle; line-height: 30px; width: 100%;">Visit Profile <i class="fa fa-external-link"></i></button></a>
           </div>
         </div>
@@ -65,13 +65,13 @@
       <div class="no-margin row width-pad">
 
         <div class="row" ng-controller="UserSearchCtrl">
-          <div class="col-md-3 no-mobile main-col">
+          <div class="col-lg-3 no-mobile main-col">
             <div sticky-sides="side-fix" type="user">
               <div class="card-box">
                 <div ng-include src="'views/user-card.html'"></div>
               </div>
 
-              <div class="card-box no-mobile" align="center">
+              <div class="card-box no-mobile best-posts" align="center">
                 <div class="gray-box comment-box">
                   <div class="gray-box-content">
                     <strong>Current Best Comment</strong>
@@ -109,23 +109,30 @@
             </div>
           </div>
 
-          <div ng-if="tab == 0" class="col-md-6 main-col middle-col">
-            <div ng-if="tab == 0" class="card-box mobile-filter" style="display: none;">
-              <div ng-include src="'views/user-card.html'"></div>
-            </div>
+          <div ng-if="tab == 0" class="col-lg-6 main-col middle-col">
 
-            <div ng-if="tab == 0" class="card-box mobile-filter" style="display: none;">
-              <div ng-include src="'views/filter-subs.html'"></div>
+            <div class="row">
+              <div class="col-md-6 ipad-user-card">
+                <div ng-if="tab == 0" class="card-box mobile-filter mobile-card" style="display: none;">
+                  <div ng-include src="'views/user-card.html'"></div>
+                </div>
+              </div>
+
+              <div class="col-md-6 ipad-filter-card">
+                <div ng-if="tab == 0" class="card-box mobile-filter mobile-card" style="display: none;">
+                  <div ng-include src="'views/filter-subs.html'"></div>
+                </div>
+              </div>
             </div>
 
             <div ng-repeat="subreddit in subList | limitTo:limit" class="sub-card-box" id="sub-row">
               <a ng-href="#/{{ username }}/{{ subreddit }}/overview/"><div class="row prevRow">
-                <div class="col-md-1 hidden-xs" align="center">
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs" align="center">
                   <strong class="num-rank" style="color: #4D4D4D;">{{ 1 + $index }}</strong>
                 </div>
-                <div class="col-md-11 col-sm-10 col-xs-10">
+                <div class="col-lg-11 col-sm-10 col-md-11 col-xs-12">
                   <div class="row">
-                    <div class="col-md-10 no-right-pad">
+                    <div class="col-lg-10 col-sm-9 no-right-pad">
                       <span class="sub-name">{{ subreddit }}</span> <span ng-if="subs[subreddit].gilded_comments > 0 || subs[subreddit].gilded_submissions > 0" class="gilded-star gilded-sub"></span>
 
                       <span class="badge"><span class="fa fa-comment small-icon"></span>&nbsp;&nbsp;{{ subs[subreddit].num_comments }}</span>
@@ -140,7 +147,7 @@
                       </div>
 
                     </div>
-                    <div class="col-md-2 hidden-xs no-left-pad" align="right">
+                    <div class="col-lg-2 col-sm-3 hidden-sm hidden-xs no-left-pad" align="right">
                       <strong style="font-size: 17px;" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'"> {{ subs[subreddit].total_ups | karma }}<span ng-class="subs[subreddit].total_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
                     </div>
                   </div>
@@ -154,7 +161,7 @@
             </div>
           </div>
 
-          <div ng-if="tab == 1" class="col-md-6 main-col">
+          <div ng-if="tab == 1" class="col-lg-6 main-col">
             <div class="card-box" ng-controller="LineChartCtrl">
               <strong class="purple-heading">Recent Points Per Month</strong>
               <br>
@@ -190,11 +197,11 @@
             </div>
           </div>
 
-          <div ng-if="tab == 2" class="col-md-6 main-col">
+          <div ng-if="tab == 2" class="col-lg-6 main-col">
             <div ng-include src="'views/search.html'"></div>
           </div>
 
-          <div class="col-md-3 main-col no-mobile">
+          <div class="col-lg-3 main-col no-mobile">
             <div sticky-sides="side-fix" type="user">
               <div ng-if="tab == 2 && hasResults" class="card-box">
                 <strong class="purple-heading">Filter Search Results</strong>

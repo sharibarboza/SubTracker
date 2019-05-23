@@ -10,34 +10,37 @@
 angular.module('SubSnoopApp')
   .service('badges', ['$filter', 'subFactory', 'subInfo', 'sortFactory', function ($filter, subFactory, subInfo, sortFactory) {
 
-    var user;
     var subs;
     var keys;
-    var badges;
-    var table_badges;
+    var badges = null;
+    var table_badges = null;
+    var b_user = null;
+    var t_user = null;
 
     /*
     Used for determining the sub badges such as most active, most upvoted, etc.
     */
     var factory = {
       getSubs: function(current_user) {
-        if (badges && user === current_user) {
+        if (badges && b_user === current_user) {
           return badges;
         } else {
-          user = current_user;
-          return getBadges();
+          b_user = current_user
+          badges = {};
+          return getBadges(current_user);
         }
       },
       getTableBadges: function(current_user) {
-          if (!badges || user !== current_user || table_badges == null) {
-            table_badges = {};
-            for (var key in badges) {
-              table_badges[key] = badges[key];
-            }
-
-            getTableBadges();
-          }
+        if (table_badges && t_user === current_user) {
           return table_badges;
+        } else {
+          t_user = current_user;
+          table_badges = {};
+          for (var key in badges) {
+            table_badges[key] = badges[key];
+          }
+          return getTableBadges(current_user);
+        }
       }
     };
     return factory;
@@ -45,7 +48,7 @@ angular.module('SubSnoopApp')
     /*
       Get the subreddit statistics for the users's Stats page
     */
-    function getBadges() {
+    function getBadges(user) {
         badges = {
           'mostUpvoted' : {
             'image' : null,
@@ -83,13 +86,15 @@ angular.module('SubSnoopApp')
     /*
      The the subreddit statistics for the badges on the users's subreddits table
     */
-    function getTableBadges() {
+    function getTableBadges(user) {
         table_badges['lastSeen'] = {
             'sub': getSub('lastSeen')
         }
         table_badges['avgPost'] = {
             'sub': getSub('avgPost')
         }
+
+        return table_badges;
     }
 
     /*
