@@ -12,7 +12,7 @@
    $scope.labels = months.getLabels();
 
    subChart.getSubChart($scope.username, $scope.subreddit);
-   $scope.series = ['Comment Upvotes', 'Post Upvotes'];
+   $scope.series = ['Comment Points', 'Post Points'];
 
    var data = subChart.getData($scope.subreddit);
    $scope.data = [

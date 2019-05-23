@@ -13,7 +13,7 @@
 
    userChart.getUserChart($scope.username);
 
-   $scope.series = ['Comment Upvotes', 'Post Upvotes'];
+   $scope.series = ['Comment Points', 'Post Points'];
    $scope.data = [
      userChart.getCommentData(),
      userChart.getSubmissionData()
