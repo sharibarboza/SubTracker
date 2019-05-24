@@ -37,7 +37,7 @@
       </div>
 
       <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
-      <div class="user-head-nav no-padding banner-pad card-shadow" align="center" sticky-nav="top-fix" type="user">
+      <div class="user-head-nav no-padding banner-pad card-shadow user-page" align="center" sticky-nav="top-fix" type="user">
         <div class="row">
           <div class="col-lg-3 hidden-md hidden-sm hidden-xs profile-img" style="position: relative;">
             <div ng-if="redditor.subreddit" class="sub-circle" style="background-image: url({{ redditor.subreddit.icon_img | escape }});"></div>
@@ -111,28 +111,30 @@
 
           <div ng-if="tab == 0" class="col-lg-6 main-col middle-col">
 
-            <div class="row">
-              <div class="col-md-6 ipad-user-card">
-                <div ng-if="tab == 0" class="card-box mobile-filter mobile-card" style="display: none;">
-                  <div ng-include src="'views/user-card.html'"></div>
+            <div class="card-box mobile-filter" style="padding: 0; display: none;">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="card-box">
+                    <div ng-include src="'views/user-card.html'"></div>
+                  </div>
                 </div>
-              </div>
 
-              <div class="col-md-6 ipad-filter-card">
-                <div ng-if="tab == 0" class="card-box mobile-filter mobile-card" style="display: none;">
-                  <div ng-include src="'views/filter-subs.html'"></div>
+                <div class="col-sm-6">
+                  <div class="card-box">
+                    <div ng-include src="'views/filter-subs.html'"></div>
+                  </div>
                 </div>
               </div>
             </div>
 
             <div ng-repeat="subreddit in subList | limitTo:limit" class="sub-card-box" id="sub-row">
               <a ng-href="#/{{ username }}/{{ subreddit }}/overview/"><div class="row prevRow">
-                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs" align="center">
+                <div class="col-lg-1 col-md-1 col-sm-1 hidden-xs" align="center">
                   <strong class="num-rank" style="color: #4D4D4D;">{{ 1 + $index }}</strong>
                 </div>
-                <div class="col-lg-11 col-sm-10 col-md-11 col-xs-12">
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
                   <div class="row">
-                    <div class="col-lg-10 col-sm-9 no-right-pad">
+                    <div class="col-lg-10 col-sm-10 no-right-pad">
                       <span class="sub-name">{{ subreddit }}</span> <span ng-if="subs[subreddit].gilded_comments > 0 || subs[subreddit].gilded_submissions > 0" class="gilded-star gilded-sub"></span>
 
                       <span class="badge"><span class="fa fa-comment small-icon"></span>&nbsp;&nbsp;{{ subs[subreddit].num_comments }}</span>
@@ -147,7 +149,7 @@
                       </div>
 
                     </div>
-                    <div class="col-lg-2 col-sm-3 hidden-sm hidden-xs no-left-pad" align="right">
+                    <div class="col-lg-2 col-sm-2 hidden-xs no-left-pad" align="right">
                       <strong style="font-size: 17px;" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'"> {{ subs[subreddit].total_ups | karma }}<span ng-class="subs[subreddit].total_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
                     </div>
                   </div>
@@ -176,7 +178,7 @@
 
             <div class="card-box" id="statistics" ng-controller="UserStatsCtrl" align="center">
               <div class="row no-margin">
-                <div ng-repeat="(badge, data) in badges" class="col-md-6 no-padding" align="center">
+                <div ng-repeat="(badge, data) in badges" class="col-sm-6 no-padding" align="center">
                   <a href="#/{{ username }}/{{ data.sub }}/overview/">
                   <md-card class="user-badge-card no-margin">
                     <md-tooltip class="tooltip">{{ data.sub }}: {{ data.points | number }} <ng-pluralize count="data.points" when="{'1': 'point', 'other': 'points'}"></ng-pluralize></md-tooltip>

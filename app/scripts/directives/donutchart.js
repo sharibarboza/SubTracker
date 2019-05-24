@@ -34,9 +34,7 @@ angular.module('SubSnoopApp')
         }
 
         function configChart(scope_chart, window_width) {
-          if (window_width < 1200 && window_width > 950) {
-            scope_chart = changeChartConfig(window_width);
-          } else if (window_width < 700) {
+          if (window_width < 700) {
             scope_chart = setChartConfig(300);
           } else {
             scope_chart = setChartConfig(310);
@@ -70,23 +68,6 @@ angular.module('SubSnoopApp')
             duration: 0,
             margin: {
               top: 50, right: 70, bottom: -50, left: 70
-            }
-          };
-        };
-
-        /*
-         Configuration for smaller screens
-         */
-        function changeChartConfig(window_width) {
-          return {
-            width: window_width - 750,
-            height: height,
-            thickness: 30,
-            grow: 10,
-            labelPadding: 35,
-            duration: 0,
-            margin: {
-              top: 50, right: 30, bottom: -50, left: 30
             }
           };
         };

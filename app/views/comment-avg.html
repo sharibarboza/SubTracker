@@ -1,0 +1,12 @@
+<div class="sub-box comment-box">
+  <div class="sub-box-content">
+    <strong>Comment Points</strong>
+    <div>
+      <strong style="font-size: 24px;">{{ sub.comment_ups | number }}</strong>
+      <br>
+      <span class="small-white-font">
+        Average: {{ sub.avg_comments | number }} <strong ng-class="sub.avg_comments >= 1 ? 'green' : 'orange'"><span ng-class="sub.avg_comments >= 1 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+      </span>
+    </div>
+  </div>
+</div>

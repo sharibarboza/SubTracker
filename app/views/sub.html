@@ -38,14 +38,15 @@
       </div>
 
       <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
-      <div class="user-head-nav no-padding banner-pad card-shadow" align="center" sticky-nav="top-fix" type="sub">
+      <div class="user-head-nav no-padding banner-pad card-shadow sub-page" align="center" sticky-nav="top-fix" type="sub">
         <div class="row center-tabs" style="position: relative; background: rgb(255, 255, 255, 0.9); margin: 0 -5px;">
-          <div class="col-md-3 hidden-xs profile-img" style="position: relative;">
+          <div class="col-lg-3 col-md-4 hidden-sm hidden-xs profile-img" style="position: relative;">
             <div ng-if="sub.info != null && subInfo.icon_img" class="sub-circle" style="background-image: url({{ subInfo.icon_img | escape }});"></div>
             <div ng-if="!subInfo.icon_img" class="sub-circle img-no-border" style="background-image: url('{{ '../images/logo.jpg' }}');"></div>
             <div class="name-bar" style="display: none;"><strong><span class="orange-text">/r/</span><a ng-href="#/{{ username }}/{{ subreddit }}/overview/">{{ subreddit }}</a></strong></div>
           </div>
-          <div class="col-md-1 col-xs-2 tab-col">
+          <div class="hidden-lg hidden-md col-sm-1 hidden-xs"></div>
+          <div class="col-md-1 col-sm-2 col-xs-2 tab-col">
             <div class="post-tab gray-bold-subtitle" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'">
               <strong>
                 <span class="word-tab">Subreddits</span>
@@ -53,7 +54,7 @@
               </strong>
             </div>
           </div>
-          <div class="col-md-1 col-xs-2 tab-col">
+          <div class="col-md-1 col-sm-2 col-xs-2 tab-col">
             <div class="post-tab gray-bold-subtitle" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'">
               <strong>
                 <span class="word-tab">Overview</span>
@@ -61,7 +62,7 @@
               </strong>
             </div>
           </div>
-          <div class="col-md-1 col-xs-2 tab-col">
+          <div class="col-md-1 col-sm-2 col-xs-2 tab-col">
             <div class="post-tab gray-bold-subtitle" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'">
               <strong>
                 <span class="word-tab">Posts</span>
@@ -69,7 +70,7 @@
               </strong>
             </div>
           </div>
-          <div class="col-md-1 col-xs-2 tab-col">
+          <div class="col-md-1 col-sm-2 col-xs-2 tab-col">
             <div class="post-tab gray-bold-subtitle" ng-click="setTab(3)" ng-class="tab == 3 ? 'underline-tab' : 'empty-class'">
               <strong>
                 <span class="word-tab">Comments</span>
@@ -77,7 +78,7 @@
               </strong>
             </div>
           </div>
-          <div class="col-md-1 col-xs-2 tab-col">
+          <div class="col-md-1 col-sm-2 col-xs-2 tab-col">
             <div class="post-tab gray-bold-subtitle" ng-click="setTab(4)" ng-class="tab == 4 ? 'underline-tab' : 'empty-class'">
               <strong>
                 <span class="word-tab">Gilded</span>
@@ -85,8 +86,8 @@
               </strong>
             </div>
           </div>
-          <div class="col-md-1 hidden-xs"></div>
-          <div class="col-md-3 hidden-xs" style="padding-top: 6px; padding-bottom: 6px; padding-right: 7px;" align="right">
+          <div class="col-lg-1 hidden-md hidden-sm hidden-xs"></div>
+          <div class="col-md-3 hidden-sm hidden-xs" style="padding-top: 6px; padding-bottom: 6px; padding-right: 7px;" align="right">
             <a ng-href="https://www.reddit.com/r/{{ subreddit }}/" target="_blank"><button class="btn nav-btn" style="vertical-align: middle; line-height: 30px; width: 100%;">Visit Subreddit <i class="fa fa-external-link"></i></button></a>
           </div>
         </div>
@@ -102,17 +103,44 @@
             </div>
 
             <div class="card-box" align="center">
-              <div ng-include src="'views/sub-averages.html'"></div>
+              <div ng-include src="'views/comment-avg.html'"></div>
+              <br>
+              <div ng-include src="'views/post-avg.html'"></div>
             </div>
           </div>
 
-          <div ng-if="tab == 1" class="col-md-6 main-col middle-col">
-            <div ng-if="tab == 1" class="card-box mobile-filter" style="display: none;">
-              <div ng-include src="'views/sub-about.html'"></div>
+          <div ng-if="tab == 1" class="col-lg-6 col-md-12 main-col middle-col">
+            <div class="card-box mobile-filter" style="padding: 0; display: none;">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="card-box">
+                    <div ng-include src="'views/sub-card.html'"></div>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="card-box">
+                    <div ng-include src="'views/sub-about.html'"></div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div ng-if="tab == 1" class="card-box mobile-filter" style="display: none;">
-              <div ng-include src="'views/sub-card.html'"></div>
+            <div class="card-box avg-box" style="display: none;">
+              <div ng-include src="'views/comment-avg.html'"></div>
+              <br>
+              <div ng-include src="'views/post-avg.html'"></div>
+            </div>
+
+            <div class="card-box ipad-avg-box" style="display: none;">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div ng-include src="'views/comment-avg.html'"></div>
+                </div>
+                <div class="col-sm-6">
+                  <div ng-include src="'views/post-avg.html'"></div>
+                </div>
+              </div>
             </div>
 
             <div class="card-box" ng-controller="SubChartCtrl">
@@ -130,12 +158,12 @@
 
             <div class="card-box" align="center">
               <div class="row">
-                <div class="col-md-6" align="center">
+                <div class="col-sm-6" align="center">
                   <strong class="purple-heading">Sentiment Analysis</strong>
                   <br>
                   <donut-chart type="sentiment" sub="{{ subreddit }}" align="center"></donut-chart>
                 </div>
-                <div class="col-md-6" align="center">
+                <div class="col-sm-6" align="center">
                   <strong class="purple-heading">Voting Feedback</strong>
                   <br>
                   <donut-chart type="reaction" sub="{{ subreddit }}" align="center"></donut-chart>
@@ -151,7 +179,7 @@
             </div>
           </div>
 
-          <div ng-if="tab > 1" class="col-md-6 main-col middle-col">
+          <div ng-if="tab > 1" class="col-lg-6 main-col middle-col">
             <div class="row post-row">
               <div class="col-sm-3 col-xs-2 post-count no-right-pad">
                 <span style="font-size: 14px;">

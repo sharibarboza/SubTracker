@@ -2191,23 +2191,89 @@ Mobile
   }
 }
 
-@media screen and (min-width: 992px) and (max-width: 1292px) {
+@media screen and (min-width: 500px) and (max-width: 1292px) {
+  .mobile-circle {
+    display: block;
+    background-color: rgb(0, 0, 0, 0.5);
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    background-size: cover;
+  }
+
+  .default-banner {
+    height: 350px;
+  }
+
+  .default-banner .banner-content {
+    padding-top: 20px;
+  }
+
+  .custom-banner .banner-content {
+    padding-top: 170px;
+  }
+
+  .s-banner, .short-banner {
+    height: 350px;
+  }
+
+  .s-banner .banner-content {
+    padding-top: 140px;
+  }
+
+  .user-pad {
+    padding-top: 60px;
+  }
+
+  .word-tab, .avg-box, .sub-page .mobile-circle {
+    display: none;
+  }
+  .icon-tab, .mobile-filter, .mobile-card, .ipad-avg-box {
+    display: block !important;
+  }
+
   .gray-box {
     height: 8.5vh;
   }
+
+  .sub-box {
+    height: 120px;
+  }
+
   .gray-box-content {
     padding-left: 20px;
     padding-right: 20px;
   }
-  .mobile-card {
-    display: block !important;
-    height: 230px;
+
+  .word-cloud {
+    height: 24vh !important;
   }
-  .ipad-user-card {
-    padding-right: 0;
+
+  .sub-circle {
+    top: -10vh;
   }
-  .ipad-filter-card {
-    padding-left: 0;
+}
+
+@media screen and (min-width: 1024px) and (max-height: 800px) {
+  .sub-circle {
+    top: -17vh;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .custom-banner .banner-content {
+    padding-top: 120px;
+  }
+
+  .s-banner .banner-content {
+    padding-top: 70px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .s-banner .mobile-circle, .custom-banner .mobile-circle {
+    display: none !important;
   }
 }
 
@@ -2217,14 +2283,14 @@ Mobile
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 500px) {
   .main-banner {
     padding-top: 50px;
     padding-bottom: 60px;
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 500px) {
   .navbar-default, #searchbar, .search-content .breadcrumb, #sub-panels {
     padding-left: 16px;
     padding-right: 16px;
@@ -2325,7 +2391,7 @@ Mobile
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 500px) {
 
   #sort-dropdown {
     padding-left: 15px;
@@ -2687,7 +2753,7 @@ Mobile
    }
  }
 
- @media screen and (max-width: 1023px) {
+ @media screen and (max-width: 500px) {
    .content {
      padding-top: 90px;
    }
@@ -2811,10 +2877,10 @@ Mobile
    }
 
    .default-banner .sub-circle, .last-seen, .sub-row-stats {
-     display: none;
+     display: none !important;
    }
 
-   .mobile-last-seen, .mobile-row-stats, .mobile-filter {
+   .mobile-last-seen, .mobile-row-stats {
      display: block !important;
    }
 
@@ -2856,7 +2922,7 @@ Mobile
     display: none;
   }
 
-  .icon-tab {
+  .icon-tab, .mobile-filter, .mobile-card, .avg-box {
     display: block !important;
   }
 
