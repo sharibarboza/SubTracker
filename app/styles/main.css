@@ -923,7 +923,7 @@ Content
 .sub-circle {
   background-color: rgb(0, 0, 0, 0.5);
   position: absolute;
-  top: -15vh;
+  top: -120px;
   width: 200px;
   height: 200px;
   border-radius: 50%;
@@ -2191,7 +2191,7 @@ Mobile
   }
 }
 
-@media screen and (min-width: 500px) and (max-width: 1292px) {
+@media screen and (min-width: 500px) and (max-width: 1200px) {
   .mobile-circle {
     display: block;
     background-color: rgb(0, 0, 0, 0.5);
@@ -2251,13 +2251,7 @@ Mobile
   }
 
   .sub-circle {
-    top: -10vh;
-  }
-}
-
-@media screen and (min-width: 1024px) and (max-height: 800px) {
-  .sub-circle {
-    top: -17vh;
+    top: -125px;
   }
 }
 
