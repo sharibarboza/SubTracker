@@ -79,8 +79,6 @@ angular.module('SubSnoopApp')
       }
     }
 
-    $scope.open = false;
-
     $scope.sliceArray = function(data) {
       return data;
     };

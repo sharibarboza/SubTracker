@@ -45,7 +45,7 @@ angular.module('SubSnoopApp')
           if (type !== 3) {
             subData.comments = input.data[key].comments;
             var commentsLen = subData.comments.length;
-          } 
+          }
 
           // Get the submissions only
           if (type !== 2) {

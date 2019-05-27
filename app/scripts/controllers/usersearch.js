@@ -29,6 +29,7 @@ angular.module('SubSnoopApp')
     $scope.type = 1;
     $scope.searchSubs = [];
     $scope.hasResults = false;
+    $scope.open = false;
 
     var initLimit = 10;
     $scope.searchLimit = initLimit;
