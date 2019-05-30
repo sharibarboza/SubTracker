@@ -13,5 +13,9 @@
     <strong class="banner-subtitle badge banner-badge" style="font-size: 14px;">
       <span class="fa fa-clock-o"></span> Last seen <span><time-ago from-time='{{ page == "user" ? lastPost * 1000 : latestPost * 1000 }}'></time-ago></span>
     </strong>
+    &nbsp;
+    <a ng-href="https://www.reddit.com/r/{{ subreddit }}/" target="_blank"><strong class="banner-subtitle badge sublink-badge">
+      Visit Subreddit <i class="fa fa-external-link"></i>
+    </strong></a>
   </div>
 </div>

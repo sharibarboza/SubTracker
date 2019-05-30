@@ -19,8 +19,9 @@ angular.module('SubSnoopApp')
       link: function(scope, element, attrs) {
         var topClass = attrs.stickyNav;
         var body = angular.element('.sub-table');
-        var offsetTop = 200;
+        var offsetTop = 450;
         var button = angular.element('.top-btn');
+        var navButton = angular.element('.nav-btn-col');
 
         if (attrs.type == "sub") {
           var listener = scope.$watch(function() { return angular.element('.bg-banner').is(':visible') }, function() {
@@ -39,10 +40,12 @@ angular.module('SubSnoopApp')
             element.addClass(topClass);
             body.addClass(bodyClass);
             button.show();
+            navButton.show();
           } else {
             element.removeClass(topClass);
             body.removeClass(bodyClass);
             button.hide();
+            navButton.hide();
           }
         });
 

@@ -33,6 +33,10 @@
             <strong class="banner-subtitle badge banner-badge">
               <span class="fa fa-clock-o"></span> Last seen <span><time-ago from-time='{{ page == "user" ? lastPost * 1000 : latestPost * 1000 }}'></time-ago></span>
             </strong>
+            &nbsp;
+            <a ng-href="https://www.reddit.com/r/{{ subreddit }}/" target="_blank"><strong class="banner-subtitle badge sublink-badge">
+              Visit Subreddit <i class="fa fa-external-link"></i>
+            </strong></a>
           </div>
         </div>
       </div>
@@ -40,55 +44,58 @@
       <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
       <div class="user-head-nav no-padding banner-pad card-shadow sub-page" align="center" sticky-nav="top-fix" type="sub">
         <div class="row center-tabs" style="position: relative; background: rgb(255, 255, 255, 0.9); margin: 0 -5px;">
-          <div class="col-lg-3 col-md-4 hidden-sm hidden-xs profile-img" style="position: relative;">
+          <div class="col-lg-3 hidden-md hidden-sm hidden-xs profile-img" style="position: relative;">
             <div ng-if="sub.info != null && subInfo.icon_img" class="sub-circle" style="background-image: url({{ subInfo.icon_img | escape }});"></div>
             <div ng-if="!subInfo.icon_img" class="sub-circle img-no-border" style="background-image: url('{{ '../images/logo.jpg' }}');"></div>
             <div class="name-bar" style="display: none;"><strong><span class="orange-text">/r/</span><a ng-href="#/{{ username }}/{{ subreddit }}/overview/">{{ subreddit }}</a></strong></div>
           </div>
-          <div class="hidden-lg hidden-md col-sm-1 hidden-xs"></div>
-          <div class="col-md-1 col-sm-2 col-xs-2 tab-col">
-            <div class="post-tab gray-bold-subtitle" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'">
-              <strong>
-                <span class="word-tab">Subreddits</span>
-                <span class="icon-tab" style="display: none;"><i class="fa fa-list"></i></span>
-              </strong>
+          <div class="hidden-lg col-md-3 col-sm-2 hidden-xs"></div>
+          <div class="col-lg-6 col-md-6 col-sm-8">
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tab-col">
+              <div class="post-tab gray-bold-subtitle" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'">
+                <strong>
+                  <span class="word-tab">Subreddits</span>
+                  <span class="icon-tab" style="display: none;"><i class="fa fa-list"></i></span>
+                </strong>
+              </div>
             </div>
-          </div>
-          <div class="col-md-1 col-sm-2 col-xs-2 tab-col">
-            <div class="post-tab gray-bold-subtitle" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'">
-              <strong>
-                <span class="word-tab">Overview</span>
-                <span class="icon-tab" style="display: none;"><i class="fa fa-area-chart"></i></span>
-              </strong>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tab-col">
+              <div class="post-tab gray-bold-subtitle" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'">
+                <strong>
+                  <span class="word-tab">Overview</span>
+                  <span class="icon-tab" style="display: none;"><i class="fa fa-area-chart"></i></span>
+                </strong>
+              </div>
             </div>
-          </div>
-          <div class="col-md-1 col-sm-2 col-xs-2 tab-col">
-            <div class="post-tab gray-bold-subtitle" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'">
-              <strong>
-                <span class="word-tab">Posts</span>
-                <span class="icon-tab" style="display: none;"><i class="fa fa-file-text"></i></span>
-              </strong>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tab-col">
+              <div class="post-tab gray-bold-subtitle" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'">
+                <strong>
+                  <span class="word-tab">Posts</span>
+                  <span class="icon-tab" style="display: none;"><i class="fa fa-file-text"></i></span>
+                </strong>
+              </div>
             </div>
-          </div>
-          <div class="col-md-1 col-sm-2 col-xs-2 tab-col">
-            <div class="post-tab gray-bold-subtitle" ng-click="setTab(3)" ng-class="tab == 3 ? 'underline-tab' : 'empty-class'">
-              <strong>
-                <span class="word-tab">Comments</span>
-                <span class="icon-tab" style="display: none;"><i class="fa fa-comment"></i></span>
-              </strong>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tab-col">
+              <div class="post-tab gray-bold-subtitle" ng-click="setTab(3)" ng-class="tab == 3 ? 'underline-tab' : 'empty-class'">
+                <strong>
+                  <span class="word-tab">Comments</span>
+                  <span class="icon-tab" style="display: none;"><i class="fa fa-comment"></i></span>
+                </strong>
+              </div>
             </div>
-          </div>
-          <div class="col-md-1 col-sm-2 col-xs-2 tab-col">
-            <div class="post-tab gray-bold-subtitle" ng-click="setTab(4)" ng-class="tab == 4 ? 'underline-tab' : 'empty-class'">
-              <strong>
-                <span class="word-tab">Gilded</span>
-                <span class="icon-tab" style="display: none;"><i class="fa fa-star"></i></span>
-              </strong>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 tab-col">
+              <div class="post-tab gray-bold-subtitle" ng-click="setTab(4)" ng-class="tab == 4 ? 'underline-tab' : 'empty-class'">
+                <strong>
+                  <span class="word-tab">Gilded</span>
+                  <span class="icon-tab" style="display: none;"><i class="fa fa-star"></i></span>
+                </strong>
+              </div>
             </div>
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
           </div>
-          <div class="col-lg-1 hidden-md hidden-sm hidden-xs"></div>
-          <div class="col-md-3 hidden-sm hidden-xs" style="padding-top: 6px; padding-bottom: 6px; padding-right: 7px;" align="right">
-            <a ng-href="https://www.reddit.com/r/{{ subreddit }}/" target="_blank"><button class="btn nav-btn" style="vertical-align: middle; line-height: 30px; width: 100%;">Visit Subreddit <i class="fa fa-external-link"></i></button></a>
+          <div class="col-lg-3 col-md-3 col-sm-2 hidden-xs nav-btn-col" style="display: none; padding-right: 0; padding-top: 6px; padding-bottom: 3px;">
+            <a ng-href="https://www.reddit.com/r/{{ subreddit }}" target="_blank"><button class="btn nav-btn" style="vertical-align: middle; line-height: 40px; width: 100%;">Visit Subreddit <i class="fa fa-external-link"></i></button></a>
           </div>
         </div>
       </div>

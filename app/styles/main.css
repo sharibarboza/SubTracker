@@ -282,6 +282,20 @@ blockquote {
   border-radius: .75rem;
 }
 
+.sublink-badge a {
+  color: white;
+}
+
+.sublink-badge {
+  padding: 5px 50px;
+  background: none !important;
+  border: 1px solid #f96854;
+}
+
+.u-banner .sublink-badge {
+  padding: 5px 80px;
+}
+
 #most-active {
   background-color: #ef5350;
 }
@@ -424,10 +438,10 @@ blockquote {
 .nav-btn {
   background-color: #3F51B5;
   border-radius: 0 !important;
-  color: white;
+  color: white !important;
   text-transform: uppercase;
   font-weight: bold;
-  padding: 5px !important;
+  padding: 0 5px !important;
 }
 
 .nav-btn:hover {
@@ -455,6 +469,10 @@ blockquote {
   display: none;
   overflow: hidden;
   transition: all 1s;
+}
+
+.sub-btn {
+  width: 10%;
 }
 
 .main-col {
@@ -831,17 +849,17 @@ Content
 }
 
 .short-banner {
-  height: 200px;
+  height: 320px;
   position: relative;
 }
 
 .tall-banner {
-  height: 450px;
+  height: 320px;
   position: relative;
 }
 
 .default-banner {
-  height: 200px;
+  height: 320px;
   color: white;
   background: rgb(249,104,84);
   background: linear-gradient(90deg, rgba(249,104,84,1) 0%, rgba(46,64,162,1) 50%, rgba(171,227,255,1) 100%);
@@ -851,7 +869,7 @@ Content
 }
 
 .custom-banner {
-  height: 450px;
+  height: 320px;
   position: relative;
   color: white;
   background-size: auto;
@@ -874,14 +892,8 @@ Content
   z-index: 1;
 }
 
-.default-banner .banner-content {
-  padding-top: 60px;
-  position: relative;
-  z-index: 2;
-}
-
-.custom-banner .banner-content {
-  padding-top: 180px;
+.banner-content {
+  padding-top: 45px;
   position: relative;
   z-index: 2;
 }
@@ -920,16 +932,14 @@ Content
   background-position: 0 50%;
 }
 
-.sub-circle {
+.mobile-circle {
+  display: block;
   background-color: rgb(0, 0, 0, 0.5);
-  position: absolute;
-  top: -120px;
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   border: 5px solid #fff;
   background-size: cover;
-  z-index: 3;
 }
 
 .small-sub-circle {
@@ -2164,6 +2174,14 @@ Mobile
   .no-mobile {
     display: none;
   }
+
+  .mobile-avatar {
+    padding-top: 0;
+  }
+
+  .sub-btn {
+    display: block !important;
+  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -2189,6 +2207,10 @@ Mobile
     border-left: 1px solid #D6D6D6;
     border-right: 1px solid #D6D6D6;
   }
+
+  .nav-btn {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 500px) and (max-width: 1200px) {
@@ -2202,28 +2224,16 @@ Mobile
     background-size: cover;
   }
 
-  .default-banner {
-    height: 350px;
+  .banner-content {
+    padding-top: 35px;
   }
 
-  .default-banner .banner-content {
-    padding-top: 20px;
-  }
-
-  .custom-banner .banner-content {
-    padding-top: 170px;
-  }
-
-  .s-banner, .short-banner {
-    height: 350px;
-  }
-
-  .s-banner .banner-content {
-    padding-top: 140px;
+  .custom-banner .banner-content, .s-banner .banner-content {
+    padding-top: 55px;
   }
 
   .user-pad {
-    padding-top: 60px;
+    padding-top: 20px;
   }
 
   .word-tab, .avg-box, .sub-page .mobile-circle {
@@ -2257,17 +2267,13 @@ Mobile
 
 @media screen and (max-width: 768px) {
   .custom-banner .banner-content {
-    padding-top: 120px;
-  }
-
-  .s-banner .banner-content {
-    padding-top: 70px;
+    padding-top: 60px;
   }
 }
 
 @media screen and (min-width: 1024px) {
   .s-banner .mobile-circle, .custom-banner .mobile-circle {
-    display: none !important;
+
   }
 }
 
@@ -2924,11 +2930,7 @@ Mobile
     padding-left: 15vw !important;
   }
 
-  .u-banner {
-    height: 240px;
-  }
-
-  .custom-banner, .tall-banner {
+  .custom-banner, .tall-banner, .s-banner, .short-banner, .u-banner {
     height: 300px;
   }
 
@@ -2942,18 +2944,14 @@ Mobile
     padding-right: 4% !important;
   }
 
-  .user-pad {
-    padding-top: 35px;
-  }
-
   .u-banner .banner-content {
     padding-top: 5px;
     position: relative;
     z-index: 2;
   }
 
-  .custom-banner .banner-content {
-    padding-top: 60px;
+  .custom-banner .banner-content, .user-pad, .s-banner .banner-content {
+    padding-top: 50px;
   }
 
   .sub-box {
@@ -2977,14 +2975,6 @@ Mobile
     border: none;
   }
 
-  .s-banner, .short-banner {
-    height: 240px;
-  }
-
-  .s-banner .banner-content {
-    padding-top: 40px;
-  }
-
   .post-row {
     margin-left: 15px;
     margin-right: 15px;
@@ -2992,5 +2982,14 @@ Mobile
 
   .post-count {
     line-height: 20px;
+  }
+
+  .sublink-badge {
+    margin-top: 6px;
+    padding: 5px 30px !important;
+  }
+
+  .u-banner .mobile-avatar {
+    padding-top: 0;
   }
 }

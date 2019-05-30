@@ -17,7 +17,7 @@ angular.module('SubSnoopApp')
       restrict: 'AE',
       link: function(scope, element, attrs) {
         var topClass = attrs.stickySides;
-        var offsetTop = 200;
+        var offsetTop = 450;
 
         if (attrs.type == "sub") {
           var listener = scope.$watch(function() { return angular.element('.bg-banner').is(':visible') }, function() {

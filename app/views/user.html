@@ -19,13 +19,13 @@
 
       <!-- User banner containing profile picture, and other user info -->
       <div class="default-banner u-banner column-pad user-pad" align="center">
-        <div class="mobile-avatar row">
-          <div class="col-md-6 col-md-push-3">
-            <div ng-if="redditor.subreddit" class="mobile-circle" style="background-image: url({{ redditor.subreddit.icon_img | escape }});"></div>
-            <div ng-if="!redditor.subreddit" class="mobile-circle" style="background-image: url({{ redditor.icon_img }});"></div>
-          </div>
-        </div>
         <div class="banner-content">
+          <div class="mobile-avatar row">
+            <div class="col-md-6 col-md-push-3">
+              <div ng-if="redditor.subreddit" class="mobile-circle" style="background-image: url({{ redditor.subreddit.icon_img | escape }});"></div>
+              <div ng-if="!redditor.subreddit" class="mobile-circle" style="background-image: url({{ redditor.icon_img }});"></div>
+            </div>
+          </div>
           <span class="user-name" id="{{ username }}">
             <strong class="sub-shadow"><span class="bright-blue">u/</span>{{ username }}</strong>
           </span>
@@ -33,6 +33,10 @@
           <strong class="banner-subtitle badge banner-badge">
             <span class="fa fa-calendar"></span> Redditor since <span ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></span>
           </strong>
+          &nbsp;
+          <a ng-href="https://www.reddit.com/u/{{ username }}/" target="_blank"><strong class="banner-subtitle badge sublink-badge">
+            Visit Reddit Profile <i class="fa fa-external-link"></i>
+          </strong></a>
         </div>
       </div>
 
@@ -44,18 +48,23 @@
             <div ng-if="!redditor.subreddit" class="sub-circle" style="background-image: url({{ redditor.icon_img }});"></div>
             <div class="name-bar" style="display: none;"><strong><span class="orange-text">/u/</span><a ng-href="#/{{ username }}/subreddits/">{{ username }}</a></strong></div>
           </div>
-          <div class="col-lg-1 col-md-4 col-sm-4 col-xs-4 tab-col">
-            <div class="post-tab gray-bold-subtitle" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'"><strong>Subreddits</strong></div>
+          <div class="col-lg-6">
+            <div class="row">
+              <div class="col-lg-3"></div>
+              <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 tab-col">
+                <div class="post-tab gray-bold-subtitle" ng-click="setTab(0)" ng-class="tab == 0 ? 'underline-tab' : 'empty-class'"><strong>Subreddits</strong></div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 tab-col">
+                <div class="post-tab gray-bold-subtitle" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'"><strong>Stats</strong></div>
+              </div>
+              <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 tab-col">
+                <div class="post-tab gray-bold-subtitle" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'"><strong>Search</strong></div>
+              </div>
+              <div class="col-lg-3"></div>
+            </div>
           </div>
-          <div class="col-lg-1 col-md-4 col-sm-4 col-xs-4 tab-col">
-            <div class="post-tab gray-bold-subtitle" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'"><strong>Stats</strong></div>
-          </div>
-          <div class="col-lg-1 col-md-4 col-sm-4 col-xs-4 tab-col">
-            <div class="post-tab gray-bold-subtitle" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'"><strong>Search</strong></div>
-          </div>
-          <div class="col-lg-3 hidden-md hidden-sm hidden-xs"></div>
-          <div class="col-lg-3 hidden-md hidden-sm hidden-xs" style="padding-top: 6px; padding-bottom: 3px;" align="right">
-            <a ng-href="https://www.reddit.com/u/{{ redditor.name }}" target="_blank"><button class="btn nav-btn" style="vertical-align: middle; line-height: 30px; width: 100%;">Visit Profile <i class="fa fa-external-link"></i></button></a>
+          <div class="col-lg-3 nav-btn-col" style="display: none; padding-right: 0; padding-top: 6px; padding-bottom: 3px;">
+            <a ng-href="https://www.reddit.com/u/{{ redditor.name }}" target="_blank"><button class="btn nav-btn" style="vertical-align: middle; line-height: 40px; width: 100%;">Visit Profile <i class="fa fa-external-link"></i></button></a>
           </div>
         </div>
       </div>
