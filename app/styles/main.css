@@ -294,6 +294,11 @@ blockquote {
 
 .u-banner .sublink-badge {
   padding: 5px 80px;
+  width: 300px;
+}
+
+.s-banner .sublink-badge, .tall-banner .sublink-badge {
+  width: 250px;
 }
 
 #most-active {
@@ -912,6 +917,14 @@ Content
   color: white;
   font-size: 13px;
   padding: 5px 20px;
+}
+
+.u-banner .banner-badge {
+  min-width: 300px;
+}
+
+.s-banner .banner-badge, .tall-banner .banner-badge {
+  min-width: 250px;
 }
 
 .sub-bg {
@@ -2991,5 +3004,17 @@ Mobile
 
   .u-banner .mobile-avatar {
     padding-top: 0;
+  }
+
+  .banner-badge, .sublink-badge {
+    width: auto !important;
+    min-width: auto !important;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .banner-badge {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
 }
