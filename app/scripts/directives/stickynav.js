@@ -19,7 +19,7 @@ angular.module('SubSnoopApp')
       link: function(scope, element, attrs) {
         var topClass = attrs.stickyNav;
         var body = angular.element('.sub-table');
-        var offsetTop = 450;
+        var offsetTop = 320;
         var button = angular.element('.top-btn');
         var navButton = angular.element('.nav-btn-col');
 

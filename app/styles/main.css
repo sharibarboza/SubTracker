@@ -2931,7 +2931,7 @@ Mobile
   }
 
   .custom-banner, .tall-banner, .s-banner, .short-banner, .u-banner {
-    height: 300px;
+    height: 270px;
   }
 
   .card-box, .sub-card-box {
@@ -2951,7 +2951,7 @@ Mobile
   }
 
   .custom-banner .banner-content, .user-pad, .s-banner .banner-content {
-    padding-top: 50px;
+    padding-top: 35px;
   }
 
   .sub-box {
