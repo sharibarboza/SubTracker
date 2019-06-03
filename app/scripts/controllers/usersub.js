@@ -42,6 +42,7 @@ angular.module('SubSnoopApp')
     $scope.limits = [0, 0, $scope.numSubmissions, $scope.numComments, 0];
     $scope.subInfo = null;
     $scope.gilded = $scope.sub.gilded_comments > 0 || $scope.sub.gilded_submissions > 0;
+    $scope.selected = sortFactory.getSubSort();
 
     $scope.latestPost = recentTimes.getData($scope.username, $scope.subreddit, $scope.sub);
     sentiMood.setSubData($scope.subreddit, $scope.sub, $scope.username);

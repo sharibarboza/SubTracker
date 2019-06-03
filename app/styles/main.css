@@ -564,7 +564,7 @@ blockquote {
   border-radius: 5px;
 }
 
-.gray-box:not(:last-child) {
+.panel-side-box:not(:last-child) {
   margin-bottom: 10px;
 }
 
@@ -1534,6 +1534,10 @@ User Page Side Bar
 Subreddit Table
 ************************/
 
+.v-spacer {
+  height: 15px;
+}
+
 .sub-table {
   padding-top: 10px;
   padding-bottom: 100px;
@@ -1545,10 +1549,6 @@ Subreddit Table
 .descript p {
   margin: 0 !important;
   word-wrap: break-word;
-}
-
-#sub-row:hover, .sub-box:hover {
-  cursor: pointer !important;
 }
 
 #sub-row .card-content {

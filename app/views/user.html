@@ -81,39 +81,41 @@
               </div>
 
               <div class="card-box no-mobile best-posts" align="center">
-                <div class="gray-box comment-box">
+                <a ng-href="#/{{ username }}/{{ topComment }}/overview/"><div class="gray-box comment-box">
                   <div class="gray-box-content">
                     <strong>Current Best Comment</strong>
-                    <a ng-href="#/{{ username }}/{{ topComment }}/overview/"><div ng-if="topComment">
+                    <div ng-if="topComment">
                       <span class="small-white-font">{{ topComment }}</span>
-                    </div></a>
+                    </div>
                     <div ng-if="!topComment">
                       <span class="small-white-font">No comments.</span>
                     </div>
                   </div>
-                </div>
-                <div class="gray-box submission-box">
+                </div></a>
+                <div class="v-spacer"></div>
+                <a ng-href="#/{{ username }}/{{ topSubmit }}/overview/"><div class="gray-box submission-box">
                   <div class="gray-box-content">
                     <strong>Current Best Post</strong>
-                    <a ng-href="#/{{ username }}/{{ topSubmit }}/overview/"><div ng-if="topSubmit">
+                    <div ng-if="topSubmit">
                       <span class="small-white-font">{{ topSubmit }}</span>
-                    </div></a>
+                    </div>
                     <div ng-if="!topSubmit">
                       <span class="small-white-font">No posts.</span>
                     </div>
                   </div>
-                </div>
-                <div class="gray-box top-sub-box">
+                </div></a>
+                <div class="v-spacer"></div>
+                <a ng-href="#/{{ username }}/{{ topSub }}/overview/"><div class="gray-box top-sub-box">
                   <div class="gray-box-content">
                     <strong>Top Subreddit This Week</strong>
-                    <a ng-href="#/{{ username }}/{{ topSub }}/overview/"><div ng-if="topSub">
+                    <div ng-if="topSub">
                       <span class="small-white-font">{{ topSub }}</span>
-                    </div></a>
+                    </div>
                     <div ng-if="!topSub">
                       <span class="small-white-font">No activity this week.</span>
                     </div>
                   </div>
-                </div>
+                </div></a>
               </div>
             </div>
           </div>
