@@ -11,6 +11,7 @@ angular.module('SubSnoopApp')
   .factory('popularSubs', ['$http', '$rootScope', function ($http, $rootScope) {
     var url = "https://api.reddit.com/subreddits.json";
     var subreddits = [];
+    var status = 1;
 
     /*
      Request the Reddit API to get popular subs
@@ -28,13 +29,18 @@ angular.module('SubSnoopApp')
             var d = [i + 1, count];
             $rootScope.$emit('mainCount', d);
           }
+          status = 1;
           return subreddits;
         }, function(error) {
           console.log(error);
+          status = 0;
         });
       },
       getSubs: function() {
         return subreddits;
+      },
+      getStatus: function() {
+        return status;
       }
     };
     return factory;

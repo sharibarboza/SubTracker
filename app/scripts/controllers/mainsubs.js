@@ -18,6 +18,7 @@
 
     popularSubs.getData();
     newSubs.getData();
+    $scope.fetchedSubs = popularSubs.getStatus();
 
     // Display popular and new subreddits for front page
     $scope.popularSubs = popularSubs.getSubs();
