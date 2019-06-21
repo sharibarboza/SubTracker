@@ -178,12 +178,14 @@ app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope
     var d = [2000, 2000];
     $rootScope.$emit('subCount', d);
 
-    $timeout(function() {
+    var interval = $timeout(function() {
       $rootScope.loadingView = false;
       $rootScope.title = curr.$$route.title;
       $rootScope.subCount = 0;
       $rootScope.subMsg = 0;
     }, 500);
+
+    clearInterval(interval);
   });
 
 }]);

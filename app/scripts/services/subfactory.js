@@ -8,8 +8,8 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sortFactory', 'subInfo', 'filterPosts', 'gilded',
-  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory, subInfo, filterPosts, gilded) {
+ .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sortFactory', 'subInfo', 'gilded', 'reaction', 'sentiMood', 'subChart', 'userHeatmap', 'subHeatmap', 'subChart', 'words',
+  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory, subInfo, gilded, reaction, sentiMood, subChart, userHeatmap, subHeatmap, words) {
     var pages = 10;
     var username;
     var promise = null;
@@ -297,8 +297,13 @@
       i = 0;
 
       sortFactory.clearSorted();
-      filterPosts.clearFilters();
       gilded.clearGilded();
+      reaction.clearData();
+      sentiMood.clearData();
+      subChart.clearData();
+      subHeatmap.clearData();
+      userHeatmap.clearData();
+      words.clearData();
     }
 
     /*

@@ -11,7 +11,8 @@
  .controller('SubChartCtrl', ['$scope', 'moment', 'subChart', 'subFactory', 'months', function ($scope, moment, subChart, subFactory, months) {
    $scope.labels = months.getLabels();
 
-   subChart.getSubChart($scope.username, $scope.subreddit);
+   var subData = subFactory.getSubData().subs[$scope.subreddit];
+   subChart.getSubChart($scope.username, $scope.subreddit, subData);
    $scope.series = ['Comment Points', 'Post Points'];
 
    var data = subChart.getData($scope.subreddit);

@@ -71,14 +71,29 @@ angular.module('SubSnoopApp')
           return (attribute in sortedSubLists);
       },
       addSorted: function(attribute, list) {
+        if (Object.keys(sortedSubLists).length == 20) {
+          clear();
+        }
+
         sortedSubLists[attribute] = list;
       },
       clearSorted: function() {
-        sortedSubLists = {};
+        clear();
       },
       getSorted: function(attribute) {
         return sortedSubLists[attribute];
       }
     };
     return factory;
+
+    /*
+     Clears data
+    */
+    function clear() {
+      for (var key in sortedSubLists) {
+        if (sortedSubLists.hasOwnProperty(key)) {
+          delete sortedSubLists[key];
+        }
+      }
+    }
   });

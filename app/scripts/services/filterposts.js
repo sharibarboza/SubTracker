@@ -33,9 +33,6 @@ angular.module('SubSnoopApp')
       'year': moment().subtract(1, 'year')
     }
 
-    // Contains cached sorted lists of subreddits
-    var filterLists = {};
-
     // The default value for sorting subreddits (totalUps - subreddits with the most points)
     var defaultFilter = filterPosts.sortOptions[0];
 
@@ -54,9 +51,6 @@ angular.module('SubSnoopApp')
       },
       getFilter: function() {
         return currentFilter;
-      },
-      clearFilters: function() {
-        filterLists = {};
       },
       getData: function(filter, data, gilded) {
         if (filter === 'all') {

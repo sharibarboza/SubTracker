@@ -33,6 +33,10 @@ angular.module('SubSnoopApp')
         }
         sub = current_sub;
 
+        if (Object.keys(subMaps).length == 20) {
+          clear();
+        }
+
         if (!(current_sub in subMaps)) {
           data = subData;
           subMaps[sub] = {};
@@ -49,6 +53,9 @@ angular.module('SubSnoopApp')
       },
       getAverage: function(s) {
         return (subMaps[s].count / diff).toFixed(0);
+      },
+      clearData: function() {
+        clear();
       }
     };
 
@@ -56,8 +63,19 @@ angular.module('SubSnoopApp')
      Reset the dates for a new sub.
     */
     function resetData() {
-      subMaps = {};
+      clear();
       data = null;
+    }
+
+    /*
+     Clears data
+    */
+    function clear() {
+      for (var key in subMaps) {
+        if (subMaps.hasOwnProperty(key)) {
+          delete subMaps[key];
+        }
+      }
     }
 
     /*

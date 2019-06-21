@@ -8,7 +8,7 @@
  * Service in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .service('words', ['subFactory', '$filter', function (subFactory, $filter) {
+  .service('words', ['$filter', function ($filter) {
     var sub;
     var currentUser;
     var subWords = {};
@@ -206,10 +206,14 @@ angular.module('SubSnoopApp')
      Split comments or submissions for a specific subreddit into words for word cloud
     */
     return {
-      getWords: function(currentSub, user) {
+      getWords: function(currentSub, user, subs) {
         if (currentUser !== user) {
           currentUser = user;
-          resetData();
+          clear();
+        }
+
+        if (Object.keys(subWords).length == 20) {
+          clear();
         }
 
         sub = currentSub;
@@ -220,7 +224,6 @@ angular.module('SubSnoopApp')
             subWords[sub].wordArray = [];
           }
 
-          var subs = subFactory.getSubData().subs;
           var comments = subs[sub].comments;
           var submissions = subs[sub].submissions;
 
@@ -230,8 +233,22 @@ angular.module('SubSnoopApp')
         }
 
         return subWords[sub].wordArray;
+      },
+      clearData: function() {
+        clear();
       }
     };
+
+    /*
+     Clears data
+    */
+    function clear() {
+      for (var key in subWords) {
+        if (subWords.hasOwnProperty(key)) {
+          delete subWords[key];
+        }
+      }
+    }
 
     /*
      Add word array to upvoted or downvoted section of a sub's Words
@@ -272,13 +289,6 @@ angular.module('SubSnoopApp')
         }
       }
       subWords[sub].wordDict = dataDict;
-    }
-
-    /*
-     Reset array and dictionaries for new subreddit
-    */
-    function resetData() {
-      subWords = {};
     }
 
     /*

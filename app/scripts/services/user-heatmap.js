@@ -52,6 +52,9 @@ angular.module('SubSnoopApp')
       },
       getAverage: function() {
         return average;
+      },
+      clearData: function() {
+        resetData();
       }
     };
 
@@ -59,14 +62,25 @@ angular.module('SubSnoopApp')
      Reset the dates for a new user.
     */
     function resetData() {
-      dates = {};
-      data = {};
+      clear(dates);
+      clear(data);
+      clear(uniqueSubs);
       count = 0;
       dataArray = [];
       subCount = 0;
-      uniqueSubs = {};
       average = null;
     };
+
+    /*
+     Clears data
+    */
+    function clear(dataList) {
+      for (var key in dataList) {
+        if (dataList.hasOwnProperty(key)) {
+          delete dataList[key];
+        }
+      }
+    }
 
     /*
      Get the array of data objects.

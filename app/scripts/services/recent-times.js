@@ -18,15 +18,33 @@ angular.module('SubSnoopApp')
     var factory = {
       getData: function(username, subreddit, subData) {
         if (username !== user) {
-          data = {};
+          clear();
           user = username;
+        }
+
+        if (Object.keys(data).length == 20) {
+          clear();
         }
 
         if (!(subreddit in data)) {
           data[subreddit] = subFactory.getLatestPost(subData);
         }
         return data[subreddit];
+      },
+      clearData: function() {
+        clear();
       }
     };
     return factory;
+
+    /*
+     Clears data
+    */
+    function clear() {
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          delete data[key];
+        }
+      }
+    }
   }]);

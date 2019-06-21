@@ -11,7 +11,8 @@
  .controller('LineChartCtrl', ['$scope', 'moment', 'userChart', 'subFactory', 'months', function ($scope, moment, userChart, subFactory, months) {
    $scope.labels = months.getLabels();
 
-   userChart.getUserChart($scope.username);
+   var subs = subFactory.getSubData().subs;
+   userChart.getUserChart($scope.username, subs);
 
    $scope.series = ['Comment Points', 'Post Points'];
    $scope.data = [

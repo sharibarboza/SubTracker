@@ -128,13 +128,13 @@ angular.module('SubSnoopApp')
       } else if (category === 'leastUpvoted') {
         sub = $filter('rank')('bottomSub', 'totalUps', subs, keys);
       } else if (category === 'mostUpvoted') {
-          sub = $filter('rank')('topSub', 'totalUps', subs, keys);
+        sub = $filter('rank')('topSub', 'totalUps', subs, keys);
       } else if (category === 'lastSeen') {
-          sub = $filter('rank')('topSub', 'lastSeen', subs, keys);
+        sub = $filter('rank')('topSub', 'lastSeen', subs, keys);
       } else if (category === 'avgPost') {
-          sub = $filter('rank')('topSub', 'avgPost', subs, keys);
+        sub = $filter('rank')('topSub', 'avgPost', subs, keys);
       } else {
-          sub = $filter('rank')('topSub', category, subs, keys);
+        sub = $filter('rank')('topSub', category, subs, keys);
       }
       return sub;
     };

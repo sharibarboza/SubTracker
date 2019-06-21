@@ -8,7 +8,7 @@
  * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .factory('submissions', ['$http', function ($http) {
+  .factory('submissions', function () {
 
     var username;
     var submits = {};
@@ -16,12 +16,17 @@ angular.module('SubSnoopApp')
     /*
      Stores a user's submissions with their HTML content wrappers
      */
-    return {
+    var factory = {
       setContent: function(submitID, content, user) {
         if (username === undefined || username !== user) {
-            submits = {};
+            clear();
             username = user;
         }
+
+        if (Object.keys(submits).length == 50) {
+          clear();
+        }
+
         submits[submitID] = content;
       },
       isStored: function(submitID, user) {
@@ -33,6 +38,21 @@ angular.module('SubSnoopApp')
       },
       getContent: function(submitID) {
         return submits[submitID];
+      },
+      clearData: function() {
+        clear();
       }
     };
-  }]);
+    return factory;
+
+    /*
+     Clears data
+    */
+    function clear() {
+      for (var key in submits) {
+        if (submits.hasOwnProperty(key)) {
+          delete submits[key];
+        }
+      }
+    }
+  });

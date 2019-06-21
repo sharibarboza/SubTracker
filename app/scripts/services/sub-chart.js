@@ -8,12 +8,11 @@
  * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .factory('subChart', ['moment', 'subFactory', function (moment, subFactory) {
+  .factory('subChart', ['moment', function (moment) {
 
     var user;
     var subs = {};
     var numMonths = 6;
-    var subData;
 
     var minDate = moment().startOf('day').subtract(numMonths, 'month');
     var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -21,14 +20,17 @@ angular.module('SubSnoopApp')
     var diff = (moment.duration(moment().diff(minDate)).asMonths()).toFixed(0);
 
     /*
-     Sets up the data for the user line chart graph.
+     Sets up the data for the subreddit line chart graph.
     */
     return {
-      getSubChart: function(current_user, sub) {
+      getSubChart: function(current_user, sub, data) {
         if (user !== current_user) {
           user = current_user;
           resetData();
-          subData = subFactory.getSubData().subs;
+        }
+
+        if (Object.keys(subs).length == 20) {
+          clear();
         }
 
         if (!(sub in subs)) {
@@ -36,8 +38,8 @@ angular.module('SubSnoopApp')
           subs[sub].commentData = [0, 0, 0, 0, 0, 0, 0];
           subs[sub].submissionData = [0, 0, 0, 0, 0, 0, 0];
           subs[sub].totalUps = 0;
-          getComments(subData[sub].comments, sub);
-          getSubmissions(subData[sub].submissions, sub);
+          getComments(data.comments, sub);
+          getSubmissions(data.submissions, sub);
         }
       },
       getSubs: function() {
@@ -45,14 +47,27 @@ angular.module('SubSnoopApp')
       },
       getData: function(sub) {
         return subs[sub];
+      },
+      clearData: function() {
+        clear();
       }
     };
 
     function resetData() {
       months = [];
-      subData = subFactory.getSubData().subs;
       setMonths();
-      subs = {};
+      clear();
+    }
+
+    /*
+     Clears data
+    */
+    function clear() {
+      for (var key in subs) {
+        if (subs.hasOwnProperty(key)) {
+          delete subs[key];
+        }
+      }
     }
 
     function setMonths() {

@@ -20,9 +20,14 @@ angular.module('SubSnoopApp')
     var factory = {
       setSubData: function(subName, subData, user) {
         if (username === undefined || user !== username) {
-          subs = {};
+          clear();
           username = user;
         }
+
+        if (Object.keys(subs).length == 20) {
+          clear();
+        }
+
         if (!(subName in subs)) {
            subs[subName] = getChartData(subData);
         }
@@ -33,9 +38,23 @@ angular.module('SubSnoopApp')
         } else {
           return null;
         }
+      },
+      clearData: function() {
+        clear();
       }
     };
     return factory;
+
+    /*
+     Clears data
+    */
+    function clear() {
+      for (var key in subs) {
+        if (subs.hasOwnProperty(key)) {
+          delete subs[key];
+        }
+      }
+    }
 
     /*
      Set up chart data by getting all posts and calculating percentages

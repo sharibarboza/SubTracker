@@ -20,6 +20,11 @@ angular.module('SubSnoopApp')
     var factory = {
       setData: function(subreddit, posts) {
         var gilds = getGildedPosts(posts);
+
+        if (Object.keys(gildedPosts).length == 20) {
+          clear();
+        }
+
         gildedPosts[subreddit] = gilds;
       },
       getData: function(subreddit) {
@@ -30,7 +35,7 @@ angular.module('SubSnoopApp')
         }
       },
       clearGilded: function() {
-        gildedPosts = {};
+        clear();
       },
       hasGilded: function(subreddit) {
         return subreddit in gildedPosts;
@@ -52,5 +57,15 @@ angular.module('SubSnoopApp')
       return gilded;
     }
 
+    /*
+     Clears gilded posts
+    */
+    function clear() {
+      for (var key in gildedPosts) {
+        if (gildedPosts.hasOwnProperty(key)) {
+          delete gildedPosts[key];
+        }
+      }
+    }
 
   }]);

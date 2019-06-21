@@ -8,7 +8,7 @@
  * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .factory('userChart', ['moment', 'subFactory', function (moment, subFactory) {
+  .factory('userChart', ['moment', function (moment) {
 
     var user;
     var subs;
@@ -26,9 +26,10 @@ angular.module('SubSnoopApp')
      Sets up the data for the user line chart graph.
     */
     return {
-      getUserChart: function(current_user) {
+      getUserChart: function(current_user, subData) {
         if (user !== current_user) {
           user = current_user;
+          subs = subData;
           resetData();
           getPosts();
         }
@@ -50,7 +51,6 @@ angular.module('SubSnoopApp')
       points = 0;
       months = [];
       setMonths();
-      subs = subFactory.getSubData().subs;
     }
 
     function setMonths() {

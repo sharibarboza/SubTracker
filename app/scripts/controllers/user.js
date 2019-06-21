@@ -125,7 +125,6 @@
        on the user's main page.
        By default, user's subs are sorted alphabetically by sub name
       */
-
       var setArray = function() {
         $scope.subList = $filter('sortSubs')($scope.subsArray, $scope.selected.value, $scope.subs);
       };
@@ -141,9 +140,13 @@
      Find the subreddits that match the search query term
      */
     $scope.changeUserSubs = function(term) {
-      $scope.subList = [];
-      $scope.subList = search.findSubs($scope.subsArray, term);
-      $scope.currentLimit = $scope.subList.length;
+      if (term == '') {
+        setArray();
+      } else {
+        $scope.subList = [];
+        $scope.subList = search.findSubs($scope.subsArray, term);
+        $scope.currentLimit = $scope.subList.length;  
+      }
     };
 
     /*
