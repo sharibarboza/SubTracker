@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title ng-bind="title">SubSnoop - Track your subreddit activity</title>
-    <meta name="description" content="">
+    <meta name="description" content="Sort your Reddit posts and comments by subreddit.">
+    <meta name="keywords" content="reddit,subreddit,posts,comments">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="icon" type="image/ico" href="images/favicon.png">
@@ -76,15 +77,14 @@
      <script src="lib/angular-ui.js"></script>
      <script src="lib/angular-jqcloud.js"></script>
      <script src="lib/angular-calendar-heatmap/dist/calendar-heatmap.js"></script>
+     <script src="scripts/services/subfactory.js"></script>
      <script src="scripts/controllers/subprogress.js"></script>
      <script src="scripts/controllers/mainsubs.js"></script>
      <script src="scripts/controllers/data.js"></script>
      <script src="scripts/services/d3service.js"></script>
      <script src="scripts/controllers/user.js"></script>
-     <script src="scripts/services/userfactory.js"></script>
      <script src="scripts/services/sentimood.js"></script>
      <script src="scripts/services/reaction.js"></script>
-     <script src="scripts/services/subfactory.js"></script>
      <script src="scripts/filters/sortsubs.js"></script>
      <script src="scripts/controllers/usersub.js"></script>
      <script src="scripts/filters/sanitize.js"></script>
@@ -123,7 +123,6 @@
      <script src="scripts/services/badges.js"></script>
      <script src="scripts/services/user-heatmap.js"></script>
      <script src="scripts/services/sub-heatmap.js"></script>
-     <script src="scripts/services/submissions.js"></script>
      <script src="scripts/filters/karma.js"></script>
      <script src="scripts/controllers/linechart.js"></script>
      <script src="scripts/services/user-chart.js"></script>
@@ -137,6 +136,8 @@
      <script src="scripts/services/months.js"></script>
      <script src="scripts/services/filterposts.js"></script>
      <script src="scripts/services/gilded.js"></script>
+     <script src="scripts/services/userfactory.js"></script>
+     <script src="scripts/services/submissions.js"></script>
      <!-- endbuild -->
    </body>
  </html>
