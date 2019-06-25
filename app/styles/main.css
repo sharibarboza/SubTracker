@@ -3011,6 +3011,10 @@ Mobile
     width: auto !important;
     min-width: auto !important;
   }
+
+  .mobile-title {
+    font-size: 0.8em !important;
+  }
 }
 
 @media screen and (max-width: 350px) {

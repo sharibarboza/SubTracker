@@ -7,7 +7,7 @@
       </div>
     </div>
     <span class="user-name" id="{{ redditor.name }}">
-      <strong class="sub-shadow"><span class="bright-blue">r/</span>{{ subreddit }}</strong>
+      <strong class="sub-shadow"><span ng-class="subreddit.length > 18 ? 'mobile-title' : 'empty-class'"><span class="bright-blue">r/</span>{{ subreddit }}</span></strong>
     </span>
     <br>
     <strong class="banner-subtitle badge banner-badge" style="font-size: 14px;">

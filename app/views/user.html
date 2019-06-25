@@ -27,7 +27,7 @@
             </div>
           </div>
           <span class="user-name" id="{{ username }}">
-            <strong class="sub-shadow"><span class="bright-blue">u/</span>{{ username }}</strong>
+            <strong class="sub-shadow"><span ng-class="username.length > 18 ? 'mobile-title' : 'empty-class'"><span class="bright-blue">u/</span>{{ username }}</span></strong>
           </span>
           <br>
           <strong class="banner-subtitle badge banner-badge">
