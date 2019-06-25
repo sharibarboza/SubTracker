@@ -140,10 +140,10 @@
 
             <div ng-repeat="subreddit in subList | limitTo:limit" class="sub-card-box" id="sub-row">
               <a ng-href="#/{{ username }}/{{ subreddit }}/overview/"><div class="row prevRow">
-                <div class="col-lg-1 col-md-1 col-sm-1 hidden-xs" align="center">
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2" align="center">
                   <strong class="num-rank" style="color: #4D4D4D;">{{ 1 + $index }}</strong>
                 </div>
-                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-12">
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 no-left-pad">
                   <div class="row">
                     <div class="col-lg-10 col-sm-10 no-right-pad">
                       <span class="sub-name">{{ subreddit }}</span> <span ng-if="subs[subreddit].gilded_comments > 0 || subs[subreddit].gilded_submissions > 0" class="gilded-star gilded-sub"></span>
