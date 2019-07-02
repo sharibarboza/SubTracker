@@ -2927,6 +2927,13 @@ Mobile
     top: calc(100vh - 54px);
   }
 
+  .top-fix-safari {
+    position: fixed;
+    top: 90px;
+    z-index: 999;
+    width: 100%;
+  }
+
   .search-panel {
     padding-left: 20px;
     padding-right: 20px;

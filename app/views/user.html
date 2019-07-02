@@ -41,7 +41,7 @@
       </div>
 
       <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
-      <div class="user-head-nav no-padding banner-pad card-shadow user-page" align="center" sticky-nav="top-fix" type="user">
+      <div class="user-head-nav no-padding banner-pad card-shadow user-page" align="center" sticky-nav="{{ topFix }}" type="user">
         <div class="row">
           <div class="col-lg-3 hidden-md hidden-sm hidden-xs profile-img" style="position: relative;">
             <div ng-if="redditor.subreddit" class="sub-circle" style="background-image: url({{ redditor.subreddit.icon_img | escape }});"></div>

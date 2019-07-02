@@ -39,6 +39,9 @@
       $scope.tab = 1;
     }
 
+    // Check for browser
+    $scope.topFix = $filter('topfix')();
+
     $scope.tabOptions = ['subreddits', 'timeline', 'stats'];
 
     $scope.setTab = function(num) {
@@ -145,7 +148,7 @@
       } else {
         $scope.subList = [];
         $scope.subList = search.findSubs($scope.subsArray, term);
-        $scope.currentLimit = $scope.subList.length;  
+        $scope.currentLimit = $scope.subList.length;
       }
     };
 

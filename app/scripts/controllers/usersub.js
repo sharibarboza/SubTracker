@@ -66,6 +66,9 @@ angular.module('SubSnoopApp')
       setUpGilded();
     }
 
+    // Check for browser
+    $scope.topFix = $filter('topfix')();
+
     if ($scope.tab > 0) {
       /*
        Call subreddit API and get sub banner and icon
