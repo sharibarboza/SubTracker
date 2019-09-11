@@ -20,6 +20,7 @@
      userChart.getSubmissionData()
    ];
    $scope.voteAverage = userChart.getAverage();
+   $scope.points = userChart.getPoints();
    $scope.onClick = function (points, evt) {
      console.log(points, evt);
    };
@@ -31,15 +32,35 @@
            id: 'y-axis-1',
            type: 'linear',
            display: true,
-           position: 'left'
+           position: 'left',
+           ticks: {
+             fontColor: "#FFFFFF"
+           }
          },
          {
            id: 'y-axis-2',
            type: 'linear',
            display: true,
-           position: 'right'
+           position: 'right',
+           ticks: {
+             fontColor: "#FFFFFF"
+           }
+         },
+       ],
+       xAxes: [
+         {
+           ticks: {
+             fontColor: "#FFFFFF"
+           }
          }
        ]
-     }
+     },
+     legend: {
+         display: true,
+         labels:{
+             fontSize: 14,
+             fontColor: 'white',
+         }
+     },
    };
 }]);

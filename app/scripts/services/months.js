@@ -9,14 +9,15 @@
  */
 angular.module('SubSnoopApp')
   .service('months', function () {
-    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var labels = [];
 
     var today = new Date();
     var d;
     var month;
+    var numMonths = 11;
 
-    for(var i = 6; i >= 0; i -= 1) {
+    for(var i = numMonths; i >= 0; i -= 1) {
       d = new Date(today.getFullYear(), today.getMonth() - i, 1);
       month = monthNames[d.getMonth()];
       labels.push(month);

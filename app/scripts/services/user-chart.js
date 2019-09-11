@@ -12,10 +12,10 @@ angular.module('SubSnoopApp')
 
     var user;
     var subs;
-    var commentData = [0, 0, 0, 0, 0, 0, 0];
-    var submissionData = [0, 0, 0, 0, 0, 0, 0];
     var points = 0;
-    var numMonths = 6;
+    var numMonths = 11;
+    var commentData = new Array(numMonths + 1).fill(0);
+    var submissionData = new Array(numMonths + 1).fill(0);
 
     var minDate = moment().startOf('day').subtract(numMonths, 'month');
     var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -42,12 +42,15 @@ angular.module('SubSnoopApp')
       },
       getAverage: function() {
         return (points / diff).toFixed(0);
+      },
+      getPoints: function() {
+        return points;
       }
     };
 
     function resetData() {
-      commentData = [0, 0, 0, 0, 0, 0, 0];
-      submissionData = [0, 0, 0, 0, 0, 0, 0];
+      commentData = new Array(numMonths + 1).fill(0);
+      submissionData = new Array(numMonths + 1).fill(0);
       points = 0;
       months = [];
       setMonths();

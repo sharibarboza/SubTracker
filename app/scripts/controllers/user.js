@@ -8,8 +8,8 @@
  * Controller of the SubSnoopApp
  */
  angular.module('SubSnoopApp')
-  .controller('UserCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', '$window', 'subFactory', 'moment', 'subsData', 'search', 'sortFactory', '$location', 'subInfo', '$anchorScroll',
-  function ($rootScope, $scope, $routeParams, $filter, $window, subFactory, moment, subsData, search, sortFactory, $location, subInfo, $anchorScroll) {
+  .controller('UserCtrl', ['$rootScope', '$scope', '$routeParams', '$filter', '$window', 'subFactory', 'moment', 'subsData', 'search', 'sortFactory', '$location', 'subInfo', '$anchorScroll', 'badges', 'recentTimes',
+  function ($rootScope, $scope, $routeParams, $filter, $window, subFactory, moment, subsData, search, sortFactory, $location, subInfo, $anchorScroll, badges, recentTimes) {
 
     /*
      Initalization
@@ -21,7 +21,6 @@
     $scope.currentLimit = 0;
     $scope.open = false;
     $scope.subLength = 0;
-
     var initLimit = 40;
     $scope.limit = initLimit;
 
@@ -47,7 +46,6 @@
     $scope.setTab = function(num) {
       $scope.tab = parseInt(num);
       $window.scrollTo(0, 0);
-
       if (num == 0) {
         $location.update_path($scope.username + '/subreddits/');  // Go to user's main page
       } else if (num == 1) {
@@ -76,26 +74,33 @@
     var configSubData = function(response) {
       $scope.comments = response.comments;
       $scope.submissions = response.submissions;
-      $scope.subs = response.subs;
+      $scope.upvotes = response.upvotes;
       $scope.latest = response.latest;
       $scope.subsArray = subFactory.getDefaultSortedArray();
       $scope.subLength = subFactory.getSubLength();
-      $scope.topComment = subsData.topComment;
-      $scope.topSubmit = subsData.topSubmit;
-      $scope.topSub = subsData.topSub;
+      $scope.avgUpvotes = $filter('average')($scope.upvotes, $scope.subLength, 0);
       $scope.commentKarma = response.user.comment_karma;
       $scope.linkKarma = response.user.link_karma;
+      $scope.topPosts = [subsData.topComment[2], subsData.topSubmit[2]];
 
+      //$scope.subBadges = badges.getAllSubs($scope.username);
+      $scope.subs = response.subs;
       for (var key in $scope.subs) {
-        if (!$scope.subs[key].icon) {
-          $scope.subIcons = subInfo.getData(key).then(function(response) {
-            $scope.subIcons = response;
-            subFactory.setIcons(response.display_name, response.icon_img);
+        if (!$scope.subs[key].icon || $scope.subs[key].info == null) {
+          subInfo.getData(key).then(function(response) {
+            var sub = response.display_name;
+            subFactory.setIcons(sub, response.icon_img);
+            subFactory.setSubInfo(sub, response);
           });
         }
       }
-
       $scope.subs = subFactory.getSubData().subs;
+      var subBadges = badges.getBadges($scope.username);
+      var lastSeen = subBadges['lastSeen'].sub;
+
+      recentTimes.getData($scope.username, lastSeen, $scope.subs[lastSeen]);
+      $scope.recentlyActive = recentTimes.recentlyActive(lastSeen, 6);
+      console.log($scope.subs);
     };
 
     /*
@@ -162,6 +167,7 @@
         $scope.limit = $scope.subLength;
       }
     }
+
   }
 
 ]);

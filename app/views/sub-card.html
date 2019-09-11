@@ -9,15 +9,6 @@
   </div>
 </div>
 
-<div ng-controller="UserStatsCtrl" style="padding-top: 10px; padding-bottom: 10px;">
-  <span ng-if="subreddit == tableBadges.mostActive.sub" class="sub-badge">Most Activity</span>
-  <span ng-if="subreddit == topComment" class="sub-badge">Best Comment</span>
-  <span ng-if="subreddit == topSubmit" class="sub-badge">Best Post</span>
-  <span ng-if="subreddit == tableBadges.newestSub.sub" class="sub-badge">Newest</span>
-  <span ng-if="subreddit == tableBadges.lastSeen.sub" class="sub-badge">Most Recent</span>
-  <span ng-if="subreddit == tableBadges.avgPost.sub" class="sub-badge">Best Average</span>
-</div>
-
 <div class="row">
   <div class="col-xs-4">
     <strong class="badge-num">{{ initComments }}</strong><br>

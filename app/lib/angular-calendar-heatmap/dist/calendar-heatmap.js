@@ -20,7 +20,7 @@ angular.module('g1b.calendar-heatmap', []).
 
         d3Service.d3().then(function(d3) {
           // Defaults
-          var gutter = 3;
+          var gutter = 4;
           var item_gutter = 3;
           var width = 600;
           var max_width = 600;
@@ -130,7 +130,7 @@ angular.module('g1b.calendar-heatmap', []).
             });
 
             var color = d3.scale.linear()
-              .range(['#ffffff', scope.color || '#ff4500'])
+              .range(['#ABB0B5', scope.color || '#ff4500'])
               .domain([-0.15 * max_value, max_value]);
 
             var calcItemX = function (d) {

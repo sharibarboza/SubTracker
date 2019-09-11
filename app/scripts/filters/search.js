@@ -37,6 +37,8 @@ angular.module('SubSnoopApp')
         subData.comments = [];
         subData.submissions = [];
         subData.status = false;
+        subData.numComments = 0;
+        subData.numSubmits = 0;
 
         //If filtered subs array is empty, this means get all subs
         if (subs.length === 0 || subs.indexOf(key) >= 0) {
@@ -44,19 +46,19 @@ angular.module('SubSnoopApp')
           // Get the comments only
           if (type !== 3) {
             subData.comments = input.data[key].comments;
-            var commentsLen = subData.comments.length;
+            subData.numComments  = subData.comments.length;
           }
 
           // Get the submissions only
           if (type !== 2) {
             subData.submissions = input.data[key].submissions;
-            var submitsLen = subData.submissions.length;
+            subData.numSubmits = subData.submissions.length;
           }
 
-          if (commentsLen || submitsLen) {
-            newData.len += (commentsLen + submitsLen);
-            newData.comments += commentsLen;
-            newData.submissions += submitsLen;
+          if (subData.numComments || subData.numSubmits) {
+            newData.len += (subData.numComments + subData.numSubmits);
+            newData.comments += subData.numComments;
+            newData.submissions += subData.numSubmits;
             newData.subs += 1;
           }
         }

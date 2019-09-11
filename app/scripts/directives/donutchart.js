@@ -152,7 +152,7 @@ angular.module('SubSnoopApp')
             .attr('cx', 0)
             .attr('cy', 0)
             .attr('r', radius)
-            .style('fill', '#fff');
+            .style('fill', '#1F2327');
 
           /*
            Display percentage and center text statistics when hovering over an arc
@@ -287,7 +287,7 @@ angular.module('SubSnoopApp')
             .attr("text-anchor", "middle")
             .attr("class", 'center-value-' + attrs.type)
             .attr("font-size", titleSize)
-            .attr("fill", "#696969")
+            .attr("fill", "#fff")
             .attr("font-weight", "bold");
 
           centerText.append('tspan')
@@ -297,8 +297,8 @@ angular.module('SubSnoopApp')
             .attr("text-anchor", "middle")
             .attr("class", 'line-1-' + attrs.type)
             .attr("font-size", dataSize)
-            .attr("fill", "#333")
-            .attr("font-weight", "bold");
+            .attr("fill", "#9099A1")
+            .attr("font-weight", "400");
 
           var percents = arcs.append("svg:text")
             .style('fill-opacity', 0)
@@ -317,6 +317,7 @@ angular.module('SubSnoopApp')
             .attr('x', 0)
             .attr('font-size', '13px')
             .attr('font-weight', '400')
+            .attr('fill', '#fff')
             .style("fill-opacity", 0)
             .text(function(d, i) {
               return d.data.percent + '%';
@@ -374,7 +375,7 @@ angular.module('SubSnoopApp')
               }
             })
             .attr('font-size', '12px')
-            .attr('fill', '#333')
+            .attr('fill', '#9099A1')
             .on('mouseover', function(d, i) {
               var sel = d3.selectAll('.arc-' + attrs.type).filter(function(d) {
                 return d.data.id === i;

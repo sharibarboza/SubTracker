@@ -9,14 +9,18 @@
  */
  angular.module('SubSnoopApp')
  .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sortFactory', 'subInfo', 'gilded', 'reaction', 'sentiMood', 'subChart', 'userHeatmap', 'subHeatmap', 'subChart', 'words',
-  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory, subInfo, gilded, reaction, sentiMood, subChart, userHeatmap, subHeatmap, words) {
+  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory, subInfo, gilded, reaction, sentiMood, subChart, userHeatmap, subHeatmap, words,) {
     var pages = 10;
     var username;
     var promise = null;
-    var after = "0";
+    var before = moment().utc();
+    var done = false;
     var subLength = 0;
     var defaultSortedArray = [];
     var upvotes = 0;
+    var total = 0;
+    var numComments = 0;
+    var numSubmits = 0;
 
     var comments = [];
     var submissions = [];
@@ -29,11 +33,12 @@
     var latestPost = null;
     var firstPost = null;
 
-    var topComment = [0, ''];
-    var topSubmit = [0, ''];
+    var topComment = [-Infinity, '', null];
+    var topSubmit = [-Infinity, '', null];
 
     var topWeek = {};
     var topSub = null;
+    var numSaved = 5;
 
     var i = 0;
 
@@ -41,11 +46,11 @@
      User interface for sub factory
     */
     var factory = {
-      getData: function(user, refresh) {
+      getData: function(user) {
         resetData();
         username = user.name;
         try {
-          promise = getSubPromise(user, refresh);
+          promise = getSubPromise(user);
         } catch(e) {
           console.log(e);
         }
@@ -100,12 +105,6 @@
           throw subreddit + ' does not have an icon image.';
         }
       },
-      getFirstPost: function(sub) {
-        return firstPost == null ? getFirstPost(sub) : firstPost
-      },
-      getLatestPost: function(sub) {
-        return latestPost == null ? getLatestPost(sub) : latestPost
-      },
       getTopComment: function() {
         return topComment;
       },
@@ -129,109 +128,135 @@
      submissions asynchronously
     */
     function getSubPromise(user, refresh) {
-      if (refresh == null) {
-        refresh = false;
-      }
+      var commentPromise = promiseChain('comment', 'commentsCallback');
+      var submitPromise = promiseChain('submission', 'submitsCallback');
 
-      //delete localStorage.previous;
-      //delete localStorage.prevData;
-      if ('data' in localStorage) {
-        var tempData = JSON.parse(localStorage.getItem('data'));
-      }
+      // Resolve both comment and submission promises together
+      return $q.all([commentPromise, submitPromise]).then(function() {
+        var data = setSubData(user);
 
-      if (refresh || !tempData || tempData.user.name != user.name) {
-        var commentPromise = promiseChain('comments', 'commentsCallback');
-        var submitPromise = promiseChain('submitted', 'submitsCallback');
-        // Resolve both comment and submission promises together
-
-        return $q.all([commentPromise, submitPromise]).then(function() {
-          setSubData(user);
-          var saved;
-          try {
-            //localStorage.clear();
-            localStorage.setItem('user', user.name);
-            localStorage.setItem('data', JSON.stringify(subData));
-            saved = true;
-          } catch(e) {
-            saved = false;
-          }
-
-          try {
-            // Store in previous searched users
-            if (!('previous' in localStorage)) {
-              localStorage.setItem('previous', "");
-            }
-
-            if (!('prevData' in localStorage)) {
-              localStorage.setItem('prevData', JSON.stringify({}));
-            }
-
-            var prevUsers = localStorage.getItem('previous').split(',');
-            var prevData = JSON.parse(localStorage.getItem('prevData'));
-
-            if (prevUsers.indexOf(user.name) < 0) {
-              prevUsers.push(user.name);
-
-              var userData = {};
-              userData.avatar = user.icon_img;
-              userData.subs = subLength;
-              prevData[user.name] = userData;
-
-              if (prevUsers.length > 5) {
-                delete prevData[prevUsers[0]];
-                prevUsers = prevUsers.slice(1, 6);
-              }
-            } else {
-              var prevIndex = prevUsers.indexOf(user.name);
-              prevUsers.splice(prevIndex, 1);
-              prevUsers.push(user.name);
-            }
-
-            localStorage.setItem('previous', prevUsers);
-            localStorage.setItem('prevData', JSON.stringify(prevData));
-          } catch(error) {
-            console.log(error);
-          }
-
+        return data.then(function(response) {
+          subData = response;
           return subData;
         }, function(error) {
           console.log(error);
         });
-      } else {
-        subData = JSON.parse(localStorage.getItem('data'));
-        subs = subData.subs;
-        subNames = Object.keys(subs);
-        subLength = subNames.length;
-        setDefaultSortedArray();
-        return subData;
+      }, function(error) {
+        console.log(error);
+      });
+    }
+
+    /*
+    Store the last 5 previous users in local storage
+    */
+    function setPrevUsers(user) {
+      //delete localStorage.previous;
+      //delete localStorage.prevData;
+
+      if (!('previous' in localStorage)) {
+        localStorage.setItem('previous', "");
       }
+
+      if (!('prevData' in localStorage)) {
+        localStorage.setItem('prevData', JSON.stringify({}));
+      }
+
+      var prevUsers = localStorage.getItem('previous').split(',');
+      var prevData = JSON.parse(localStorage.getItem('prevData'));
+      var numPrev = 5;
+
+      if (prevUsers.indexOf(user.name) < 0) {
+        prevUsers.push(user.name);
+
+        var userData = {};
+        userData.avatar = user.icon_img;
+        userData.subs = subLength;
+        prevData[user.name] = userData;
+
+        if (prevUsers.length > numPrev + 1) {
+          delete prevData[prevUsers[0]];
+          prevUsers = prevUsers.slice(1, numPrev + 1);
+        }
+      } else {
+        var prevIndex = prevUsers.indexOf(user.name);
+        prevUsers.splice(prevIndex, 1);
+        prevUsers.push(user.name);
+      }
+
+      localStorage.setItem('previous', prevUsers);
+      localStorage.setItem('prevData', JSON.stringify(prevData));
     }
 
     /*
      Configure sub data object, which will be passed to the controllers.
     */
-    function setSubData(response) {
-      organizeComments(comments);
-      organizeSubmitted(submissions);
-      calculateTopSub();
+    function setSubData(user_response) {
+      var commentPromises = organizePosts(comments, 't1_');
+      var submitPromises = organizePosts(submissions, 't3_');
+      var promises = commentPromises.concat(submitPromises);
 
-      subNames = Object.keys(subs);
-      subLength = subNames.length;
+      return $q.all(promises).then(function(response) {
+        comments = [];
+        submissions = [];
+        subs = {};
 
-      setTotalUps();
-      setAverages();
-      setDefaultSortedArray();
+        var data = [];
+        for (var i = 0; i < response.length; i++) {
+          data.push.apply(data, response[i].data.data.children);
+        }
+        var dataLen = data.length;
 
-      subData = {
-        'user': createUser(response),
-        'comments' : comments.length,
-        'submissions' : submissions.length,
-        'subs' : subs,
-        'upvotes' : upvotes,
-        'topComment': topComment[1],
-        'topSubmit': topSubmit[1],
-        'topSub': topSub
-      }
+        for (var i = 0; i < dataLen; i++) {
+          var post = data[i].data;
+
+          try {
+            var subreddit = post.subreddit;
+            if (!(subreddit in subs)) {
+              subs[subreddit] = createNewSub();
+            }
+
+            if (post.name.indexOf('t1_') >= 0) {
+              addComment(subreddit, subs[subreddit], post);
+              comments.push(post);
+            } else {
+              addSubmission(subreddit, subs[subreddit], post);
+              submissions.push(post);
+            }
+            getTopSub(post);
+          } catch(e) {
+            console.log(e);
+          }
+        }
+
+        calculateTopSub();
+        subNames = Object.keys(subs);
+        subLength = subNames.length;
+
+        try {
+          setPrevUsers(user_response);
+        } catch(error) {
+          console.log(error);
+        }
+
+        setTotalUps();
+        setAverages();
+        setDefaultSortedArray();
+
+        subData = {
+          'user': createUser(user_response),
+          'comments' : comments.length,
+          'submissions' : submissions.length,
+          'subs' : subs,
+          'upvotes' : upvotes,
+          'topComment': topComment,
+          'topSubmit': topSubmit,
+          'topSub': topSub
+        }
+
+        return subData;
+      }, function(error) {
+        console.log(error);
+      });
     }
 
     /*
@@ -272,10 +297,14 @@
     */
     function resetData() {
       promise = null;
-      after = "0";
+      before = moment().utc();
+      done = false;
       subLength = 0;
       defaultSortedArray = [];
       upvotes = 0;
+      total = 0;
+      numComments = 0;
+      numSubmits = 0;
 
       comments = [];
       submissions = [];
@@ -288,8 +317,8 @@
       latestPost = null;
       firstPost = null;
 
-      topComment = [0, ''];
-      topSubmit = [0, ''];
+      topComment = [-Infinity, '', null];
+      topSubmit = [-Infinity, '', null];
 
       topWeek = {};
       topSub = null;
@@ -307,27 +336,40 @@
     }
 
     /*
-     Make the http request to the Reddit API using HTTP GET request.
+     Make the http request to the PushShift API using HTTP GET request.
     */
     function callAPI(where) {
-      var url = 'https://api.reddit.com/user/'+username+'/'+where+'.json?limit=100&after='+after;
+      //var url = 'https://api.reddit.com/user/'+username+'/'+where+'.json?limit=100&after='+after;
+      //var call = $http.get(url);
+      var url = 'https://api.pushshift.io/reddit/search/'+where+'/?sort=desc&size=500&author='+username+'&before='+before;
       var call = $http.get(url);
+
       return call;
     }
 
     /*
      Resolve promise and return data if there is no more requests.
-     If there is still an after value, chain the next promise.
     */
     function getPromise(where, promise) {
       var promise = promise.then(function(response) {
-        var data = getDataList(where, response);
+        if (response) {
+          var data = response.data.data;
+          var data_len = data.length;
 
-        if (after) {
-          return callAPI(where);
-        } else {
-          return data;
+          if (data.length > 0) {
+            var data = getDataList(where, data, data_len);
+          } else {
+            before = null;
+          }
+
+          if (before) {
+            var nextPromise = callAPI(where);
+            return getPromise(where, nextPromise);
+          } else {
+            return null;
+          }
         }
+
       }, function(error) {
         console.log(error);
       });
@@ -341,70 +383,57 @@
     */
     function promiseChain(where) {
       var promise = callAPI(where);
-
-      for (var i = 0; i < pages; i++) {
-        promise = getPromise(where, promise);
-      }
-      return promise;
+      return getPromise(where, promise);
     }
 
     /*
      Update comment or submission array data and return the list
     */
-    function getDataList(where, response) {
-      if (where === 'comments') {
-        return getCommentsData(response.data);
+    function getDataList(where, data_list, data_len) {
+      if (where === 'comment') {
+        commentData.push(data_list);
+        pushData('comments', data_list, data_len);
+        return commentData;
       } else {
-        return getSubmitsData(response.data);
+        submitData.push(data_list);
+        pushData('submits', data_list, data_len);
+        return submitData;
       }
-    }
-
-    /*
-     If there is a response, get the new comment post data
-     Return current comment data
-    */
-    function getCommentsData(response) {
-      if (response) {
-        commentData.push(response.data.children);
-        after = response.data.after;
-        pushData(response.data, 'comments');
-      }
-      return commentData;
-    }
-
-    /*
-     If there is a response, get the new submitted post data
-     Return current submissions data
-    */
-    function getSubmitsData(response) {
-      if (response) {
-        submitData.push(response.data.children);
-        after = response.data.after;
-        pushData(response.data, 'submits');
-      }
-      return submitData;
     }
 
     /*
      Push the comment/submission data to their respective lists
     */
-    function pushData(response, where) {
-      if (response) {
-        var data = response.children;
-        var count = data.length;
-        for (var i = 0; i < count; i++) {
-          var item = data[i].data;
-          if (where === 'comments') {
-            item.type = 'comment';
-            comments.push(item);
-          } else {
-            item.type = 'submit';
-            submissions.push(item);
-          }
+    function pushData(where, data_list, data_len) {
+      for (var i = 0; i < data_len; i++) {
+        var item = data_list[i];
 
-          var d = [comments.length + submissions.length, 2000];
-          $rootScope.$emit('subCount', d);
+        if (where === 'comments') {
+          if (numComments < 10000) {
+            comments.push(item);
+            numComments += 1;
+          } else {
+            console.log(numComments);
+            before = null;
+            return;
+          }
+        } else {
+          if (numSubmits < 10000) {
+            submissions.push(item);
+            numSubmits += 1;
+          } else {
+            before = null;
+            return;
+          }
         }
+
+        // Set before variable
+        if (i == (data_len - 1)) {
+          before = item.created_utc;
+        }
+
+        total += 1;
+        $rootScope.$emit('subCount', total);
       }
     }
 
@@ -412,41 +441,29 @@
      Grabs the comments and store them in their respective sub object
      as well as other statistics
     */
-    function organizeComments(comments) {
-      subs = {};
+    function organizePosts(data, prefix) {
+      var ids = [];
+      var currentID = '';
+      var promises = [];
+      var dataLen = data.length;
 
       // Push comments
-      for (var i = 0; i < comments.length; i++) {
-        var comment = comments[i];
-        var subreddit = comment.subreddit;
-
-        if (!(subreddit in subs)) {
-          subs[subreddit] = createNewSub();
+      for (var i = 0; i < data.length; i++) {
+        var item = data[i];
+        currentID += prefix + item.id + ',';
+        if (i == dataLen - 1 ||(i > 0 && i % 99 == 0)) {
+          currentID = currentID.replace(/,\s*$/, "");
+          ids.push(currentID);
+          currentID = '';
         }
-        addComment(subreddit, subs[subreddit], comment);
-        getTopSub(comment);
       }
 
-    }
-
-    /*
-     Grabs submissions and stores them in their respective sub object
-    */
-    function organizeSubmitted(submissions) {
-      for (var i = 0; i < submissions.length; i++) {
-        var submission = submissions[i];
-        var subreddit = submission.subreddit;
-        if (!(subreddit in subs)) {
-          subs[subreddit] = createNewSub();
-        }
-
-        addSubmission(subreddit, subs[subreddit], submission);
-        getTopSub(submission);
+      for (var i = 0; i < ids.length; i++) {
+        var idURL = 'https://api.reddit.com/api/info.json?id=' + ids[i];
+        var promise = $http.get(idURL);
+        promises.push(promise);
       }
-
-      for (var sub in subs) {
-        subs[sub].submissions = $filter('sortPosts')(subs[sub].submissions, 'newest');
-      }
+      return promises;
     }
 
     /*
@@ -478,8 +495,10 @@
       subData.submission_ups = 0;
       subData.recent_submission = null;
       subData.num_submissions = 0;
+      subData.gilds = {};
       subData.gilded_comments = 0;
       subData.gilded_submissions = 0;
+      subData.is_gilded = false;
       subData.count = 0;
       subData.recent_activity = null;
       subData.icon = null;
@@ -487,6 +506,8 @@
       subData.avg_karma = 0;
       subData.avg_comments = 0;
       subData.avg_submissions = 0;
+      subData.top_comment = [-Infinity, null];
+      subData.top_submit = [-Infinity, null];
 
       return subData;
     }
@@ -498,15 +519,14 @@
       /* Create comment object */
       var obj = {};
       obj.id = comment.id;
-      obj.type = comment.type;
+      obj.type = 'comment';
       obj.gildings = comment.gildings;
       obj.created_utc = comment.created_utc;
       obj.body_html = comment.body_html;
-      obj.link_permalink = comment.link_permalink;
+      obj.link_permalink = comment.permalink.replace(comment.id + '/', '');
       obj.link_title = comment.link_title;
       obj.link_url = comment.link_url;
       obj.link_author = comment.link_author;
-      obj.num_comments = comment.num_comments;
       obj.ups = comment.ups;
       obj.subreddit = comment.subreddit;
 
@@ -518,12 +538,17 @@
       subreddit.recent_comment = date;
       subreddit.comment_ups += parseInt(comment.ups);
 
-      if (comment.ups > topComment[0]) {
-        topComment = [comment.ups, name];
-      }
-
       subreddit.gilded_comments += $filter('gilded')(comment.gildings);
+      getGilded(subreddit, comment.gildings);
+
       subreddit.recent_activity = compareDates(subreddit.recent_activity, comment, true);
+
+      if (comment.ups > topComment[0]) {
+        topComment = [comment.ups, name, obj];
+      }
+      if (comment.ups > subreddit.top_comment[0]) {
+        subreddit.top_comment = [comment.ups, obj];
+      }
     }
 
     /*
@@ -533,7 +558,7 @@
       /* Create submission object */
       var obj = {};
       obj.id = submission.id;
-      obj.type = submission.type;
+      obj.type = 'submission';
       obj.gildings = submission.gildings;
       obj.created_utc = submission.created_utc;
       obj.num_comments = submission.num_comments;
@@ -573,13 +598,33 @@
       var date = $filter('date')(submission);
       subreddit.recent_submission = date;
       subreddit.submission_ups += parseInt(submission.ups);
+      subreddit.gilded_submissions += $filter('gilded')(submission.gildings);
+      getGilded(subreddit, submission.gildings);
+
+      subreddit.recent_activity = compareDates(subreddit.recent_activity, submission, true);
 
       if (submission.ups > topSubmit[0]) {
-        topSubmit = [submission.ups, name];
+        topSubmit = [submission.ups, name, obj];
       }
+      if (submission.ups > subreddit.top_submit[0]) {
+        subreddit.top_submit = [submission.ups, obj];
+      }
+    }
 
-      subreddit.gilded_submissions += $filter('gilded')(submission.gildings);
-      subreddit.recent_activity = compareDates(subreddit.recent_activity, submission, true);
+    /*
+     Get the number of gilds
+    */
+    function getGilded(subreddit, gildings) {
+      for (var key in gildings) {
+        if (!(key in subreddit.gilds)) {
+          subreddit.gilds[key] = 0;
+        }
+        subreddit.gilds[key] += gildings[key];
+
+        if (!subreddit.is_gilded && subreddit.gilds[key] > 0) {
+          subreddit.is_gilded = true;
+        }
+      }
     }
 
     /*
@@ -611,61 +656,6 @@
     function setDefaultSortedArray() {
       defaultSortedArray = $filter('sortSubs')(Object.keys(subs), 'totalUps', subs);
       subLength = defaultSortedArray.length;
-    }
-
-    /*
-     Get the oldest post.
-     If sub is null, then get the oldest post out of all the user's subs,
-     otherwise, get the oldest post in the sub only.
-    */
-    function getFirstPost(sub) {
-      if (sub) {
-        if ('first_post' in sub) {
-          return sub.first_post;
-        }
-
-        var subComment, subSubmit;
-        if ('comments' in sub) {
-          subComment = sub.comments[sub.comments.length-1];
-        }
-
-        if ('submissions' in sub) {
-          subSubmit = sub.submissions[sub.submissions.length-1];
-        }
-
-        var firstPost = compareDates(subComment, subSubmit, false);
-        sub.first_post = firstPost.created_utc;
-        return sub.first_post;
-      } else {
-        var oldestComment = comments[comments.length-1];
-        var oldestSubmit = submissions[submissions.length-1];
-        var firstPost = compareDates(oldestComment, oldestSubmit, false);
-        return firstPost.created_utc;
-      }
-    }
-
-    /*
-     Get the newest post.
-     If sub is null, then get the newest post out of all the user's subs,
-     otherwise, get the newest post in the sub only.
-    */
-    function getLatestPost(sub) {
-      if ('latest_post' in sub) {
-        return sub.latest_post;
-      }
-
-      var subComment, subSubmit;
-      if ('comments' in sub) {
-        subComment = sub.comments[0];
-      }
-
-      if ('submissions' in sub) {
-        subSubmit = sub.submissions[0];
-      }
-
-      var latestPost = compareDates(subComment, subSubmit, true);
-      sub.latest_post = latestPost.created_utc;
-      return sub.latest_post;
     }
 
     /*

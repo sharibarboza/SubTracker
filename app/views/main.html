@@ -3,23 +3,39 @@
 
   <div class="main-container">
     <div class="default-banner main-banner card-shadow jumbotron">
-      <h2><strong>Track your subreddit activity</strong></h2>
-      <h3 id="main-subtitle"><strong>View and order your comments and submissions by subreddit.</strong></h3>
+      <div class="banner-content">
+        <h2><strong>Track your subreddit activity</strong></h2>
+        <h3 id="main-subtitle"><strong>View and order your comments and submissions by subreddit.</strong></h3>
+      </div>
 
       <div ng-include src="'views/main-search.html'"></div>
     </div>
-    <div ng-if="fetchedSubs == 1" class="row no-margin">
-      <div class="row no-margin col-md-10 col-md-push-1 no-padding" id="sub-panels">
-        <div class="col-md-6">
-          <h5><strong class="sub-panel-title dark-gray">Popular Subreddits</strong></h5>
-          <div class="panel-list" ng-repeat="subElement in popularSubs">
-            <div ng-include src="'views/sub-panel.html'"></div>
+    <div ng-if="fetchedSubs == 1" class="row">
+      <div class="row col-md-10 col-md-push-1" id="sub-panels">
+        <div class="col-md-6 no-left-pad">
+          <div class="panel-col card-box">
+            <div class="headerRow side-pad">
+              <strong class="side-headers"><i class="fa fa-heart"></i> Popular Subreddits</strong>
+            </div>
+            <div class="panel-list sideRow" ng-repeat="subElement in popularSubs">
+              <div ng-include src="'views/sub-panel.html'"></div>
+            </div>
+            <div class="side-pad">
+              <a href="https://www.reddit.com/subreddits/?count=25&after=t5_2qhsa" target="_blank"><span class="fa fa-chevron-right"></span> View More Popular Subreddits</a>
+            </div>
           </div>
         </div>
-        <div class="col-md-6">
-          <h5><strong class="sub-panel-title dark-gray">New Subreddits</strong></h5>
-          <div class="panel-list" ng-repeat="subElement in newSubs">
-            <div ng-include src="'views/sub-panel.html'"></div>
+        <div class="col-md-6 no-right-pad">
+          <div class="panel-col card-box">
+            <div class="headerRow side-pad">
+              <strong class="side-headers"><i class="fa fa-flash"></i> New Subreddits</strong>
+            </div>
+            <div class="panel-list sideRow" ng-repeat="subElement in newSubs">
+              <div ng-include src="'views/sub-panel.html'"></div>
+            </div>
+            <div class="side-pad">
+              <a href="hhttps://www.reddit.com/subreddits/new/?count=25&after=t5_24gthe" target="_blank"><span class="fa fa-chevron-right"></span> View More Newly Created Subreddits</a>
+            </div>
           </div>
         </div>
       </div>

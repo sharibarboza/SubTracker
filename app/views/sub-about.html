@@ -1,10 +1,10 @@
-<strong class="purple-heading">About This Subreddit</strong>
-<br><br>
-<span class="small-gray-font"><span class="fa fa-calendar"></span> Created <strong class="orange-text" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></strong></span>
-<div style="margin-top: 5px;">
-  <span class="small-gray-font"><i class="fa fa-user-plus" aria-hidden="true"></i>
-  <span class="gray-bold-subtitle">{{ subInfo.subscribers | number }}</span> subscribers</span>
+<div class="fixed-about">
+  <strong class="white"><i class="fa fa-calendar"></i> Created:</strong> <span class="light-grey" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></span>
+  &nbsp;&nbsp;&nbsp;
+  <strong class="white"><i class="fa fa-user-plus" aria-hidden="true"></i> Subscribers: </strong><span class="light-grey">{{ subInfo.subscribers | number }}</span>
 </div>
 <br>
-<span ng-if="subInfo.public_description" class="small-font descript" ng-bind-html="subInfo.public_description_html | sanitize"></span>
-<br>
+<div class="descript small-font" style="max-height: 29vh; color:#F5F5F5;">
+  <span ng-if="subInfo.public_description" ng-bind-html="subInfo.public_description_html | sanitize"></span>
+  <span ng-if="!subInfo.public_description">No description available.<span>
+</div>

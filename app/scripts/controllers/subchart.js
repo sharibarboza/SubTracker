@@ -16,6 +16,9 @@
    $scope.series = ['Comment Points', 'Post Points'];
 
    var data = subChart.getData($scope.subreddit);
+   $scope.totalUps = data.totalUps;
+   $scope.monthAverage = data.average;
+
    $scope.data = [
      data.commentData,
      data.submissionData
@@ -28,15 +31,35 @@
            id: 'y-axis-1',
            type: 'linear',
            display: true,
-           position: 'left'
+           position: 'left',
+           ticks: {
+             fontColor: "#FFFFFF"
+           }
          },
          {
            id: 'y-axis-2',
            type: 'linear',
            display: true,
-           position: 'right'
+           position: 'right',
+           ticks: {
+             fontColor: "#FFFFFF"
+           }
+         }
+       ],
+       xAxes: [
+         {
+           ticks: {
+             fontColor: "#FFFFFF"
+           }
          }
        ]
-     }
+     },
+     legend: {
+         display: true,
+         labels:{
+             fontSize: 14,
+             fontColor: 'white',
+         }
+     },
    };
 }]);

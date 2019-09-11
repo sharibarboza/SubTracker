@@ -1,13 +1,12 @@
-<md-card class="md-card-margin no-pad" ng-class="{ 'post-margin' : page == 'submissions' || page == 'search', 'no-margin' : page == 'search' }">
-  <md-card-title>
+<div class="md-card-margin no-pad" ng-class="{ 'post-margin' : page == 'submissions' || page == 'search', 'no-margin' : page == 'search' }">
+  <div>
     <div class="no-padding" ng-class="page != 'user' ? 'col-xs-12' : 'col-xs-7'">
       <h5><strong>{{ page == 'user' ? 'Most Recent Submission' : 'Most Upvoted Submission' }}</strong></h5>
     </div>
     <div ng-if="page == 'user'" class="col-xs-5 no-padding card-sub" align="right">
       <strong><a class="purple" ng-href="#/{{ username }}/{{ element.subreddit }}/">/r/{{ element.subreddit | truncate:15:true }}</a></strong>
     </div>
-  </md-card-title>
-  <md-divider></md-divider>
+  </div>
 
   <div ng-include src="'views/submit-no-thumbnail.html'"></div>
 
@@ -15,7 +14,7 @@
     <accordion-group ng-init="status = {isOpen: open}" is-open="status.isOpen">
       <accordion-heading>
         <div class="center">
-          <i class="fa fa-2x gray" ng-class="status.isOpen ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true"></i> 
+          <i class="fa fa-2x gray" ng-class="status.isOpen ? 'fa-angle-up' : 'fa-angle-down'" aria-hidden="true"></i>
         </div>
       </accordion-heading>
       <div id="submit-col">
@@ -23,4 +22,4 @@
       </div>
     </accordion-group>
   </accordion>
-</md-card>
+</div>

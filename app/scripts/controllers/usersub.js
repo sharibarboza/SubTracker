@@ -20,6 +20,7 @@ angular.module('SubSnoopApp')
     $scope.username = $routeParams.username;
     $rootScope.title = $scope.username + ' | ' + $routeParams.subreddit;
     $scope.user = userFactory.getUser();
+    $scope.page = 'sub';
 
     var initLimit = 25;
     $scope.limit = initLimit;
@@ -36,8 +37,7 @@ angular.module('SubSnoopApp')
     $scope.initSubmits = $scope.submissions.length;
     $scope.numComments = $scope.sub.num_comments;
     $scope.numSubmissions = $scope.sub.num_submissions;
-    $scope.topComment = subsData.topComment;
-    $scope.topSubmit = subsData.topSubmit;
+    $scope.topPosts = [$scope.sub.top_comment[1], $scope.sub.top_submit[1]];
     $scope.total = $scope.numComments + $scope.numSubmissions;
     $scope.limits = [0, 0, $scope.numSubmissions, $scope.numComments, 0];
     $scope.subInfo = null;
@@ -45,9 +45,10 @@ angular.module('SubSnoopApp')
     $scope.selected = sortFactory.getSubSort();
 
     $scope.latestPost = recentTimes.getData($scope.username, $scope.subreddit, $scope.sub);
+    $scope.recentlyActive = recentTimes.recentlyActive($scope.subreddit, 6);
+
     sentiMood.setSubData($scope.subreddit, $scope.sub, $scope.username);
     reaction.setSubData($scope.subreddit, $scope.sub, $scope.username);
-
     /*
      Tab configuration for toggling between comment and submissions display
     */
@@ -57,7 +58,7 @@ angular.module('SubSnoopApp')
     var baseUrl = '/' + $scope.username + '/' + $scope.subreddit;
     if ($location.path() === baseUrl + '/overview/') {
       $scope.tab = 1;
-    } else if ($location.path() === baseUrl + '/submitted/') {
+    } else if ($location.path() === baseUrl + '/posts/') {
       $scope.tab = 2;
     } else if ($location.path() === baseUrl + '/comments/') {
       $scope.tab = 3;
@@ -131,7 +132,6 @@ angular.module('SubSnoopApp')
     $scope.setTab = function(num) {
       $scope.tab = parseInt(num);
       $scope.setAccordion();
-      $window.scrollTo(0, 0);
 
       if ($scope.tab === 3) {
         $scope.sortSelected = $scope.commentSort;
@@ -150,7 +150,7 @@ angular.module('SubSnoopApp')
       } else if (num == 1) {
         $location.update_path($scope.username + '/' + $scope.subreddit + '/overview/');
       } else if (num == 2) {
-        $location.update_path($scope.username + '/' + $scope.subreddit + '/submitted/');
+        $location.update_path($scope.username + '/' + $scope.subreddit + '/posts/');
       } else if (num == 3) {
         $location.update_path($scope.username + '/' + $scope.subreddit + '/comments/');
       } else if (num == 4) {
@@ -310,7 +310,7 @@ angular.module('SubSnoopApp')
      Set up gilded posts
     */
     function setUpGilded() {
-      if ($scope.gilds == undefined) {
+      if ($scope.gilds == undefined || $scope.gilds.length == 0) {
         var gildList = $scope.sub['comments'].concat($scope.sub['submissions']);
         gilded.setData($scope.subreddit, gildList);
         $scope.gilds = gilded.getData($scope.subreddit);

@@ -9,7 +9,7 @@
 }
 .calendar-heatmap .label {
   cursor: pointer;
-  fill: rgb(170, 170, 170);
+  fill: white;
   font-family: Helvetica, arial, 'Open Sans', sans-serif;
 }
 .calendar-heatmap .button {

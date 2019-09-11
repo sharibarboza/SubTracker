@@ -1,6 +1,4 @@
-<md-card-content class="no-pad" id="comment-card">
-  <a ng-href="{{ element.link_url }}" target="_blank" class="wrap-text"><strong>{{ element.link_title | escape }}</strong></a> by <a ng-href="#/{{ element.link_author }}" class="purple" target="_blank">{{ element.link_author }}</a>
-  <br>
+<div class="no-pad" id="comment-card">
   <span class="post-links">
     <ng-pluralize class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'" count="element.ups" when="{'1': '1 point', 'other': '{{ element.ups | number }} points'}"></ng-pluralize>
   </span>
@@ -13,8 +11,8 @@
   <span class="post-links">
     <span ng-if="element.gildings.gid_3 > 0"><img class="gilded-icon" lazy-img="{{ '../images/platinum.png' }}"/><span class="gild-font"> x {{ element.gildings.gid_3 }}</span></span>
   </span>
-  <span class="post-links">
+  <span class="post-links light-grey">
     <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMM Do YYYY, h:mm a'" class="post-date"></span>
   </span>
   <p class="post-body wrap-text" ng-bind-html="element.highlighted_body && page == 'search' ? element.highlighted_body : element.body_html | escape | sanitize | truncate:200:false"></p>
-</md-card-content>
+</div>

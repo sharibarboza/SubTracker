@@ -9,7 +9,7 @@
  * Filter in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .filter('gilded', ['moment', function (moment) {
+  .filter('gilded', [function () {
 
     /*
      Get number of gildings (post, gold, platinum)

@@ -69,7 +69,6 @@ angular.module('SubSnoopApp')
         var item = data[where][i];
         var body = null;
         var title = null;
-        var terms = searchInput.split(' ');
 
         var highlighted_title = null;
 
@@ -86,7 +85,7 @@ angular.module('SubSnoopApp')
 
         /* Reset highlighted html */
         item = resetHighlighted(item);
-        var match = highlightTerms(terms, body, title, where);
+        var match = highlightTerms(searchInput, body, title, where);
 
         if (match) {
 
@@ -158,35 +157,27 @@ angular.module('SubSnoopApp')
      For example, in a search input with 2 words, the submission post is a match if one word
      only is found in the body but the other word is found in the title.
     */
-    function highlightTerms(terms, body, title, where) {
+    function highlightTerms(term, body, title, where) {
       var matched_terms = [];
 
       // Check post body text for any matches
-      for (var i = 0; i < terms.length; i++) {
-        var term = terms[i];
-        body = $filter('highlight')(body, term);
+      body = $filter('highlight')(body, term);
 
-        if (body && isMatch(body, term)) {
-          matched_terms.push(term);
-        }
+      if (body && isMatch(body, term)) {
+        matched_terms.push(term);
       }
 
       // Check submission title only for any matches
       if (where === 'submissions') {
-        for (var i = 0; i < terms.length; i++) {
-          var term = terms[i];
-          title = $filter('highlight')(title, term);
-          if (title && isMatch(title, term)) {
-            matched_terms.push(term);
-          }
+        title = $filter('highlight')(title, term);
+        if (title && isMatch(title, term)) {
+          matched_terms.push(term);
         }
       }
 
       // Check that all terms are matched
-      for (var i = 0; i < terms.length; i++) {
-        if (matched_terms.indexOf(terms[i]) < 0) {
-          return null;
-        }
+      if (matched_terms.indexOf(term) < 0) {
+        return null;
       }
 
       /*

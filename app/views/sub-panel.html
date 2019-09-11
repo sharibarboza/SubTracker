@@ -1,24 +1,25 @@
 <div class="row">
   <md-card class="list-card-box">
     <md-card-title>
-      <md-card-title-media ng-if="subElement.icon_img != '' && subElement.icon_img != null">
-        <img class="md-media-sm sub-icon" lazy-img="{{ subElement.icon_img ? subElement.icon_img : '../images/logo.jpg' }}">
+      <md-card-title-media>
+        <img ng-if="subElement.icon_img != '' && subElement.icon_img != null" class="md-media-sm sub-icon" lazy-img="{{ subElement.icon_img | escape }}">
+        <default-logo ng-if="subElement.icon_img == '' || subElement.icon_img == null" sub="{{ subElement.display_name }}" page="{{ page }}"></default-logo>
       </md-card-title-media>
-      <md-card-title-text class="small-font" ng-class="subElement.icon_img ? 'sub-panel-content' : 'empty-class'">
+      <md-card-title-text class="sub-panel-content">
         <span>
-          <a ng-if="subElement.subreddit_type != 'user'" class="sub-panel-title purple" ng-href="https://www.reddit.com/r/{{ subElement.display_name }}" target="_blank"><strong><span class="orange">/r/</span>{{ subElement.display_name }}</strong></a>
-          <a ng-if="subElement.subreddit_type == 'user'" ng-href="#/{{ subElement.display_name_prefixed | username }}" target="_blank"><strong>/{{ subElement.display_name_prefixed | escape }}</strong></a> &middot <span class="dark-gray wrap-text">{{ subElement.title | escape }}</span>
-          <p class="md-gray wrap-text sub-desc" ng-bind-html="subElement.public_description_html | sanitize"></p>
+          <a ng-if="subElement.subreddit_type != 'user'" class="sub-panel-title green" ng-href="https://www.reddit.com/r/{{ subElement.display_name }}" target="_blank"><strong>r/{{ subElement.display_name }}</strong></a>
+          <a ng-if="subElement.subreddit_type == 'user'" ng-href="#/{{ subElement.display_name_prefixed | username }}" target="_blank"><strong>/{{ subElement.display_name_prefixed | escape }}</strong></a> &middot <span class="light-grey wrap-text">{{ subElement.title | escape }}</span>
+          <p class="sub-desc" style="color:#F5F5F5;" ng-bind-html="subElement.public_description_html | sanitize"></p>
         </span>
-        <div class="row" id="sub-panel-stats"><strong>
+        <div class="row" id="sub-panel-stats">
           <div class="col-md-12">
-            <span class="light-gray sub-panel-category"><i class="fa fa-user-plus" aria-hidden="true"></i> SUBSCRIBERS: </span>
-            <span class="sub-panel-value">{{ subElement.subscribers | number }}</span></span>
+            <strong class="white"><i class="fa fa-user-plus" aria-hidden="true"></i> Subscribers: </strong>
+            <span class="light-grey">{{ subElement.subscribers | number }}</span>
             <br>
-            <span class="light-gray sub-panel-category"><i class="fa fa-calendar" aria-hidden="true"></i> CREATED: </span>
-            <span class="green" ng-bind="subElement.created_utc * 1000 | amDateFormat:'MMM Do YYYY, h:mm a' "></span></span>
+            <strong class="white"><i class="fa fa-calendar" aria-hidden="true"></i> Created: </strong>
+            <span class="light-grey" ng-bind="subElement.created_utc * 1000 | amDateFormat:'MMM Do YYYY, h:mm a' "></span>
           </div>
-        </strong></div>
+        </div>
       </md-card-title-text>
     </md-card-title>
   </md-card>

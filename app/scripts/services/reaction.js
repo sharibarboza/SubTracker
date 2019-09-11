@@ -11,7 +11,7 @@ angular.module('SubSnoopApp')
   .factory('reaction', function () {
     var username;
     var subs = {};
-    var colorData = {'Upvoted' : "#97c9f0", 'Neutral' : "#D6D6D6", 'Downvoted' : "#f96854"};
+    var colorData = {'Upvoted' : "#37AE9B", 'Neutral' : "#D6D6D6", 'Downvoted' : "#f96854"};
     var value2 = '';
 
     /*

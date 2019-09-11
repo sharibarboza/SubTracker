@@ -11,7 +11,7 @@ angular.module('SubSnoopApp')
   .factory('sentiMood', function () {
     var username;
     var subs = {};
-    var colorData = {'Positive' : "#97c9f0", 'Neutral' : "#D6D6D6", 'Negative' : "#f96854"};
+    var colorData = {'Positive' : "#37AE9B", 'Neutral' : "#D6D6D6", 'Negative' : "#f96854"};
     var value2 = '';
 
     /*

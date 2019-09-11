@@ -1,9 +1,7 @@
-<md-card class="heatmap heatmap-box" ng-controller="SubHeatmapCtrl">
-  <strong class="purple-heading">Recent Activity Per Month</strong>
+<div class="heatmap middle-col-pad g-underline" ng-controller="SubHeatmapCtrl">
+  <strong class="white title-heading">Entries Created In The Last 6 Months: {{ total }}</strong>
   <br>
-  <md-card-content class="no-pad">
-    <div align="center">
-      <calendar-heatmap data="mapData" color="'#f96854'" overview="'year'" handler="print" type="'sub'"></calendar-heatmap>
-    </div>
-  </md-card-content>
-</md-card>
+  <span class="light-grey">{{ average }} average <ng-pluralize count="average" when="{ '1': 'entry', 'other': 'entries' }"></ng-pluralize> / month</span>
+  <br><br>
+  <calendar-heatmap data="mapData" color="'#2C617B'" overview="'year'" handler="print" type="'sub'"></calendar-heatmap>
+</div>

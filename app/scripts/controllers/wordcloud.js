@@ -15,5 +15,5 @@ angular.module('SubSnoopApp')
     var subs = subFactory.getSubData().subs;
     $scope.words = words.getWords($scope.subreddit, $routeParams.username, subs);
 
-    $scope.colors = ['#f96854', '#645F6B', '#174cba', '#cc5763', '#964276', '#21159e', '#0f80d4', '#578386', '#4a2590'];
+    $scope.colors = ['#f96854', '#97BBCD', '#3BC6D2', '#E975BF', '#C275E6', '#CDCB6A', '#3BA7A4', '#1DA1F2', '#E8E8E8', '#9099A1'];
   }]);

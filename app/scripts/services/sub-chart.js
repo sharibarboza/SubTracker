@@ -12,12 +12,11 @@ angular.module('SubSnoopApp')
 
     var user;
     var subs = {};
-    var numMonths = 6;
+    var numMonths = 11;
 
     var minDate = moment().startOf('day').subtract(numMonths, 'month');
     var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var months = [];
-    var diff = (moment.duration(moment().diff(minDate)).asMonths()).toFixed(0);
 
     /*
      Sets up the data for the subreddit line chart graph.
@@ -35,11 +34,12 @@ angular.module('SubSnoopApp')
 
         if (!(sub in subs)) {
           subs[sub] = {};
-          subs[sub].commentData = [0, 0, 0, 0, 0, 0, 0];
-          subs[sub].submissionData = [0, 0, 0, 0, 0, 0, 0];
+          subs[sub].commentData = new Array(numMonths + 1).fill(0);
+          subs[sub].submissionData = new Array(numMonths + 1).fill(0);
           subs[sub].totalUps = 0;
           getComments(data.comments, sub);
           getSubmissions(data.submissions, sub);
+          subs[sub].average = subs[sub].totalUps / numMonths;
         }
       },
       getSubs: function() {

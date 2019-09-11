@@ -20,13 +20,13 @@ angular.module('SubSnoopApp')
         var topClass = attrs.stickyNav;
         var body = angular.element('.sub-table');
 
-        var offsetTop = 320;
+        var offsetTop = 400;
         if (topClass === 'top-fix-safari') {
           offsetTop = 274;
         }
 
-        var button = angular.element('.top-btn');
-        var navButton = angular.element('.nav-btn-col');
+        var topBtn = angular.element('.top-btn');
+
 
         if (attrs.type == "sub") {
           var listener = scope.$watch(function() { return angular.element('.bg-banner').is(':visible') }, function() {
@@ -44,13 +44,11 @@ angular.module('SubSnoopApp')
           if ($win.scrollTop() >= offsetTop) {
             element.addClass(topClass);
             body.addClass(bodyClass);
-            button.show();
-            navButton.show();
+            topBtn.show();
           } else {
             element.removeClass(topClass);
             body.removeClass(bodyClass);
-            button.hide();
-            navButton.hide();
+            topBtn.hide();
           }
         });
 

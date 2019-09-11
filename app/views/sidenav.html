@@ -1,29 +1,22 @@
 <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" style="position: fixed; z-index: 1000;">
 
-<md-toolbar>
-  <h1 class="md-toolbar-tools side-banner"><strong>{{ username }}'s subreddits</strong></h1>
-</md-toolbar>
 <md-content layout-padding>
   <br>
-  <form>
-    <md-input-container>
-      <label for="testInput"><i class="glyphicon glyphicon-search" aria-hidden="true"></i> Search for a sub</label>
-      <input type="text" id="testInput"
-             ng-model="searchSub" ng-change="changeUserSubs(searchSub)">
-    </md-input-container>
-    <button type="submit" style="display: none;" ng-controller="SidebarCtrl" ng-click="close()">Go!</button>
+  <form redirect="{{ true }}" novalidate="novalidate" handle-phone-submit>
+    <div class="input-group" id="testInput">
+      <input type="text" id="nav-search" class="form-control sub-form"
+             ng-model="searchSub" ng-change="changeUserSubs(searchSub)" placeholder="&#xF002; &nbsp;Enter sub name ..." style="font-family: FontAwesome, Helvetica Neue;" md-autofocus>
+    </div>
   </form>
-
-  <a ng-href="#/{{ username }}/subreddits/"><strong ng-controller="SidebarCtrl" class="black"><i class="fa fa-arrow-left gray" aria-hidden="true"></i> Back to subreddits</strong></a>
-  <br><br>
+  <hr style="margin-bottom: 0;">
   <ul>
-    <strong>Sorted by: <span class="purple">{{ selected.name }}</span></strong>
+    <strong class="white">Sorted by: <span class="light-grey">{{ selected.name }}</span></strong>
     <br><br>
 
-    <li ng-repeat="subname in subList"><a ng-href="#/{{ username }}/{{ subname }}/overview/"><strong><p class="mobile-list"><span class="orange">/r/</span>{{ subname }}</p></strong></a></li>
+    <li ng-repeat="subname in subList"><a ng-href="#/{{ username }}/{{ subname }}/overview/"><strong><p class="mobile-list white">r/{{ subname }}</p></strong></a></li>
   </ul>
 
-  <strong ng-controller="SidebarCtrl" ng-click="close()" class="black"><i class="fa fa-arrow-right gray" aria-hidden="true"></i> Close</strong>
+  <strong ng-controller="SidebarCtrl" ng-click="close()" class="light-grey"><i class="fa fa-times" aria-hidden="true"></i> Close</strong>
 </md-content>
 
 </md-sidenav>

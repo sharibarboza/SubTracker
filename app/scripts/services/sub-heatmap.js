@@ -14,8 +14,9 @@ angular.module('SubSnoopApp')
     var sub;
     var subMaps = {};
     var data;
+    var numMonths = 6;
 
-    var minDate = moment().startOf('day').subtract(7, 'month');
+    var minDate = moment().startOf('day').subtract(numMonths + 1, 'month');
     var diff = (moment.duration(moment().diff(minDate)).asMonths()).toFixed(0);
 
     /*
@@ -53,6 +54,9 @@ angular.module('SubSnoopApp')
       },
       getAverage: function(s) {
         return (subMaps[s].count / diff).toFixed(0);
+      },
+      getTotal: function(s) {
+        return subMaps[s].count;
       },
       clearData: function() {
         clear();

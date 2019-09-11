@@ -14,4 +14,6 @@ angular.module('SubSnoopApp')
 
     // Get data for activity heatmap for a user's specific subreddit
     $scope.mapData = subHeatmap.getSubMap($scope.username, $scope.subreddit, subs[$scope.subreddit], null);
+    $scope.average = subHeatmap.getAverage($scope.subreddit);
+    $scope.total = subHeatmap.getTotal($scope.subreddit);
   }]);

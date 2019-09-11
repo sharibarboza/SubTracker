@@ -17,7 +17,7 @@
      */
     $rootScope.$on('subCount', function(event, data) {
         if (data !== undefined) {
-          $rootScope.subCount = (data[0] / data[1]) * 100;
+          $rootScope.subCount = data;
         } else {
           $rootScope.subCount = undefined;
         }

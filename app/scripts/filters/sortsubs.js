@@ -105,8 +105,14 @@ angular.module('SubSnoopApp')
     */
     var sortGilded = function(keys, data) {
       keys.sort(function(a, b) {
-        var num1 = data[a].gilded_comments + data[a].gilded_submissions;
-        var num2 = data[b].gilded_comments + data[b].gilded_submissions;
+        var num1 = $filter('gilded')(data[a].gilds);
+        var num2 = $filter('gilded')(data[b].gilds);
+
+        if (num1 == num2) {
+          var num1 = $filter('gildWeight')(data[a].gilds);
+          var num2 = $filter('gildWeight')(data[b].gilds);        
+        }
+
         return $filter('sortNum')(num1, num2, a, b, true, 'alpha');
       });
       return keys;

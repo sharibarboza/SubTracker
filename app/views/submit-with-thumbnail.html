@@ -1,4 +1,4 @@
-<md-card-content class="no-pad">
+<div class="no-pad">
   <div class="row submit-row">
     <div class="col-md-2 col-xs-3 post-thumbnail" align="center">
       <thumbnail data="{{ element }}" page="{{ page }}"></thumbnail>
@@ -11,13 +11,14 @@
 	    <accordion-group ng-init="status = { isOpen: open }" is-open="status.isOpen">
 	      <accordion-heading>
 
-        <div id="submit-stats" class="row" style="border: 1px solid #ddd;">
+        <div id="submit-stats" class="row">
           <div class="col-xs-11">
             <span class="post-links">
-              <strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong>
+              <span ng-if="element.ups > 0" class="upvote-badge"><ng-pluralize class="post-points" count="element.ups" when="{'1': '1 point', 'other': '{{ element.ups | number }} points'}"></ng-pluralize> <span class="glyphicon glyphicon-arrow-up green"></span></span>
+              <span ng-if="element.ups < 1" class="downvote-badge"><ng-pluralize class="post-points" count="element.ups" when="{'-1': '-1 point', 'other': '{{ element.ups | number }} points'}"></ng-pluralize> <span class="glyphicon glyphicon-arrow-down orange"></span></span>
             </span>
             <span class="post-links">
-              <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date gray"></span>
+              <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date light-grey"></span>
             </span>
           </div>
           <div class="col-xs-1" align="right">
@@ -46,4 +47,4 @@
       </div>
     </accordion-group>
   </accordion>
-</md-card-content>
+</div>

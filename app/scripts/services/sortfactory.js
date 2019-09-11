@@ -16,10 +16,10 @@ angular.module('SubSnoopApp')
 
     var sortSubs = {
       sortOptions: [
-        {value: 'totalUps', name: 'Total Cumulative Points'},
+        {value: 'totalUps', name: 'Total cumulative points'},
         {value: 'mostActive', name: 'Most activity'},
         {value: 'lastSeen', name: 'Most recent activity'},
-        {value: 'mostGilded', name: 'Most gilded posts'},
+        {value: 'mostGilded', name: 'Most gilded'},
         {value: 'totalComments', name: 'Total comments'},
         {value: 'totalSubmits', name: 'Total posts'},
         {value: 'subName', name: 'Subreddit name'},
@@ -31,8 +31,8 @@ angular.module('SubSnoopApp')
       sortOptions: [
         {value: 'newest', name: 'Newest'},
         {value: 'oldest', name: 'Oldest'},
-        {value: 'mostUps', name: 'Upvoted'},
-        {value: 'mostDowns', name: 'Controversial'},
+        {value: 'mostUps', name: 'Most Points'},
+        {value: 'mostDowns', name: 'Least Points'},
       ]
     };
 

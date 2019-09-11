@@ -100,7 +100,7 @@ app.config(['$routeProvider', '$locationProvider', 'lazyImgConfigProvider', func
         }
       }
     })
-    .when('/:username/:subreddit/submitted/', {
+    .when('/:username/:subreddit/posts/', {
       templateUrl: 'views/sub.html',
       controller: 'UserSubCtrl',
       controllerAs: 'usersub',
@@ -140,27 +140,22 @@ app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope
     $rootScope.path = curr.$$route.templateUrl;
     $rootScope.userPath = userUrls.indexOf($rootScope.path) >= 0;
 
+    var loading = false;
     if (prev !== undefined) {
+      if (!prev.params.hasOwnProperty('username')) {
+        loading = true;
+      } else {
+        var currUser = curr.params.username.toLowerCase();
+        var prevUser = prev.params.username.toLowerCase();
+        if (currUser !== prevUser) {
+          loading = true;
+        } else {
+          loading = false;
+        }
+      }
+
       $rootScope.redirect = prev.$$route.redirectTo;
-    }
-
-    var loading;
-    var paramUser, dataUser;
-    try {
-      paramUser = localStorage.getItem('user').toLowerCase() === curr.pathParams.username.toLowerCase();
-    } catch(e) {
-      paramUser = false;
-    }
-    try {
-      var storageData = JSON.parse(localStorage.getItem('data'));
-      dataUser = storageData.user.name.toLowerCase() === curr.pathParams.username.toLowerCase();
-    } catch(e) {
-      dataUser = false;
-    }
-
-    if (!paramUser && dataUser) {
-      loading = false;
-    } else if (!paramUser && !dataUser) {
+    } else {
       loading = true;
     }
 
@@ -175,17 +170,8 @@ app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope
    Hide the loading progress bar and display the page
    */
   $rootScope.$on('$routeChangeSuccess', function(e, curr, prev) {
-    var d = [2000, 2000];
-    $rootScope.$emit('subCount', d);
-
-    var interval = $timeout(function() {
-      $rootScope.loadingView = false;
-      $rootScope.title = curr.$$route.title;
-      $rootScope.subCount = 0;
-      $rootScope.subMsg = 0;
-    }, 500);
-
-    clearInterval(interval);
+    $rootScope.loadingView = false;
+    $rootScope.subCount = 0;
   });
 
 }]);

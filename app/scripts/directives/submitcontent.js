@@ -188,17 +188,7 @@ angular.module('SubSnoopApp')
      Alter the width of an image
     */
     var getImageClass = function(page) {
-      var html;
-
-      if (windowWidth < 800) {
-        html = '<img class="submit-pic fuller-pic" ';
-      } else if (page == 'submissions' || page == 'search') {
-        html = '<img class="submit-pic smaller-pic" ';
-      } else {
-        html = '<img class="submit-pic fuller-pic" ';
-      }
-
-      return html;
+      return '<img class="submit-pic fuller-pic" ';
     }
 
     /*

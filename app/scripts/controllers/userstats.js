@@ -8,10 +8,8 @@
  * Controller of the SubSnoopApp
  */
 angular.module('SubSnoopApp')
-  .controller('UserStatsCtrl', ['$scope', 'badges', function ($scope, badges) {
+  .controller('UserStatsCtrl', ['$scope', 'badges', 'subFactory', function ($scope, badges, subFactory) {
       // Get the subreddits for Most Active, Most Upvoted, Least Upvoted, & Newest
-      $scope.badges = badges.getSubs($scope.username);
-
-      // Get the subreddits for Best Comment, Best Post, Best Average, Newest, & Last Seen
-      $scope.tableBadges = badges.getTableBadges($scope.username);
+      $scope.subs = subFactory.getSubData().subs;
+      $scope.sideBadges = badges.getAllSubs($scope.username);
   }]);
