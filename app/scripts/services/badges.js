@@ -21,23 +21,24 @@ angular.module('SubSnoopApp')
     */
     var factory = {
       getAllSubs: function(current_user) {
-        if (!subFactory.checkUser(current_user) || current_user != user) {
-          return sub_data;
-        } else {
+        if (isEmpty(sub_data) || !subFactory.checkUser(current_user) || current_user != user) {
           user = current_user;
-          clear(sub_badges);
-          clear(sub_data);
           setData();
           var data = subFactory.getSubData();
           return configureSubs(data);
         }
+        return sub_data;
       },
       getBadges: function(current_user) {
-        if (!subFactory.checkUser(current_user) || current_user  != user) {
+        if (isEmpty(sub_badges) || !subFactory.checkUser(current_user) || current_user != user) {
           user = current_user;
+          clear(sub_badges);
+          clear(sub_data);
           setData();
+
           var data = subFactory.getSubData();
           sub_badges = initBadges(data);
+          sub_data = configureSubs(data);
         }
         return sub_badges;
       },
@@ -78,20 +79,24 @@ angular.module('SubSnoopApp')
       for (var key in sub_badges) {
         if ('sub' in sub_badges[key]) {
           var sub = sub_badges[key].sub;
-          addSub(sub, sub_badges[key].name, sub_badges[key].icon);
+          addSub(sub, sub_badges[key]);
         }
       }
 
       return sub_data;
     }
 
-    function addSub(sub, name, icon) {
+    function addSub(sub, data) {
       if (!(sub in sub_data)) {
-        sub_data[sub] = [];
+        sub_data[sub] = {
+          'badges': [],
+          'image': null
+        };
       }
 
-      var point = {'name': name, 'icon': icon}
-      sub_data[sub].push(point);
+      var point = {'name': data.name, 'icon': data.icon}
+      sub_data[sub].badges.push(point);
+      sub_data[sub].image = data.image;
     }
 
     /*
@@ -205,6 +210,17 @@ angular.module('SubSnoopApp')
         sub = getSub(category);
       }
       sub_badges[category].sub = sub;
+
+      subInfo.getData(sub).then(function(response) {
+        var name = response.display_name;
+        subFactory.setIcons(name, response.icon_img);
+        subFactory.setSubInfo(name, response);
+
+        if (sub_badges.hasOwnProperty(category)) {
+          sub_badges[category].image = response.icon_img;
+        }
+
+      });
     };
 
     /*

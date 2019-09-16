@@ -145,13 +145,18 @@ app.run(['$rootScope', '$location', '$interval', '$timeout', function($rootScope
       if (!prev.params.hasOwnProperty('username')) {
         loading = true;
       } else {
-        var currUser = curr.params.username.toLowerCase();
-        var prevUser = prev.params.username.toLowerCase();
-        if (currUser !== prevUser) {
+        try {
+          var currUser = curr.params.username.toLowerCase();
+          var prevUser = prev.params.username.toLowerCase();
+          if (currUser !== prevUser) {
+            loading = true;
+          } else {
+            loading = false;
+          }
+        } catch(e) {
           loading = true;
-        } else {
-          loading = false;
         }
+
       }
 
       $rootScope.redirect = prev.$$route.redirectTo;

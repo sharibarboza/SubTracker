@@ -14,9 +14,9 @@ angular.module('SubSnoopApp')
     var sub;
     var subMaps = {};
     var data;
-    var numMonths = 6;
+    var numMonths = 12;
 
-    var minDate = moment().startOf('day').subtract(numMonths + 1, 'month');
+    var minDate = moment().startOf('day').subtract(numMonths, 'month');
     var diff = (moment.duration(moment().diff(minDate)).asMonths()).toFixed(0);
 
     /*

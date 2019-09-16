@@ -5,11 +5,12 @@
     <div class="default-banner main-banner card-shadow jumbotron">
       <div class="banner-content">
         <h2><strong>Track your subreddit activity</strong></h2>
-        <h3 id="main-subtitle"><strong>View and order your comments and submissions by subreddit.</strong></h3>
-      </div>
+        <h3 id="main-subtitle"><strong>View and order your comments and posts by subreddit.</strong></h3>
 
-      <div ng-include src="'views/main-search.html'"></div>
+        <div ng-include src="'views/main-search.html'"></div>
+      </div>
     </div>
+
     <div ng-if="fetchedSubs == 1" class="row">
       <div class="row col-md-10 col-md-push-1" id="sub-panels">
         <div class="col-md-6 no-left-pad">

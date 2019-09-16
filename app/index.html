@@ -35,9 +35,9 @@
             <div ng-controller="ProgressSubCtrl">
                 <div class="loading-msg" align="center">
                     <span ng-show="userPath">
-                      This could take a minute.
+                      Please wait. This could be a minute.
                       <br>
-                      Fetching {{ subCount | number }} posts ...
+                      Fetching {{ subCount | number }} entries ...
                     </span>
                 </div>
             </div>
@@ -146,6 +146,8 @@
      <script src="scripts/directives/middlebar.js"></script>
      <script src="scripts/directives/goback.js"></script>
      <script src="scripts/directives/defaultlogo.js"></script>
+     <script src="scripts/controllers/entrylimit.js"></script>
+     <script src="scripts/services/entry-limit.js"></script>
      <!-- endbuild -->
    </body>
  </html>

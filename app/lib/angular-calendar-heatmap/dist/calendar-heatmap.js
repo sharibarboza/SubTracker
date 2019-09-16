@@ -4,6 +4,7 @@
 
 angular.module('g1b.calendar-heatmap', []).
     directive('calendarHeatmap', ['$window', '$timeout', 'd3Service', '$filter', function ($window, $timeout, d3Service, $filter) {
+    var numMonths = 12;
 
     return {
       restrict: 'E',
@@ -20,20 +21,24 @@ angular.module('g1b.calendar-heatmap', []).
 
         d3Service.d3().then(function(d3) {
           // Defaults
-          var gutter = 4;
-          var item_gutter = 3;
+          var gutter = 0;
           var width = 600;
           var max_width = 600;
-          var height = 600;
-          var item_size = 10;
+          var height = 200;
+          var height_pad = 5;
+          var item_size = 100;
           var label_padding = 20;
-          var max_block_height = 20;
           var transition_duration = 500;
           var in_transition = false;
 
           // Tooltip defaults
           var tooltip_width = 175;
           var tooltip_padding = 10;
+
+
+          // Define start and end date of the selected year
+          var start_of_year = moment().startOf('month').subtract(numMonths, 'month');
+          var end_of_year = moment().endOf('day');
 
           // Initialize current overview type and history
           scope.overview = scope.overview || 'global';
@@ -56,7 +61,7 @@ angular.module('g1b.calendar-heatmap', []).
             .style('opacity', 0);
 
           var getNumberOfWeeks = function () {
-            var dayIndex = Math.round((moment() - moment().subtract(6, 'month').startOf('week')) / 86400000);
+            var dayIndex = Math.round((moment() - moment().subtract(numMonths, 'month').startOf('week')) / 86400000);
             var colIndex = Math.trunc(dayIndex / 6);
             var numWeeks = colIndex + 1;
             return numWeeks;
@@ -67,8 +72,8 @@ angular.module('g1b.calendar-heatmap', []).
           }, function ( w ) {
             if ( !w ) { return; }
             width = w < max_width ? max_width : w;
-            item_size = ((width - label_padding) / getNumberOfWeeks() - gutter);
-            height = label_padding + 7 * (item_size + gutter);
+            item_size = (width / getNumberOfWeeks()) + 0.5;
+            height = label_padding + 7 * (item_size + gutter * height_pad);
             svg.attr({'width': width, 'height': height});
             if ( !!scope.data ) {
               scope.drawChart();
@@ -110,14 +115,10 @@ angular.module('g1b.calendar-heatmap', []).
               scope.history.push(scope.overview);
             }
 
-            var year_ago = moment().startOf('day').subtract(6, 'month');
+            var year_ago = moment().startOf('day').subtract(numMonths, 'month');
             var max_value = d3.max(scope.data, function (d) {
               return d.total;
             });
-
-            // Define start and end date of the selected year
-            var start_of_year = moment().startOf('month').subtract(6, 'month');
-            var end_of_year = moment().endOf('day');
 
             // Filter data down to the selected year
             var year_data = scope.data.filter(function (d) {
@@ -131,7 +132,7 @@ angular.module('g1b.calendar-heatmap', []).
 
             var color = d3.scale.linear()
               .range(['#ABB0B5', scope.color || '#ff4500'])
-              .domain([-0.15 * max_value, max_value]);
+              .domain([-0.2 * max_value, max_value]);
 
             var calcItemX = function (d) {
               var date = moment(d.date);
@@ -140,140 +141,56 @@ angular.module('g1b.calendar-heatmap', []).
               return colIndex * (item_size + gutter) + label_padding;
             };
             var calcItemY = function (d) {
-              return label_padding + moment(d.date).weekday() * (item_size + gutter);
+              return label_padding + moment(d.date).weekday() * (item_size + gutter * height_pad);
             };
             var calcItemSize = function (d) {
-              if ( max_value <= 0 ) { return item_size; }
-              return item_size * 0.75 + (item_size * d.total / max_value) * 0.25;
+              return item_size * 0.93;
             };
 
             items.selectAll('.item-circle').remove();
 
-            $timeout(function() {
-              items.selectAll('.item-circle')
-                .data(year_data)
-                .enter()
-                .append('rect')
-                .attr('class', 'item item-circle')
-                .style('opacity', 0)
-                .attr('x', function (d) {
-                  return calcItemX(d) + (item_size - calcItemSize(d)) / 2;
-                })
-                .attr('y', function (d) {
-                  return calcItemY(d) + (item_size - calcItemSize(d)) / 2;
-                })
-                .attr('rx', function (d) {
-                  return calcItemSize(d);
-                })
-                .attr('ry', function (d) {
-                  return calcItemSize(d);
-                })
-                .attr('width', function (d) {
-                  return calcItemSize(d);
-                })
-                .attr('height', function (d) {
-                  return calcItemSize(d);
-                })
-                .attr('fill', function (d) {
-                  return ( d.total > 0 ) ? color(d.total) : 'transparent';
-                })
-                .on('mouseover', function (d) {
-                  if ( in_transition ) { return; }
+            items.selectAll('.item-circle')
+              .data(year_data)
+              .enter()
+              .append('rect')
+              .attr('class', 'item item-circle')
+              .style('opacity', 0)
+              .attr('x', function (d) {
+                return calcItemX(d) + (item_size - calcItemSize(d)) / 2;
+              })
+              .attr('y', function (d) {
+                return calcItemY(d) + (item_size - calcItemSize(d)) / 2;
+              })
+              .attr('rx', 0)
+              .attr('ry', 0)
+              .attr('width', function (d) {
+                return calcItemSize(d);
+              })
+              .attr('height', function (d) {
+                return calcItemSize(d);
+              })
+              .attr('fill', function (d) {
+                return ( d.total > 0 ) ? color(d.total) : 'transparent';
+              })
+              .on('mouseover', function (d) {
+                if ( in_transition ) { return; }
 
-                  // Pulsating animation
-                  var circle = d3.select(this);
-                  (function repeat() {
-                    circle = circle.transition()
-                      .duration(transition_duration)
-                      .ease('ease-in')
-                      .attr('x', function (d) {
-                        return calcItemX(d) - (item_size * 1.1 - item_size) / 2;
-                      })
-                      .attr('y', function (d) {
-                        return calcItemY(d) - (item_size * 1.1 - item_size) / 2;
-                      })
-                      .attr('width', item_size * 1.1)
-                      .attr('height', item_size * 1.1)
-                      .transition()
-                      .duration(transition_duration)
-                      .ease('ease-in')
-                      .attr('x', function (d) {
-                        return calcItemX(d) + (item_size - calcItemSize(d)) / 2;
-                      })
-                      .attr('y', function (d) {
-                        return calcItemY(d) + (item_size - calcItemSize(d)) / 2;
-                      })
-                      .attr('width', function (d) {
-                        return calcItemSize(d);
-                      })
-                      .attr('height', function (d) {
-                        return calcItemSize(d);
-                      })
-                      .each('end', repeat);
-                  })();
-
-                  // Construct tooltip
-                  var tooltip_html = '';
-                  tooltip_html += '<div class="heatmap-tooltip">';
-
-                  var entryType = ' entries';
-
-                  tooltip_html += '<div class="header"><strong>' + scope.formatTotal(d.total, entryType) + ' created</strong></div>';
-
-                  tooltip_html += '<div>on ' + moment(d.date).format('dddd, MMM Do YYYY') + '</div><br>';
-
-                  if (scope.type === 'sub') {
-                    tooltip_html += '<div><strong>Comments: </strong>' + d.comments + '</div>';
-                    tooltip_html += '<div><strong>Posts: </strong>' + d.submissions + '</div>';
-                  } else {
-                    var sortedSubs = $filter('sortSubs')(Object.keys(d.subs), 'subName', d.subs);
-
-                    for (var i = 0; i < sortedSubs.length; i++) {
-                      var key = sortedSubs[i];
-                      var sub = d.subs[key];
-
-                      tooltip_html += '<div><strong>' + key + ':</strong> ';
-                      if (sub.comments > 0) {
-                        tooltip_html += scope.formatTotal(sub.comments, ' comments');
-                      }
-
-                      if (sub.comments > 0 && sub.submissions > 0) {
-                        tooltip_html += ', ';
-                      }
-
-                      if (sub.submissions > 0) {
-                        tooltip_html += scope.formatTotal(sub.submissions, ' posts');
-                      }
-
-                      tooltip_html += '</div>';
-                    }
-                  }
-
-                  tooltip_html += '</div>';
-
-                  // Calculate tooltip position
-                  var x = calcItemX(d) + item_size;
-                  if ( (width*2) - x < (tooltip_width + tooltip_padding * 3) ) {
-                    x -= tooltip_width + tooltip_padding * 2;
-                  }
-                  var y = calcItemY(d) + item_size;
-                  y -= 150;
-
-                  // Show tooltip
-                  tooltip.html(tooltip_html)
-                    .style('left', x + 'px')
-                    .style('top', y + 'px')
+                // Pulsating animation
+                var circle = d3.select(this);
+                (function repeat() {
+                  circle = circle.transition()
+                    .duration(transition_duration)
+                    .ease('ease-in')
+                    .attr('x', function (d) {
+                      return calcItemX(d) - (item_size * 1.1 - item_size) / 2;
+                    })
+                    .attr('y', function (d) {
+                      return calcItemY(d) - (item_size * 1.1 - item_size) / 2;
+                    })
+                    .attr('width', item_size * 1.1)
+                    .attr('height', item_size * 1.1)
                     .transition()
-                      .duration(transition_duration / 2)
-                      .ease('ease-in')
-                      .style('opacity', 1);
-                })
-                .on('mouseout', function () {
-                  if ( in_transition ) { return; }
-
-                  // Set circle radius back to what it's supposed to be
-                  d3.select(this).transition()
-                    .duration(transition_duration / 2)
+                    .duration(transition_duration)
                     .ease('ease-in')
                     .attr('x', function (d) {
                       return calcItemX(d) + (item_size - calcItemSize(d)) / 2;
@@ -286,36 +203,113 @@ angular.module('g1b.calendar-heatmap', []).
                     })
                     .attr('height', function (d) {
                       return calcItemSize(d);
-                    });
+                    })
+                    .each('end', repeat);
+                })();
 
-                  // Hide tooltip
-                  scope.hideTooltip();
-                })
-                .transition()
-                  .delay( function () {
-                    return (Math.cos(Math.PI * Math.random()) + 1) * transition_duration;
-                  })
-                  .duration(function () {
-                    return transition_duration;
-                  })
-                  .ease('ease-in')
-                  .style('opacity', 1)
-                  .call(function (transition, callback) {
-                    if ( transition.empty() ) {
-                      callback();
+                // Construct tooltip
+                var tooltip_html = '';
+                tooltip_html += '<div class="heatmap-tooltip">';
+
+                var entryType = ' entries';
+                tooltip_html += '<div class="header"><strong>' + scope.formatTotal(d.total, entryType) + ' created</strong></div>';
+                tooltip_html += '<div>on ' + moment(d.date).format('dddd, MMM Do YYYY') + '</div><br>';
+
+                if (scope.type === 'sub') {
+                  tooltip_html += '<div><strong>Comments: </strong>' + d.comments + '</div>';
+                  tooltip_html += '<div><strong>Posts: </strong>' + d.submissions + '</div>';
+                } else {
+                  var sortedSubs = $filter('sortSubs')(Object.keys(d.subs), 'subName', d.subs, false);
+
+                  for (var i = 0; i < sortedSubs.length; i++) {
+                    var key = sortedSubs[i];
+                    var sub = d.subs[key];
+
+                    try {
+                      tooltip_html += '<div><strong>' + key + ':</strong> ';
+                      if (sub.comments > 0) {
+                        tooltip_html += scope.formatTotal(sub.comments, ' comments');
+                      }
+
+                      if (sub.comments > 0 && sub.submissions > 0) {
+                        tooltip_html += ', ';
+                      }
+
+                      if (sub.submissions > 0) {
+                        tooltip_html += scope.formatTotal(sub.submissions, ' posts');
+                      }
+                    } catch(e) {
+
                     }
-                    var n = 0;
-                    transition
-                      .each(function() { ++n; })
-                      .each('end', function() {
-                        if ( !--n ) {
-                          callback.apply(this, arguments);
-                        }
-                      });
-                    }, function() {
-                      in_transition = false;
+                    tooltip_html += '</div>';
+                  }
+                }
+                tooltip_html += '</div>';
+
+                // Calculate tooltip position
+                var x = calcItemX(d) + item_size;
+                if ( (width*2) - x < (tooltip_width + tooltip_padding * 3) ) {
+                  x -= tooltip_width + tooltip_padding * 2;
+                }
+                var y = calcItemY(d) + item_size;
+                y -= 150;
+
+                // Show tooltip
+                tooltip.html(tooltip_html)
+                  .style('left', x + 'px')
+                  .style('top', y + 'px')
+                  .transition()
+                    .duration(transition_duration / 2)
+                    .ease('ease-in')
+                    .style('opacity', 1);
+              })
+              .on('mouseout', function () {
+                if ( in_transition ) { return; }
+
+                // Set circle radius back to what it's supposed to be
+                d3.select(this).transition()
+                  .duration(transition_duration / 2)
+                  .ease('ease-in')
+                  .attr('x', function (d) {
+                    return calcItemX(d) + (item_size - calcItemSize(d)) / 2;
+                  })
+                  .attr('y', function (d) {
+                    return calcItemY(d) + (item_size - calcItemSize(d)) / 2;
+                  })
+                  .attr('width', function (d) {
+                    return calcItemSize(d);
+                  })
+                  .attr('height', function (d) {
+                    return calcItemSize(d);
+                  });
+
+                // Hide tooltip
+                scope.hideTooltip();
+              })
+              .transition()
+                .delay( function () {
+                  return (Math.cos(Math.PI * Math.random()) + 1) * transition_duration;
+                })
+                .duration(function () {
+                  return transition_duration;
+                })
+                .ease('ease-in')
+                .style('opacity', 1)
+                .call(function (transition, callback) {
+                  if ( transition.empty() ) {
+                    callback();
+                  }
+                  var n = 0;
+                  transition
+                    .each(function() { ++n; })
+                    .each('end', function() {
+                      if ( !--n ) {
+                        callback.apply(this, arguments);
+                      }
                     });
-            }, 500);
+                  }, function() {
+                    in_transition = false;
+                  });
 
             // Add month labels
             var month_labels = d3.time.months(start_of_year, end_of_year);
@@ -335,7 +329,10 @@ angular.module('g1b.calendar-heatmap', []).
                 return d.toLocaleDateString('en-us', {month: 'short'});
               })
               .attr('x', function (d, i) {
-                return monthScale(i) + (monthScale(i) - monthScale(i-1)) / 2;
+                var date = moment(d);
+                var dayIndex = Math.round((date - moment(start_of_year).startOf('week')) / 86400000);
+                var colIndex = Math.trunc(dayIndex / 7) + 2;
+                return colIndex * (item_size + gutter) + label_padding;
               })
               .attr('y', label_padding / 2)
               .on('mouseenter', function (d) {
@@ -373,7 +370,7 @@ angular.module('g1b.calendar-heatmap', []).
               .enter()
               .append('text')
               .attr('class', 'label label-day')
-              .attr('x', label_padding / 3)
+              .attr('x', 0)
               .attr('y', function (d, i) {
                 return dayScale(i) + dayScale.rangeBand() / 1.75;
               })

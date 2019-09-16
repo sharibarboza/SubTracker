@@ -13,7 +13,9 @@
 
    var subData = subFactory.getSubData().subs[$scope.subreddit];
    subChart.getSubChart($scope.username, $scope.subreddit, subData);
+
    $scope.series = ['Comment Points', 'Post Points'];
+   $scope.colors = ['#37AE9B', '#DCDCDC'];
 
    var data = subChart.getData($scope.subreddit);
    $scope.totalUps = data.totalUps;

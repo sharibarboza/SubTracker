@@ -1,0 +1,4 @@
+<div style="margin-top: 5px;" class="white small-font" ng-controller="EntryLimitCtrl">
+  <i ng-if="currentLimit != 'All'">* All data is based on the user's last {{ currentLimit | number }} comments and {{ currentLimit | number }} posts.</i>
+  <i ng-if="currentLimit == 'All'">* All data is based on the user's entire comment and post history.</i>
+</div>

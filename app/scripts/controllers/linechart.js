@@ -15,6 +15,8 @@
    userChart.getUserChart($scope.username, subs);
 
    $scope.series = ['Comment Points', 'Post Points'];
+   $scope.colors = ['#37AE9B', '#DCDCDC'];
+
    $scope.data = [
      userChart.getCommentData(),
      userChart.getSubmissionData()

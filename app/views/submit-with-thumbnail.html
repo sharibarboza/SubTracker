@@ -8,7 +8,7 @@
       <br class="hide-break">
 
 	  <accordion class="accordion accordion-hidden">
-	    <accordion-group ng-init="status = { isOpen: open }" is-open="status.isOpen">
+	    <accordion-group ng-init="status = { isOpen: tab == 1 ? true : open }" is-open="status.isOpen">
 	      <accordion-heading>
 
         <div id="submit-stats" class="row">

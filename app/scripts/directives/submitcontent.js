@@ -117,7 +117,7 @@ angular.module('SubSnoopApp')
 
       html = html.replace(/width="\d+"/g, 'width="' + videoWidth + '%"');
 
-      var videoHeight = 250;
+      var videoHeight = 300;
       html = html.replace(/height="\d+"/g, 'height="' + videoHeight + '"');
 
       return html;
@@ -256,10 +256,10 @@ angular.module('SubSnoopApp')
                 var html;
                 if (isImgurGif(data.url)) {
                     gif_url = getImgurUrl(data.url);
-                    html = '<iframe src="' + gif_url + '/embed" height="450"></iframe>';
+                    html = '<img src="' + gif_url + '/embed"></iframe>';
                 } else {
                     gif_url = data.url;
-                    html = '<iframe src="' + gif_url + '" height="240"></iframe>';
+                    html = '<img src="' + gif_url + '"></iframe>';
                 }
                 content = centerWrap(changeSize(page, html));
             } else if (data.selftext_html) {

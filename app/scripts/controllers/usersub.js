@@ -45,7 +45,7 @@ angular.module('SubSnoopApp')
     $scope.selected = sortFactory.getSubSort();
 
     $scope.latestPost = recentTimes.getData($scope.username, $scope.subreddit, $scope.sub);
-    $scope.recentlyActive = recentTimes.recentlyActive($scope.subreddit, 6);
+    $scope.recentlyActive = recentTimes.recentlyActive($scope.subreddit, 12);
 
     sentiMood.setSubData($scope.subreddit, $scope.sub, $scope.username);
     reaction.setSubData($scope.subreddit, $scope.sub, $scope.username);

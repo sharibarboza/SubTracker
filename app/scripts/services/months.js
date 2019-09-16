@@ -15,7 +15,7 @@ angular.module('SubSnoopApp')
     var today = new Date();
     var d;
     var month;
-    var numMonths = 11;
+    var numMonths = 12;
 
     for(var i = numMonths; i >= 0; i -= 1) {
       d = new Date(today.getFullYear(), today.getMonth() - i, 1);

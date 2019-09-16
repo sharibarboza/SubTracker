@@ -18,8 +18,9 @@ angular.module('SubSnoopApp')
     var subCount = 0;
     var uniqueSubs = {};
     var average = null;
+    var numMonths = 12;
 
-    var minDate = moment().startOf('day').subtract(7, 'month');
+    var minDate = moment().startOf('day').subtract(numMonths, 'month');
     var diff = (moment.duration(moment().diff(minDate)).asMonths()).toFixed(0);
 
     /*

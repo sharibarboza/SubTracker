@@ -15,11 +15,21 @@
    if ('previous' in localStorage) {
      var prevUsers = localStorage.getItem('previous').split(',').reverse();
      $scope.prevUsers = [];
+     var count = 0;
 
-     for (var i = 0; i < prevUsers.length; i++) {
+     for (var i = 0; i < 6; i++) {
        var name = prevUsers[i];
-       if (name !== "" && name.toLowerCase() !== $scope.username.toLowerCase()) {
-         $scope.prevUsers.push(name);
+       if (count >= 5) {
+         break;
+       }
+
+       try {
+         if (name !== "" && name.toLowerCase() !== $scope.username.toLowerCase()) {
+           $scope.prevUsers.push(name);
+           count += 1;
+         }
+       } catch(e) {
+
        }
      }
    } else {

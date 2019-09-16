@@ -8,8 +8,8 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sortFactory', 'subInfo', 'gilded', 'reaction', 'sentiMood', 'subChart', 'userHeatmap', 'subHeatmap', 'subChart', 'words',
-  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory, subInfo, gilded, reaction, sentiMood, subChart, userHeatmap, subHeatmap, words,) {
+ .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sortFactory', 'subInfo', 'gilded', 'reaction', 'sentiMood', 'entryLimit', 'subChart', 'userHeatmap', 'subHeatmap', 'subChart', 'words',
+  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory, subInfo, gilded, reaction, sentiMood, entryLimit, subChart, userHeatmap, subHeatmap, words) {
     var pages = 10;
     var username;
     var promise = null;
@@ -21,6 +21,7 @@
     var total = 0;
     var numComments = 0;
     var numSubmits = 0;
+    var limit = entryLimit.getLimit().value;
 
     var comments = [];
     var submissions = [];
@@ -133,14 +134,7 @@
 
       // Resolve both comment and submission promises together
       return $q.all([commentPromise, submitPromise]).then(function() {
-        var data = setSubData(user);
-
-        return data.then(function(response) {
-          subData = response;
-          return subData;
-        }, function(error) {
-          console.log(error);
-        });
+        return setSubData(user);
       }, function(error) {
         console.log(error);
       });
@@ -163,7 +157,7 @@
 
       var prevUsers = localStorage.getItem('previous').split(',');
       var prevData = JSON.parse(localStorage.getItem('prevData'));
-      var numPrev = 5;
+      var numPrev = 6;
 
       if (prevUsers.indexOf(user.name) < 0) {
         prevUsers.push(user.name);
@@ -191,72 +185,67 @@
      Configure sub data object, which will be passed to the controllers.
     */
     function setSubData(user_response) {
-      var commentPromises = organizePosts(comments, 't1_');
-      var submitPromises = organizePosts(submissions, 't3_');
-      var promises = commentPromises.concat(submitPromises);
+      var posts = organizePosts();
+      subs = {};
+      var dataLen = posts.length;
 
-      return $q.all(promises).then(function(response) {
-        comments = [];
-        submissions = [];
-        subs = {};
-
-        var data = [];
-        for (var i = 0; i < response.length; i++) {
-          data.push.apply(data, response[i].data.data.children);
-        }
-        var dataLen = data.length;
-
-        for (var i = 0; i < dataLen; i++) {
-          var post = data[i].data;
-
-          try {
-            var subreddit = post.subreddit;
-            if (!(subreddit in subs)) {
-              subs[subreddit] = createNewSub();
-            }
-
-            if (post.name.indexOf('t1_') >= 0) {
-              addComment(subreddit, subs[subreddit], post);
-              comments.push(post);
-            } else {
-              addSubmission(subreddit, subs[subreddit], post);
-              submissions.push(post);
-            }
-            getTopSub(post);
-          } catch(e) {
-            console.log(e);
-          }
-        }
-
-        calculateTopSub();
-        subNames = Object.keys(subs);
-        subLength = subNames.length;
+      for (var i = 0; i < dataLen; i++) {
+        var post = posts[i].data;
 
         try {
-          setPrevUsers(user_response);
-        } catch(error) {
-          console.log(error);
+          var subreddit = post.subreddit;
+          if (!(subreddit in subs)) {
+            subs[subreddit] = createNewSub();
+          }
+
+          if (post.name.indexOf('t1_') >= 0) {
+            post = addComment(subreddit, subs[subreddit], post);
+            comments.push(post);
+          } else {
+            post = addSubmission(subreddit, subs[subreddit], post);
+            submissions.push(post);
+          }
+          getTopSub(post);
+        } catch(e) {
+          console.log(e);
         }
+      }
 
-        setTotalUps();
-        setAverages();
-        setDefaultSortedArray();
+      calculateTopSub();
+      subNames = Object.keys(subs);
+      subLength = subNames.length;
 
-        subData = {
-          'user': createUser(user_response),
-          'comments' : comments.length,
-          'submissions' : submissions.length,
-          'subs' : subs,
-          'upvotes' : upvotes,
-          'topComment': topComment,
-          'topSubmit': topSubmit,
-          'topSub': topSub
-        }
-
-        return subData;
-      }, function(error) {
+      try {
+        setPrevUsers(user_response);
+      } catch(error) {
         console.log(error);
-      });
+      }
+
+      setTotalUps();
+      setAverages();
+      setDefaultSortedArray();
+
+      subData = {
+        'user': createUser(user_response),
+        'comments' : comments.length,
+        'submissions' : submissions.length,
+        'subs' : subs,
+        'upvotes' : upvotes,
+        'topComment': topComment,
+        'topSubmit': topSubmit,
+        'topSub': topSub
+      }
+
+      return subData;
+    }
+
+    function organizePosts() {
+      commentData = [].concat.apply([], commentData);
+      submitData = [].concat.apply([], submitData);
+      comments = [];
+      submissions = [];
+
+      return commentData.concat.apply(commentData, submitData);
     }
 
     /*
@@ -305,6 +294,7 @@
       total = 0;
       numComments = 0;
       numSubmits = 0;
+      limit = entryLimit.getLimit().value;
 
       comments = [];
       submissions = [];
@@ -350,29 +340,37 @@
     /*
      Resolve promise and return data if there is no more requests.
     */
-    function getPromise(where, promise) {
+    function getPromise(where, promise, prevData) {
       var promise = promise.then(function(response) {
         if (response) {
           var data = response.data.data;
           var data_len = data.length;
 
           if (data.length > 0) {
-            var data = getDataList(where, data, data_len);
+            prevData = getDataList(where, data, data_len);
           } else {
             before = null;
           }
 
-          if (before) {
-            var nextPromise = callAPI(where);
-            return getPromise(where, nextPromise);
+          var currentTotal;
+          if (where === 'comment') {
+            currentTotal = numComments;
           } else {
-            return null;
+            currentTotal = numSubmits;
+          }
+
+          if (before && (limit === 'All' || currentTotal < limit)) {
+            var nextPromise = callAPI(where);
+            return getPromise(where, nextPromise, prevData);
+          } else {
+            return prevData;
           }
         }
 
       }, function(error) {
         console.log(error);
       });
+
       return promise;
     }
 
@@ -383,42 +381,73 @@
     */
     function promiseChain(where) {
       var promise = callAPI(where);
-      return getPromise(where, promise);
+      promise = getPromise(where, promise, null);
+
+      return promise;
     }
 
     /*
      Update comment or submission array data and return the list
     */
     function getDataList(where, data_list, data_len) {
+      var promises;
+
       if (where === 'comment') {
-        commentData.push(data_list);
-        pushData('comments', data_list, data_len);
-        return commentData;
+        promises = pushData('comments', data_list, data_len, 't1_');
       } else {
-        submitData.push(data_list);
-        pushData('submits', data_list, data_len);
-        return submitData;
+        promises = pushData('submits', data_list, data_len, 't3_');
       }
+
+      var data = $q.all(promises).then(function(response) {
+        var items = [];
+        for (var i = 0; i < response.length; i++) {
+          var listings = response[i].data.data.children;
+
+          for (var j = 0; j < listings.length; j++) {
+            var item = listings[j];
+
+            if (where === 'comment') {
+              commentData.push(item);
+            } else {
+              submitData.push(item);
+            }
+          }
+        }
+
+        if (where === 'comment') {
+          return commentData;
+        } else {
+          return submitData;
+        }
+      }, function(error) {
+        console.log(error);
+      });
+
+      return data;
     }
 
     /*
      Push the comment/submission data to their respective lists
     */
-    function pushData(where, data_list, data_len) {
+    function pushData(where, data_list, data_len, prefix) {
+      var promises = [];
+      var numIDs = 0;
+      var ids = [];
+      var limit = entryLimit.getLimit().value;
+
       for (var i = 0; i < data_len; i++) {
         var item = data_list[i];
 
         if (where === 'comments') {
-          if (numComments < 10000) {
+          if (limit === 'All' || numComments < limit) {
             comments.push(item);
             numComments += 1;
           } else {
-            console.log(numComments);
             before = null;
             return;
           }
         } else {
-          if (numSubmits < 10000) {
+          if (limit === 'All' || numSubmits < limit) {
             submissions.push(item);
             numSubmits += 1;
           } else {
@@ -432,38 +461,39 @@
           before = item.created_utc;
         }
 
+        ids.push(prefix + item.id);
+        numIDs += 1;
         total += 1;
         $rootScope.$emit('subCount', total);
       }
-    }
 
-    /*
-     Grabs the comments and store them in their respective sub object
-     as well as other statistics
-    */
-    function organizePosts(data, prefix) {
-      var ids = [];
-      var currentID = '';
-      var promises = [];
-      var dataLen = data.length;
-
-      // Push comments
-      for (var i = 0; i < data.length; i++) {
-        var item = data[i];
-        currentID += prefix + item.id + ',';
-        if (i == dataLen - 1 ||(i > 0 && i % 99 == 0)) {
-          currentID = currentID.replace(/,\s*$/, "");
-          ids.push(currentID);
-          currentID = '';
-        }
-      }
-
-      for (var i = 0; i < ids.length; i++) {
-        var idURL = 'https://api.reddit.com/api/info.json?id=' + ids[i];
+      var idStrings = getStringIDS(ids, numIDs, data_len);
+      for (var i = 0; i < idStrings.length; i++) {
+        var idURL = 'https://api.reddit.com/api/info.json?id=' + idStrings[i];
         var promise = $http.get(idURL);
         promises.push(promise);
       }
+
       return promises;
+    }
+
+    /*
+     Get a list of string IDS to use for API urls
+    */
+    function getStringIDS(ids, numIDs, numData) {
+      var currentID = '';
+      var idStrings = [];
+
+      for (var i = 0; i < numIDs; i++) {
+        var id = ids[i];
+        currentID += id + ',';
+        if (i == (numData - 1) || i > 0 && i % 99 == 0) {
+          currentID = currentID.replace(/,\s*$/, "");
+          idStrings.push(currentID);
+          currentID = '';
+        }
+      }
+      return idStrings;
     }
 
     /*
@@ -549,6 +579,8 @@
       if (comment.ups > subreddit.top_comment[0]) {
         subreddit.top_comment = [comment.ups, obj];
       }
+
+      return obj;
     }
 
     /*
@@ -609,6 +641,8 @@
       if (submission.ups > subreddit.top_submit[0]) {
         subreddit.top_submit = [submission.ups, obj];
       }
+
+      return obj;
     }
 
     /*

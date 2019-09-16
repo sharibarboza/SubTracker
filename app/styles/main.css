@@ -402,12 +402,22 @@ blockquote {
   color: #1F2327 !important;
   background-color: #9099A1;
   border-color: #9099A1;
+  margin-right: -1px;
 }
 
 .btn-info:hover {
   background-color: #D1504E !important;
   border-color: #D1504E !important;
   color: white !important;
+}
+
+.input-group-btn button {
+  height: 40px;
+}
+
+#main-search {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
 
 .gray-bg {
@@ -520,6 +530,7 @@ blockquote {
   border: none !important;
   background-color: #2F3942 !important;
   color: #9CA5AD !important;
+  height: 40px;
 }
 
 .sort-dropdown, .sub-form {
@@ -593,6 +604,11 @@ blockquote {
   padding-right: 0 !important;
   border-left: 1px solid #4B5054;
   border-right: 1px solid #4B5054;
+  width: 52% !important;
+}
+
+.col-lg-3 {
+  width: 24% !important;
 }
 
 .fixed {
@@ -621,7 +637,11 @@ blockquote {
 }
 
 .fixed-right {
-  width: 75%;
+  width: 80%;
+}
+
+.fixed-left {
+  width: 82%;
 }
 
 .card-box-content {
@@ -979,6 +999,19 @@ md-card {
   font-size: 13px !important;
 }
 
+.limit-text {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 10px;
+  color: white;
+}
+
+.limit-text span {
+  background-color: black;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
 .panel-box {
   border: 1px solid #e5e5e5;
   margin-top: -1px;
@@ -1014,7 +1047,7 @@ Dropdown
 
 .dropdown-menu {
   width: auto;
-  min-width: 100px !important;
+  min-width: auto;
   background-color: #2D3339;
   color: #9099A1;
 }
@@ -1050,17 +1083,17 @@ Content
 }
 
 .width-pad, .banner-pad {
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: 7%;
+  padding-right: 7%;
 }
 
 .middle-col-pad {
-  padding: 20px 24px;
+  padding: 18px;
 }
 
 .column-pad, .profile-bar {
-  padding-left: 25px;
-  padding-right: 25px;
+  padding-left: 18px;
+  padding-right: 18px;
 }
 
 /* Main marketing message and sign up button */
@@ -1176,7 +1209,7 @@ Content
 .mobile-circle {
   position: absolute;
   top: 110px;
-  left: 0px;
+  left: 5px;
   display: block;
   background-color: rgb(0, 0, 0, 0.5);
   width: 150px;
@@ -1360,7 +1393,7 @@ Content
 }
 
 .searches, .comment-list {
-  padding: 15px 24px;
+  padding: 18px;
   border-bottom: 1px solid #4B5054;
   margin-bottom: -2px;
 }
@@ -1489,7 +1522,7 @@ Navigation
 }
 
 #nav-button {
-  height: 34px;
+  height: 35px;
   z-index: 999;
 }
 

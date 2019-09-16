@@ -12,9 +12,10 @@ angular.module('SubSnoopApp')
 
     var user;
     var subs = {};
-    var numMonths = 11;
+    var numMonths = 12;
 
     var minDate = moment().startOf('day').subtract(numMonths, 'month');
+    var currentYear = moment().year();
     var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var months = [];
 
@@ -87,8 +88,7 @@ angular.module('SubSnoopApp')
         try {
           var date = moment(comment.created_utc * 1000);
           if (date >= minDate) {
-            var monthName = monthNames[date.month()];
-            var index = months.indexOf(monthName);
+            var index = getIndex(date);
             subs[sub].commentData[index] += comment.ups;
             subs[sub].totalUps += comment.ups;
           }
@@ -104,8 +104,7 @@ angular.module('SubSnoopApp')
         try {
           var date = moment(submission.created_utc * 1000);
           if (date >= minDate) {
-            var monthName = monthNames[date.month()];
-            var index = months.indexOf(monthName);
+            var index = getIndex(date);
             subs[sub].submissionData[index] += submission.ups;
             subs[sub].totalUps += submission.ups;
           }
@@ -113,6 +112,18 @@ angular.module('SubSnoopApp')
           console.log(e);
         }
       }
+    }
+
+    function getIndex(date) {
+      var index;
+      var monthName = monthNames[date.month()];
+      index = months.indexOf(monthName);
+
+      if (index + 12 <= numMonths && date.year() === currentYear) {
+        index += 12;
+      }
+
+      return index;
     }
 
   }]);

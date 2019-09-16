@@ -13,11 +13,12 @@ angular.module('SubSnoopApp')
     var user;
     var subs;
     var points = 0;
-    var numMonths = 11;
+    var numMonths = 12;
     var commentData = new Array(numMonths + 1).fill(0);
     var submissionData = new Array(numMonths + 1).fill(0);
 
     var minDate = moment().startOf('day').subtract(numMonths, 'month');
+    var currentYear = moment().year();
     var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var months = [];
     var diff = (moment.duration(moment().diff(minDate)).asMonths()).toFixed(0);
@@ -52,6 +53,7 @@ angular.module('SubSnoopApp')
       commentData = new Array(numMonths + 1).fill(0);
       submissionData = new Array(numMonths + 1).fill(0);
       points = 0;
+
       months = [];
       setMonths();
     }
@@ -80,8 +82,7 @@ angular.module('SubSnoopApp')
         try {
           var date = moment(comment.created_utc * 1000);
           if (date >= minDate) {
-            var monthName = monthNames[date.month()];
-            var index = months.indexOf(monthName);
+            var index = getIndex(date);
             commentData[index] += comment.ups;
             points += comment.ups;
           }
@@ -97,8 +98,7 @@ angular.module('SubSnoopApp')
         try {
           var date = moment(submission.created_utc * 1000);
           if (date >= minDate) {
-            var monthName = monthNames[date.month()];
-            var index = months.indexOf(monthName);
+            var index = getIndex(date);
             submissionData[index] += submission.ups;
             points += submission.ups;
           }
@@ -106,6 +106,18 @@ angular.module('SubSnoopApp')
           console.log(e);
         }
       }
+    }
+
+    function getIndex(date) {
+      var index;
+      var monthName = monthNames[date.month()];
+      index = months.indexOf(monthName);
+
+      if (index + 12 <= numMonths && date.year() === currentYear) {
+        index += 12;
+      }
+
+      return index;
     }
 
   }]);

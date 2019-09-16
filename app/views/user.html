@@ -1,5 +1,8 @@
 <!-- Display not found page -->
-<div id="not-found" ng-if="notfound" ng-include src="'views/not-found.html'"></div>
+<div id="not-found" ng-if="notfound">
+  <div ng-include src="'views/searchnav.html'"></div>
+  <div ng-include src="'views/not-found.html'"></div>
+</div>
 
 <div class="main-content" id="home-page" ng-controller="UserSearchCtrl">
 
@@ -23,20 +26,27 @@
       <div class="row width-pad">
         <div class="col-lg-3 no-mobile no-left-pad">
           <div class="fixed fixed-sides col-lg-3" style="width: 20vw;">
-            <div class="top-bar top-brand">
-              <a class="white" ng-href="#/">SubSnoop</a>
-            </div>
-
-            <form redirect="{{ true }}" novalidate="novalidate" handle-phone-submit>
-              <div class="input-group" id="search-strip">
-                <input type="text" ng-model="inputname" class="form-control" id="nav-search" placeholder="&#xF002; &nbsp;Enter username ..." style="margin-left: 0; font-family: FontAwesome, Helvetica Neue;" required>
-                <span class="input-group-btn">
-                  <button class="btn btn-info" id="nav-button" type="submit"><i class="glyphicon glyphicon-search" id="nav-icon" aria-hidden="true"></i></button>
-                </span>
+            <div class="fixed-left">
+              <div class="top-bar top-brand">
+                <a class="white" ng-href="#/">SubSnoop</a>
               </div>
-            </form>
-            <br>
-            <div ng-include src="'views/side-badges.html'"></div>
+
+              <div ng-controller="EntryLimitCtrl">
+                <form redirect="{{ true }}" novalidate="novalidate" handle-phone-submit>
+                  <div class="input-group" id="search-strip">
+                    <input type="text" ng-model="inputname" class="form-control" id="nav-search" placeholder="&#xF002; &nbsp;Enter username ..." style="margin-left: 0; font-family: FontAwesome, Helvetica Neue;" required>
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ limitName }}&nbsp;&nbsp;<span class="caret"></span></button>
+                      <ul id="entry-limit" class="dropdown-menu" role="menu">
+                        <li ng-repeat="option in limitOptions" ng-click="setLimit(option)">{{ option.name }}</li>
+                      </ul>
+                    </span>
+                  </div>
+                </form>
+              </div>
+              <br>
+              <div ng-include src="'views/side-badges.html'"></div>
+            </div>
           </div>
         </div>
 
@@ -90,8 +100,6 @@
                 <strong>{{ linkKarma | karma }}</strong> <span class="light-grey">Post Karma</span>
               </span>
             </div>
-            <br>
-            <button class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
           </div>
 
           <div class="user-head-nav no-padding banner-pad user-page" align="center" type="user">
@@ -124,7 +132,8 @@
                   <strong class="white">Current points: </strong><strong ng-class="upvotes > 0 ? 'green' : 'orange'">{{ upvotes | karma }}<span ng-class="upvotes > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong><br>
                   <span class="light-grey">{{ avgUpvotes | karma }} average <ng-pluralize count="{{ avgUpvotes }}" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> / subreddit</span>
                   <br><br>
-                  <i class="white small-font">* All data is based on the user's last 10k comments and last 10k posts.</i>
+                  <button class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
+                  <div ng-include src="'views/limit-msg.html'"></div>
                 </div>
               </div>
 
@@ -158,7 +167,7 @@
               <div class="col-md-3 post-count no-right-pad">
                 <strong class="light-grey">Filter Subreddits</strong>
               </div>
-              <div class="col-md-9 no-left-pad" align="right" style="padding-right: 5px;">
+              <div class="col-md-9 no-left-pad" align="right">
                 <div class="btn-group select-dropdown dropdown-margin">
                   <button type="button" class="form-control sort-dropdown btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <span>{{ selected.name }}</span>
@@ -190,8 +199,8 @@
                           <span ng-if="subs[subreddit].num_comments > 0">
                             <span class="fa fa-comment small-icon"></span>
                             {{ subs[subreddit].num_comments | number }} <ng-pluralize count="subs[subreddit].num_comments" when="{ '1': 'Comment', 'other': 'Comments' }"></ng-pluralize>
+                            &nbsp;
                           </span>
-                          &nbsp;
                           <span ng-if="subs[subreddit].num_submissions > 0">
                             <span class="fa fa-file-text small-icon"></span>
                             {{ subs[subreddit].num_submissions | number }} <ng-pluralize count="subs[subreddit].num_submissions" when="{ '1': 'Post', 'other': 'Posts' }"></ng-pluralize>
@@ -224,22 +233,6 @@
           </div>
 
           <div ng-if="tab == 1" class="col-lg-6 main-col middle-col">
-            <div ng-if="!recentlyActive" class="middle-col-pad g-underline">
-              <span class="light-grey">No recent activity in the last year.</span>
-            </div>
-
-            <div ng-if="recentlyActive" ng-controller="LineChartCtrl" class="middle-col-pad g-underline" style="padding-bottom: 0;">
-              <strong class="white title-heading">Recent Points In The Last Year: {{ points | karma }}</strong>
-              <br>
-              <span class="light-grey">Average: {{ voteAverage | karma }} <ng-pluralize count="{{ voteAverage }}" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per month</span>
-              <br><br>
-              <canvas id="line" class="chart chart-line" chart-data="data"
-              chart-labels="labels" chart-series="series" chart-options="options"
-              chart-dataset-override="datasetOverride" chart-click="onClick">
-              </canvas>
-              <br>
-            </div>
-            <div ng-if="recentlyActive" class="g-underline" ng-include src="'views/user-heatmap.html'"></div>
             <div ng-repeat="element in topPosts" ng-if="element" class="comment-list list-card-box">
               <strong class="white title-heading">Current Top {{ element.type == 'submission' ? 'Post' : 'Comment' }} <a ng-href="#/{{ username }}/{{ element.subreddit }}/overview/" class="post-flair" style="float: right;">r/{{ element.subreddit }}</a></strong>
               <br><br>
@@ -250,6 +243,23 @@
                 <div ng-include src="'views/submission.html'"></div>
               </div>
             </div>
+
+            <div ng-if="!recentlyActive" class="middle-col-pad g-underline">
+              <span class="light-grey">No recent activity in the last year.</span>
+            </div>
+
+            <div ng-if="recentlyActive" ng-controller="LineChartCtrl" class="middle-col-pad g-underline" style="padding-bottom: 0;">
+              <strong class="white title-heading">Recent Points Earned In The Last Year: {{ points | karma }}</strong>
+              <br>
+              <span class="light-grey">Average: {{ voteAverage | karma }} <ng-pluralize count="{{ voteAverage }}" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per month</span>
+              <br><br>
+              <canvas id="line" class="chart chart-line" chart-data="data"
+              chart-labels="labels" chart-series="series" chart-colors="colors" chart-options="options"
+              chart-dataset-override="datasetOverride" chart-click="onClick" height="100">
+              </canvas>
+              <br>
+            </div>
+            <div ng-if="recentlyActive" class="g-underline" ng-include src="'views/user-heatmap.html'"></div>
           </div>
 
           <div ng-if="tab == 2" class="col-lg-6 main-col middle-col">

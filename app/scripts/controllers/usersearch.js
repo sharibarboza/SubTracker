@@ -102,7 +102,7 @@ angular.module('SubSnoopApp')
     $scope.filterResults = function(type) {
       $scope.type = type;
       $scope.results = $filter('search')($scope.origResults, type, $scope.searchSubs);
-      $scope.resultList = $filter('sortSubs')(Object.keys($scope.results.data), 'subName', $scope.results.data);
+      $scope.resultList = $filter('sortSubs')(Object.keys($scope.results.data), 'subName', $scope.results.data, false);
       $scope.noResults = getNotFoundMsg();
     };
 

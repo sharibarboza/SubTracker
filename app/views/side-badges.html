@@ -1,17 +1,17 @@
 <div class="no-mobile" ng-controller="UserStatsCtrl">
-  <div ng-repeat="(sub, badges) in sideBadges" class="row no-margin" style="margin-bottom: 1vh;">
+  <div ng-repeat="(sub, data) in sideBadges" class="row no-margin" style="margin-bottom: 1vh;">
     <a ng-href="#/{{ username }}/{{ sub }}/overview/"><div>
       <div class="col-sm-9 no-padding">
         <strong class="sub-name"><span class="white">r/{{ sub }}</span></strong>
         <ul class="badge-list">
-          <li ng-repeat="point in badges" class="light-grey">
+          <li ng-repeat="point in data.badges" class="light-grey">
             <span align="center"><span class="{{ point.icon }}"></span></span>&nbsp;{{ point.name }}
           </li>
         </ul>
       </div>
       <div class="col-sm-3 no-padding" align="right">
-        <img class="img-circle prev-img img-responsive side-logo" lazy-img="{{ subs[sub].info.icon_img | escape }}">
-        <default-logo ng-if="subs[sub].info.icon_img == '' || subs[sub].info.icon_img == null" sub="{{ sub }}" page="{{ page }}"></default-logo>
+        <img class="img-circle prev-img img-responsive side-logo" lazy-img="{{ subs[sub].icon | escape }}">
+        <default-logo ng-if="subs[sub].icon == '' || subs[sub].icon == null" sub="{{ sub }}" page="{{ page }}"></default-logo>
       </div>
     </div></a>
   </div>

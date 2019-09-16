@@ -110,7 +110,7 @@ angular.module('SubSnoopApp')
 
         if (num1 == num2) {
           var num1 = $filter('gildWeight')(data[a].gilds);
-          var num2 = $filter('gildWeight')(data[b].gilds);        
+          var num2 = $filter('gildWeight')(data[b].gilds);
         }
 
         return $filter('sortNum')(num1, num2, a, b, true, 'alpha');
@@ -124,13 +124,13 @@ angular.module('SubSnoopApp')
      attribute: what to sort on (must be an attribute from the sortOptions in the sortFactory service)
      subs: a dictionary containing all subs and their corresponding data objects
      */
-    return function (input, attribute, subs) {
+    return function (input, attribute, subs, cached) {
       var sortedData = [];
      /*
       Get the cached sorted list to avoid repeating the sorting process
       */
 
-      if (sortFactory.isSorted(attribute)) {
+      if (cached && sortFactory.isSorted(attribute)) {
         var sortedList = sortFactory.getSorted(attribute);
         if (sortedList.length === input.length) {
           return sortedList;
