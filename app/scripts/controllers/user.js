@@ -21,6 +21,7 @@
     $scope.currentLimit = 0;
     $scope.open = false;
     $scope.subLength = 0;
+
     var initLimit = 40;
     $scope.limit = initLimit;
 
@@ -30,29 +31,18 @@
       $scope.noSubs = true;
     }
 
-    if ($location.path() === '/' + $scope.username + '/subreddits/') {
-      $scope.tab = 0;
-    } else if ($location.path() === '/' + $scope.username + '/search/') {
-      $scope.tab = 2;
-    } else {
-      $scope.tab = 1;
-    }
+    var titleRoot = $scope.username + ' | ';
+    var pageRoot = '/' + $scope.username + '/';
+    $scope.tabOptions = ['subreddits', 'statistics', 'search'];
+    setTabNum();
 
     // Check for browser
     $scope.topFix = $filter('topfix')();
-
-    $scope.tabOptions = ['subreddits', 'timeline', 'stats'];
-
     $scope.setTab = function(num) {
       $scope.tab = parseInt(num);
       $window.scrollTo(0, 0);
-      if (num == 0) {
-        $location.update_path($scope.username + '/subreddits/');  // Go to user's main page
-      } else if (num == 1) {
-        $location.update_path($scope.username + '/stats/');
-      } else if (num == 2) {
-        $location.update_path($scope.username + '/search/');
-      }
+
+      updatePath(num);
     };
 
     /*
@@ -116,7 +106,6 @@
     */
     if (subsData && Object.keys(subsData.subs).length > 0) {
       $scope.notfound = false;
-      $rootScope.title = $scope.username + ' | Subreddits';
 
       configUserData(subsData.user);
       configSubData(subsData);
@@ -140,7 +129,7 @@
     } else {
       $scope.notfound = true;
       $scope.main = true;
-      $rootScope.title = 'SubSnoop | User not found';
+      $rootScope.title = 'SubSnoop | User Not Found';
     }
 
     /*
@@ -165,6 +154,32 @@
       } else {
         $scope.limit = $scope.subLength;
       }
+    }
+
+    /*
+     Check the current URL path and set the title
+    */
+    function setTabNum() {
+      for (var i = 0; i < $scope.tabOptions.length; i++) {
+        var tabName = $scope.tabOptions[i];
+        if (pageRoot + tabName + '/' === $location.path()) {
+          $scope.tab = i;
+          var tabTitle = tabName[0].toUpperCase() + tabName.slice(1, tabName.length);
+          $rootScope.title = titleRoot + tabTitle;
+          return;
+        }
+      }
+    }
+
+    /*
+     Update the path upon a tab change
+    */
+    function updatePath(num) {
+      var tabName = $scope.tabOptions[num];
+      var tabTitle = tabName[0].toUpperCase() + tabName.slice(1, tabName.length);
+
+      $rootScope.title = titleRoot + tabTitle;
+      $location.update_path(pageRoot + tabName + '/');
     }
 
   }

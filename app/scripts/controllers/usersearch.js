@@ -22,7 +22,6 @@ angular.module('SubSnoopApp')
     $scope.searchList = $scope.subsArray;  // Used for collapsible sidenav
     $scope.searchInput = "";
     $scope.noResults = "";
-    $rootScope.title = $scope.username + ' | Search';
     $scope.user = userFactory.getUser();
     $scope.results = {'data':{}};
     $scope.resultList = [];

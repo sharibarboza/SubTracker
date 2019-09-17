@@ -60,7 +60,7 @@ app.config(['$routeProvider', '$locationProvider', 'lazyImgConfigProvider', func
         }
       }
     })
-    .when('/:username/stats/', {
+    .when('/:username/statistics/', {
       templateUrl: 'views/user.html',
       controller: 'UserCtrl',
       controllerAs: 'user',

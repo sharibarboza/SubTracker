@@ -18,12 +18,15 @@ angular.module('SubSnoopApp')
     $window.scrollTo(0, 0);
     $scope.main = false;
     $scope.username = $routeParams.username;
-    $rootScope.title = $scope.username + ' | ' + $routeParams.subreddit;
     $scope.user = userFactory.getUser();
     $scope.page = 'sub';
 
     var initLimit = 25;
     $scope.limit = initLimit;
+
+    var titleRoot = $scope.username + ' | ' + $scope.subreddit + ' | ';
+    var pageRoot = '/' + $scope.username + '/' + $scope.subreddit + '/';
+    $rootScope.title = titleRoot + 'Overview';
 
     /*
      Set up for specific subreddit
@@ -54,18 +57,7 @@ angular.module('SubSnoopApp')
     */
     $scope.anchor = '';
     $scope.tabOptions = ['subreddits', 'overview', 'posts', 'comments', 'gilded'];
-
-    var baseUrl = '/' + $scope.username + '/' + $scope.subreddit;
-    if ($location.path() === baseUrl + '/overview/') {
-      $scope.tab = 1;
-    } else if ($location.path() === baseUrl + '/posts/') {
-      $scope.tab = 2;
-    } else if ($location.path() === baseUrl + '/comments/') {
-      $scope.tab = 3;
-    } else if ($location.path() === baseUrl + '/gilded/') {
-      $scope.tab = 4;
-      setUpGilded();
-    }
+    setTabNum();
 
     // Check for browser
     $scope.topFix = $filter('topfix')();
@@ -145,17 +137,7 @@ angular.module('SubSnoopApp')
         setUpGilded();
       }
 
-      if (num == 0) {
-        $location.path($scope.username + '/subreddits/');
-      } else if (num == 1) {
-        $location.update_path($scope.username + '/' + $scope.subreddit + '/overview/');
-      } else if (num == 2) {
-        $location.update_path($scope.username + '/' + $scope.subreddit + '/posts/');
-      } else if (num == 3) {
-        $location.update_path($scope.username + '/' + $scope.subreddit + '/comments/');
-      } else if (num == 4) {
-        $location.update_path($scope.username + '/' + $scope.subreddit + '/gilded/');
-      }
+      updatePath(num);
 
       $scope.open = false;
       $scope.limit = initLimit;
@@ -317,6 +299,32 @@ angular.module('SubSnoopApp')
       }
 
       $scope.numGilds = $scope.gilds.length;
+    }
+
+    /*
+     Check the current URL path and set the title
+    */
+    function setTabNum() {
+      for (var i = 0; i < $scope.tabOptions.length; i++) {
+        var tabName = $scope.tabOptions[i];
+        if (pageRoot + tabName + '/' === $location.path()) {
+          $scope.tab = i;
+          var tabTitle = tabName[0].toUpperCase() + tabName.slice(1, tabName.length);
+          $rootScope.title = titleRoot + tabTitle;
+          return;
+        }
+      }
+    }
+
+    /*
+     Update the path upon a tab change
+    */
+    function updatePath(num) {
+      var tabName = $scope.tabOptions[num];
+      var tabTitle = tabName[0].toUpperCase() + tabName.slice(1, tabName.length);
+
+      $rootScope.title = titleRoot + tabTitle;
+      $location.update_path(pageRoot + tabName + '/');
     }
 
   }

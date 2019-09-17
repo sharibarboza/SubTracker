@@ -303,9 +303,10 @@ angular.module('SubSnoopApp')
           groupWords(post.body_html);
         } else if (where === 'submits') {
           groupWords(post.title);
-
-          if ('selftext' in post) {
+          if ('selftext' in post && post.selftext) {
             groupWords(post.selftext);
+          } else if ('selftext_html' in post && post.selftext_html) {
+            groupWords(post.selftext_html);
           }
         }
       }
@@ -315,15 +316,17 @@ angular.module('SubSnoopApp')
      Split body text into array of words and clean words of non-alpha characters
     */
     function groupWords(body) {
-      var words = body.split(' ');
+      if (body) {
+        var words = body.split(' ');
 
-      for (var i = 0; i < words.length; i++) {
-        var word = $filter('escape')(words[i]);
+        for (var i = 0; i < words.length; i++) {
+          var word = $filter('escape')(words[i]);
 
-        if (isNotLink(word)) {
-          var splitWords = cleanWord(word);
-          addWords(splitWords);
-        }
+          if (isNotLink(word)) {
+            var splitWords = cleanWord(word);
+            addWords(splitWords);
+          }
+        }  
       }
     }
 
