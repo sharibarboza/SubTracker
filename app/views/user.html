@@ -115,54 +115,8 @@
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="col-lg-3 no-mobile">
-          <div class="fixed fixed-sides col-lg-3" style="margin-top: 15px;">
-            <div class="fixed-right">
-              <div ng-if="tab != 2" class="card-box">
-                <div class="headerRow side-pad">
-                  <strong class="side-headers">User Statistics Overview</strong>
-                </div>
-                <div class="card-box-content">
-                  <strong class="white">{{ comments | number }} </strong><span class="light-grey"> <ng-pluralize count="comments" when="{'1': 'Comment', 'other': 'Comments'}"></ng-pluralize></span>
-                  &nbsp;&nbsp;
-                  <strong class="white">{{ submissions | number }}</strong><span class="light-grey"> <ng-pluralize count="submissions" when="{'1': 'Post', 'other': 'Posts'}"></ng-pluralize></span>
-                  <br><br>
-                  <strong class="white">Current points: </strong><strong ng-class="upvotes > 0 ? 'green' : 'orange'">{{ upvotes | karma }}<span ng-class="upvotes > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong><br>
-                  <span class="light-grey">{{ avgUpvotes | karma }} average <ng-pluralize count="{{ avgUpvotes }}" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> / subreddit</span>
-                  <br><br>
-                  <button class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
-                  <div ng-include src="'views/limit-msg.html'"></div>
-                </div>
-              </div>
-
-              <div ng-if="tab == 2" class="card-box">
-                <div class="headerRow side-pad">
-                  <strong class="side-headers">Filter Searched Results</strong>
-                </div>
-                <div ng-include src="'views/side-search.html'"></div>
-              </div>
-
-              <div ng-include src="'views/prev-users.html'"></div>
-
-              <div class="no-mobile" align="center" style="position: relative;">
-                <back-top></back-top>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sub-table">
-      <div class="row width-pad">
-
-        <div class="row no-margin">
-          <div class="col-lg-3 no-mobile main-col"></div>
-
-          <div ng-if="tab == 0" class="col-lg-6 main-col middle-col">
-
+          <div ng-if="tab == 0">
             <div class="row post-row middle-col-pad">
               <div class="col-md-3 post-count no-right-pad">
                 <strong class="light-grey">Filter Subreddits</strong>
@@ -232,43 +186,82 @@
             </div>
           </div>
 
-          <div ng-if="tab == 1" class="col-lg-6 main-col middle-col">
-            <div ng-repeat="element in topPosts" ng-if="element" class="comment-list list-card-box">
-              <strong class="white title-heading">Current Top {{ element.type == 'submission' ? 'Post' : 'Comment' }} <a ng-href="#/{{ username }}/{{ element.subreddit }}/overview/" class="post-flair" style="float: right;">r/{{ element.subreddit }}</a></strong>
-              <br><br>
-              <div ng-if="element.type == 'comment'">
-                <div ng-include src="'views/comment-no-title.html'"></div>
+          <div ng-if="tab == 1" id="user-col">
+            <div id="top-entries-{{ username }}">
+              <div ng-repeat="element in topPosts" ng-if="element" class="comment-list list-card-box">
+                <strong class="white title-heading">Current Top {{ element.type == 'submission' ? 'Post' : 'Comment' }} <a ng-href="#/{{ username }}/{{ element.subreddit }}/overview/" class="post-flair" style="float: right;">r/{{ element.subreddit }}</a></strong>
+                <br><br>
+                <div ng-if="element.type == 'comment'" id="top-com">
+                  <div ng-include src="'views/comment-no-title.html'"></div>
+                </div>
+                <div ng-if="element.type == 'submission'" id="top-post">
+                  <div ng-include src="'views/submission.html'"></div>
+                </div>
               </div>
-              <div ng-if="element.type == 'submission'">
-                <div ng-include src="'views/submission.html'"></div>
-              </div>
+            </div>
+
+            <div ng-if="recentlyActive" class="middle-col-pad g-underline" id="linechart-{{ username }}" style="padding-bottom: 0;">
+              <user-line user="{{ username }}">
+                <div ng-if="!chartReady" align="center">
+                  <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
+                </div>
+                <div ng-if="chartReady" class="graph" id="user-line-{{ username }}" ng-include src="'views/user-chart.html'"></div>
+              </user-line>
+            </div>
+
+            <div ng-if="recentlyActive" class="middle-col-pad g-underline user-map-{{ username }}" style="padding-bottom: 0;">
+              <user-map user="{{ username }}">
+                <div ng-if="!chartReady" align="center">
+                  <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
+                </div>
+                <div ng-if="chartReady" class="graph" ng-include src="'views/user-heatmap.html'"></div>
+              </user-map>
             </div>
 
             <div ng-if="!recentlyActive" class="middle-col-pad g-underline">
               <span class="light-grey">No recent activity in the last year.</span>
             </div>
-
-            <div ng-if="recentlyActive" ng-controller="LineChartCtrl" class="middle-col-pad g-underline" style="padding-bottom: 0;">
-              <strong class="white title-heading">Recent Points Earned In The Last Year: {{ points | karma }}</strong>
-              <br>
-              <span class="light-grey">Average: {{ voteAverage | karma }} <ng-pluralize count="{{ voteAverage }}" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per month</span>
-              <br><br>
-              <canvas id="line" class="chart chart-line" chart-data="data"
-              chart-labels="labels" chart-series="series" chart-colors="colors" chart-options="options"
-              chart-dataset-override="datasetOverride" chart-click="onClick" height="100">
-              </canvas>
-              <br>
-            </div>
-            <div ng-if="recentlyActive" class="g-underline" ng-include src="'views/user-heatmap.html'"></div>
           </div>
 
-          <div ng-if="tab == 2" class="col-lg-6 main-col middle-col">
+          <div ng-if="tab == 2">
             <div ng-include src="'views/search.html'"></div>
           </div>
+        </div>
 
-          <div class="col-lg-3 main-col no-mobile">
+        <div class="col-lg-3 no-mobile">
+          <div class="fixed fixed-sides col-lg-3" style="margin-top: 15px;">
+            <div class="fixed-right">
+              <div ng-if="tab != 2" class="card-box">
+                <div class="headerRow side-pad">
+                  <strong class="side-headers">User Statistics Overview</strong>
+                </div>
+                <div class="card-box-content">
+                  <strong class="white">{{ comments | number }} </strong><span class="light-grey"> <ng-pluralize count="comments" when="{'1': 'Comment', 'other': 'Comments'}"></ng-pluralize></span>
+                  &nbsp;&nbsp;
+                  <strong class="white">{{ submissions | number }}</strong><span class="light-grey"> <ng-pluralize count="submissions" when="{'1': 'Post', 'other': 'Posts'}"></ng-pluralize></span>
+                  <br><br>
+                  <strong class="white">Current points: </strong><strong ng-class="upvotes > 0 ? 'green' : 'orange'">{{ upvotes | karma }}<span ng-class="upvotes > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong><br>
+                  <span class="light-grey">{{ avgUpvotes | karma }} average <ng-pluralize count="{{ avgUpvotes }}" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> / subreddit</span>
+                  <br><br>
+                  <button class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
+                  <div ng-include src="'views/limit-msg.html'"></div>
+                </div>
+              </div>
+
+              <div ng-if="tab == 2" class="card-box">
+                <div class="headerRow side-pad">
+                  <strong class="side-headers">Filter Searched Results</strong>
+                </div>
+                <div ng-include src="'views/side-search.html'"></div>
+              </div>
+
+              <div ng-include src="'views/prev-users.html'"></div>
+
+              <div class="no-mobile" align="center" style="position: relative;">
+                <back-top></back-top>
+              </div>
+            </div>
           </div>
-
         </div>
       </div>
     </div>

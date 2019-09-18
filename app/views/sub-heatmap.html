@@ -1,7 +1,8 @@
-<div class="heatmap middle-col-pad g-underline" ng-controller="SubHeatmapCtrl">
+<div ng-show="chartReady">
   <strong class="white title-heading">Entries Created In The Last Year: {{ total | number }}</strong>
   <br>
   <span class="light-grey">{{ average }} average <ng-pluralize count="average" when="{ '1': 'entry', 'other': 'entries' }"></ng-pluralize> / month</span>
   <br><br>
   <calendar-heatmap data="mapData" color="'#004D41'" overview="'year'" handler="print" type="'sub'"></calendar-heatmap>
+  <br><br>
 </div>

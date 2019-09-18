@@ -22,6 +22,7 @@
     var numComments = 0;
     var numSubmits = 0;
     var limit = entryLimit.getLimit().value;
+    var allIDs = {};
 
     var comments = [];
     var submissions = [];
@@ -191,7 +192,6 @@
 
       for (var i = 0; i < dataLen; i++) {
         var post = posts[i].data;
-
         try {
           var subreddit = post.subreddit;
           if (!(subreddit in subs)) {
@@ -201,15 +201,18 @@
           if (post.name.indexOf('t1_') >= 0) {
             post = addComment(subreddit, subs[subreddit], post);
             comments.push(post);
+            delete allIDs['t1_' + post.id];
           } else {
             post = addSubmission(subreddit, subs[subreddit], post);
             submissions.push(post);
+            delete allIDs['t3_' + post.id];
           }
           getTopSub(post);
         } catch(e) {
           console.log(e);
         }
       }
+      getMissingPosts();
 
       calculateTopSub();
       subNames = Object.keys(subs);
@@ -295,6 +298,7 @@
       numComments = 0;
       numSubmits = 0;
       limit = entryLimit.getLimit().value;
+      allIDs = {};
 
       comments = [];
       submissions = [];
@@ -323,6 +327,18 @@
       subHeatmap.clearData();
       userHeatmap.clearData();
       words.clearData();
+    }
+
+    /*
+     Chain data promises for fetching comments or submissions.
+     Reddit API caps at 1000 comments and submisions each. Only 100 items can be
+     fetched at a time, making for at most 10 API requests.
+    */
+    function promiseChain(where) {
+      var promise = callAPI(where);
+      promise = getPromise(where, promise, null);
+
+      return promise;
     }
 
     /*
@@ -370,18 +386,6 @@
       }, function(error) {
         console.log(error);
       });
-
-      return promise;
-    }
-
-    /*
-     Chain data promises for fetching comments or submissions.
-     Reddit API caps at 1000 comments and submisions each. Only 100 items can be
-     fetched at a time, making for at most 10 API requests.
-    */
-    function promiseChain(where) {
-      var promise = callAPI(where);
-      promise = getPromise(where, promise, null);
 
       return promise;
     }
@@ -461,7 +465,9 @@
           before = item.created_utc;
         }
 
-        ids.push(prefix + item.id);
+        var id = prefix + item.id;
+        ids.push(id);
+        allIDs[id] = '';
         numIDs += 1;
         total += 1;
         $rootScope.$emit('subCount', total);
@@ -741,4 +747,14 @@
       return post;
     }
 
+    /*
+     See if there are any missing comments or posts that didn't get
+     retrieved from the Reddit API
+    */
+    function getMissingPosts() {
+      var count = Object.keys(allIDs).length;
+      if (count > 0) {
+        count + ' entries failed to be retrieved from Reddit API.';
+      }
+    }
   }]);

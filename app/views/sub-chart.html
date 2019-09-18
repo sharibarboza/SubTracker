@@ -1,0 +1,13 @@
+<div ng-show="chartReady">
+  <strong class="white title-heading">Points Earned In The Last Year: {{ totalUps | number }}</strong>
+  <br>
+  <span class="light-grey">
+    {{ monthAverage | karma }} average <ng-pluralize count="monthAverage" when="{ '1': 'point', 'other': 'points' }"></ng-pluralize> / month
+  </span>
+  <br><br>
+  <canvas id="line" class="chart chart-line" chart-data="data"
+  chart-labels="labels" chart-series="series" chart-colors="colors" chart-options="options"
+  chart-dataset-override="datasetOverride" chart-click="onClick" height="100">
+  </canvas>
+  <br>
+</div>

@@ -1,7 +1,8 @@
-<div class="heatmap middle-col-pad"  ng-controller="UserHeatmapCtrl">
+<div ng-show="chartReady">
   <strong class="white title-heading">Recent Entries Created In The Last Year: {{ count | number }}</strong>
   <br>
   <span class="light-grey">Average: {{ subAverage }} unique <ng-pluralize count="{{ subAverage }}" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize> per month</span>
   <br><br>
   <calendar-heatmap data="mapData" color="'#004D41'" overview="'year'" handler="print" type="'user'"></calendar-heatmap>
+  <br>
 </div>

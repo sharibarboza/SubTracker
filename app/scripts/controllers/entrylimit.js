@@ -24,10 +24,12 @@
    }
 
    function getMsg() {
+     var msg;
      if ($scope.currentLimit === 'All') {
-       $scope.tooltipMsg = 'This will fetch all comments and posts.';
+       msg = 'This will fetch all comments and posts.';
      } else {
-       $scope.tooltipMsg = 'This will fetch the last ' + $filter('number')($scope.currentLimit) + ' comments & ' + $filter('number')($scope.currentLimit) + ' posts.';
+       msg = 'This will fetch the last ' + $filter('number')($scope.currentLimit) + ' comments & ' + $filter('number')($scope.currentLimit) + ' posts.';
      }
+     $scope.tooltipMsg = msg;
    }
 }]);

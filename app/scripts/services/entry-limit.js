@@ -16,7 +16,7 @@ angular.module('SubSnoopApp')
       { 'name': 'All', 'value': 'All' },
     ]
 
-    var currentLimit = limitOptions[1];
+    var currentLimit = limitOptions[0];
 
     /*
      Sets the limited entries set by the user when searching for a redditor

@@ -27,7 +27,7 @@ angular.module('SubSnoopApp')
      amount of submissions per date.
     */
     return {
-      getSubMap: function(current_user, current_sub, subData, current_year) {
+      getSubMap: function(current_user, current_sub, subData) {
         if (user != current_user) {
           resetData();
           user = current_user;

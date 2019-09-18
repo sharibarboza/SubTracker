@@ -147,37 +147,42 @@
             </div>
           </div>
 
-          <div ng-if="tab == 1">
-            <div ng-repeat="element in topPosts" ng-if="element" class="comment-list list-card-box">
-              <strong class="white title-heading">Current Top {{ element.type == 'submission' ? 'Post' : 'Comment' }}</strong>
-              <br><br>
-              <div ng-if="element.type == 'comment'">
-                <div ng-include src="'views/comment-no-title.html'"></div>
+          <div ng-if="tab == 1" id="sub-col">
+            <div id="top-entries-{{ subreddit }}">
+              <div ng-repeat="element in topPosts" ng-if="element" class="comment-list list-card-box">
+                <strong class="white title-heading">Current Top {{ element.type == 'submission' ? 'Post' : 'Comment' }}</strong>
+                <br><br>
+                <div ng-if="element.type == 'comment'">
+                  <div ng-include src="'views/comment-no-title.html'"></div>
+                </div>
+                <div ng-if="element.type == 'submission'">
+                  <div ng-include src="'views/submission.html'"></div>
+                  <br>
+                </div>
               </div>
-              <div ng-if="element.type == 'submission'">
-                <div ng-include src="'views/submission.html'"></div>
-                <br>
-              </div>
+            </div>
+
+            <div ng-if="recentlyActive" class="middle-col-pad g-underline" id="linechart-{{ subreddit }}">
+              <sub-line sub="{{ subreddit }}">
+                <div ng-if="!chartReady" align="center">
+                  <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
+                </div>
+                <div ng-if="chartReady" class="graph" id="sub-line-{{ subreddit }}" ng-include src="'views/sub-chart.html'"></div>
+              </sub-line>
+            </div>
+
+            <div ng-if="recentlyActive" class="middle-col-pad g-underline sub-map-{{ subreddit }}" style="padding-bottom: 0;">
+              <sub-map sub="{{ subreddit }}">
+                <div ng-if="!chartReady" align="center">
+                  <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
+                </div>
+                <div ng-if="chartReady" class="graph" ng-include src="'views/sub-heatmap.html'"></div>
+              </sub-map>
             </div>
 
             <div ng-if="!recentlyActive" class="middle-col-pad g-underline">
               <span class="light-grey">No recent activity in the last year.</span>
             </div>
-
-            <div ng-if="recentlyActive" class="middle-col-pad g-underline" ng-controller="SubChartCtrl">
-              <strong class="white title-heading">Points Earned In The Last Year: {{ totalUps | number }}</strong>
-              <br>
-              <span class="light-grey">
-                {{ monthAverage | karma }} average <ng-pluralize count="monthAverage" when="{ '1': 'point', 'other': 'points' }"></ng-pluralize> / month
-              </span>
-              <br><br>
-              <canvas id="line" class="chart chart-line" chart-data="data"
-              chart-labels="labels" chart-series="series" chart-colors="colors" chart-options="options"
-              chart-dataset-override="datasetOverride" chart-click="onClick" height="100">
-              </canvas>
-            </div>
-
-            <div ng-if="recentlyActive" ng-include src="'views/sub-heatmap.html'"></div>
 
             <div class="middle-col-pad g-underline" align="center">
               <div class="row">

@@ -270,11 +270,12 @@ angular.module('SubSnoopApp')
               content = '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
             }
 
+            var final_html = '<div class="post-content">' + content + '</div>';
             if (page !== 'search') {
-              submissions.setContent(submitID, content, attrs.user);
+              submissions.setContent(submitID, final_html, attrs.user);
             }
 
-            return secureURLs(content);
+            return secureURLs(final_html);
           };
 
           element.html(getTemplate(data, truncate));
