@@ -35,6 +35,8 @@
             <div ng-controller="ProgressSubCtrl">
                 <div class="loading-msg" align="center">
                     <span ng-show="userPath">
+                      <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
+                      <br>
                       Please wait. This could be a minute.
                       <br>
                       Fetching {{ subCount | number }} entries ...
@@ -86,6 +88,7 @@
      <script src="scripts/directives/usermap.js"></script>
      <script src="scripts/directives/subline.js"></script>
      <script src="scripts/directives/submap.js"></script>
+     <script src="scripts/directives/wordcloud.js"></script>
      <script src="scripts/controllers/mainsubs.js"></script>
      <script src="scripts/controllers/data.js"></script>
      <script src="scripts/services/d3service.js"></script>
@@ -120,7 +123,6 @@
      <script src="scripts/controllers/userstats.js"></script>
      <script src="scripts/filters/iscontent.js"></script>
      <script src="scripts/services/words.js"></script>
-     <script src="scripts/controllers/wordcloud.js"></script>
      <script src="scripts/services/subinfo.js"></script>
      <script src="scripts/filters/username.js"></script>
      <script src="scripts/filters/date.js"></script>

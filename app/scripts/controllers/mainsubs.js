@@ -17,9 +17,15 @@
     $scope.main = true;
     $scope.page = 'home';
 
-    popularSubs.getData();
+    var status = popularSubs.getData();
+    status.then(function(response) {
+      if (response.status == -1) {
+        $scope.fetchedSubs = 0;
+      } else {
+        $scope.fetchedSubs = 1;
+      }
+    });
     newSubs.getData();
-    $scope.fetchedSubs = popularSubs.getStatus();
 
     // Display popular and new subreddits for front page
     $scope.popularSubs = popularSubs.getSubs();

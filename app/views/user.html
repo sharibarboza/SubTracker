@@ -24,8 +24,8 @@
 
       <!-- User banner containing profile picture, and other user info -->
       <div class="row width-pad">
-        <div class="col-lg-3 no-mobile no-left-pad">
-          <div class="fixed fixed-sides col-lg-3" style="width: 20vw;">
+        <div class="col-lg-3 col-xs-hidden no-mobile no-left-pad">
+          <div class="fixed fixed-sides col-lg-3 col-xs-hidden" style="width: 20vw;">
             <div class="fixed-left">
               <div class="top-bar top-brand">
                 <a class="white" ng-href="#/">SubSnoop</a>
@@ -50,9 +50,9 @@
           </div>
         </div>
 
-        <div class="col-lg-6 middle-col">
+        <div class="col-lg-6 col-xs-12 middle-col" style="margin-bottom: 200px;">
           <div class="top-bar middle-bar" middle-bar>
-            <strong>
+            <strong style="display: inline;">
               <a ng-href="#/{{ username }}/subreddits/"><i class="glyphicon glyphicon-home"></i></a>&nbsp;&nbsp;<a ng-href="#/{{ username }}/subreddits/" class="white">{{ username }}</a>
               <span class="light-grey">/
               <span ng-if="tab == 0">Subreddits</span>
@@ -60,6 +60,26 @@
               <span ng-if="tab == 2">Search</span>
               </span>
             </strong>
+          </div>
+
+          <div class="top-bar middle-mobile-bar">
+            <div class="row">
+              <div class="col-xs-10 no-padding">
+                <strong style="display: inline;">
+                  <a ng-href="#/{{ username }}/subreddits/"><i class="glyphicon glyphicon-home"></i></a>&nbsp;&nbsp;<a ng-href="#/{{ username }}/subreddits/" class="white">{{ username }}</a>
+                  <span class="light-grey">/
+                  <span ng-if="tab == 0">Subreddits</span>
+                  <span ng-if="tab == 1">Statistics</span>
+                  <span ng-if="tab == 2">Search</span>
+                  </span>
+                </strong>
+              </div>
+              <div class="col-xs-2 no-padding">
+                <div align="right" ng-controller="SidebarCtrl">
+                  <a href class="nav-link" ng-click="toggleRight()"><i class="fa fa-bars white"></i></a>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="default-banner u-banner column-pad user-pad">
@@ -73,7 +93,7 @@
             </div>
           </div>
 
-          <div class="profile-bar" ng-controller="DataCtrl">
+          <div class="profile-bar">
             <div align="right">
               <strong>
                 <strong style="font-size: 28px;">{{ subLength }}</strong>
@@ -90,6 +110,7 @@
                 <span class="fa fa-link light-grey"></span> <a ng-href="https://www.reddit.com/u/{{ username }}/" target="_blank">Reddit Profile</a>
               </span>
               &nbsp;&nbsp;&nbsp;
+              <br style="display: none" class="mobile-break">
               <span class="light-grey">
                 <span class="fa fa-calendar"></span> Joined Reddit on <span ng-bind="redditor.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></span>
               </span>
@@ -118,10 +139,10 @@
 
           <div ng-if="tab == 0">
             <div class="row post-row middle-col-pad">
-              <div class="col-md-3 post-count no-right-pad">
+              <div class="col-md-3 col-xs-12 post-count no-right-pad">
                 <strong class="light-grey">Filter Subreddits</strong>
               </div>
-              <div class="col-md-9 no-left-pad" align="right">
+              <div class="col-md-9 col-xs-12 no-left-pad mobile-filters" align="right">
                 <div class="btn-group select-dropdown dropdown-margin">
                   <button type="button" class="form-control sort-dropdown btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <span>{{ selected.name }}</span>
@@ -141,12 +162,12 @@
 
             <div ng-repeat="subreddit in subList | limitTo:limit" class="sub-card-box" id="sub-row">
               <a ng-href="#/{{ username }}/{{ subreddit }}/overview/"><div class="row prevRow">
-                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2" align="center">
+                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 sub-cells" align="center">
                   <strong class="num-rank">{{ 1 + $index }}</strong>
                 </div>
-                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 no-left-pad">
+                <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 sub-cells no-left-pad">
                   <div class="row">
-                    <div class="col-lg-10 col-sm-10 no-right-pad">
+                    <div class="col-lg-10 col-sm-10 no-right-pad sub-inner-row">
                       <span class="sub-name white">r/{{ subreddit }}</span>&nbsp;&middot;&nbsp;<span class="light-grey" ng-init="seen=subs[subreddit].recent_activity.created_utc * 1000"><time-ago from-time='{{ seen }}'></time-ago></span>
                       <div class="sub-font light-grey" style="margin-top: 5px;">
                         <span class="badge">
@@ -158,9 +179,9 @@
                           <span ng-if="subs[subreddit].num_submissions > 0">
                             <span class="fa fa-file-text small-icon"></span>
                             {{ subs[subreddit].num_submissions | number }} <ng-pluralize count="subs[subreddit].num_submissions" when="{ '1': 'Post', 'other': 'Posts' }"></ng-pluralize>
+                            &nbsp;&nbsp;
                           </span>
                         </span>
-                        &nbsp;&nbsp;
                         <span ng-if="subs[subreddit].is_gilded" class="light-grey badge">
                           <span ng-if="subs[subreddit].gilds.gid_1 > 0"><img class="gilded-icon" lazy-img="{{ '../images/silver.png' }}"/>x{{ subs[subreddit].gilds.gid_1 }}&nbsp;</span>
                           <span ng-if="subs[subreddit].gilds.gid_2 > 0"><img class="gilded-icon" lazy-img="{{ '../images/gold.png' }}"/>x{{ subs[subreddit].gilds.gid_2 }}&nbsp;</span>
@@ -191,13 +212,22 @@
               <div ng-repeat="element in topPosts" ng-if="element" class="comment-list list-card-box">
                 <strong class="white title-heading">Current Top {{ element.type == 'submission' ? 'Post' : 'Comment' }} <a ng-href="#/{{ username }}/{{ element.subreddit }}/overview/" class="post-flair" style="float: right;">r/{{ element.subreddit }}</a></strong>
                 <br><br>
-                <div ng-if="element.type == 'comment'" id="top-com">
+                <div ng-if="element.type == 'comment'" id="top-comment-{{ username }}">
                   <div ng-include src="'views/comment-no-title.html'"></div>
                 </div>
-                <div ng-if="element.type == 'submission'" id="top-post">
+                <div ng-if="element.type == 'submission'" id="top-post-{{ username }}">
                   <div ng-include src="'views/submission.html'"></div>
                 </div>
               </div>
+            </div>
+
+            <div ng-if="recentlyActive" class="middle-col-pad g-underline user-map-{{ username }}" id="mapchart-{{ username }}" style="padding-bottom: 0;">
+              <user-map user="{{ username }}">
+                <div ng-if="!chartReady" align="center">
+                  <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
+                </div>
+                <div ng-if="chartReady" class="graph" ng-include src="'views/user-heatmap.html'"></div>
+              </user-map>
             </div>
 
             <div ng-if="recentlyActive" class="middle-col-pad g-underline" id="linechart-{{ username }}" style="padding-bottom: 0;">
@@ -207,15 +237,6 @@
                 </div>
                 <div ng-if="chartReady" class="graph" id="user-line-{{ username }}" ng-include src="'views/user-chart.html'"></div>
               </user-line>
-            </div>
-
-            <div ng-if="recentlyActive" class="middle-col-pad g-underline user-map-{{ username }}" style="padding-bottom: 0;">
-              <user-map user="{{ username }}">
-                <div ng-if="!chartReady" align="center">
-                  <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
-                </div>
-                <div ng-if="chartReady" class="graph" ng-include src="'views/user-heatmap.html'"></div>
-              </user-map>
             </div>
 
             <div ng-if="!recentlyActive" class="middle-col-pad g-underline">
@@ -228,20 +249,20 @@
           </div>
         </div>
 
-        <div class="col-lg-3 no-mobile">
-          <div class="fixed fixed-sides col-lg-3" style="margin-top: 15px;">
+        <div class="col-lg-3 col-xs-hidden no-mobile">
+          <div class="fixed fixed-sides col-lg-3 col-xs-hidden" style="margin-top: 15px;">
             <div class="fixed-right">
               <div ng-if="tab != 2" class="card-box">
                 <div class="headerRow side-pad">
                   <strong class="side-headers">User Statistics Overview</strong>
                 </div>
-                <div class="card-box-content">
+                <div class="card-box-content" ng-controller="DataCtrl">
                   <strong class="white">{{ comments | number }} </strong><span class="light-grey"> <ng-pluralize count="comments" when="{'1': 'Comment', 'other': 'Comments'}"></ng-pluralize></span>
                   &nbsp;&nbsp;
                   <strong class="white">{{ submissions | number }}</strong><span class="light-grey"> <ng-pluralize count="submissions" when="{'1': 'Post', 'other': 'Posts'}"></ng-pluralize></span>
                   <br><br>
                   <strong class="white">Current points: </strong><strong ng-class="upvotes > 0 ? 'green' : 'orange'">{{ upvotes | karma }}<span ng-class="upvotes > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong><br>
-                  <span class="light-grey">{{ avgUpvotes | karma }} average <ng-pluralize count="{{ avgUpvotes }}" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> / subreddit</span>
+                  <span class="light-grey">{{ avgUpvotes | karma }} average <ng-pluralize count="{{ avgUpvotes }}" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per subreddit</span>
                   <br><br>
                   <button class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
                   <div ng-include src="'views/limit-msg.html'"></div>

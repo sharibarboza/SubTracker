@@ -24,32 +24,48 @@ angular.module('SubSnoopApp')
         scope.getChart = function() {
           scope.mapData = userHeatmap.getUserMap(scope.username, subs, null);
         	scope.count = userHeatmap.getCount();
-          scope.subAverage = userHeatmap.getAverage();
+          scope.average = userHeatmap.getAverage();
+          scope.uniqueSubs = userHeatmap.getUniqueSubs();
           scope.chartReady = true;
         };
 
         $document.ready(function() {
-          var middleCol = element.parent().parent();
           var prevElem = element.parent()[0].previousElementSibling;
-          var idName = '#' + prevElem.id + ' .graph';
+          var idName;
+          if (angular.element('#top-post-' + scope.username).length > 0) {
+            idName = '#' + prevElem.id + ' .post-content';
+          } else {
+            idName = '#' + prevElem.id + ' .post-body';
+          }
 
-          var listener = scope.$watch(function() { return middleCol.find(idName).height() > 0 }, function() {
-            var e = middleCol.find(idName);
+          var listener = scope.$watch(function() { return angular.element(idName).height() > 0 }, function() {
+            var e = angular.element(idName);
+            var scrollHeight = $document[0].documentElement.scrollHeight;
 
-            if (!scope.chartReady && e.length > 0 && e[0].clientHeight > 0) {
-              var entriesHeight = middleCol.find('#top-entries-' + attrs.user)[0].clientHeight;
-              var offsetTop = entriesHeight + 50;
-
-              $win.on('scroll', function (e) {
-                if (!scope.chartReady && $win.scrollTop() >= offsetTop) {
-                  scope.getChart();
-                  scope.chartReady = true;
-                  scope.$apply();
-                  return;
-                }
-              });
+            if (!scope.chartReady && e.length > 0) {
+              if (e[0].clientHeight > 0) {
+                var boxTop = element[0].getBoundingClientRect().top + 100;
+                $win.on('scroll', function (e) {
+                  if (!scope.chartReady && ($win.scrollTop() + $win.height()) >= boxTop) {
+                    scope.getChart();
+                    scope.$apply();
+                    return;
+                  }
+                });
+              } else {
+                var boxTop = prevElem.getBoundingClientRect().top - 100;
+                $win.on('scroll', function (e) {
+                  var scrollY = $win.scrollTop();
+                  if (!scope.chartReady && (scrollY >= boxTop || scrollY >= scrollHeight)) {
+                    scope.getChart();
+                    scope.$apply();
+                    return;
+                  }
+                });
+              }
             }
           });
+
         });
       }
     };

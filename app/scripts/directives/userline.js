@@ -34,9 +34,6 @@ angular.module('SubSnoopApp')
 
           scope.voteAverage = userChart.getAverage();
           scope.points = userChart.getPoints();
-          scope.onClick = function (points, evt) {
-            console.log(points, evt);
-          };
           scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
           scope.options = {
             scales: {
@@ -81,26 +78,25 @@ angular.module('SubSnoopApp')
         };
 
         $document.ready(function() {
-          var middleCol = element.parent().parent();
           var prevElem = element.parent()[0].previousElementSibling;
-          var idName = '#' + prevElem.id + ' .post-content';
+          var idName = '#' + prevElem.id + ' .graph';
 
-          var listener = scope.$watch(function() { return middleCol.find(idName).height() > 0 }, function() {
-            var e = middleCol.find(idName);
+          var listener = scope.$watch(function() { return angular.element(idName).height() > 0 }, function() {
+            var e = angular.element(idName);
 
             if (!scope.chartReady && e.length > 0 && e[0].clientHeight > 0) {
-              var boxTop = element[0].getBoundingClientRect().top + 100;
+              var boxTop = element.parent()[0].getBoundingClientRect().top + 100;
 
               $win.on('scroll', function (e) {
-                if (!scope.chartReady && ($win.scrollTop() + $win.height()) >= boxTop) {
+                if (!scope.chartReady && $win.scrollTop() + $win.height() >= boxTop) {
                   scope.getChart();
-                  scope.chartReady = true;
                   scope.$apply();
                   return;
                 }
               });
             }
           });
+
         });
 
       }

@@ -2,7 +2,7 @@
   <strong class="white title-heading">Points Earned In The Last Year: {{ totalUps | number }}</strong>
   <br>
   <span class="light-grey">
-    {{ monthAverage | karma }} average <ng-pluralize count="monthAverage" when="{ '1': 'point', 'other': 'points' }"></ng-pluralize> / month
+    {{ monthAverage | karma }} average <ng-pluralize count="monthAverage" when="{ '1': 'point', 'other': 'points' }"></ng-pluralize> earned per month
   </span>
   <br><br>
   <canvas id="line" class="chart chart-line" chart-data="data"

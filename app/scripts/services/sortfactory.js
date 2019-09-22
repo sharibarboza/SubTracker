@@ -16,7 +16,7 @@ angular.module('SubSnoopApp')
 
     var sortSubs = {
       sortOptions: [
-        {value: 'totalUps', name: 'Total cumulative points'},
+        {value: 'totalUps', name: 'Total points'},
         {value: 'mostActive', name: 'Most activity'},
         {value: 'lastSeen', name: 'Most recent activity'},
         {value: 'mostGilded', name: 'Most gilded'},

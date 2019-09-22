@@ -256,10 +256,10 @@ angular.module('SubSnoopApp')
                 var html;
                 if (isImgurGif(data.url)) {
                     gif_url = getImgurUrl(data.url);
-                    html = '<img src="' + gif_url + '/embed"></iframe>';
+                    html = '<img width="100%" src="' + gif_url + '/embed"></iframe>';
                 } else {
                     gif_url = data.url;
-                    html = '<img src="' + gif_url + '"></iframe>';
+                    html = '<img width="100%" src="' + gif_url + '"></iframe>';
                 }
                 content = centerWrap(changeSize(page, html));
             } else if (data.selftext_html) {

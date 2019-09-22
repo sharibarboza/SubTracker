@@ -21,8 +21,8 @@
   </div>
 </div>
 
-<div ng-show="searching">
-  <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+<div ng-show="searching" align="center" class="g-underline">
+  <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
 </div>
 
 <div class="row no-margin" ng-if="resultList.length" id="results">

@@ -17,7 +17,8 @@ angular.module('SubSnoopApp')
     var dataArray = [];
     var subCount = 0;
     var uniqueSubs = {};
-    var average = null;
+    var numUnique = 0;
+    var average = 0;
     var numMonths = 12;
 
     var minDate = moment().startOf('day').subtract(numMonths, 'month');
@@ -33,6 +34,7 @@ angular.module('SubSnoopApp')
     return {
       getUserMap: function(current_user, subs, current_year) {
         if (!dates || user !== current_user) {
+          user = current_user;
           resetData();
           var keys = Object.keys(subs);
 
@@ -43,8 +45,8 @@ angular.module('SubSnoopApp')
             getData('submissions');
           }
           fillDataArray();
-          calculateAverage();
-          user = current_user;
+          calculateUnique();
+          average = (count / numMonths).toFixed(0);
         }
         return dataArray;
       },
@@ -53,6 +55,9 @@ angular.module('SubSnoopApp')
       },
       getAverage: function() {
         return average;
+      },
+      getUniqueSubs: function() {
+        return numUnique;
       },
       clearData: function() {
         resetData();
@@ -69,7 +74,8 @@ angular.module('SubSnoopApp')
       count = 0;
       dataArray = [];
       subCount = 0;
-      average = null;
+      numUnique = 0;
+      average = 0;
     };
 
     /*
@@ -97,15 +103,14 @@ angular.module('SubSnoopApp')
     /*
      Calculate the average of unique subreddits per month.
     */
-    function calculateAverage() {
+    function calculateUnique() {
       var totalSubs = 0;
       for (var key in uniqueSubs) {
         var subDict = uniqueSubs[key];
         var length = Object.keys(subDict).length;
         totalSubs += length;
       }
-      var totalMonths = Object.keys(uniqueSubs).length;
-      average = (totalSubs / totalMonths).toFixed(0);
+      numUnique = (totalSubs / numMonths).toFixed(0);
     }
 
     /*
@@ -137,6 +142,7 @@ angular.module('SubSnoopApp')
           if (!(elem.subreddit in uniqueSubs[month])) {
             uniqueSubs[month][elem.subreddit] = null;
           }
+          count += 1;
         }
       }
     }
@@ -159,7 +165,6 @@ angular.module('SubSnoopApp')
         dayData.details = [];
         dayData.summary = [];
         dayData.subs = {};
-        count += 1;
       } else {
         dayData = dates[dateObj];
       }

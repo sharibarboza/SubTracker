@@ -4,9 +4,9 @@
     <span ng-if="element.ups < 1" class="downvote-badge"><ng-pluralize class="post-points" count="element.ups" when="{'-1': '-1 point', 'other': '{{ element.ups | number }} points'}"></ng-pluralize> <span class="glyphicon glyphicon-arrow-down orange"></span></span>
     &nbsp;
     <span class="light-grey">
-      <span ng-if="element.gildings.gid_1 > 0"><img class="gilded-icon" lazy-img="{{ '../images/silver.png' }}"/> {{ element.gildings.gid_1 }}&nbsp;</span>
-      <span ng-if="element.gildings.gid_2 > 0"><img class="gilded-icon" lazy-img="{{ '../images/gold.png' }}"/> {{ element.gildings.gid_2 }}&nbsp;</span>
-      <span ng-if="element.gildings.gid_3 > 0"><img class="gilded-icon" lazy-img="{{ '../images/platinum.png' }}"/> {{ element.gildings.gid_3 }}</span>
+      <span ng-if="element.gildings.gid_1 > 0"><img class="gilded-icon" lazy-img="{{ '../images/silver.png' }}"/>x{{ element.gildings.gid_1 }}&nbsp;</span>
+      <span ng-if="element.gildings.gid_2 > 0"><img class="gilded-icon" lazy-img="{{ '../images/gold.png' }}"/>x{{ element.gildings.gid_2 }}&nbsp;</span>
+      <span ng-if="element.gildings.gid_3 > 0"><img class="gilded-icon" lazy-img="{{ '../images/platinum.png' }}"/>x{{ element.gildings.gid_3 }}</span>
     </span>
   <div>
   <p class="post-body wrap-text" ng-bind-html="element.highlighted_body && page == 'search' ? element.highlighted_body : element.body_html | escape | sanitize"></p>

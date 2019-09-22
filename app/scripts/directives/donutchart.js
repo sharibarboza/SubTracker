@@ -7,20 +7,23 @@
  * # pieChart
  */
 angular.module('SubSnoopApp')
-  .directive('donutChart', ['d3Service', '$window', 'subFactory', '$filter', 'moment', 'sentiMood', 'reaction',
-    function (d3Service, $window, subFactory, $filter, moment, sentiMood, reaction) {
+  .directive('donutChart', ['d3Service', '$window', '$document', 'subFactory', '$filter', 'moment', 'sentiMood', 'reaction',
+    function (d3Service, $window, $document, subFactory, $filter, moment, sentiMood, reaction) {
 
   /*
    Based on http://embed.plnkr.co/YICxe0/
   */
   var windowWidth = $window.innerWidth;
+  var $win = angular.element($window);
 
   return {
     restrict: 'EA',
     replace: true,
     scope: true,
-    template: '<div id="donut-chart"></div>',
     link: function(scope, element, attrs) {
+      scope.chartReady = false;
+      scope.loaderImg = '../images/103.gif';
+
       d3Service.d3().then(function(d3) {
 
         /*
@@ -41,18 +44,6 @@ angular.module('SubSnoopApp')
           }
           return scope_chart;
         }
-
-        /*
-         Adjust chart width according to the user's width of the screen
-         */
-        scope.chartConfig = configChart(scope.chartConfig, windowWidth);
-
-        var w = angular.element($window);
-        scope.getWindowDimensions = function () {
-          return {
-              'w': w.width()
-          };
-        };
 
         /*
          Default configuration for pie chart
@@ -79,27 +70,43 @@ angular.module('SubSnoopApp')
           /*
            Get data to populate pie charts
            */
-          var user = subFactory.getUser();
+          var user;
           var chartData;
-          if (attrs.sub && attrs.type === 'sentiment') {
-            chartData = sentiMood.getData(attrs.sub);
-          } else if (attrs.sub && attrs.type === 'reaction') {
-            chartData = reaction.getData(attrs.sub);
-          }
+          var d3ChartEl;
 
           // --------------------------------------------------------
 
-          var d3ChartEl = d3.select(element[0]);
-          try {
-            drawChart(chartData, scope.chartConfig);
+          scope.getChart = function() {
+            d3ChartEl = d3.select(element[0]);
+            user = subFactory.getUser();
+            if (attrs.sub && attrs.type === 'sentiment') {
+              chartData = sentiMood.getData(attrs.sub);
+            } else if (attrs.sub && attrs.type === 'reaction') {
+              chartData = reaction.getData(attrs.sub);
+            }
 
-            w.bind('resize', function() {
-              scope.$apply();
+            scope.chartReady = true;
+            scope.chartConfig = configChart(scope.chartConfig, windowWidth);
+
+            var w = angular.element($window);
+            scope.getWindowDimensions = function () {
+              return {
+                  'w': w.width()
+              };
+            };
+
+            try {
               drawChart(chartData, scope.chartConfig);
-            });
-          } catch(error) {
-            console.log(error);
+
+              w.bind('resize', function() {
+                scope.$apply();
+                drawChart(chartData, scope.chartConfig);
+              });
+            } catch(error) {
+              console.log(error);
+            }
           }
+
         }
 
         /*
@@ -387,6 +394,66 @@ angular.module('SubSnoopApp')
         }
 
         init();
+
+        $document.ready(function() {
+          var donutElem = element.parent().parent().parent();
+          var prevElem = donutElem[0].previousElementSibling;
+          var idName = '#' + prevElem.id + ' .graph';
+          var noGraph = false;
+
+          if (!prevElem.id) {
+            noGraph = true;
+
+            var prevElem = prevElem.previousElementSibling;
+            if (angular.element('#top-post-' + attrs.sub).length > 0) {
+              idName = '#' + prevElem.id + ' .post-content';
+            } else {
+              idName = '#' + prevElem.id + ' .post-body';
+            }
+          }
+
+          if (!noGraph) {
+            var listener = scope.$watch(function() { return angular.element(idName).height() > 0 }, function() {
+              var e = angular.element(idName);
+
+              if (!scope.chartReady && e[0]) {
+                scope.getChart();
+                return;
+              }
+            });
+          } else {
+            var listener = scope.$watch(function() { return angular.element(idName).height() > 0 }, function() {
+              var e = angular.element(idName);
+
+              if (!scope.chartReady && e.length > 0) {
+                if (e[0].clientHeight > 0) {
+                  var boxTop = element[0].getBoundingClientRect().top + 100;
+                  $win.on('scroll', function (e) {
+                    if (!scope.chartReady && ($win.scrollTop() + $win.height()) >= boxTop) {
+                      scope.getChart();
+                      scope.$apply();
+                      return;
+                    }
+                  });
+                } else {
+                  var boxTop = e[0].getBoundingClientRect().top;
+                  var scrollHeight = $document[0].documentElement.scrollHeight;
+
+                  $win.on('scroll', function (e) {
+                    var scrollY = $win.scrollTop();
+                    if (!scope.chartReady && (scrollY >= boxTop || scrollY + $win.height() >= scrollHeight)) {
+                      scope.getChart();
+                      scope.$apply();
+                      return;
+                    }
+                  });
+                }
+              }
+
+            });
+          }
+
+        });
 
       });
 

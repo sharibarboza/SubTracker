@@ -1054,6 +1054,7 @@ Dropdown
   min-width: auto;
   background-color: #2D3339;
   color: #9099A1;
+  z-index: 9999;
 }
 
 .dropdown-menu li {
@@ -1136,6 +1137,8 @@ Content
   height: 210px;
   position: relative;
   color: white;
+  background-image: url('../images/default-bg.jpg');
+  background-size: cover;
   background-size: cover;
   background-position: center 0;
   font-weight: 400;
@@ -1506,6 +1509,20 @@ Navigation
   border-bottom: 1px solid #4B5054;
   line-height: 60px;
   padding: 0 25px;
+}
+
+.middle-mobile-bar {
+  position: fixed;
+  z-index: 999;
+  background-color: #1F2327;
+  color: white;
+  font-size: 18px;
+  height: 60px;
+  border-bottom: 1px solid #4B5054;
+  line-height: 60px;
+  padding: 0 18px;
+  width: 100%;
+  display: none;
 }
 
 .home-icon {
@@ -2522,13 +2539,6 @@ Mobile
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-  /* Remove the padding we set earlier */
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
@@ -2664,16 +2674,14 @@ Mobile
 }
 
 @media screen and (max-width: 500px) {
-  .main-banner {
-    padding-top: 50px;
-    padding-bottom: 60px;
-  }
-}
-
-@media screen and (max-width: 500px) {
   .navbar-default, #searchbar, .search-content .breadcrumb, #sub-panels {
     padding-left: 16px;
     padding-right: 16px;
+  }
+
+  .main-banner {
+    padding-top: 50px;
+    padding-bottom: 60px;
   }
 
   .user-banner {
@@ -2734,6 +2742,10 @@ Mobile
   .user-banner {
     text-align: center;
   }
+
+  .middle-col {
+    width: 100% !important;
+  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -2777,7 +2789,7 @@ Mobile
     padding-left: 15px;
   }
 
-  .post-body, .overview-body {
+  .overview-body {
     padding: 0;
   }
 
@@ -3006,10 +3018,11 @@ Mobile
 
   .post-thumbnail {
     padding-right: 0;
+    padding-left: 0;
   }
 
-  .post-body {
-    padding-top: 0;
+  .submit-info {
+    padding-right: 0;
   }
 
   .md-toolbar-tools {
@@ -3126,7 +3139,7 @@ Mobile
 
  @media screen and (max-width: 500px) {
    .content {
-     padding-top: 90px;
+     padding-top: 0;
    }
 
    #sub-panels .card-box {
@@ -3162,7 +3175,7 @@ Mobile
    }
 
    .sub-name {
-     font-size: 1.2em;
+     font-size: 16px;
    }
 
    .rank-box {
@@ -3258,8 +3271,10 @@ Mobile
    .mobile-circle {
      display: block;
      background-color: rgb(0, 0, 0, 0.5);
-     width: 110px;
-     height: 110px;
+     top: 60px;
+     left: 0px;
+     width: 130px;
+     height: 130px;
      border-radius: 50%;
      border: 5px solid #fff;
      background-size: cover;
@@ -3311,12 +3326,21 @@ Mobile
   }
 
   .custom-banner, .s-banner, .short-banner, .u-banner {
-    height: 270px;
+    height: 180px;
   }
 
   .sub-card-box {
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .sub-innner-row, .prevRow .sub-cells {
+    padding: 0;
+    text-align: left;
+  }
+
+  .sub-inner-row {
+    padding-left: 0 !important;
   }
 
   .nav-pad {
@@ -3391,6 +3415,49 @@ Mobile
   .md-media-sm {
     width: 60px !important;
     height: 60px !important;
+  }
+
+  .toggle-nav {
+    display: none;
+  }
+
+  .middle-bar {
+    display: none;
+  }
+
+  .banner-subtitle {
+    font-size: 15px;
+  }
+
+  .mobile-break {
+    display: block !important;
+  }
+
+  .mobile-filters {
+    text-align: left !important;
+    padding-left: 15px;
+  }
+
+  .post-count {
+    height: auto;
+  }
+
+  .sort-dropdown, .sub-form {
+    width: 44vw !important;
+    margin-top: 0 !important;
+    font-size: 14px;
+  }
+
+  .footer {
+    padding: 30px 15px;
+  }
+
+  .middle-mobile-bar {
+    display: block;
+  }
+
+  .comment-div {
+    padding-bottom: 25px;
   }
 }
 

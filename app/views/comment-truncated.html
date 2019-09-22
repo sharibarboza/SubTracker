@@ -12,7 +12,7 @@
     <span ng-if="element.gildings.gid_3 > 0"><img class="gilded-icon" lazy-img="{{ '../images/platinum.png' }}"/><span class="gild-font"> x {{ element.gildings.gid_3 }}</span></span>
   </span>
   <span class="post-links light-grey">
-    <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMM Do YYYY, h:mm a'" class="post-date"></span>
+    <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date"></span>
   </span>
   <p class="post-body wrap-text" ng-bind-html="element.highlighted_body && page == 'search' ? element.highlighted_body : element.body_html | escape | sanitize | truncate:200:false"></p>
 </div>
