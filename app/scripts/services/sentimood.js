@@ -8,7 +8,7 @@
  * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .factory('sentiMood', function () {
+  .factory('sentiMood', ['$filter', function ($filter) {
     var username;
     var subs = {};
     var colorData = {'Positive' : "#37AE9B", 'Neutral' : "#D6D6D6", 'Negative' : "#f96854"};
@@ -100,7 +100,7 @@ angular.module('SubSnoopApp')
         chartArray.push(d);
       }
 
-      var total = numComments + numSubmits
+      var total = $filter('number')(numComments + numSubmits);
       getPercentages(chartArray, total);
 
       chartData.values = chartArray;
@@ -141,4 +141,4 @@ angular.module('SubSnoopApp')
       }
     };
 
-  });
+  }]);

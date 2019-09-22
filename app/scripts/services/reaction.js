@@ -8,7 +8,7 @@
  * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .factory('reaction', function () {
+  .factory('reaction', ['$filter', function ($filter) {
     var username;
     var subs = {};
     var colorData = {'Upvoted' : "#37AE9B", 'Neutral' : "#D6D6D6", 'Downvoted' : "#f96854"};
@@ -87,7 +87,7 @@ angular.module('SubSnoopApp')
         chartArray.push(d);
       }
 
-      var total = numComments + numSubmits;
+      var total = $filter('number')(numComments + numSubmits);
       getPercentages(chartArray, total);
 
       chartData.values = chartArray;
@@ -128,4 +128,4 @@ angular.module('SubSnoopApp')
       }
     };
 
-  });
+  }]);
