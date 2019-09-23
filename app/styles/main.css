@@ -587,7 +587,7 @@ blockquote {
 .top-btn {
   position: fixed;
   bottom: 20px;
-  right: 15vw;
+  right: 13vw;
   z-index: 999;
   display: none;
   overflow: hidden;

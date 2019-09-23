@@ -183,6 +183,13 @@
     }
 
     /*
+     Set current user in local storage
+    */
+    function setCurrentUser(user) {
+      localStorage.setItem('currentUser', user.name);
+    }
+
+    /*
      Configure sub data object, which will be passed to the controllers.
     */
     function setSubData(user_response) {
@@ -218,8 +225,16 @@
       subNames = Object.keys(subs);
       subLength = subNames.length;
 
+      // Set previous users in local storage
       try {
         setPrevUsers(user_response);
+      } catch(error) {
+        console.log(error);
+      }
+
+      // Set current user in local local storage
+      try {
+        setCurrentUser(user_response);
       } catch(error) {
         console.log(error);
       }
@@ -238,7 +253,7 @@
         'topSubmit': topSubmit,
         'topSub': topSub
       }
-
+      
       return subData;
     }
 

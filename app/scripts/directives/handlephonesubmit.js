@@ -23,11 +23,32 @@ angular.module('SubSnoopApp')
 
         element.on('submit', function() {
           textFields[0].blur();
-          var username = textFields[0].value;
+          var username = (textFields[0].value).trim();
+
+          var currentUser;
+          try {
+            currentUser = localStorage.getItem('currentUser');
+
+            if (!username) {
+              username = currentUser;
+            }
+          } catch(e) {
+          }
 
           if (attrs.redirect === 'true') {
-            $location.path(username + '/subreddits/');  // Go to user's main page
-            scope.$apply();
+            if (username.toLowerCase() === currentUser.toLowerCase().trim()) {
+              if (page === 'home') {
+                $location.path(username + '/subreddits');
+                scope.$apply();
+                location.reload();
+              } else {
+                location.reload();
+              }
+            } else {
+              $location.path(username + '/subreddits/');  // Go to user's main page
+              scope.$apply();
+            }
+
           }
         });
       }

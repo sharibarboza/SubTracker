@@ -100,17 +100,18 @@ angular.module('SubSnoopApp')
         chartArray.push(d);
       }
 
-      var total = $filter('number')(numComments + numSubmits);
+      var total = numComments + numSubmits;
       getPercentages(chartArray, total);
 
       chartData.values = chartArray;
       chartData.colors = colorData;
       chartData.center.value = "Post Attitude";
 
+      var totalNum = $filter('number')(total);
       if (total === 1) {
-        chartData.center.value2 = total + ' entry';
+        chartData.center.value2 = totalNum + ' entry';
       } else {
-        chartData.center.value2 = total + ' entries';
+        chartData.center.value2 = totalNum + ' entries';
       }
 
       return chartData;
