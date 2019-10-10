@@ -39,6 +39,10 @@ angular.module('SubSnoopApp')
     // Contains cached sorted lists of subreddits
     var sortedSubLists = {};
 
+    // Contains cached sorted lists of entries from each subreddit
+    var sortedEntries = {};
+    var numCachedEntries = 0;
+
     // The default value for sorting subreddits (totalUps - subreddits with the most points)
     var defaultSubSort = sortSubs.sortOptions[0];
 
@@ -71,17 +75,42 @@ angular.module('SubSnoopApp')
           return (attribute in sortedSubLists);
       },
       addSorted: function(attribute, list) {
-        if (Object.keys(sortedSubLists).length == 20) {
-          clear();
-        }
-
         sortedSubLists[attribute] = list;
       },
       clearSorted: function() {
-        clear();
+        clear(sortedSubLists);
+        clear(sortedEntries);
+        numCachedEntries = 0;
       },
       getSorted: function(attribute) {
         return sortedSubLists[attribute];
+      },
+      hasEntries: function(subreddit, attribute, where) {
+        if (subreddit in sortedEntries) {
+          if (where in sortedEntries[subreddit]) {
+            return (attribute in sortedEntries[subreddit][where]);
+          }
+        }
+        return false;
+      },
+      addEntries: function(subreddit, attribute, where, list) {
+        if (numCachedEntries >= 30) {
+          clear(sortedEntries);
+          numCachedEntries = 0;
+        }
+        if (!(subreddit in sortedEntries)) {
+          sortedEntries[subreddit] = {}
+        }
+        if (!(where in sortedEntries[subreddit])) {
+          sortedEntries[subreddit][where] = {};
+        }
+        if (!(attribute in sortedEntries[subreddit][where])) {
+          sortedEntries[subreddit][where][attribute] = list;
+          numCachedEntries += 1;
+        }
+      },
+      getEntries: function(subreddit, attribute, where) {
+        return sortedEntries[subreddit][where][attribute];
       }
     };
     return factory;
@@ -89,10 +118,10 @@ angular.module('SubSnoopApp')
     /*
      Clears data
     */
-    function clear() {
-      for (var key in sortedSubLists) {
-        if (sortedSubLists.hasOwnProperty(key)) {
-          delete sortedSubLists[key];
+    function clear(dataList) {
+      for (var key in dataList) {
+        if (dataList.hasOwnProperty(key)) {
+          delete dataList[key];
         }
       }
     }

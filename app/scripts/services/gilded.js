@@ -16,20 +16,26 @@ angular.module('SubSnoopApp')
 
     // Contains cached sorted lists of subreddits
     var gildedPosts = {};
+    var defaultSort = 'newest';
 
     var factory = {
-      setData: function(subreddit, posts) {
-        var gilds = getGildedPosts(posts);
-
+      setData: function(subreddit, posts, sort) {
         if (Object.keys(gildedPosts).length == 20) {
           clear();
         }
+        var gilds;
+        if (!(subreddit in gildedPosts)) {
+          posts = getGildedPosts(posts);
+          gildedPosts[subreddit] = {};
+        }
 
-        gildedPosts[subreddit] = gilds;
+        if (!(sort in gildedPosts[subreddit])) {
+          gildedPosts[subreddit][sort] = posts;
+        }
       },
-      getData: function(subreddit) {
+      getData: function(subreddit, sort) {
         try {
-          return gildedPosts[subreddit];
+          return gildedPosts[subreddit][sort];
         } catch(e) {
           return [];
         }

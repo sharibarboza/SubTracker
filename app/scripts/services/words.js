@@ -224,8 +224,8 @@ angular.module('SubSnoopApp')
             subWords[sub].wordArray = [];
           }
 
-          var comments = subs[sub].comments;
-          var submissions = subs[sub].submissions;
+          var comments = subs.comments;
+          var submissions = subs.submissions;
 
           splitWords(comments, 'comments');
           splitWords(submissions, 'submits');
@@ -326,7 +326,7 @@ angular.module('SubSnoopApp')
             var splitWords = cleanWord(word);
             addWords(splitWords);
           }
-        }  
+        }
       }
     }
 

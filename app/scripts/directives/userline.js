@@ -20,10 +20,10 @@ angular.module('SubSnoopApp')
       link: function(scope, element, attrs) {
         scope.labels = months.getLabels();
         scope.chartReady = false;
-        var subs = subFactory.getSubData().subs;
+        var entries = subFactory.getAllEntries();
 
         scope.getChart = function() {
-          userChart.getUserChart(scope.username, subs);
+          userChart.getUserChart(scope.username, entries);
           scope.series = ['Comment Points', 'Post Points'];
           scope.colors = ['#37AE9B', '#DCDCDC'];
 

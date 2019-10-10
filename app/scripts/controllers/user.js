@@ -87,7 +87,7 @@
       $scope.subs = subFactory.getSubData().subs;
       var subBadges = badges.getBadges($scope.username);
       var lastSeen = subBadges['lastSeen'].sub;
-
+      
       recentTimes.getData($scope.username, lastSeen, $scope.subs[lastSeen]);
       $scope.recentlyActive = recentTimes.recentlyActive(lastSeen, 6);
     };

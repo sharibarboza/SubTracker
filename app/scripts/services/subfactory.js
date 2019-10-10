@@ -8,8 +8,8 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sortFactory', 'subInfo', 'gilded', 'reaction', 'sentiMood', 'entryLimit', 'subChart', 'userHeatmap', 'subHeatmap', 'subChart', 'words',
-  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory, subInfo, gilded, reaction, sentiMood, entryLimit, subChart, userHeatmap, subHeatmap, words) {
+ .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sortFactory', 'filterPosts', 'subInfo', 'gilded', 'reaction', 'sentiMood', 'entryLimit', 'subChart', 'userHeatmap', 'subHeatmap', 'subChart', 'words',
+  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory, filterPosts, subInfo, gilded, reaction, sentiMood, entryLimit, subChart, userHeatmap, subHeatmap, words) {
     var pages = 10;
     var username;
     var promise = null;
@@ -23,6 +23,7 @@
     var numSubmits = 0;
     var limit = entryLimit.getLimit().value;
     var allIDs = {};
+    var subEntries = {};
 
     var comments = [];
     var submissions = [];
@@ -85,6 +86,21 @@
       },
       getSubmitsList: function() {
         return submissions;
+      },
+      getEntries: function(subreddit, where, limit) {
+        try {
+          if (where) {
+            var entryList = subEntries[subreddit][where];
+            return entryList.slice(0, limit);
+          } else {
+            return subEntries[subreddit];
+          }
+        } catch(e) {
+          return [];
+        }
+      },
+      getAllEntries: function() {
+        return subEntries;
       },
       setSubInfo: function(subreddit, info) {
         try {
@@ -253,7 +269,7 @@
         'topSubmit': topSubmit,
         'topSub': topSub
       }
-      
+
       return subData;
     }
 
@@ -314,6 +330,7 @@
       numSubmits = 0;
       limit = entryLimit.getLimit().value;
       allIDs = {};
+      subEntries = {};
 
       comments = [];
       submissions = [];
@@ -335,6 +352,7 @@
       i = 0;
 
       sortFactory.clearSorted();
+      filterPosts.clearFiltered();
       gilded.clearGilded();
       reaction.clearData();
       sentiMood.clearData();
@@ -460,7 +478,7 @@
         if (where === 'comments') {
           if (limit === 'All' || numComments < limit) {
             comments.push(item);
-            numComments += 1;
+            numComments += 1; 
           } else {
             before = null;
             return;
@@ -538,11 +556,9 @@
     */
     function createNewSub() {
       var subData = {};
-      subData.comments = [];
       subData.comment_ups = 0;
       subData.recent_comment = null;
       subData.num_comments = 0;
-      subData.submissions = [];
       subData.submission_ups = 0;
       subData.recent_submission = null;
       subData.num_submissions = 0;
@@ -564,6 +580,19 @@
     }
 
     /*
+     Add entry to entries object
+    */
+    function addEntry(subreddit, entry, where) {
+      if (!(subreddit in subEntries)) {
+        subEntries[subreddit] = {
+          'comments': [],
+          'submissions': []
+        };
+      }
+      subEntries[subreddit][where].push(entry);
+    }
+
+    /*
      Add a new comment to a sub object
     */
     function addComment(name, subreddit, comment) {
@@ -581,7 +610,7 @@
       obj.ups = comment.ups;
       obj.subreddit = comment.subreddit;
 
-      subreddit.comments.push(obj);
+      addEntry(name, obj, 'comments');
       subreddit.count += 1;
       subreddit.num_comments += 1;
 
@@ -644,7 +673,7 @@
         }
       }
 
-      subreddit.submissions.push(obj);
+      addEntry(name, obj, 'submissions');
       subreddit.count += 1;
       subreddit.num_submissions += 1;
 
@@ -723,11 +752,11 @@
       var subComments, subSubmits, oldestComment, oldestSubmit;
 
       for (var key in subs) {
-        subComments = subs[key].comments;
-        subSubmits = subs[key].submissions;
+        subComments = subEntries[key].comments;
+        subSubmits = subEntries[key].submissions;
 
-        oldestComment = subs[key].comments[subComments.length-1];
-        oldestSubmit = subs[key].submissions[subSubmits.length-1];
+        oldestComment = subEntries[key].comments[subComments.length-1];
+        oldestSubmit = subEntries[key].submissions[subSubmits.length-1];
 
         firstPosts.push(compareDates(oldestComment, oldestSubmit, false));
       }

@@ -23,14 +23,17 @@ angular.module('SubSnoopApp')
       getAllSubs: function(current_user) {
         if (isEmpty(sub_data) || !subFactory.checkUser(current_user) || current_user != user) {
           user = current_user;
+          clear(sub_badges);
+          clear(sub_data);
           setData();
+
           var data = subFactory.getSubData();
           return configureSubs(data);
         }
         return sub_data;
       },
       getBadges: function(current_user) {
-        if (isEmpty(sub_badges) || !subFactory.checkUser(current_user) || current_user != user) {
+        if (isEmpty(sub_data) || !subFactory.checkUser(current_user) || current_user != user) {
           user = current_user;
           clear(sub_badges);
           clear(sub_data);
@@ -75,14 +78,12 @@ angular.module('SubSnoopApp')
       if (isEmpty(sub_badges)) {
         initBadges(data);
       }
-
       for (var key in sub_badges) {
         if ('sub' in sub_badges[key]) {
           var sub = sub_badges[key].sub;
           addSub(sub, sub_badges[key]);
         }
       }
-
       return sub_data;
     }
 

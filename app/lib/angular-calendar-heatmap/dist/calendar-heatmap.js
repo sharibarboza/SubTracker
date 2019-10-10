@@ -27,7 +27,8 @@ angular.module('g1b.calendar-heatmap', []).
           var height = 200;
           var height_pad = 5;
           var item_size = 100;
-          var label_padding = 20;
+          var label_padding_width = 15;
+          var label_padding_height = 20;
           var transition_duration = 500;
           var in_transition = false;
 
@@ -73,7 +74,7 @@ angular.module('g1b.calendar-heatmap', []).
             if ( !w ) { return; }
             width = w < max_width ? max_width : w;
             item_size = (width / getNumberOfWeeks()) + 0.5;
-            height = label_padding + 7 * (item_size + gutter * height_pad);
+            height = label_padding_height + 7 * (item_size + gutter * height_pad);
             svg.attr({'width': width, 'height': height});
             if ( !!scope.data ) {
               scope.drawChart();
@@ -138,10 +139,10 @@ angular.module('g1b.calendar-heatmap', []).
               var date = moment(d.date);
               var dayIndex = Math.round((date - moment(start_of_year).startOf('week')) / 86400000);
               var colIndex = Math.trunc(dayIndex / 7);
-              return colIndex * (item_size + gutter) + label_padding;
+              return colIndex * (item_size + gutter) + label_padding_width;
             };
             var calcItemY = function (d) {
-              return label_padding + moment(d.date).weekday() * (item_size + gutter * height_pad);
+              return label_padding_height + moment(d.date).weekday() * (item_size + gutter * height_pad);
             };
             var calcItemSize = function (d) {
               return item_size * 0.93;
@@ -323,7 +324,7 @@ angular.module('g1b.calendar-heatmap', []).
               .append('text')
               .attr('class', 'label label-month')
               .attr('font-size', function () {
-                return Math.floor(label_padding / 3) + 'px';
+                return Math.floor(label_padding_width / 3) + 'px';
               })
               .text(function (d) {
                 return d.toLocaleDateString('en-us', {month: 'short'});
@@ -332,9 +333,9 @@ angular.module('g1b.calendar-heatmap', []).
                 var date = moment(d);
                 var dayIndex = Math.round((date - moment(start_of_year).startOf('week')) / 86400000);
                 var colIndex = Math.trunc(dayIndex / 7) + 2;
-                return colIndex * (item_size + gutter) + label_padding;
+                return colIndex * (item_size + gutter) + label_padding_width;
               })
-              .attr('y', label_padding / 2)
+              .attr('y', label_padding_height / 2)
               .on('mouseenter', function (d) {
                 if ( in_transition ) { return; }
 
@@ -360,7 +361,7 @@ angular.module('g1b.calendar-heatmap', []).
             // Add day labels
             var day_labels = d3.time.days(moment().startOf('week'), moment().endOf('week'));
             var dayScale = d3.scale.ordinal()
-              .rangeRoundBands([label_padding, height])
+              .rangeRoundBands([label_padding_height, height])
               .domain(day_labels.map(function (d) {
                 return moment(d).weekday();
               }));
@@ -376,7 +377,7 @@ angular.module('g1b.calendar-heatmap', []).
               })
               .style('text-anchor', 'left')
               .attr('font-size', function () {
-                return Math.floor(label_padding / 3) + 'px';
+                return Math.floor(label_padding_height / 3) + 'px';
               })
               .text(function (d) {
                 return moment(d).format('dddd')[0];

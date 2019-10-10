@@ -7,7 +7,7 @@
  * # userMap
  */
 angular.module('SubSnoopApp')
-  .directive('userMap', ['$compile', '$window', '$document', 'subFactory', 'userHeatmap', function ($compile, $window, $document, subFactory, userHeatmap) {
+  .directive('userMap', ['$compile', '$window', '$document', 'userHeatmap', 'subFactory', function ($compile, $window, $document, userHeatmap, subFactory) {
     var $win = angular.element($window);
 
     /*
@@ -19,10 +19,10 @@ angular.module('SubSnoopApp')
       restrict: 'E',
       link: function(scope, element, attrs) {
         scope.chartReady = false;
-        var subs = subFactory.getSubData().subs;
+        var entries = subFactory.getAllEntries();
 
         scope.getChart = function() {
-          scope.mapData = userHeatmap.getUserMap(scope.username, subs, null);
+          scope.mapData = userHeatmap.getUserMap(scope.username, entries, null);
         	scope.count = userHeatmap.getCount();
           scope.average = userHeatmap.getAverage();
           scope.uniqueSubs = userHeatmap.getUniqueSubs();

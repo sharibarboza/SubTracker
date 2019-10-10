@@ -9,7 +9,7 @@
  * Filter in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .filter('sortPosts', ['moment', '$filter', function (moment, $filter) {
+  .filter('sortPosts', ['moment', '$filter', 'sortFactory', function (moment, $filter, sortFactory) {
 
     /*
      Used for sorting comments/submission posts
@@ -41,9 +41,14 @@ angular.module('SubSnoopApp')
       return keys;
     };
 
-    return function (originalInput, attribute) {
+    return function (originalInput, attribute, subreddit, where) {
       var sortedData = [];
       var input = originalInput.slice(0);
+
+      // Get cached sorted list
+      if (subreddit && sortFactory.hasEntries(subreddit, attribute, where)) {
+        return sortFactory.getEntries(subreddit, attribute, where);
+      }
 
       if (input) {
         if (attribute === 'newest') {
@@ -54,6 +59,11 @@ angular.module('SubSnoopApp')
           sortedData = sortPoints(input, true);
         } else if (attribute === 'mostDowns') {
           sortedData = sortPoints(input, false);
+        }
+
+        // Cache sorted list
+        if (subreddit) {
+          sortFactory.addEntries(subreddit, attribute, where, sortedData);
         }
       }
       return sortedData;

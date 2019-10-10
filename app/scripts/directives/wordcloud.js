@@ -19,7 +19,7 @@ angular.module('SubSnoopApp')
       restrict: 'E',
       link: function(scope, element, attrs) {
         scope.chartReady = false;
-        var subs = subFactory.getSubData().subs;
+        var subs = subFactory.getEntries(attrs.sub, null);
         scope.colors = ['#f96854', '#97BBCD', '#3BC6D2', '#E975BF', '#C275E6', '#CDCB6A', '#3BA7A4', '#1DA1F2', '#E8E8E8', '#9099A1'];
 
         scope.getChart = function() {

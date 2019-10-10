@@ -20,7 +20,7 @@ angular.module('SubSnoopApp')
       link: function(scope, element, attrs) {
         scope.labels = months.getLabels();
         scope.chartReady = false;
-        var subs = subFactory.getSubData().subs[attrs.sub];
+        var subs = subFactory.getEntries(attrs.sub, null);
 
         scope.getChart = function() {
           subChart.getSubChart(scope.username, attrs.sub, subs);

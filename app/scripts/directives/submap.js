@@ -19,7 +19,7 @@ angular.module('SubSnoopApp')
       restrict: 'E',
       link: function(scope, element, attrs) {
         scope.chartReady = false;
-        var subs = subFactory.getSubData().subs[attrs.sub];
+        var subs = subFactory.getEntries(attrs.sub, null);
 
         scope.getChart = function() {
           scope.mapData = subHeatmap.getSubMap(scope.username, attrs.sub, subs);

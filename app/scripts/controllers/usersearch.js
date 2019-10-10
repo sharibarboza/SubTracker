@@ -17,8 +17,8 @@ angular.module('SubSnoopApp')
     $scope.searching = false;  // For loading progression wheel
     $scope.main = false;
     $scope.page = 'search';
-    $scope.dataSubs = subFactory.getSubData().subs;
-    $scope.subsArray = Object.keys($scope.dataSubs);
+    $scope.entries = subFactory.getAllEntries();
+    $scope.subsArray = Object.keys($scope.entries);
     $scope.searchList = $scope.subsArray;  // Used for collapsible sidenav
     $scope.searchInput = "";
     $scope.noResults = "";
@@ -128,7 +128,7 @@ angular.module('SubSnoopApp')
       $scope.searching = true;
       $timeout(function() {
         resetFilters();
-        $scope.origResults = searchResults.getData($scope.searchInput, $scope.dataSubs, $scope.type, $scope.searchSubs);
+        $scope.origResults = searchResults.getData($scope.searchInput, $scope.entries);
         $scope.hasResults = Object.keys($scope.origResults).length > 0;
         $scope.filterResults(1);
         $scope.searching = false;

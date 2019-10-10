@@ -54,27 +54,6 @@ angular.module('SubSnoopApp')
     };
 
     /*
-     Sort subreddits numerically by point average
-     */
-    var sortAverage = function(keys, data, where) {
-      keys.sort(function(a, b) {
-        var num1, num2;
-        if (where === 'comments') {
-          num1 = getAverage(data[a].comment_ups, data[a].comments.length);
-          num2 = getAverage(data[b].comment_ups, data[b].comments.length);
-        } else if (where === 'submitted') {
-          num1 = getAverage(data[a].submission_ups, data[a].submissions.length);
-          num2 = getAverage(data[b].submission_ups, data[b].submissions.length);
-        } else {
-          num1 = getAverage(data[a].total_ups, data[a].count);
-          num2 = getAverage(data[b].total_ups, data[b].count);
-        }
-        return $filter('sortNum')(num1, num2, a, b, true, 'alpha');
-      });
-      return keys;
-    };
-
-    /*
      Sort subreddits by most recent date
      */
     var sortRecent = function(keys, data) {
@@ -143,21 +122,15 @@ angular.module('SubSnoopApp')
         if (attribute === 'subName') {
           sortedData = sortName(cloned_keys);
         } else if (attribute === 'totalComments') {
-          sortedData = sort(cloned_keys, subs, 'comments', true);
+          sortedData = sort(cloned_keys, subs, 'num_comments', true);
         } else if (attribute === 'totalSubmits') {
-          sortedData = sort(cloned_keys, subs, 'submissions', true);
+          sortedData = sort(cloned_keys, subs, 'num_submissions', true);
         } else if (attribute === 'totalUps') {
           sortedData = sort(input, subs, 'total_ups', true);
         } else if (attribute === 'lastSeen') {
           sortedData = sortRecent(cloned_keys, subs);
         } else if (attribute === 'mostActive') {
           sortedData = sortActivity(cloned_keys, subs);
-        } else if (attribute === 'avgComment') {
-          sortedData = sortAverage(cloned_keys, subs, 'comments');
-        } else if (attribute === 'avgSubmit') {
-          sortedData = sortAverage(cloned_keys, subs, 'submitted');
-        } else if (attribute === 'avgPost') {
-          sortedData = sortAverage(cloned_keys, subs, 'posts');
         } else if (attribute === 'mostDown') {
           sortedData = sort(cloned_keys, subs, 'total_ups', false);
         } else if (attribute === 'mostGilded') {

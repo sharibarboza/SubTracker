@@ -118,7 +118,6 @@ angular.module('SubSnoopApp')
       var index;
       var monthName = monthNames[date.month()];
       index = months.indexOf(monthName);
-
       if (index + 12 <= numMonths && date.year() === currentYear) {
         index += 12;
       }
