@@ -45,10 +45,6 @@ angular.module('SubSnoopApp')
       var sortedData = [];
       var input = originalInput.slice(0);
 
-      // Get cached sorted list
-      if (subreddit && sortFactory.hasEntries(subreddit, attribute, where)) {
-        return sortFactory.getEntries(subreddit, attribute, where);
-      }
 
       if (input) {
         if (attribute === 'newest') {
@@ -59,11 +55,6 @@ angular.module('SubSnoopApp')
           sortedData = sortPoints(input, true);
         } else if (attribute === 'mostDowns') {
           sortedData = sortPoints(input, false);
-        }
-
-        // Cache sorted list
-        if (subreddit) {
-          sortFactory.addEntries(subreddit, attribute, where, sortedData);
         }
       }
       return sortedData;

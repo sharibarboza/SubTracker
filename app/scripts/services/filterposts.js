@@ -8,7 +8,7 @@
  * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .factory('filterPosts', ['moment', function (moment) {
+  .factory('filterPosts', ['moment', '$filter', function (moment, $filter) {
 
     /*
      Contains all the categories to sort subreddits and to sort posts
@@ -60,19 +60,32 @@ angular.module('SubSnoopApp')
       getFilter: function() {
         return currentFilter;
       },
-      getData: function(data, filter, subreddit, sort, where, gilded) {
-        if (filter === 'all') {
-          return data;
-        } else if (checkExists(subreddit, where, filter, sort)) {
-          return filteredLists[subreddit][where][filter][sort];
+      getLength: function(subreddit, where, filter, sort) {
+        if (checkExists(subreddit, where, filter)) {
+          return filteredLists[subreddit][where][filter][sort].length;
         } else {
-          var filteredEntries = filterData(data, filter, gilded);
-
-          if (!gilded) {
-            addFiltered(filteredEntries, subreddit, filter, sort, where);
-          }
-          return filteredEntries;
+          return 0;
         }
+      },
+      getData: function(data, filter, subreddit, sort, where, limit) {
+        var dataList;
+        if (checkExists(subreddit, where, filter)) {
+          if (checkExists(subreddit, where, filter, sort)) {
+            var entries = filteredLists[subreddit][where][filter][sort];
+            return entries.slice(0, limit);
+          }
+          var filteredObj = filteredLists[subreddit][where][filter];
+          var firstKey = Object.keys(filteredObj)[0];
+          dataList = filteredObj[firstKey];
+        } else {
+          dataList = filterData(data, filter);
+        }
+
+        var sortedList = $filter('sortPosts')(dataList, sort, subreddit, where);
+        addFiltered(filter, subreddit, sort, where, sortedList);
+
+        return sortedList.slice(0, limit);
+
       }
     };
     return factory;
@@ -90,14 +103,14 @@ angular.module('SubSnoopApp')
         return false;
       }
 
-      if (!(sort in filteredLists[sub][where][filter])) {
+      if (sort && !(sort in filteredLists[sub][where][filter])) {
         return false;
       }
 
       return true;
     }
 
-    function addFiltered(data, sub, filter, sort, where) {
+    function addFiltered(filter, sub, sort, where, data) {
       if (numListsCached >= 50) {
         clear(filteredLists);
         numListsCached = 0;
@@ -122,19 +135,22 @@ angular.module('SubSnoopApp')
       numListsCached += 1;
     }
 
-    function filterData(data, filter, gilded) {
+    function filterData(data, filter) {
+      if (filter === 'all') {
+        return data;
+      }
+
       var dataList = [];
       var limit = limits[filter];
-
       for (var i = 0; i < data.length; i++) {
         var node = data[i];
         var time = moment(node.created_utc*1000);
 
-        if (time >= limit) {
-          dataList.push(node);
-        } else if (gilded && node.type === 'submitted') {
+        if (time < limit) {
           break;
         }
+
+        dataList.push(node);
       }
       return dataList;
     }

@@ -84,33 +84,6 @@ angular.module('SubSnoopApp')
       },
       getSorted: function(attribute) {
         return sortedSubLists[attribute];
-      },
-      hasEntries: function(subreddit, attribute, where) {
-        if (subreddit in sortedEntries) {
-          if (where in sortedEntries[subreddit]) {
-            return (attribute in sortedEntries[subreddit][where]);
-          }
-        }
-        return false;
-      },
-      addEntries: function(subreddit, attribute, where, list) {
-        if (numCachedEntries >= 30) {
-          clear(sortedEntries);
-          numCachedEntries = 0;
-        }
-        if (!(subreddit in sortedEntries)) {
-          sortedEntries[subreddit] = {}
-        }
-        if (!(where in sortedEntries[subreddit])) {
-          sortedEntries[subreddit][where] = {};
-        }
-        if (!(attribute in sortedEntries[subreddit][where])) {
-          sortedEntries[subreddit][where][attribute] = list;
-          numCachedEntries += 1;
-        }
-      },
-      getEntries: function(subreddit, attribute, where) {
-        return sortedEntries[subreddit][where][attribute];
       }
     };
     return factory;

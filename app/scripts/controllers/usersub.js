@@ -40,9 +40,8 @@ angular.module('SubSnoopApp')
     $scope.submitSort = $scope.sortSelected;
     $scope.gildSort = $scope.sortSelected;
 
-    $scope.entries = subFactory.getEntries($scope.subreddit, null);
-    $scope.comments = $scope.entries['comments'];
-    $scope.submissions = $scope.entries['submissions'];
+    $scope.comments = [];
+    $scope.submissions = [];
 
     $scope.initComments = $scope.sub.num_comments;
     $scope.initSubmits = $scope.sub.num_submissions;
@@ -111,23 +110,15 @@ angular.module('SubSnoopApp')
 
       if ($scope.tab === 3) {
         $scope.commentSort = sort;
-        var entries = subFactory.getEntries($scope.subreddit, 'comments');
-        $scope.comments = $filter('sortPosts')(entries, sort.value, $scope.subreddit, 'comments');
-        if ($scope.commentFilter.value != 'all') {
-          $scope.comments = filterComments($scope.commentFilter);
-        }
       } else if ($scope.tab === 2) {
         $scope.submitSort = sort;
-        var entries = subFactory.getEntries($scope.subreddit, 'submissions');
-        $scope.submissions = $filter('sortPosts')(entries, sort.value, $scope.subreddit, 'submissions');
-        if ($scope.submitFilter.value != 'all') {
-          $scope.submissions = filterSubmits($scope.submitFilter);
-        }
       } else if ($scope.tab === 4) {
         $scope.gilds = $filter('sortPosts')($scope.gilds, sort.value);
         gilded.setData($scope.subreddit, $scope.gilds, sort.value);
         $scope.gildSort = sort;
       }
+
+      $scope.limit = initLimit;
       $scope.setArray();
     };
 
@@ -137,17 +128,11 @@ angular.module('SubSnoopApp')
     */
     $scope.setArray = function(top) {
       if ($scope.tab === 3) {
+        setEntries('comments', $scope.commentFilter.value, $scope.commentSort.value);
         $scope.slicedArray = $scope.sliceArray($scope.comments);
-        // Cache comments
-        if (!(sortFactory.hasEntries($scope.subreddit, $scope.sortSelected.value, 'comments'))) {
-          sortFactory.addEntries($scope.subreddit, $scope.sortSelected.value, 'comments', $scope.comments);
-        }
       } else if ($scope.tab === 2) {
+        setEntries('submissions', $scope.submitFilter.value, $scope.submitSort.value);
         $scope.slicedArray = $scope.sliceArray($scope.submissions);
-        // Cache submissions
-        if (!(sortFactory.hasEntries($scope.subreddit, $scope.sortSelected.value, 'submissions'))) {
-          sortFactory.addEntries($scope.subreddit, $scope.sortSelected.value, 'submissions', $scope.submissions);
-        }
       } else if ($scope.tab === 4) {
         $scope.slicedArray = $scope.sliceArray($scope.gilds);
       }
@@ -220,13 +205,15 @@ angular.module('SubSnoopApp')
       $scope.filterVal = filter;
 
       if ($scope.tab === 3) {
-        filterComments(filter);
+        $scope.commentFilter = filter;
       } else if ($scope.tab === 2) {
-        filterSubmits(filter);
+        $scope.submitFilter = filter;
       } else if ($scope.tab === 4) {
+        $scope.gildFilter = filter;
         filterGilded(filter);
       }
 
+      $scope.limit = initLimit;
       $scope.setArray();
     }
 
@@ -265,42 +252,6 @@ angular.module('SubSnoopApp')
     $scope.subList = sortFactory.getSorted(sortFactory.getSubSort().value);
     if (!$scope.subList) {
       $scope.subList = $scope.subsArray;
-    }
-
-    /*
-     Filter comments based on time
-    */
-    function filterComments(filter) {
-      var entries = sortFactory.getEntries($scope.subreddit, $scope.commentSort.value, 'comments');
-      if (filter.value === 'all') {
-        $scope.comments = entries;
-        $scope.numComments = $scope.sub.num_comments;
-      } else {
-        $scope.comments = filterPosts.getData(entries, filter.value, $scope.subreddit, $scope.commentSort.value, 'comments');
-        $scope.numComments = $scope.comments.length;
-      }
-      $scope.commentFilter = filter;
-      $scope.limits[3] = $scope.numComments;
-
-      return $scope.comments;
-    }
-
-    /*
-     Filter submissions based on time
-    */
-    function filterSubmits(filter) {
-      var entries = sortFactory.getEntries($scope.subreddit, $scope.submitSort.value, 'submissions');
-      if (filter.value === 'all') {
-        $scope.submissios = entries;
-        $scope.numSubmissions = $scope.sub.num_submissions;
-      } else {
-        $scope.submissions = filterPosts.getData(entries, filter.value, $scope.subreddit, $scope.submitSort.value, 'submissions');
-        $scope.numSubmissions = $scope.submissions.length;
-      }
-      $scope.submitFilter = filter;
-      $scope.limits[2] = $scope.numSubmissions;
-
-      return $scope.submissions;
     }
 
     /*
@@ -360,6 +311,35 @@ angular.module('SubSnoopApp')
 
       $rootScope.title = titleRoot + tabTitle;
       $location.update_path(pageRoot + tabName + '/');
+    }
+
+    function setEntries(where, filter, sort) {
+      var entries = filterPosts.getData(
+        subFactory.getEntries($scope.subreddit, where),
+        filter,
+        $scope.subreddit,
+        sort,
+        where,
+        $scope.limit
+      );
+
+      if (where === 'comments') {
+        $scope.comments = entries;
+        if (filter === 'all') {
+          $scope.numComments = $scope.initComments;
+        } else {
+          $scope.numComments = filterPosts.getLength($scope.subreddit, where, filter, sort);
+        }
+        $scope.limits[3] = $scope.numComments;
+      } else if (where === 'submissions') {
+        $scope.submissions = entries;
+        if (filter === 'all') {
+          $scope.numSubmits = $scope.initSubmits;
+        } else {
+          $scope.numSubmits = filterPosts.getLength($scope.subreddit, where, filter, sort);
+        }
+        $scope.limits[2] = $scope.numSubmits;
+      }
     }
 
   }
