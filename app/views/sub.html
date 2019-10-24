@@ -101,7 +101,7 @@
                 <div class="mobile-avatar row">
                   <div class="col-md-6 col-md-push-3">
                     <div ng-if="sub.info != null && subInfo.icon_img" class="mobile-circle" style="background-image: url({{ subInfo.icon_img | escape }});"></div>
-                    <div ng-if="!subInfo.icon_img" class="mobile-circle img-no-border" style="background-image: url('{{ '../images/logo.jpg' }}');"></div>
+                    <default-logo ng-if="!subInfo.icon_img" sub="{{ subreddit }}" page="profile"></default-logo>
                   </div>
                 </div>
               </div>

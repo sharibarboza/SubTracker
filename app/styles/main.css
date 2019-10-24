@@ -1138,8 +1138,7 @@ Content
   position: relative;
   color: white;
   background-image: url('../images/default-bg.jpg');
-  background-size: cover;
-  background-size: cover;
+  background-size: cover !important;
   background-position: center 0;
   font-weight: 400;
   margin-right: 0;
@@ -1275,7 +1274,7 @@ Content
 }
 
 .img-no-border {
-  border: 0;
+  border: none !important;
 }
 
 .sub-banner {
@@ -3303,6 +3302,18 @@ Mobile
      border-radius: 50%;
      border: 5px solid #fff;
      background-size: cover;
+   }
+
+   .profile-logo {
+     width: 130px;
+     height: 130px;
+     font-size: 60px;
+     padding: 18px;
+     position: absolute;
+     top: 60px;
+     left: -8px;
+     display: block;
+     border: 5px solid #fff;
    }
 
   .mobile-row-stats {
