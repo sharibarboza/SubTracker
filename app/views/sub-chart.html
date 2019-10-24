@@ -1,4 +1,4 @@
-<div ng-show="chartReady">
+<div ng-show="chartReady" ng-controller="ChartWidthCtrl">
   <strong class="white title-heading">Points Earned In The Last Year: {{ totalUps | number }}</strong>
   <br>
   <span class="light-grey">
@@ -7,7 +7,7 @@
   <br><br>
   <canvas id="line" class="chart chart-line" chart-data="data"
   chart-labels="labels" chart-series="series" chart-colors="colors" chart-options="options"
-  chart-dataset-override="datasetOverride" chart-click="onClick" height="{{ width < 500 ? 135 : 100 }}">
+  chart-dataset-override="datasetOverride" chart-click="onClick" height="{{ chartWidth }}">
   </canvas>
   <br>
 </div>

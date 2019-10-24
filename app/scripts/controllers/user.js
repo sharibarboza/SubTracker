@@ -21,7 +21,6 @@
     $scope.currentLimit = 0;
     $scope.open = false;
     $scope.subLength = 0;
-    $scope.width = $window.innerWidth;
 
     var initLimit = 40;
     $scope.limit = initLimit;
@@ -182,6 +181,7 @@
       $rootScope.title = titleRoot + tabTitle;
       $location.update_path(pageRoot + tabName + '/');
     }
+
 
   }
 

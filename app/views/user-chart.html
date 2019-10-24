@@ -1,11 +1,11 @@
-<div ng-show="chartReady">
+<div ng-show="chartReady" ng-controller="ChartWidthCtrl">
   <strong class="white title-heading">Recent Points Earned In The Last Year: {{ points | karma }}</strong>
   <br>
   <span class="light-grey">{{ voteAverage | karma }} average <ng-pluralize count="{{ voteAverage }}" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> earned per month</span>
   <br><br>
   <canvas id="line" class="chart chart-line" chart-data="data"
   chart-labels="labels" chart-series="series" chart-colors="colors" chart-options="options"
-  chart-dataset-override="datasetOverride" chart-click="onClick" height="{{ width < 500 ? 135 : 100 }}">
+  chart-dataset-override="datasetOverride" chart-click="onClick" height="{{ chartWidth }}">
   </canvas>
   <br>
 </div>
