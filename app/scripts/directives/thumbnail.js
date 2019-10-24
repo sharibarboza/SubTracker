@@ -42,7 +42,7 @@ angular.module('SubSnoopApp')
         var getTemplate = function(data, url, type) {
           if (isThumbnail(data)) {
             return '<img class="thumb thumb-pic" lazy-img="' + type + '">';
-          } else if (page == 'sub' && windowWidth >= 768) {
+          } else if (page == 'sub' && windowWidth >= 768 && windowWidth <= 1024) {
             return '<div class="thumb thumb-' + type + '"></div>';
           } else {
             return '<div class="thumb thumb-beta-' + type + '"></div>';
