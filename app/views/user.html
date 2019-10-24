@@ -24,8 +24,8 @@
 
       <!-- User banner containing profile picture, and other user info -->
       <div class="row width-pad">
-        <div class="col-lg-3 col-xs-hidden no-mobile no-left-pad">
-          <div class="fixed fixed-sides col-lg-3 col-xs-hidden" style="width: 20vw;">
+        <div class="col-lg-3 hidden-md hidden-sm hidden-xs no-mobile no-left-pad">
+          <div class="fixed fixed-sides col-lg-3 hidden-xs" style="width: 20vw;">
             <div class="fixed-left">
               <div class="top-bar top-brand">
                 <a class="white" ng-href="#/">SubSnoop</a>
@@ -50,7 +50,7 @@
           </div>
         </div>
 
-        <div class="col-lg-6 col-xs-12 middle-col" style="margin-bottom: 50px;">
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 middle-col" style="margin-bottom: 50px;">
           <div class="top-bar middle-bar" middle-bar>
             <strong style="display: inline;">
               <a ng-href="#/{{ username }}/subreddits/"><i class="glyphicon glyphicon-home"></i></a>&nbsp;&nbsp;<a ng-href="#/{{ username }}/subreddits/" class="white">{{ username }}</a>
@@ -64,7 +64,12 @@
 
           <div class="top-bar middle-mobile-bar">
             <div class="row">
-              <div class="col-xs-10 no-padding">
+              <div class="col-sm-3 hidden-xs no-padding">
+                <div class="top-bar top-brand">
+                  <a class="white" ng-href="#/">SubSnoop</a>
+                </div>
+              </div>
+              <div class="col-sm-7 col-xs-10 no-padding">
                 <div ng-controller="EntryLimitCtrl">
                   <form redirect="{{ true }}" novalidate="novalidate" handle-phone-submit>
                     <div class="input-group" id="search-strip">
@@ -79,7 +84,7 @@
                   </form>
                 </div>
               </div>
-              <div class="col-xs-2 no-padding">
+              <div class="col-sm-2 col-xs-2 no-padding">
                 <div align="right" ng-controller="SidebarCtrl">
                   <a href class="nav-link" ng-click="toggleRight()"><i class="fa fa-bars white"></i></a>
                 </div>
@@ -144,10 +149,10 @@
 
           <div ng-if="tab == 0">
             <div class="row post-row middle-col-pad">
-              <div class="col-md-3 col-xs-12 post-count no-right-pad">
+              <div class="col-md-3 col-sm-3 col-xs-12 post-count no-right-pad" style="padding-left: 18px;">
                 <strong class="light-grey">Filter Subreddits</strong>
               </div>
-              <div class="col-md-9 col-xs-12 no-left-pad mobile-filters" align="right">
+              <div class="col-md-9 col-sm-9 col-xs-12 no-left-pad mobile-filters" align="right">
                 <div class="btn-group select-dropdown dropdown-margin">
                   <button type="button" class="form-control sort-dropdown btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <span>{{ selected.name }}</span>
@@ -198,7 +203,7 @@
                       </div>
 
                     </div>
-                    <div class="col-lg-2 col-sm-2 hidden-xs no-left-pad" align="right">
+                    <div class="col-lg-2 col-sm-2 hidden-xs no-left-pad sub-list-pts" align="right">
                       <strong style="font-size: 17px;" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'"> {{ subs[subreddit].total_ups | karma }}<span ng-class="subs[subreddit].total_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
                     </div>
                   </div>
@@ -254,7 +259,7 @@
           </div>
         </div>
 
-        <div class="col-lg-3 col-xs-hidden no-mobile">
+        <div class="col-lg-3 hidden-md hidden-sm hidden-xs no-mobile">
           <div class="fixed fixed-sides col-lg-3 col-xs-hidden" style="margin-top: 15px;">
             <div class="fixed-right">
               <div ng-if="tab != 2" class="card-box">

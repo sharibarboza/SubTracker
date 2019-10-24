@@ -608,11 +608,15 @@ blockquote {
   padding-right: 0 !important;
   border-left: 1px solid #4B5054;
   border-right: 1px solid #4B5054;
-  width: 52% !important;
+  width: 52%;
 }
 
 .col-lg-3 {
   width: 24% !important;
+}
+
+.user-head-nav .col-lg-3 {
+  width: 25% !important;
 }
 
 .fixed {
@@ -2540,7 +2544,7 @@ Mobile
 ************************/
 
 /* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1024px) {
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
@@ -2576,7 +2580,7 @@ Mobile
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1024px) {
   .user-side, .heatmap {
     overflow: scroll !important;
   }
@@ -2628,10 +2632,10 @@ Mobile
     padding-top: 20px;
   }
 
-  .word-tab, .avg-box, .sub-page .mobile-circle {
+  .avg-box, .sub-page .mobile-circle {
     display: none;
   }
-  .icon-tab, .mobile-filter, .mobile-card, .ipad-avg-box {
+  .mobile-filter, .mobile-card, .ipad-avg-box {
     display: block !important;
   }
 
@@ -2657,7 +2661,7 @@ Mobile
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .custom-banner .banner-content {
     padding-top: 0px;
   }
@@ -2675,7 +2679,7 @@ Mobile
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 1024px) {
   .navbar-default, #searchbar, .search-content .breadcrumb, #sub-panels {
     padding-left: 16px;
     padding-right: 16px;
@@ -2750,9 +2754,13 @@ Mobile
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1024px) {
   .paginate {
     text-align: center;
+  }
+
+  .user-head-nav .col-xs-2 {
+    width: 20% !important;
   }
 
   #sub-panel-stats .span {
@@ -2785,7 +2793,7 @@ Mobile
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 1024px) {
 
   #sort-dropdown {
     padding-left: 15px;
@@ -3148,13 +3156,17 @@ Mobile
    }
  }
 
- @media screen and (max-width: 500px) {
+ @media screen and (max-width: 1024px) {
    .content {
      padding-top: 0;
    }
 
    .dropdown-menu {
      line-height: 20px;
+   }
+
+   .sub-list-pts {
+     padding-right: 0;
    }
 
    .form-control {
@@ -3349,11 +3361,7 @@ Mobile
     padding-right: 20px;
   }
 
-  .word-tab {
-    display: none;
-  }
-
-  .icon-tab, .mobile-filter, .mobile-card, .avg-box {
+  .mobile-filter, .mobile-card, .avg-box {
     display: block !important;
   }
 
@@ -3366,8 +3374,8 @@ Mobile
   }
 
   .sub-card-box {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 18px;
+    padding-right: 18px;
   }
 
   .sub-innner-row, .prevRow .sub-cells {
@@ -3474,8 +3482,7 @@ Mobile
   }
 
   .mobile-filters {
-    text-align: left !important;
-    padding-left: 15px;
+    padding-left: 18px;
   }
 
   .post-count {
@@ -3483,7 +3490,7 @@ Mobile
   }
 
   .sort-dropdown, .sub-form {
-    width: 44vw !important;
+    width: 25vw !important;
     margin-top: 0 !important;
     font-size: 14px;
   }
@@ -3502,6 +3509,43 @@ Mobile
 
   .map-scroll {
     overflow: scroll;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .sort-dropdown, .sub-form {
+    width: 44vw !important;
+    margin-top: 0 !important;
+    font-size: 14px;
+  }
+
+  .mobile-filters {
+    text-align: left;
+    padding-left: 18px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .word-tab {
+    display: none;
+  }
+
+  .icon-tab {
+    display: block !important;
+  }
+}
+
+@media screen and (max-width: 1024px) and (min-width: 767px) {
+  .custom-banner, .s-banner, .short-banner, .u-banner {
+    height: 300px;
+  }
+
+  .mobile-circle {
+    top: 180px;
+  }
+
+  .profile-logo, .s-banner .mobile-circle {
+    top: 130px;
   }
 }
 

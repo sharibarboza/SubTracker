@@ -40,7 +40,8 @@ angular.module('SubSnoopApp')
           var listener = scope.$watch(function() { return angular.element(idName).height() && angular.element(idName).height() > 0 }, function() {
             var e = angular.element(idName);
             if (!scope.chartReady && e.length > 0) {
-              if (e[0].clientHeight > 0) {
+              if (e.height() > 0) {
+                console.log('yar!!');
                 var boxTop = element[0].getBoundingClientRect().top + 100;
                 $win.on('scroll', function (e) {
                   if (!scope.chartReady && ($win.scrollTop() + $win.height()) >= boxTop) {
@@ -51,9 +52,8 @@ angular.module('SubSnoopApp')
                 });
               } else {
                 var boxTop = prevElem.getBoundingClientRect().top;
-
                 $win.on('scroll', function (e) {
-                  var scrollY = $win.scrollTop();
+                  var scrollY = $win.scrollTop() + 100;
                   if (!scope.chartReady && scrollY >= boxTop) {
                     scope.getChart();
                     scope.$apply();
