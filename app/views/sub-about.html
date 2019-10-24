@@ -1,6 +1,7 @@
 <div class="fixed-about">
   <strong class="white"><i class="fa fa-calendar"></i> Created:</strong> <span class="light-grey" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></span>
   &nbsp;&nbsp;&nbsp;
+  <br style="display: none" class="mobile-break">
   <strong class="white"><i class="fa fa-user-plus" aria-hidden="true"></i> Subscribers: </strong><span class="light-grey">{{ subInfo.subscribers | number }}</span>
 </div>
 <br>

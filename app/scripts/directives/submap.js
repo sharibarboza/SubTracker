@@ -37,7 +37,7 @@ angular.module('SubSnoopApp')
             idName = '#' + prevElem.id + ' .post-body';
           }
 
-          var listener = scope.$watch(function() { return angular.element(idName).height() > 0 }, function() {
+          var listener = scope.$watch(function() { return angular.element(idName).height() && angular.element(idName).height() > 0 }, function() {
             var e = angular.element(idName);
             if (!scope.chartReady && e.length > 0) {
               if (e[0].clientHeight > 0) {

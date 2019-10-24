@@ -50,7 +50,7 @@
           </div>
         </div>
 
-        <div class="col-lg-6 col-xs-12 middle-col" style="margin-bottom: 200px;">
+        <div class="col-lg-6 col-xs-12 middle-col" style="margin-bottom: 50px;">
           <div class="top-bar middle-bar" middle-bar>
             <strong style="display: inline;">
               <a ng-href="#/{{ username }}/subreddits/"><i class="glyphicon glyphicon-home"></i></a>&nbsp;&nbsp;<a ng-href="#/{{ username }}/subreddits/" class="white">{{ username }}</a>
@@ -65,14 +65,19 @@
           <div class="top-bar middle-mobile-bar">
             <div class="row">
               <div class="col-xs-10 no-padding">
-                <strong style="display: inline;">
-                  <a ng-href="#/{{ username }}/subreddits/"><i class="glyphicon glyphicon-home"></i></a>&nbsp;&nbsp;<a ng-href="#/{{ username }}/subreddits/" class="white">{{ username }}</a>
-                  <span class="light-grey">/
-                  <span ng-if="tab == 0">Subreddits</span>
-                  <span ng-if="tab == 1">Statistics</span>
-                  <span ng-if="tab == 2">Search</span>
-                  </span>
-                </strong>
+                <div ng-controller="EntryLimitCtrl">
+                  <form redirect="{{ true }}" novalidate="novalidate" handle-phone-submit>
+                    <div class="input-group" id="search-strip">
+                      <input type="text" ng-model="inputname" class="form-control" id="nav-search" placeholder="&#xF002; &nbsp;Enter username ..." style="margin-left: 0; font-family: FontAwesome, Helvetica Neue; float: none;" required>
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ limitName }}&nbsp;&nbsp;<span class="caret"></span></button>
+                        <ul id="entry-limit" class="dropdown-menu" role="menu">
+                          <li ng-repeat="option in limitOptions" ng-click="setLimit(option)">{{ option.name }}</li>
+                        </ul>
+                      </span>
+                    </div>
+                  </form>
+                </div>
               </div>
               <div class="col-xs-2 no-padding">
                 <div align="right" ng-controller="SidebarCtrl">

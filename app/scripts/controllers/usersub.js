@@ -20,6 +20,7 @@ angular.module('SubSnoopApp')
     $scope.username = $routeParams.username;
     $scope.user = userFactory.getUser();
     $scope.page = 'sub';
+    $scope.width = $window.innerWidth;
 
     var initLimit = 25;
     $scope.limit = initLimit;

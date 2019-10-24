@@ -1,14 +1,29 @@
 <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" style="position: fixed; z-index: 1000;">
 
 <md-content layout-padding>
+
   <br>
+  <div class="row">
+    <div class="col-xs-9">
+      <strong class="sub-name"><span class="white">u/{{ username }}</span></strong>
+    </div>
+    <div class="col-xs-3">
+      <img ng-if="user.subreddit" class="img-circle prev-img img-responsive toggle-logo" lazy-img="{{ user.subreddit.icon_img | escape }}">
+      <img ng-if="!user.subreddit" class="img-circle prev-img img-responsive toggle-logo" lazy-img="{{ user.icon_img | escape }}">
+    </div>
+  </div>
+  <ul class="badge-list white" style="margin-bottom: 0;">
+    <li><i class="fa fa-list"></i> <a ng-href="#/{{ username }}/subreddits/">Subreddit Rankings</a></li>
+    <li><i class="fa fa-bar-chart"></i> <a ng-href="#/{{ username }}/statistics/">User Statistics</a></li>
+    <li><i class="fa fa-search"></i> <a ng-href="#/{{ username }}/search/">Search Comments & Posts</a></li>
+  </ul>
+  <hr style="margin-bottom: 0;">
   <form redirect="{{ true }}" novalidate="novalidate">
     <div class="input-group" id="testInput">
       <input type="text" id="nav-search" class="form-control sub-form"
              ng-model="searchSub" ng-change="changeUserSubs(searchSub)" placeholder="&#xF002; &nbsp;Enter sub name ..." style="font-family: FontAwesome, Helvetica Neue;" md-autofocus>
     </div>
   </form>
-  <hr style="margin-bottom: 0;">
   <ul>
     <strong class="white">Sorted by: <span class="light-grey">{{ selected.name }}</span></strong>
     <br><br>

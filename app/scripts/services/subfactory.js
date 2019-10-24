@@ -478,7 +478,7 @@
         if (where === 'comments') {
           if (limit === 'All' || numComments < limit) {
             comments.push(item);
-            numComments += 1; 
+            numComments += 1;
           } else {
             before = null;
             return;

@@ -40,7 +40,7 @@
                 <span class="light-grey results-sub search-results-num">&middot;&nbsp;<ng-pluralize count="(results.data[sub].numComments) + (results.data[sub].numSubmits)" when="{'1': '1 entry', 'other': '{{ ((results.data[sub].numComments) + (results.data[sub].numSubmits)) | number }} entries'}"></ng-pluralize> found</span>
                 <br>
                 <span class="light-grey">
-                  <span class="badge" ng-if="results.data[sub].numComments > 0"><span class="fa fa-comment small-icon"></span>&nbsp;&nbsp;<span class="white">{{ results.data[sub].numComments }}</span> <ng-pluralize count="{{ results.data[sub].numComments }}" when="{'1': 'comment', 'other': 'comments'}"></ng-pluralize>&nbsp;</span>
+                  <span class="badge" ng-if="results.data[sub].numComments > 0" style="padding-left: 0;"><span class="fa fa-comment small-icon"></span>&nbsp;&nbsp;<span class="white">{{ results.data[sub].numComments }}</span> <ng-pluralize count="{{ results.data[sub].numComments }}" when="{'1': 'comment', 'other': 'comments'}"></ng-pluralize>&nbsp;</span>
                   <span class="badge" ng-if="results.data[sub].numSubmits > 0"><span class="fa fa-file-text small-icon"></span>&nbsp;&nbsp;<span class="white">{{ results.data[sub].numSubmits }}</span> <ng-pluralize count="{{ results.data[sub].numSubmits }}" when="{'1': 'post', 'other': 'posts'}"></ng-pluralize></span>
                   &nbsp;
                 </span>
@@ -53,7 +53,7 @@
 
           <div class="card-action search-panel">
             <div ng-if="results.data[sub].comments.length">
-              <div class="middle-col-pad" style="padding-bottom: 5px;">
+              <div class="search-header">
                 <strong class="white title-heading">Comments</strong>
               </div>
               <div class="g-underline"></div>
@@ -67,7 +67,7 @@
             </div>
 
             <div ng-if="results.data[sub].submissions.length">
-              <div class="middle-col-pad" style="padding-bottom: 5px;">
+              <div class="search-header">
                 <strong class="white title-heading">Posts</strong>
               </div>
               <div class="g-underline"></div>

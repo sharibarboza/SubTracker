@@ -7,6 +7,8 @@
     Active in {{ uniqueSubs }} average <ng-pluralize count="{{ uniqueSubs }}" when="{'1': 'subreddit', 'other': 'subreddits'}"></ng-pluralize> per month
   </span>
   <br><br>
-  <calendar-heatmap data="mapData" color="'#004D41'" overview="'year'" handler="print" type="'user'"></calendar-heatmap>
+  <calendar-heatmap data="mapData" color="'#004D41'" overview="'year'" handler="print" type="'user'" class="map-scroll"></calendar-heatmap>
+  <br>
+  <span class="light-grey mobile-only post-date">Scroll to the right to see the rest of the year.</span>
   <br>
 </div>

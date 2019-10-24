@@ -1092,7 +1092,7 @@ Content
   padding-right: 7%;
 }
 
-.middle-col-pad {
+.middle-col-pad, .search-header {
   padding: 18px;
 }
 
@@ -1244,6 +1244,10 @@ Content
 
 .side-logo {
   width: 45px;
+}
+
+.toggle-logo {
+  width: 30px;
 }
 
 .sub-logo {
@@ -1518,9 +1522,8 @@ Navigation
   color: white;
   font-size: 18px;
   height: 60px;
-  border-bottom: 1px solid #4B5054;
   line-height: 60px;
-  padding: 0 18px;
+  padding: 0 15px;
   width: 100%;
   display: none;
 }
@@ -2463,7 +2466,7 @@ Search
 }
 
 #results-card {
-  padding: 3px 24px;
+  padding: 3px 18px;
   background-color: #1F2327;
   margin-bottom: -1px;
   line-height: 19px;
@@ -2657,7 +2660,7 @@ Mobile
 
 @media screen and (max-width: 768px) {
   .custom-banner .banner-content {
-    padding-top: 60px;
+    padding-top: 0px;
   }
 }
 
@@ -2856,6 +2859,10 @@ Mobile
     text-align: center;
   }
 
+  .search-header {
+    padding: 3px 0;
+  }
+
   #home-page .table-pad {
     padding-top: 10px;
   }
@@ -3003,6 +3010,10 @@ Mobile
     display: block;
   }
 
+  .cloud-box div {
+    padding: 0;
+  }
+
   #user-viewing {
     padding-bottom: 0;
   }
@@ -3085,6 +3096,7 @@ Mobile
 
   .comment-links {
     float: left !important;
+    margin-top: 5px;
   }
 
   .word-cloud {
@@ -3142,6 +3154,19 @@ Mobile
      padding-top: 0;
    }
 
+   .dropdown-menu {
+     line-height: 20px;
+   }
+
+   .form-control {
+     height: 34px;
+   }
+
+   .input-group-btn button {
+     height: 34px;
+     margin-top: 2px;
+   }
+
    #sub-panels .card-box {
      width: inherit !important;
    }
@@ -3171,7 +3196,7 @@ Mobile
    }
 
    .nav-link {
-     font-size: 0.95em !important;
+     font-size: 1.4em !important;
    }
 
    .sub-name {
@@ -3354,7 +3379,11 @@ Mobile
     z-index: 2;
   }
 
-  .custom-banner .banner-content, .user-pad, .s-banner .banner-content {
+  .user-pad {
+    padding-top: 35px;
+  }
+
+  .custom-banner .banner-content {
     padding-top: 35px;
   }
 
@@ -3458,6 +3487,10 @@ Mobile
 
   .comment-div {
     padding-bottom: 25px;
+  }
+
+  .map-scroll {
+    overflow: scroll;
   }
 }
 

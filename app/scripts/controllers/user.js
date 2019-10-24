@@ -21,6 +21,7 @@
     $scope.currentLimit = 0;
     $scope.open = false;
     $scope.subLength = 0;
+    $scope.width = $window.innerWidth;
 
     var initLimit = 40;
     $scope.limit = initLimit;
@@ -87,7 +88,7 @@
       $scope.subs = subFactory.getSubData().subs;
       var subBadges = badges.getBadges($scope.username);
       var lastSeen = subBadges['lastSeen'].sub;
-      
+
       recentTimes.getData($scope.username, lastSeen, $scope.subs[lastSeen]);
       $scope.recentlyActive = recentTimes.recentlyActive(lastSeen, 6);
     };
