@@ -35,6 +35,10 @@ angular.module('SubSnoopApp')
           } catch(e) {
           }
 
+          if (!currentUser) {
+            currentUser = username;
+          }
+
           if (attrs.redirect === 'true') {
             if (username.toLowerCase() === currentUser.toLowerCase().trim()) {
               if (page === 'home') {

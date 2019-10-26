@@ -27,9 +27,7 @@
         <div class="col-lg-3 hidden-md hidden-sm hidden-xs no-mobile no-left-pad">
           <div class="fixed fixed-sides col-lg-3 hidden-xs" style="width: 20vw;">
             <div class="fixed-left">
-              <div class="top-bar top-brand">
-                <a class="white" ng-href="#/">SubSnoop</a>
-              </div>
+              <div ng-include src="'views/brand.html'"></div>
 
               <div ng-controller="EntryLimitCtrl">
                 <form redirect="{{ true }}" novalidate="novalidate" handle-phone-submit>
@@ -53,7 +51,7 @@
         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 middle-col" style="margin-bottom: 50px;">
           <div class="top-bar middle-bar" middle-bar>
             <strong style="display: inline;">
-              <a ng-href="#/{{ username }}/subreddits/"><i class="glyphicon glyphicon-home"></i></a>&nbsp;&nbsp;<a ng-href="#/{{ username }}/subreddits/" class="white">{{ username }}</a>
+              <a ng-href="#/{{ username }}/subreddits/" class="white">{{ username }}</a>
               <span class="light-grey">/
               <span ng-if="tab == 0">Subreddits</span>
               <span ng-if="tab == 1">Statistics</span>
@@ -62,35 +60,7 @@
             </strong>
           </div>
 
-          <div class="top-bar middle-mobile-bar">
-            <div class="row">
-              <div class="col-sm-3 hidden-xs no-padding">
-                <div class="top-bar top-brand">
-                  <a class="white" ng-href="#/">SubSnoop</a>
-                </div>
-              </div>
-              <div class="col-sm-7 col-xs-10 no-padding">
-                <div ng-controller="EntryLimitCtrl">
-                  <form redirect="{{ true }}" novalidate="novalidate" handle-phone-submit>
-                    <div class="input-group" id="search-strip">
-                      <input type="text" ng-model="inputname" class="form-control" id="nav-search" placeholder="&#xF002; &nbsp;Enter username ..." style="margin-left: 0; font-family: FontAwesome, Helvetica Neue; float: none;" required>
-                      <span class="input-group-btn">
-                        <button type="button" class="btn btn-default btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ limitName }}&nbsp;&nbsp;<span class="caret"></span></button>
-                        <ul id="entry-limit" class="dropdown-menu" role="menu">
-                          <li ng-repeat="option in limitOptions" ng-click="setLimit(option)">{{ option.name }}</li>
-                        </ul>
-                      </span>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <div class="col-sm-2 col-xs-2 no-padding">
-                <div align="right" ng-controller="SidebarCtrl">
-                  <a href class="nav-link" ng-click="toggleRight()"><i class="fa fa-bars white"></i></a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div ng-include src="'views/mobile-bar.html'"></div>
 
           <div class="default-banner u-banner column-pad user-pad">
             <div class="banner-content">
@@ -149,6 +119,7 @@
 
           <div ng-if="tab == 0">
             <div class="row post-row middle-col-pad">
+
               <div class="col-md-3 col-sm-3 col-xs-12 post-count no-right-pad" style="padding-left: 18px;">
                 <strong class="light-grey">Filter Subreddits</strong>
               </div>
@@ -199,9 +170,6 @@
                         </span>
                       </div>
 
-                      <div class="mobile-last-seen" style="display: none;">
-                      </div>
-
                     </div>
                     <div class="col-lg-2 col-sm-2 hidden-xs no-left-pad sub-list-pts" align="right">
                       <strong style="font-size: 17px;" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'"> {{ subs[subreddit].total_ups | karma }}<span ng-class="subs[subreddit].total_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
@@ -218,6 +186,8 @@
           </div>
 
           <div ng-if="tab == 1" id="user-col">
+            <div class="mobile-only middle-col-pad g-underline" ng-include src="'views/stats-overview.html'"></div>
+
             <div id="top-entries-{{ username }}">
               <div ng-repeat="element in topPosts" ng-if="element" class="comment-list list-card-box">
                 <strong class="white title-heading">Current Top {{ element.type == 'submission' ? 'Post' : 'Comment' }} <a ng-href="#/{{ username }}/{{ element.subreddit }}/overview/" class="post-flair" style="float: right;">r/{{ element.subreddit }}</a></strong>
@@ -266,16 +236,8 @@
                 <div class="headerRow side-pad">
                   <strong class="side-headers">User Statistics Overview</strong>
                 </div>
-                <div class="card-box-content" ng-controller="DataCtrl">
-                  <strong class="white">{{ comments | number }} </strong><span class="light-grey"> <ng-pluralize count="comments" when="{'1': 'Comment', 'other': 'Comments'}"></ng-pluralize></span>
-                  &nbsp;&nbsp;
-                  <strong class="white">{{ submissions | number }}</strong><span class="light-grey"> <ng-pluralize count="submissions" when="{'1': 'Post', 'other': 'Posts'}"></ng-pluralize></span>
-                  <br><br>
-                  <strong class="white">Current points: </strong><strong ng-class="upvotes > 0 ? 'green' : 'orange'">{{ upvotes | karma }}<span ng-class="upvotes > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong><br>
-                  <span class="light-grey">{{ avgUpvotes | karma }} average <ng-pluralize count="{{ avgUpvotes }}" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per subreddit</span>
-                  <br><br>
-                  <button class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
-                  <div ng-include src="'views/limit-msg.html'"></div>
+                <div class="card-box-content">
+                  <div ng-include src="'views/stats-overview.html'"></div>
                 </div>
               </div>
 

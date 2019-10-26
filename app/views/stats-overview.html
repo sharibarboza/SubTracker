@@ -1,0 +1,9 @@
+<strong class="white">{{ comments | number }} </strong><span class="light-grey"> <ng-pluralize count="comments" when="{'1': 'Comment', 'other': 'Comments'}"></ng-pluralize></span>
+&nbsp;&nbsp;
+<strong class="white">{{ submissions | number }}</strong><span class="light-grey"> <ng-pluralize count="submissions" when="{'1': 'Post', 'other': 'Posts'}"></ng-pluralize></span>
+<br><br>
+<strong class="white">Current points: </strong><strong ng-class="upvotes > 0 ? 'green' : 'orange'">{{ upvotes | karma }}<span ng-class="upvotes > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong><br>
+<span class="light-grey">{{ avgUpvotes | karma }} average <ng-pluralize count="{{ avgUpvotes }}" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per subreddit</span>
+<br><br>
+<button ng-controller="DataCtrl" class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
+<div ng-include src="'views/limit-msg.html'"></div>

@@ -1,0 +1,23 @@
+<strong class="white">{{ initComments | number }} </strong><span class="light-grey"> <ng-pluralize count="initComments" when="{'1': 'Comment', 'other': 'Comments'}"></ng-pluralize></span>
+&nbsp;&nbsp;
+<strong class="white">{{ initSubmits | number }}</strong><span class="light-grey"> <ng-pluralize count="initSubmits" when="{'1': 'Post', 'other': 'Posts'}"></ng-pluralize></span>
+<br><br>
+<strong class="white">Comment Points: </strong>
+<strong ng-class="sub.comment_ups > 0 ? 'green' : 'orange'">{{ sub.comment_ups | karma }}<span ng-class="sub.comment_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+<br>
+<strong class="white">Post Points: </strong>
+<strong ng-class="sub.submission_ups > 0 ? 'green' : 'orange'">{{ sub.submission_ups | karma }}<span ng-class="sub.submission_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+<div class="light-grey" style="margin-top: 8px;">
+  {{ sub.avg_comments | karma }} average <ng-pluralize count="sub.avg_comments" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per comment
+  <br>
+  {{ sub.avg_submissions | karma }} average <ng-pluralize count="sub.avg_submissions" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per post
+</div>
+<br>
+<button ng-controller="DataCtrl" class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
+<div ng-include src="'views/limit-msg.html'"></div>
+<br>
+<div class="mobile-only" ng-controller="BadgesCtrl" style="margin-bottom: 5px;">
+  <div ng-repeat="flair in badgeFlairs" style="display: inline;">
+    <span class="badge badge-flair">{{ flair }}</span>
+  </div>
+</div>

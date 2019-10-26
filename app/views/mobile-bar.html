@@ -1,0 +1,32 @@
+<div class="top-bar middle-mobile-bar">
+  <div class="row">
+    <div class="col-md-3 col-sm-4 hidden-xs no-padding">
+      <div class="top-bar top-brand">
+        <a class="white" ng-href="#/"><img src="{{ '../images/favicon.png' }}" style="margin-top: -5px;" /> SubSnoop</a>
+      </div>
+    </div>
+    <div class="mobile-only hidden-md hidden-sm col-xs-2 no-padding">
+      <a ng-href="#/"><img src="{{ '../images/favicon.png' }}" /></a>
+    </div>
+    <div class="col-md-6 col-sm-5 col-xs-8 no-padding">
+      <div ng-controller="EntryLimitCtrl">
+        <form redirect="{{ true }}" novalidate="novalidate" handle-phone-submit>
+          <div class="input-group" id="search-strip">
+            <input type="text" ng-model="inputname" class="form-control" id="nav-search" placeholder="&#xF002; &nbsp;Enter username ..." style="margin-left: 0; font-family: FontAwesome, Helvetica Neue; float: none;" required>
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ limitName }}&nbsp;&nbsp;<span class="caret"></span></button>
+              <ul id="entry-limit" class="dropdown-menu" role="menu">
+                <li ng-repeat="option in limitOptions" ng-click="setLimit(option)">{{ option.name }}</li>
+              </ul>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-2 no-padding">
+      <div align="right" ng-controller="SidebarCtrl">
+        <a href class="nav-link" ng-click="toggleRight()"><i class="fa fa-bars white"></i></a>
+      </div>
+    </div>
+  </div>
+</div>

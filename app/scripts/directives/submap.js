@@ -41,7 +41,6 @@ angular.module('SubSnoopApp')
             var e = angular.element(idName);
             if (!scope.chartReady && e.length > 0) {
               if (e.height() > 0) {
-                console.log('yar!!');
                 var boxTop = element[0].getBoundingClientRect().top + 100;
                 $win.on('scroll', function (e) {
                   if (!scope.chartReady && ($win.scrollTop() + $win.height()) >= boxTop) {

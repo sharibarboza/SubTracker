@@ -220,12 +220,19 @@ ul {
   font-size: 13px !important;
 }
 
+.badge-flair {
+  background-color: #338A7C !important;
+  color: white !important;
+  font-weight: bold !important;
+  font-size: 12px !important;
+}
+
 .downvote-badge {
   font-size: 12px;
   color: white;
   padding: 2px 7px;
   border-radius: 20px;
-  border: 1px solid rgb(239,83,80,0.5);
+  border: 1px solid rgba(239,83,80,0.5) !important;
 }
 
 .upvote-badge {
@@ -233,7 +240,7 @@ ul {
   color: white;
   padding: 2px 7px;
   border-radius: 20px;
-  border: 1px solid rgb(55,174,155,0.5);
+  border: 1px solid rgba(55,174,155,0.5) !important;
 }
 
 #results-card .post-badge {
@@ -390,7 +397,7 @@ blockquote {
 }
 
 .badge-list {
-  line-height: 3vh;
+  line-height: 25px;
 }
 
 .u-banner .sublink-badge {
@@ -1515,7 +1522,7 @@ Navigation
   height: 60px;
   border-bottom: 1px solid #4B5054;
   line-height: 60px;
-  padding: 0 25px;
+  padding: 0 18px;
 }
 
 .middle-mobile-bar {
@@ -1526,7 +1533,7 @@ Navigation
   font-size: 18px;
   height: 60px;
   line-height: 60px;
-  padding: 0 15px;
+  padding: 0 18px;
   width: 100%;
   display: none;
 }
@@ -3522,6 +3529,10 @@ Mobile
   .mobile-filters {
     text-align: left;
     padding-left: 18px;
+  }
+
+  .top-brand {
+    font-size: 20px;
   }
 }
 
