@@ -46,13 +46,13 @@ angular.module('SubSnoopApp')
     $scope.initComments = $scope.sub.num_comments;
     $scope.initSubmits = $scope.sub.num_submissions;
     $scope.numComments = $scope.sub.num_comments;
-    $scope.numSubmissions = $scope.sub.num_submissions;
+    $scope.numSubmits = $scope.sub.num_submissions;
     $scope.topPosts = [$scope.sub.top_comment[1], $scope.sub.top_submit[1]];
-    $scope.total = $scope.numComments + $scope.numSubmissions;
+    $scope.total = $scope.numComments + $scope.numSubmits
     $scope.subInfo = null;
     $scope.selected = sortFactory.getSubSort();
     $scope.gilded = $scope.sub.gilded_comments > 0 || $scope.sub.gilded_submissions > 0;
-    $scope.limits = [0, 0, $scope.numSubmissions, $scope.numComments, 0];
+    $scope.limits = [0, 0, $scope.numSubmits, $scope.numComments, 0];
 
     $scope.latestPost = recentTimes.getData($scope.username, $scope.subreddit, $scope.sub);
     $scope.recentlyActive = recentTimes.recentlyActive($scope.subreddit, 12);

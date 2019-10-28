@@ -235,7 +235,7 @@
               <div class="col-sm-3 col-xs-2 post-count no-right-pad">
                 <span class="light-grey">
                   <strong ng-if="tab == 3">{{ numComments | number }} <span>{{ numComments == 1 ? 'Comment' : 'Comments' }}</span></strong>
-                  <strong ng-if="tab == 2">{{ numSubmissions | number }} <span>{{ numSubmissions == 1 ? 'Post' : 'Posts' }}</span></strong>
+                  <strong ng-if="tab == 2">{{ numSubmits | number }} <span>{{ numSubmits == 1 ? 'Post' : 'Posts' }}</span></strong>
                   <strong ng-if="tab == 4">{{ numGilds }} Gilded</strong>
                 </span>
               </div>
@@ -279,7 +279,7 @@
             <div ng-if="tab == 3 && numComments == 0" class="white middle-col-pad ending-line">
               There are <strong><span class="orange-text">0</span> comments</strong> to display.
             </div>
-            <div ng-if="tab == 2 && numSubmissions == 0" class="white middle-col-pad ending-line">
+            <div ng-if="tab == 2 && numSubmits == 0" class="white middle-col-pad ending-line">
               There are <strong><span class="orange-text">0</span> posts</strong> to display.
             </div>
             <div ng-if="tab == 4 && numGilds == 0" class="white middle-col-pad ending-line">

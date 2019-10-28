@@ -83,7 +83,7 @@ angular.module('SubSnoopApp')
 
         var sortedList = $filter('sortPosts')(dataList, sort, subreddit, where);
         addFiltered(filter, subreddit, sort, where, sortedList);
-
+        
         return sortedList.slice(0, limit);
 
       }
