@@ -3,11 +3,21 @@
 <strong ng-if="page == 'search' && element.highlighted_title" class="white post-title" ng-bind-html="element.highlighted_title | sanitize"></strong>
 </a> <span ng-if="element.link_flair_text" class="post-flair label label-default">{{ element.link_flair_text | escape }}</span>
 
-<br>
-<span class="post-links light-grey">
+<div class="light-grey" style="padding-top: 10px;">
   <span class="mobile-sub-header">
-    <strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong><br>
-    <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date light-grey"></span>
-    <span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gildings }}</span></span>
+    <span ng-if="element.ups > 0" class="upvote-badge"><ng-pluralize class="post-points" count="element.ups" when="{'1': '1 point', 'other': '{{ element.ups | number }} points'}"></ng-pluralize> <span class="glyphicon glyphicon-arrow-up green"></span></span>
+    <span ng-if="element.ups < 1" class="downvote-badge"><ng-pluralize class="post-points" count="element.ups" when="{'-1': '-1 point', 'other': '{{ element.ups | number }} points'}"></ng-pluralize> <span class="glyphicon glyphicon-arrow-down orange"></span></span>&nbsp;&nbsp;
+    <br class="mobile-break" style="display: none" />
+    <span ng-if="element.gildings | gilded">
+      <span class="light-grey">
+        <span ng-if="element.gildings.gid_1 > 0"><img class="gilded-icon" lazy-img="{{ '../images/silver.png' }}"/>x{{ element.gildings.gid_1 }}&nbsp;</span>
+        <span ng-if="element.gildings.gid_2 > 0"><img class="gilded-icon" lazy-img="{{ '../images/gold.png' }}"/>x{{ element.gildings.gid_2 }}&nbsp;</span>
+        <span ng-if="element.gildings.gid_3 > 0"><img class="gilded-icon" lazy-img="{{ '../images/platinum.png' }}"/>x{{ element.gildings.gid_3 }}</span>
+      </span>
+    </span>
+    <br class="mobile-break" style="display: none" />
+    <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date light-grey"></span>&nbsp;&nbsp;
+    <br class="mobile-break" style="display: none" />
+    <span class="post-links"><a ng-href="https://reddit.com{{ element.permalink }}" target="_blank">Full Thread ({{ element.num_comments }})</a></span>
   </span>
-</span>
+</div>

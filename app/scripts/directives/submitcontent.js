@@ -232,49 +232,46 @@ angular.module('SubSnoopApp')
           var getTemplate = function(data, truncate) {
             var content;
             var submitID = data.id;
+            var info = {};
 
-            if (page !== 'search' && submissions.isStored(submitID, attrs.user)) {
-                content = submissions.getContent(submitID);
-                return secureURLs(content);
+            if (submissions.isStored(submitID, attrs.user)) {
+              info = submissions.getContent(submitID);
             }
+            info.url = data.url;
 
-            if (isLinkedImage(data)) {
-              content = getImageClass(page) + 'lazy-img="' + getVideoUrl(data.url) + '">';
-            } else if (data.media && data.media.oembed && data.media.oembed.provider_name != "Imgur") {
-              var html = $filter('escape')(secureURLs(data.media.oembed.html));
+            if (info.selftext_html) {
+              content = highlightHtml(page, info.selftext_html, data, truncate);
+            } else if (info.html) {
+              content = highlightHtml(page, info.html, data, truncate);
+            } else if (isLinkedImage(info)) {
+              content = getImageClass(page) + 'lazy-img="' + getVideoUrl(info.url) + '">';
+            } else if (info.media && info.media.oembed && info.media.oembed.provider_name != "Imgur") {
+              var html = $filter('escape')(secureURLs(info.media.oembed.html));
               content = centerWrap(changeSize(page, html));
-            } else if (isPreview(data) && (isAttachedImage(data) || isImgurAlbum(data))) {
-              content = getImageClass(page) + 'lazy-img="' + $filter('escape')(getPreview(data)) + '">';
-            } else if (data.media && 'reddit_video' in data.media && data.media.reddit_video.fallback_url) {
-              var html = '<video width="100%" class="submit-pic" controls><source src="' + data.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
+            } else if (isPreview(info) && (isAttachedImage(info) || isImgurAlbum(info))) {
+              content = getImageClass(page) + 'lazy-img="' + $filter('escape')(getPreview(info)) + '">';
+            } else if (info.media && 'reddit_video' in info.media && info.media.reddit_video.fallback_url) {
+              var html = '<video width="100%" class="submit-pic" controls><source src="' + info.media.reddit_video.fallback_url + '" type="video/mp4"></video>';
               content = centerWrap(changeSize(page, html));
-            } else if (isMP4(data.url)) {
-              var html = '<video width="100%" class="submit-pic" controls><source src="' + data.url + '" type="video/mp4"></video>';
+            } else if (isMP4(info.url)) {
+              var html = '<video width="100%" class="submit-pic" controls><source src="' + info.url + '" type="video/mp4"></video>';
               content = centerWrap(changeSize(page, html));
-            } else if (isGif(data.url)) {
+            } else if (isGif(info.url)) {
                 var gif_url;
                 var html;
-                if (isImgurGif(data.url)) {
-                    gif_url = getImgurUrl(data.url);
+                if (isImgurGif(info.url)) {
+                    gif_url = getImgurUrl(info.url);
                     html = '<img width="100%" src="' + gif_url + '/embed"></iframe>';
                 } else {
-                    gif_url = data.url;
+                    gif_url = info.url;
                     html = '<img width="100%" src="' + gif_url + '"></iframe>';
                 }
                 content = centerWrap(changeSize(page, html));
-            } else if (data.selftext_html) {
-              content = highlightHtml(page, data.selftext_html, data, truncate);
-            } else if (data.html) {
-              content = highlightHtml(page, data.html, data, truncate);
             } else {
-              content = '<a href="' + data.url + '" target="_blank">' + data.url + '</a>';
+              content = '<a href="' + info.url + '" target="_blank">' + info.url + '</a>';
             }
 
             var final_html = '<div class="post-content">' + content + '</div>';
-            if (page !== 'search') {
-              submissions.setContent(submitID, final_html, attrs.user);
-            }
-
             return secureURLs(final_html);
           };
 

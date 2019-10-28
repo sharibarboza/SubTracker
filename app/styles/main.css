@@ -595,7 +595,7 @@ blockquote {
   position: fixed;
   bottom: 20px;
   right: 13vw;
-  z-index: 999;
+  z-index: 1000 !important;
   display: none;
   overflow: hidden;
 }
@@ -2071,12 +2071,12 @@ User Sub Page
 }
 
 .post-links {
+  font-weight: 600;
   margin-top: 6px;
 }
 
-.post-links {
-  font-weight: 600;
-  padding-right: 10px;
+.post-links:not(:last-child) {
+  padding-right: 20px;
 }
 
 .post-links a {
@@ -2335,6 +2335,7 @@ Sub Page Side Bar
 .post-content {
   height: 100%;
   width: 100%;
+  color: #F5F5F5;
 }
 
 #stat-lines {
@@ -2542,6 +2543,7 @@ Footer
   font-size: 14px;
   background-color: #1F2327;
   font-weight: 500;
+  z-index: 1 !important;
 }
 
 .footer a {
