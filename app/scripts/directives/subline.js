@@ -20,10 +20,12 @@ angular.module('SubSnoopApp')
       link: function(scope, element, attrs) {
         scope.labels = months.getLabels();
         scope.chartReady = false;
-        var subs = subFactory.getEntries(attrs.sub, null);
+        var subname = scope.subreddit;
+        var username = scope.username;
+        var subs = subFactory.getEntries(subname, null);
 
         scope.getChart = function() {
-          subChart.getSubChart(scope.username, attrs.sub, subs);
+          subChart.getSubChart(username, subname, subs);
           scope.series = ['Comment Points', 'Post Points'];
           scope.colors = ['#37AE9B', '#DCDCDC'];
 
@@ -79,14 +81,25 @@ angular.module('SubSnoopApp')
         };
 
         $document.ready(function() {
+          var chart = angular.element('#linechart-' + subname);
           var prevElem = element.parent()[0].previousElementSibling;
           var idName = '#' + prevElem.id + ' .graph';
+          var winHeight = $win.innerHeight();
 
           var listener = scope.$watch(function() { return angular.element(idName).height() > 0 }, function() {
             var e = angular.element(idName);
             if (!scope.chartReady && e.length > 0 && e[0].clientHeight > 0) {
-              scope.getChart();
-              return;
+              var boxTop = chart[0].offsetTop - winHeight + 100;
+
+              $win.on('scroll', function (e) {
+                var scrollY = $win.scrollTop();
+
+                if (!scope.chartReady && (scrollY >= boxTop)) {
+                  scope.getChart();
+                  scope.$apply();
+                  return;
+                }
+              });
             }
           });
 

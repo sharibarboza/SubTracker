@@ -20,16 +20,18 @@ angular.module('SubSnoopApp')
       link: function(scope, element, attrs) {
         scope.chartReady = false;
         var entries = subFactory.getAllEntries();
+        var username = scope.username;
 
         scope.getChart = function() {
-          scope.mapData = userHeatmap.getUserMap(scope.username, entries, null);
+          scope.mapData = userHeatmap.getUserMap(username, entries, null);
         	scope.count = userHeatmap.getCount();
           scope.average = userHeatmap.getAverage();
           scope.uniqueSubs = userHeatmap.getUniqueSubs();
           scope.chartReady = true;
         };
 
-        $document.ready(function() {
+        angular.element($document).ready(function() {
+          var chart = angular.element('#mapchart-' + username);
           var prevElem = element.parent()[0].previousElementSibling;
           var idName;
           if (angular.element('#top-post-' + scope.username).length > 0) {
@@ -37,26 +39,16 @@ angular.module('SubSnoopApp')
           } else {
             idName = '#' + prevElem.id + ' .post-body';
           }
+          var winHeight = $win.innerHeight();
 
           var listener = scope.$watch(function() { return angular.element(idName).height() && angular.element(idName).height() > 0 }, function() {
             var e = angular.element(idName);
-            var scrollHeight = $document[0].documentElement.scrollHeight;
-
-            if (!scope.chartReady && e.length > 0) {
+            if (!scope.chartReady && e && e.length > 0) {
               if (e[0].clientHeight > 0) {
-                var boxTop = element[0].getBoundingClientRect().top + 100;
-                $win.on('scroll', function (e) {
-                  if (!scope.chartReady && ($win.scrollTop() + $win.height()) >= boxTop) {
-                    scope.getChart();
-                    scope.$apply();
-                    return;
-                  }
-                });
-              } else {
-                var boxTop = prevElem.getBoundingClientRect().top - 100;
+                var boxTop = chart[0].offsetTop - winHeight + 50;
                 $win.on('scroll', function (e) {
                   var scrollY = $win.scrollTop();
-                  if (!scope.chartReady && (scrollY >= boxTop || scrollY >= scrollHeight)) {
+                  if (!scope.chartReady && (scrollY >= boxTop)) {
                     scope.getChart();
                     scope.$apply();
                     return;

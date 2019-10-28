@@ -174,7 +174,7 @@
             </div>
 
             <div ng-if="recentlyActive" class="middle-col-pad g-underline sub-map-{{ subreddit }}" id="mapchart-{{ subreddit }}" style="padding-bottom: 0;">
-              <sub-map sub="{{ subreddit }}">
+              <sub-map>
                 <div ng-if="!chartReady" align="center">
                   <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
                 </div>
@@ -183,7 +183,7 @@
             </div>
 
             <div ng-if="recentlyActive" class="middle-col-pad g-underline" id="linechart-{{ subreddit }}">
-              <sub-line sub="{{ subreddit }}">
+              <sub-line>
                 <div ng-if="!chartReady" align="center">
                   <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
                 </div>
@@ -200,7 +200,7 @@
                 <div class="col-sm-6" align="center">
                   <strong class="white title-heading">Sentiment Analysis</strong>
                   <br>
-                  <donut-chart type="sentiment" sub="{{ subreddit }}" align="center">
+                  <donut-chart type="sentiment" align="center">
                     <div ng-if="chartReady" class="graph" id="donut-chart"></div>
                     <div ng-if="!chartReady" align="center">
                       <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
@@ -210,7 +210,7 @@
                 <div class="col-sm-6" align="center">
                   <strong class="white title-heading">Voting Feedback</strong>
                   <br>
-                  <donut-chart type="reaction" sub="{{ subreddit }}" align="center">
+                  <donut-chart type="reaction" align="center">
                     <div ng-if="chartReady" class="graph" id="donut-chart"></div>
                     <div ng-if="!chartReady" align="center">
                       <img class="loader" lazy-img="{{ '../images/103.gif' }}" />

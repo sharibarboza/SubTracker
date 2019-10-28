@@ -23,6 +23,7 @@ angular.module('SubSnoopApp')
     link: function(scope, element, attrs) {
       scope.chartReady = false;
       scope.loaderImg = '../images/103.gif';
+      var subname = scope.subreddit;
 
       d3Service.d3().then(function(d3) {
 
@@ -79,10 +80,10 @@ angular.module('SubSnoopApp')
           scope.getChart = function() {
             d3ChartEl = d3.select(element[0]);
             user = subFactory.getUser();
-            if (attrs.sub && attrs.type === 'sentiment') {
-              chartData = sentiMood.getData(attrs.sub);
-            } else if (attrs.sub && attrs.type === 'reaction') {
-              chartData = reaction.getData(attrs.sub);
+            if (subname && attrs.type === 'sentiment') {
+              chartData = sentiMood.getData(subname);
+            } else if (subname && attrs.type === 'reaction') {
+              chartData = reaction.getData(subname);
             }
 
             scope.chartReady = true;
@@ -396,63 +397,37 @@ angular.module('SubSnoopApp')
         init();
 
         $document.ready(function() {
+          var chart = angular.element('#piecharts-' + subname);
           var donutElem = element.parent().parent().parent();
           var prevElem = donutElem[0].previousElementSibling;
           var idName = '#' + prevElem.id + ' .graph';
-          var noGraph = false;
 
-          if (!prevElem.id) {
-            noGraph = true;
-
+          // If no activity in the last year, there will be no charts, get top entries instead
+          if (prevElem.id.length == 0) {
             var prevElem = prevElem.previousElementSibling;
-            if (angular.element('#top-post-' + attrs.sub).length > 0) {
+            if (angular.element('#top-post-' + subname).length > 0) {
               idName = '#' + prevElem.id + ' .post-content';
             } else {
               idName = '#' + prevElem.id + ' .post-body';
             }
           }
+          var winHeight = $win.innerHeight();
 
-          if (!noGraph) {
-            var listener = scope.$watch(function() { return angular.element(idName).height() > 0 }, function() {
-              var e = angular.element(idName);
+          var listener = scope.$watch(function() { return angular.element(idName).height() > 0 }, function() {
+            var e = angular.element(idName);
 
-              if (!scope.chartReady && e[0]) {
-                scope.getChart();
-                return;
-              }
-            });
-          } else {
-            var listener = scope.$watch(function() { return angular.element(idName).height() > 0 }, function() {
-              var e = angular.element(idName);
-
-              if (!scope.chartReady && e.length > 0) {
-                if (e[0].clientHeight > 0) {
-                  var boxTop = element[0].getBoundingClientRect().top + 100;
-                  $win.on('scroll', function (e) {
-                    if (!scope.chartReady && ($win.scrollTop() + $win.height()) >= boxTop) {
-                      scope.getChart();
-                      scope.$apply();
-                      return;
-                    }
-                  });
-                } else {
-                  var boxTop = e[0].getBoundingClientRect().top;
-                  var scrollHeight = $document[0].documentElement.scrollHeight;
-
-                  $win.on('scroll', function (e) {
-                    var scrollY = $win.scrollTop();
-                    if (!scope.chartReady && (scrollY >= boxTop || scrollY + $win.height() >= scrollHeight)) {
-                      scope.getChart();
-                      scope.$apply();
-                      return;
-                    }
-                  });
+            if (!scope.chartReady && e.length > 0 && e[0].clientHeight > 0) {
+              var boxTop = chart[0].offsetTop - winHeight + 100;
+              $win.on('scroll', function (e) {
+                var scrollY = $win.scrollTop();
+                if (!scope.chartReady && (scrollY >= boxTop)) {
+                  scope.getChart();
+                  scope.$apply();
+                  return;
                 }
-              }
-
-            });
-          }
-
+              });
+            }
+          });
         });
 
       });

@@ -21,9 +21,10 @@ angular.module('SubSnoopApp')
         scope.labels = months.getLabels();
         scope.chartReady = false;
         var entries = subFactory.getAllEntries();
+        var username = scope.username;
 
         scope.getChart = function() {
-          userChart.getUserChart(scope.username, entries);
+          userChart.getUserChart(username, entries);
           scope.series = ['Comment Points', 'Post Points'];
           scope.colors = ['#37AE9B', '#DCDCDC'];
 
@@ -78,17 +79,20 @@ angular.module('SubSnoopApp')
         };
 
         $document.ready(function() {
+          var chart = angular.element('#linechart-' + username);
           var prevElem = element.parent()[0].previousElementSibling;
           var idName = '#' + prevElem.id + ' .graph';
+          var winHeight = $win.innerHeight();
 
           var listener = scope.$watch(function() { return angular.element(idName).height() > 0 }, function() {
             var e = angular.element(idName);
 
             if (!scope.chartReady && e.length > 0 && e[0].clientHeight > 0) {
-              var boxTop = element.parent()[0].getBoundingClientRect().top + 100;
+              var boxTop = chart[0].offsetTop - winHeight + 100;
 
               $win.on('scroll', function (e) {
-                if (!scope.chartReady && $win.scrollTop() + $win.height() >= boxTop) {
+                var scrollY = $win.scrollTop();
+                if (!scope.chartReady && (scrollY >= boxTop)) {
                   scope.getChart();
                   scope.$apply();
                   return;

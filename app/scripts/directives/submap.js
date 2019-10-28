@@ -19,41 +19,36 @@ angular.module('SubSnoopApp')
       restrict: 'E',
       link: function(scope, element, attrs) {
         scope.chartReady = false;
-        var subs = subFactory.getEntries(attrs.sub, null);
+        var subname = scope.subreddit;
+        var username = scope.username;
+        var subs = subFactory.getEntries(subname, null);
 
         scope.getChart = function() {
-          scope.mapData = subHeatmap.getSubMap(scope.username, attrs.sub, subs);
-          scope.average = subHeatmap.getAverage(attrs.sub);
-          scope.total = subHeatmap.getTotal(attrs.sub);
+          scope.mapData = subHeatmap.getSubMap(username, subname, subs);
+          scope.average = subHeatmap.getAverage(subname);
+          scope.total = subHeatmap.getTotal(subname);
           scope.chartReady = true;
         };
 
         $document.ready(function() {
+          var chart = angular.element('#mapchart-' + subname);
           var prevElem = element.parent()[0].previousElementSibling;
           var idName;
-          if (angular.element('#top-post-' + attrs.sub).length > 0) {
+          if (angular.element('#top-post-' + subname).length > 0) {
             idName = '#' + prevElem.id + ' .post-content';
           } else {
             idName = '#' + prevElem.id + ' .post-body';
           }
+          var winHeight = $win.innerHeight();
 
           var listener = scope.$watch(function() { return angular.element(idName).height() && angular.element(idName).height() > 0 }, function() {
             var e = angular.element(idName);
-            if (!scope.chartReady && e.length > 0) {
-              if (e.height() > 0) {
-                var boxTop = element[0].getBoundingClientRect().top + 100;
+            if (!scope.chartReady && e && e.length > 0) {
+              if (e[0].clientHeight > 0) {
+                var boxTop = chart[0].offsetTop - winHeight + 50;
                 $win.on('scroll', function (e) {
-                  if (!scope.chartReady && ($win.scrollTop() + $win.height()) >= boxTop) {
-                    scope.getChart();
-                    scope.$apply();
-                    return;
-                  }
-                });
-              } else {
-                var boxTop = prevElem.getBoundingClientRect().top;
-                $win.on('scroll', function (e) {
-                  var scrollY = $win.scrollTop() + 100;
-                  if (!scope.chartReady && scrollY >= boxTop) {
+                  var scrollY = $win.scrollTop();
+                  if (!scope.chartReady && (scrollY >= boxTop)) {
                     scope.getChart();
                     scope.$apply();
                     return;

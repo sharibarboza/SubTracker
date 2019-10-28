@@ -2321,14 +2321,20 @@ Sub Page Side Bar
 .submit-pic {
   display: block;
   margin: 0 auto;
+  height: auto;
 }
 
 .smaller-pic {
-  width: 60%;
+  width: 100%;
 }
 
 .fuller-pic {
   max-width: 100%;
+}
+
+.post-content {
+  height: 100%;
+  width: 100%;
 }
 
 #stat-lines {

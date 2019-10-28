@@ -4,23 +4,8 @@
 </a> <span ng-if="element.link_flair_text" class="post-flair label label-default">{{ element.link_flair_text | escape }}</span>
 
 <br>
-
 <span class="post-links light-grey">
-  <span style="font-weight: 400;">
-    <a ng-href="https://reddit.com{{ element.permalink }}" target="_blank"><ng-pluralize count="element.num_comments" when="{'1': '1 comment', 'other': '{{ element.num_comments | number }} comments'}"></ng-pluralize></a>
-    &nbsp;
-    <span>
-      <span ng-if="element.gildings.gid_1 > 0"><img class="gilded-icon" lazy-img="{{ '../images/silver.png' }}"/> {{ element.gildings.gid_1 }}</span>
-    </span>
-    <span>
-      <span ng-if="element.gildings.gid_2 > 0"><img class="gilded-icon" lazy-img="{{ '../images/gold.png' }}"/> {{ element.gildings.gid_2 }}</span>
-    </span>
-    <span>
-      <span ng-if="element.gildings.gid_3 > 0"><img class="gilded-icon" lazy-img="{{ '../images/platinum.png' }}"/> {{ element.gildings.gid_3 }}</span>
-    </span>
-  </span>
-
-  <span class="mobile-sub-header" style="display: none;">
+  <span class="mobile-sub-header">
     <strong class="post-points" ng-class="element.ups > 0 ? 'green' : 'orange'">{{ element.ups | number }} {{ element.ups == 1 || element.ups == -1 ? "point" : "points" }}</strong><br>
     <span ng-bind="element.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'" class="post-date light-grey"></span>
     <span ng-if="element.gilded > 0"><span class="post-links gilded-icon gray"> x {{ element.gildings }}</span></span>

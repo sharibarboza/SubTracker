@@ -202,7 +202,7 @@
             </div>
 
             <div ng-if="recentlyActive" class="middle-col-pad g-underline user-map-{{ username }}" id="mapchart-{{ username }}" style="padding-bottom: 0;">
-              <user-map user="{{ username }}">
+              <user-map>
                 <div ng-if="!chartReady" align="center">
                   <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
                 </div>
@@ -211,7 +211,7 @@
             </div>
 
             <div ng-if="recentlyActive" class="middle-col-pad g-underline" id="linechart-{{ username }}" style="padding-bottom: 0;">
-              <user-line user="{{ username }}">
+              <user-line>
                 <div ng-if="!chartReady" align="center">
                   <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
                 </div>
