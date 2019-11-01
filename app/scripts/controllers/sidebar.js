@@ -9,7 +9,6 @@
  */
 angular.module('SubSnoopApp')
   .controller('SidebarCtrl', ['$scope', '$timeout', '$mdSidenav', '$log', function ($scope, $timeout, $mdSidenav, $log) {
-
     $scope.toggleRight = function () {
       buildToggler('right');
     };

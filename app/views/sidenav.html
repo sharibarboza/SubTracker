@@ -18,17 +18,18 @@
     <li><i class="fa fa-search"></i> <a ng-href="#/{{ username }}/search/">Search Comments & Posts</a></li>
   </ul>
   <hr style="margin-bottom: 0;">
+
   <form redirect="{{ true }}" novalidate="novalidate">
     <div class="input-group" id="testInput">
       <input type="text" id="nav-search" class="form-control sub-form"
              ng-model="searchSub" ng-change="changeUserSubs(searchSub)" placeholder="&#xF002; &nbsp;Enter sub name ..." style="font-family: FontAwesome, Helvetica Neue;" md-autofocus>
     </div>
   </form>
+  <br>
   <ul>
     <strong class="white">Sorted by: <span class="light-grey">{{ selected.name }}</span></strong>
     <br><br>
-
-    <li ng-repeat="subname in subList"><a ng-href="#/{{ username }}/{{ subname }}/overview/"><strong><p class="mobile-list white">r/{{ subname }}</p></strong></a></li>
+    <li ng-repeat="subname in sideList"><a ng-href="#/{{ username }}/{{ subname }}/overview/"><strong><p class="mobile-list white">r/{{ subname }}</p></strong></a></li>
   </ul>
 
   <strong ng-controller="SidebarCtrl" ng-click="close()" class="light-grey"><i class="fa fa-times" aria-hidden="true"></i> Close</strong>

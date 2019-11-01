@@ -87,6 +87,17 @@
       getSubmitsList: function() {
         return submissions;
       },
+      getAllSubs: function() {
+        return subs;
+      },
+      getSubs: function(data) {
+        var subList = [];
+        for (var i = 0; i < data.length; i++) {
+          var sub = data[i];
+          subList.push(subs[sub]);
+        }
+        return subList;
+      },
       getEntries: function(subreddit, where, limit) {
         try {
           if (where) {
@@ -107,7 +118,7 @@
           if (info.banner_img == "" || info.banner_img == null) {
             info.banner_img = "";
           }
-          subData.subs[subreddit].info = info;
+          subs[subreddit].info = info;
         } catch(error) {
           throw subreddit + ' does not exist in ' + username + '\'s subreddits.';
         }
@@ -115,9 +126,9 @@
       setIcons: function(subreddit, iconImg) {
         try {
           if (iconImg !== "" && iconImg !== null) {
-            subData.subs[subreddit].icon = iconImg;
+            subs[subreddit].icon = iconImg;
           } else {
-            subData.subs[subreddit].icon = null;
+            subs[subreddit].icon = null;
           }
         } catch(error) {
           throw subreddit + ' does not have an icon image.';
@@ -218,7 +229,7 @@
         try {
           var subreddit = post.subreddit;
           if (!(subreddit in subs)) {
-            subs[subreddit] = createNewSub();
+            subs[subreddit] = createNewSub(subreddit);
           }
 
           if (post.name.indexOf('t1_') >= 0) {
@@ -263,7 +274,7 @@
         'user': createUser(user_response),
         'comments' : comments.length,
         'submissions' : submissions.length,
-        'subs' : subs,
+        'subs' : subLength,
         'upvotes' : upvotes,
         'topComment': topComment,
         'topSubmit': topSubmit,
@@ -554,8 +565,9 @@
     /*
      Create and return a new sub object
     */
-    function createNewSub() {
+    function createNewSub(subreddit) {
       var subData = {};
+      subData.name = subreddit;
       subData.comment_ups = 0;
       subData.recent_comment = null;
       subData.num_comments = 0;

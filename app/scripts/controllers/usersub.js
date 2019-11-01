@@ -33,7 +33,7 @@ angular.module('SubSnoopApp')
      $scope.sub contains the comments and submissions arrays
     */
     $scope.subsArray = subFactory.getSubNames();
-    $scope.sub = subsData.subs[$routeParams.subreddit];
+    $scope.sub = subFactory.getAllSubs()[$routeParams.subreddit];
 
     $scope.sortSelected = sortFactory.getDefaultPostSort();
     $scope.commentSort = $scope.sortSelected;
@@ -238,20 +238,27 @@ angular.module('SubSnoopApp')
     }
 
     /*
-     Find the subreddits that match the search query term
-     */
+     Used for filtering subreddits by name
+    */
     $scope.changeUserSubs = function(term) {
-      $scope.subList = [];
-      $scope.subList = search.findSubs($scope.subsArray, term);
-      $scope.currentLimit = $scope.subList.length;
+      var sortedList = sortFactory.getSorted($scope.selected.value);
+
+      if (term == '') {
+        $scope.subList = subFactory.getSubs(sortedList);
+        $scope.sideList = sortedList;
+      } else {
+        var resultsList = search.findSubs(subFactory.getDefaultSortedArray(), term);
+        $scope.subList = subFactory.getSubs(resultsList);
+        $scope.sideList = resultsList;
+      }
     };
 
     /*
      Set subs list for toggle sidebar
     */
-    $scope.subList = sortFactory.getSorted(sortFactory.getSubSort().value);
-    if (!$scope.subList) {
-      $scope.subList = $scope.subsArray;
+    $scope.sideList = sortFactory.getSorted(sortFactory.getSubSort().value);
+    if (!$scope.sideList) {
+      $scope.sideList = $scope.subsArray;
     }
 
     /*

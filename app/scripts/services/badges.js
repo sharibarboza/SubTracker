@@ -20,29 +20,19 @@ angular.module('SubSnoopApp')
     Used for determining the sub badges such as most active, most upvoted, etc.
     */
     var factory = {
-      getAllSubs: function(current_user) {
+      getSubs: function(current_user) {
         if (isEmpty(sub_data) || !subFactory.checkUser(current_user) || current_user != user) {
           user = current_user;
           clear(sub_badges);
           clear(sub_data);
           setData();
 
-          var data = subFactory.getSubData();
-          return configureSubs(data);
+          sub_badges = initBadges();
+          configureSubs();
         }
         return sub_data;
       },
-      getBadges: function(current_user) {
-        if (isEmpty(sub_data) || !subFactory.checkUser(current_user) || current_user != user) {
-          user = current_user;
-          clear(sub_badges);
-          clear(sub_data);
-          setData();
-
-          var data = subFactory.getSubData();
-          sub_badges = initBadges(data);
-          sub_data = configureSubs(data);
-        }
+      getBadges: function() {
         return sub_badges;
       },
       clearData: function() {
@@ -56,7 +46,7 @@ angular.module('SubSnoopApp')
      Sets sub data from sub factory
     */
     function setData() {
-      subs = subFactory.getSubData().subs;
+      subs = subFactory.getAllSubs();
       keys = subFactory.getDefaultSortedArray();
     }
 
@@ -71,33 +61,19 @@ angular.module('SubSnoopApp')
       }
     }
 
-    /*
-     Get a user's notable subs categorized by subreddit
-    */
-    function configureSubs(data) {
-      if (isEmpty(sub_badges)) {
-        initBadges(data);
-      }
-      for (var key in sub_badges) {
-        if ('sub' in sub_badges[key]) {
-          var sub = sub_badges[key].sub;
-          addSub(sub, sub_badges[key]);
+    function configureSubs() {
+      for (var badge in sub_badges) {
+        var data = sub_badges[badge];
+        var sub = data.sub;
+        if (!(sub in sub_data)) {
+          sub_data[sub] = [];
         }
-      }
-      return sub_data;
-    }
 
-    function addSub(sub, data) {
-      if (!(sub in sub_data)) {
-        sub_data[sub] = {
-          'badges': [],
-          'image': null
-        };
+        var b = {
+          'name': data.name, 'icon': data.icon
+        }
+        sub_data[sub].push(b);
       }
-
-      var point = {'name': data.name, 'icon': data.icon}
-      sub_data[sub].badges.push(point);
-      sub_data[sub].image = data.image;
     }
 
     /*
@@ -115,60 +91,51 @@ angular.module('SubSnoopApp')
     /*
       Get the subreddit statistics for the users's Stats page
     */
-    function initBadges(data) {
+    function initBadges() {
         sub_badges = {
           'mostUpvoted' : {
             'image' : null,
             'name' : 'Most Upvoted',
-            'points' : 0,
             'icon' : 'glyphicon glyphicon-arrow-up'
           },
           'mostActive' : {
             'image' : null,
             'name' : 'Most Active',
-            'points' : 0,
             'icon' : 'fa fa-heart'
           },
           'topSubmit' : {
             'image' : null,
             'name' : 'Current Best Post',
-            'points' : 0,
             'icon' : 'fa fa-file-text'
           },
           'topComment' : {
             'image' : null,
             'name' : 'Current Best Comment',
-            'points' : 0,
             'icon' : 'fa fa-comment'
           },
           'mostGilded' : {
             'image' : null,
             'name' : 'Most Gilded',
-            'points' : 0,
             'icon' : 'fa fa-star'
           },
           'leastUpvoted' : {
             'image' : null,
             'name' : 'Least Upvoted',
-            'points' : 0,
             'icon' : 'glyphicon glyphicon-arrow-down'
           },
           'newestSub' : {
             'image' : null,
             'name' : 'Newest',
-            'points' : 0,
             'icon' : 'fa fa-flash'
           },
           'topSub' : {
             'image' : null,
             'name' : 'Top Subreddit of the Week',
-            'points' : 0,
             'icon' : 'fa fa-fire'
           },
           'lastSeen' : {
             'image' : null,
             'name' : 'Last Recent Activity',
-            'points' : 0,
             'icon' : 'fa fa-clock-o'
           }
         };
@@ -184,7 +151,10 @@ angular.module('SubSnoopApp')
         if (!(subs[gildedSub].is_gilded)) {
           delete sub_badges['mostGilded'];
         }
+
+        var data = subFactory.getSubData();
         var tops = ['topSubmit', 'topComment', 'topSub'];
+
         for (var i = 0; i < tops.length; i++) {
           var category = tops[i];
           var sub = data[category];
@@ -216,11 +186,6 @@ angular.module('SubSnoopApp')
         var name = response.display_name;
         subFactory.setIcons(name, response.icon_img);
         subFactory.setSubInfo(name, response);
-
-        if (sub_badges.hasOwnProperty(category)) {
-          sub_badges[category].image = response.icon_img;
-        }
-
       });
     };
 

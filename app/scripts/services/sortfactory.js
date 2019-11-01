@@ -82,7 +82,11 @@ angular.module('SubSnoopApp')
         clear(sortedEntries);
         numCachedEntries = 0;
       },
-      getSorted: function(attribute) {
+      getSorted: function(attribute, limit) {
+        if (limit) {
+          return sortedSubLists[attribute].slice(0, limit);
+        }
+        
         return sortedSubLists[attribute];
       }
     };

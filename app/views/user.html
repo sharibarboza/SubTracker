@@ -18,7 +18,7 @@
 
     <div ng-if="!noSubs" class="banner-div" sticky-nav>
 
-      <div class="toggle-nav" align="right" ng-controller="SidebarCtrl">
+      <div class="toggle-nav" align="right" ng-controller="SidebarCtrl" ng-click="openSide()">
         <a href class="nav-link" ng-click="toggleRight()"><i class="fa fa-bars white"></i></a>
       </div>
 
@@ -119,7 +119,6 @@
 
           <div ng-if="tab == 0">
             <div class="row post-row middle-col-pad">
-
               <div class="col-md-3 col-sm-3 col-xs-12 post-count no-right-pad" style="padding-left: 18px;">
                 <strong class="light-grey">Filter Subreddits</strong>
               </div>
@@ -141,51 +140,53 @@
               </div>
             </div>
 
-            <div ng-repeat="subreddit in subList | limitTo:limit" class="sub-card-box" id="sub-row">
-              <a ng-href="#/{{ username }}/{{ subreddit }}/overview/"><div class="row prevRow">
+            <div align="center"><img ng-if="!listLoaded" class="loader" lazy-img="{{ '../images/103.gif' }}" /></div>
+            <div ng-if="listLoaded" ng-repeat="subreddit in subList | limitTo:limit" class="sub-card-box" id="sub-row">
+              <a ng-href="#/{{ username }}/{{ subreddit.name }}/overview/"><div class="row prevRow">
                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 sub-cells" align="center">
                   <strong class="num-rank">{{ 1 + $index }}</strong>
                 </div>
                 <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 sub-cells no-left-pad">
                   <div class="row">
                     <div class="col-lg-10 col-sm-10 no-right-pad sub-inner-row">
-                      <span class="sub-name white">r/{{ subreddit }}</span>&nbsp;&middot;&nbsp;<span class="light-grey" ng-init="seen=subs[subreddit].recent_activity.created_utc * 1000"><time-ago from-time='{{ seen }}'></time-ago></span>
+                      <span class="sub-name white">r/{{ subreddit.name }}</span>&nbsp;&middot;&nbsp;<span class="light-grey" ng-init="seen=subreddit.recent_activity.created_utc * 1000"><time-ago from-time='{{ seen }}'></time-ago></span>
                       <div class="sub-font light-grey" style="margin-top: 5px;">
                         <span class="badge">
-                          <span ng-if="subs[subreddit].num_comments > 0">
+                          <span ng-if="subreddit.num_comments > 0">
                             <span class="fa fa-comment small-icon"></span>
-                            {{ subs[subreddit].num_comments | number }} <ng-pluralize count="subs[subreddit].num_comments" when="{ '1': 'Comment', 'other': 'Comments' }"></ng-pluralize>
+                            {{ subreddit.num_comments | number }} <ng-pluralize count="subreddit.num_comments" when="{ '1': 'Comment', 'other': 'Comments' }"></ng-pluralize>
                             &nbsp;
                           </span>
-                          <span ng-if="subs[subreddit].num_submissions > 0">
+                          <span ng-if="subreddit.num_submissions > 0">
                             <span class="fa fa-file-text small-icon"></span>
-                            {{ subs[subreddit].num_submissions | number }} <ng-pluralize count="subs[subreddit].num_submissions" when="{ '1': 'Post', 'other': 'Posts' }"></ng-pluralize>
+                            {{ subreddit.num_submissions | number }} <ng-pluralize count="subreddit.num_submissions" when="{ '1': 'Post', 'other': 'Posts' }"></ng-pluralize>
                             &nbsp;&nbsp;
                           </span>
                         </span>
-                        <span ng-if="subs[subreddit].is_gilded" class="light-grey badge">
-                          <span ng-if="subs[subreddit].gilds.gid_1 > 0"><img class="gilded-icon" lazy-img="{{ '../images/silver.png' }}"/>x{{ subs[subreddit].gilds.gid_1 }}&nbsp;</span>
-                          <span ng-if="subs[subreddit].gilds.gid_2 > 0"><img class="gilded-icon" lazy-img="{{ '../images/gold.png' }}"/>x{{ subs[subreddit].gilds.gid_2 }}&nbsp;</span>
-                          <span ng-if="subs[subreddit].gilds.gid_3 > 0"><img class="gilded-icon" lazy-img="{{ '../images/platinum.png' }}"/>x{{ subs[subreddit].gilds.gid_3 }}</span>
+                        <span ng-if="subreddit.is_gilded" class="light-grey badge">
+                          <span ng-if="subreddit.gilds.gid_1 > 0"><img class="gilded-icon" lazy-img="{{ '../images/silver.png' }}"/>x{{ subreddit.gilds.gid_1 }}&nbsp;</span>
+                          <span ng-if="subreddit.gilds.gid_2 > 0"><img class="gilded-icon" lazy-img="{{ '../images/gold.png' }}"/>x{{ subreddit.gilds.gid_2 }}&nbsp;</span>
+                          <span ng-if="subreddit.gilds.gid_3 > 0"><img class="gilded-icon" lazy-img="{{ '../images/platinum.png' }}"/>x{{ subreddit.gilds.gid_3 }}</span>
                         </span>
                       </div>
 
                     </div>
                     <div class="col-lg-2 col-sm-2 hidden-xs no-left-pad sub-list-pts" align="right">
-                      <strong style="font-size: 17px;" ng-class="subs[subreddit].total_ups > 0 ? 'green' : 'orange'"> {{ subs[subreddit].total_ups | karma }}<span ng-class="subs[subreddit].total_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+                      <strong style="font-size: 17px;" ng-class="subreddit.total_ups > 0 ? 'green' : 'orange'"> {{ subreddit.total_ups | karma }}<span ng-class="subreddit.total_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
                     </div>
                   </div>
                 </div>
               </div>
-
             </a>
             </div>
-            <div ng-if="limit < subLength" class="g-underline" align="center">
+
+            <div ng-if="subList.length == 0" class="g-underline"></div>
+            <div ng-if="listLoaded && limit < subLength" class="g-underline" align="center">
               <button ng-click="loadMore()" class="btn gray-btn load-btn">Load More</button>
             </div>
           </div>
 
-          <div ng-if="tab == 1" id="user-col">
+          <div ng-if="tab == 1" id="user-col" ng-controller="UserStatsCtrl">
             <div class="mobile-only middle-col-pad g-underline" ng-include src="'views/stats-overview.html'"></div>
 
             <div id="top-entries-{{ username }}">
@@ -256,6 +257,7 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
