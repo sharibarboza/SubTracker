@@ -17,17 +17,35 @@ angular.module('SubSnoopApp')
      Stores a user's submissions with their HTML content wrappers
      */
     var factory = {
-      setContent: function(submitID, content, user) {
+      addContent: function(submission, user) {
         if (username === undefined || username !== user) {
             clear();
             username = user;
         }
 
-        if (Object.keys(submits).length == 50) {
-          clear();
+        var obj = {};
+
+        obj.selftext_html = submission.selftext_html;
+        obj.media = null;
+        if (submission.media) {
+          obj.media = {};
+          if ('oembed' in submission.media) {
+            obj.media.oembed = submission.media.oembed;
+          }
+          if ('reddit_video' in submission.media) {
+            obj.media.reddit_video = submission.media.reddit_video;
+          }
         }
 
-        submits[submitID] = content;
+        obj.preview = null;
+        if (submission.preview) {
+          obj.preview = {};
+          if ('images' in submission.preview) {
+            obj.preview = submission.preview.images[0].resolutions;
+          }
+        }
+
+        submits[submission.id] = obj;
       },
       isStored: function(submitID, user) {
         if (username === undefined || username !== user) {

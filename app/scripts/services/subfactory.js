@@ -8,8 +8,8 @@
  * Factory in the SubSnoopApp.
  */
  angular.module('SubSnoopApp')
- .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sortFactory', 'filterPosts', 'subInfo', 'gilded', 'reaction', 'sentiMood', 'entryLimit', 'subChart', 'userHeatmap', 'subHeatmap', 'subChart', 'words',
-  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory, filterPosts, subInfo, gilded, reaction, sentiMood, entryLimit, subChart, userHeatmap, subHeatmap, words) {
+ .factory('subFactory', ['$http', '$rootScope', 'userFactory', '$q', 'moment', '$filter', 'sortFactory', 'filterPosts', 'submissions', 'subInfo', 'gilded', 'reaction', 'sentiMood', 'entryLimit', 'userHeatmap', 'subHeatmap', 'subChart', 'words',
+  function ($http, $rootScope, userFactory, $q, moment, $filter, sortFactory, filterPosts, submissions, subInfo, gilded, reaction, sentiMood, entryLimit, userHeatmap, subHeatmap, subChart, words) {
     var pages = 10;
     var username;
     var promise = null;
@@ -25,8 +25,8 @@
     var allIDs = {};
     var subEntries = {};
 
-    var comments = [];
-    var submissions = [];
+    var commentsList = [];
+    var submissionsList = [];
     var subs = {};
     var subNames = [];
     var commentData = [];
@@ -82,10 +82,10 @@
         return subLength;
       },
       getCommentsList: function() {
-        return comments;
+        return commentsList;
       },
       getSubmitsList: function() {
-        return submissions;
+        return submissionsList;
       },
       getAllSubs: function() {
         return subs;
@@ -234,11 +234,11 @@
 
           if (post.name.indexOf('t1_') >= 0) {
             post = addComment(subreddit, subs[subreddit], post);
-            comments.push(post);
+            commentsList.push(post);
             delete allIDs['t1_' + post.id];
           } else {
             post = addSubmission(subreddit, subs[subreddit], post);
-            submissions.push(post);
+            submissionsList.push(post);
             delete allIDs['t3_' + post.id];
           }
           getTopSub(post);
@@ -272,8 +272,8 @@
 
       subData = {
         'user': createUser(user_response),
-        'comments' : comments.length,
-        'submissions' : submissions.length,
+        'comments' : commentsList.length,
+        'submissions' : submissionsList.length,
         'subs' : subLength,
         'upvotes' : upvotes,
         'topComment': topComment,
@@ -287,8 +287,8 @@
     function organizePosts() {
       commentData = [].concat.apply([], commentData);
       submitData = [].concat.apply([], submitData);
-      comments = [];
-      submissions = [];
+      commentsList = [];
+      submissionsList = [];
 
       return commentData.concat.apply(commentData, submitData);
     }
@@ -343,8 +343,8 @@
       allIDs = {};
       subEntries = {};
 
-      comments = [];
-      submissions = [];
+      commentsList = [];
+      submissionsList = [];
       subs = {};
       subNames = [];
       commentData = [];
@@ -371,6 +371,7 @@
       subHeatmap.clearData();
       userHeatmap.clearData();
       words.clearData();
+      submissions.clearData();
     }
 
     /*
@@ -488,7 +489,7 @@
 
         if (where === 'comments') {
           if (limit === 'All' || numComments < limit) {
-            comments.push(item);
+            commentsList.push(item);
             numComments += 1;
           } else {
             before = null;
@@ -496,7 +497,7 @@
           }
         } else {
           if (limit === 'All' || numSubmits < limit) {
-            submissions.push(item);
+            submissionsList.push(item);
             numSubmits += 1;
           } else {
             before = null;
@@ -658,32 +659,12 @@
       obj.num_comments = submission.num_comments;
       obj.permalink = submission.permalink;
       obj.ups = submission.ups;
-      obj.selftext_html = submission.selftext_html;
       obj.subreddit = submission.subreddit;
       obj.title = submission.title;
       obj.url = submission.url;
       obj.thumbnail = submission.thumbnail;
       obj.thumbnail_width = submission.thumbnail_width;
       obj.link_flair_text = submission.link_flair_text;
-
-      obj.media = null;
-      if (submission.media) {
-        obj.media = {};
-        if ('oembed' in submission.media) {
-          obj.media.oembed = submission.media.oembed;
-        }
-        if ('reddit_video' in submission.media) {
-          obj.media.reddit_video = submission.media.reddit_video;
-        }
-      }
-
-      obj.preview = null;
-      if (submission.preview) {
-        obj.preview = {};
-        if ('images' in submission.preview) {
-          obj.preview = submission.preview.images[0].resolutions;
-        }
-      }
 
       addEntry(name, obj, 'submissions');
       subreddit.count += 1;
@@ -703,6 +684,8 @@
       if (submission.ups > subreddit.top_submit[0]) {
         subreddit.top_submit = [submission.ups, obj];
       }
+
+      submissions.addContent(submission, username);
 
       return obj;
     }

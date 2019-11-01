@@ -128,6 +128,7 @@
       var sortedList = sortFactory.getSorted(sort.value, $scope.limit);
 
       $scope.subList = subFactory.getSubs(sortedList);
+      $scope.sideList = sortedList;
       sortFactory.setSubSort(sort);
       $scope.selected = sort;
       $scope.listLoaded = true;
