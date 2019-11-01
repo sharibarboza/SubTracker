@@ -109,7 +109,11 @@ angular.module('SubSnoopApp')
       Get the cached sorted list to avoid repeating the sorting process
       */
 
-      if (cached || sortFactory.isSorted(attribute)) {
+      if (typeof cached == undefined || cached == null) {
+        cached = true;
+      }
+
+      if (cached && sortFactory.isSorted(attribute)) {
         var sortedList = sortFactory.getSorted(attribute);
         if (sortedList.length === input.length) {
           return sortedList;
@@ -138,7 +142,9 @@ angular.module('SubSnoopApp')
         }
       }
 
-      sortFactory.addSorted(attribute, sortedData);
+      if (cached) {
+        sortFactory.addSorted(attribute, sortedData);
+      }
       return sortedData;
     };
 

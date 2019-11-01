@@ -86,7 +86,7 @@ angular.module('SubSnoopApp')
         if (limit) {
           return sortedSubLists[attribute].slice(0, limit);
         }
-        
+
         return sortedSubLists[attribute];
       }
     };
