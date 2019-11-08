@@ -4,7 +4,7 @@
       <strong class="white title-heading">Most Mentioned Words</strong>
       <br><br>
       <jqcloud ng-show="chartReady" words="words" steps="10" colors="{{ colors }}" delay="5" class="word-cloud" style="width: 100%; height: 30vh; margin-bottom: 15px;"></jqcloud>
-      <div ng-if="!chartReady" align="center"><img class="loader" lazy-img="{{ '../images/103.gif' }}" /></div>
+      <div ng-if="!chartReady" align="center"><img class="loader" ng-src="{{ '../images/103.gif' }}" /></div>
     </div>
   </div>
 </div>

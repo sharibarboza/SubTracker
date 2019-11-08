@@ -86,7 +86,7 @@
           <div class="profile-bar">
             <div align="right">
               <strong>
-                <strong style="font-size: 28px;">{{ sub.total_ups | number }}</strong>
+                <strong style="font-size: 28px;">{{ sub.total_ups | karma }}</strong>
                 <ng-pluralize count="sub.total_ups" when="{'1': 'point', 'other': 'points'}">
               </strong>
             </div>
@@ -176,7 +176,7 @@
             <div ng-if="recentlyActive" class="middle-col-pad g-underline sub-map-{{ subreddit }}" id="mapchart-{{ subreddit }}" style="padding-bottom: 0;">
               <sub-map>
                 <div ng-if="!chartReady" align="center">
-                  <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
+                  <img class="loader" ng-src="{{ '../images/103.gif' }}" />
                 </div>
                 <div ng-if="chartReady" class="graph" ng-include src="'views/sub-heatmap.html'"></div>
               </sub-map>
@@ -185,7 +185,7 @@
             <div ng-if="recentlyActive" class="middle-col-pad g-underline" id="linechart-{{ subreddit }}">
               <sub-line>
                 <div ng-if="!chartReady" align="center">
-                  <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
+                  <img class="loader" ng-src="{{ '../images/103.gif' }}" />
                 </div>
                 <div ng-if="chartReady" class="graph" id="sub-line-{{ subreddit }}" ng-include src="'views/sub-chart.html'"></div>
               </sub-line>
@@ -203,7 +203,7 @@
                   <donut-chart type="sentiment" align="center">
                     <div ng-if="chartReady" class="graph" id="donut-chart"></div>
                     <div ng-if="!chartReady" align="center">
-                      <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
+                      <img class="loader" ng-src="{{ '../images/103.gif' }}" />
                     </div>
                   </donut-chart>
                 </div>
@@ -213,7 +213,7 @@
                   <donut-chart type="reaction" align="center">
                     <div ng-if="chartReady" class="graph" id="donut-chart"></div>
                     <div ng-if="!chartReady" align="center">
-                      <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
+                      <img class="loader" ng-src="{{ '../images/103.gif' }}" />
                     </div>
                   </donut-chart>
                 </div>
@@ -223,7 +223,7 @@
             <div class="middle-col-pad g-underline" id="wordchart-{{ subreddit }}">
               <word-cloud sub="{{ subreddit }}">
                 <div ng-if="!chartReady" align="center">
-                  <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
+                  <img class="loader" ng-src="{{ '../images/103.gif' }}" />
                 </div>
                 <div ng-if="chartReady" class="graph" id="word-cloud-{{ subreddit }}" ng-include src="'views/sub-wordcloud.html'"></div>
               </word-cloud>
@@ -261,6 +261,11 @@
               </div>
             </div>
 
+
+            <div ng-show="!listLoaded" align="center" class="g-underline">
+              <img class="loader" ng-src="{{ '../images/103.gif' }}" />
+            </div>
+
             <div ng-class="limit < limits[tab] ? 'ending-line' : 'empty-class'">
               <div id="{{ tabOptions[tab] }}">
                 <div ng-repeat="element in slicedArray | limitTo:limit" class="comment-list list-card-box">
@@ -271,8 +276,11 @@
                     <div ng-include src="'views/submission.html'"></div>
                   </div>
                 </div>
-                <div ng-if="limit < limits[tab]" align="center">
+                <div ng-show="listLoaded" ng-if="limit < limits[tab]" align="center">
                   <button ng-click="loadMore()" class="btn gray-btn load-btn">Load More</button>
+                </div>
+                <div ng-show="!listLoaded && loadingMore" align="center" class="g-underline">
+                  <img class="loader" ng-src="{{ '../images/103.gif' }}" />
                 </div>
               </div>
             </div>
@@ -285,19 +293,83 @@
             <div ng-if="tab == 4 && numGilds == 0" class="white middle-col-pad ending-line">
               There are <strong><span class="orange-text">0</span> gilded</strong> entries to display.
             </div>
-
           </div>
+
         </div>
         <div class="col-lg-3 hidden-md hidden-sm hidden-xs no-mobile">
           <div class="fixed fixed-sides col-lg-3" style="margin-top: 15px;">
             <div class="fixed-right">
 
-              <div class="card-box">
+              <div ng-if="tab == 1" class="card-box">
                 <div class="headerRow side-pad">
                   <strong class="side-headers">Statistics Overview</strong>
                 </div>
                 <div class="card-box-content">
                   <div ng-include src="'views/sub-overview.html'"></div>
+                </div>
+              </div>
+
+              <div ng-if="tab == 3" class="card-box">
+                <div class="headerRow side-pad">
+                  <strong class="side-headers">{{ commentFilter.name }} Overview</strong>
+                </div>
+                <div class="card-box-content">
+                  <strong class="white">{{ numComments | number }} </strong><span class="light-grey"> <ng-pluralize count="numComments" when="{'1': 'Comment', 'other': 'Comments'}"></ng-pluralize></span>
+                  &nbsp;&nbsp;
+                  <strong class="white">Points: </strong>
+                  <strong ng-if="filterPoints[0] !== NaN" ng-class="filterPoints[0] > 0 ? 'green' : 'orange'">{{ filterPoints[0] | karma }}<span ng-class="filterPoints[0] > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+                  <br><br>
+                  <div ng-if="filterPoints[1] !== NaN" class="light-grey">
+                    {{ filterPoints[1] | karma }} average <ng-pluralize count="filterPoints[1]" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per comment
+                  </div>
+                  <br>
+                  <button ng-controller="DataCtrl" class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
+                  <div ng-include src="'views/limit-msg.html'"></div>
+                </div>
+              </div>
+
+              <div ng-if="tab == 2" class="card-box">
+                <div class="headerRow side-pad">
+                  <strong class="side-headers">{{ submitFilter.name }} Overview</strong>
+                </div>
+                <div class="card-box-content">
+                  <strong class="white">{{ numSubmits | number }}</strong><span class="light-grey"> <ng-pluralize count="numSubmits" when="{'1': 'Post', 'other': 'Posts'}"></ng-pluralize></span>
+                  &nbsp;&nbsp;
+                  <strong class="white">Points: </strong>
+                  <strong ng-if="filterPoints[0] !== NaN" ng-class="filterPoints[0] > 0 ? 'green' : 'orange'">{{ filterPoints[0] | karma }}<span ng-class="filterPoints[0] > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+                  <br><br>
+                  <div ng-if="filterPoints[1] !== NaN" class="light-grey">
+                    {{ filterPoints[1] | karma }} average <ng-pluralize count="filterPoints[1]" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per post
+                  </div>
+                  <br>
+                  <button ng-controller="DataCtrl" class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
+                  <div ng-include src="'views/limit-msg.html'"></div>
+                </div>
+              </div>
+
+              <div ng-if="tab == 4" class="card-box">
+                <div class="headerRow side-pad">
+                  <strong class="side-headers">{{ gildFilter.name }} Overview</strong>
+                </div>
+                <div class="card-box-content">
+                  <strong class="white">{{ gildData.numComments | number }} </strong><span class="light-grey"> <ng-pluralize count="gildData.numComments" when="{'1': 'Comment', 'other': 'Comments'}"></ng-pluralize></span>
+                  &nbsp;&nbsp;
+                  <strong class="white">{{ gildData.numSubmits | number }}</strong><span class="light-grey"> <ng-pluralize count="gildData.numSubmits" when="{'1': 'Post', 'other': 'Posts'}"></ng-pluralize></span>
+                  <br><br>
+                  <strong class="white">Comment Points: </strong>
+                  <strong ng-if="gildData.commentPoints !== NaN" ng-class="gildData.commentPoints > 0 ? 'green' : 'orange'">{{ gildData.commentPoints | karma }}<span ng-class="gildData.commentPoints > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+                  <br>
+                  <strong class="white">Post Points: </strong>
+                  <strong ng-if="gildData.submitPoints !== NaN" ng-class="gildData.submitPoints > 0 ? 'green' : 'orange'">{{ gildData.submitPoints | karma }}<span ng-class="gildData.submitPoints > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+                  <br>
+                  <div ng-if="gildData.commentAvg !== NaN" class="light-grey" style="margin-top: 8px;">
+                    {{ gildData.commentAvg | karma }} average <ng-pluralize count="gildData.commentAvg" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per comment
+                    <br>
+                    {{ gildData.submitAvg | karma }} average <ng-pluralize count="gildData.submitAvg" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per post
+                  </div>
+                  <br>
+                  <button ng-controller="DataCtrl" class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
+                  <div ng-include src="'views/limit-msg.html'"></div>
                 </div>
               </div>
 

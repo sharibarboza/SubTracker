@@ -80,9 +80,12 @@ angular.module('SubSnoopApp')
           scope.getChart = function() {
             d3ChartEl = d3.select(element[0]);
             user = subFactory.getUser();
+
             if (subname && attrs.type === 'sentiment') {
+              sentiMood.setSubData(subname, subFactory.getEntries(subname, null), user);
               chartData = sentiMood.getData(subname);
             } else if (subname && attrs.type === 'reaction') {
+              reaction.setSubData(subname, subFactory.getEntries(subname, null), user);
               chartData = reaction.getData(subname);
             }
 

@@ -22,7 +22,7 @@
 </div>
 
 <div ng-show="searching" align="center" class="g-underline">
-  <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
+  <img class="loader" ng-src="{{ '../images/103.gif' }}" />
 </div>
 
 <div class="row no-margin" ng-if="resultList.length" id="results">
@@ -56,7 +56,7 @@
               <div class="search-header">
                 <strong class="white title-heading">Comments</strong>
               </div>
-              <div class="g-underline"></div>
+              <div class="g-underline-no-pad"></div>
             </div>
             <div ng-repeat="element in results.data[sub].comments | limitTo: searchLimit" class="searches" id="{{ sub }}-comments" ng-if="type != 3">
               <span class="gray small-font" ng-bind="comment.created_utc * 1000 | amDateFormat: 'MMMM Do YYYY, h:mm a'"></span>
@@ -70,7 +70,7 @@
               <div class="search-header">
                 <strong class="white title-heading">Posts</strong>
               </div>
-              <div class="g-underline"></div>
+              <div class="g-underline-no-pad"></div>
               <br>
             </div>
             <div ng-repeat="element in results.data[sub].submissions | limitTo: searchLimit" class="searches" id="{{ sub }}-submits" ng-if="type != 2">

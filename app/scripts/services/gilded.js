@@ -19,23 +19,18 @@ angular.module('SubSnoopApp')
     var defaultSort = 'newest';
 
     var factory = {
-      setData: function(subreddit, posts, sort) {
+      setData: function(subreddit, posts) {
         if (Object.keys(gildedPosts).length == 20) {
           clear();
         }
         var gilds;
         if (!(subreddit in gildedPosts)) {
-          posts = getGildedPosts(posts);
-          gildedPosts[subreddit] = {};
-        }
-
-        if (!(sort in gildedPosts[subreddit])) {
-          gildedPosts[subreddit][sort] = posts;
+          getGildedPosts(posts, subreddit);
         }
       },
-      getData: function(subreddit, sort) {
+      getData: function(subreddit) {
         try {
-          return gildedPosts[subreddit][sort];
+          return gildedPosts[subreddit];
         } catch(e) {
           return [];
         }
@@ -52,15 +47,17 @@ angular.module('SubSnoopApp')
     /*
      Get all the gilded posts in the sub.
     */
-    function getGildedPosts(posts) {
+    function getGildedPosts(posts, subreddit) {
       var gilded = [];
 
       for (var i = 0; i < posts.length; i++) {
         if ($filter('gilded')(posts[i].gildings) > 0) {
-          gilded.push(posts[i]);
+          var node = posts[i];
+          gilded.push(node);
         }
       }
-      return gilded;
+
+      gildedPosts[subreddit] = gilded;
     }
 
     /*

@@ -1,4 +1,4 @@
-<div>
+<div ng-controller="MainSubsCtrl">
   <div ng-include src="'views/searchnav.html'"></div>
 
   <div class="main-container">
@@ -11,7 +11,11 @@
       </div>
     </div>
 
-    <div ng-if="fetchedSubs == 1" class="row">
+    <div ng-show="fetchedSubs != 1 && fetchedSubs != 0" align="center">
+      <img class="loader" ng-src="{{ '../images/103.gif' }}" />
+    </div>
+
+    <div ng-show="fetchedSubs == 1" class="row">
       <div class="row col-md-10 col-md-push-1" id="sub-panels">
         <div class="col-lg-6 col-md-12 no-left-pad">
           <div class="panel-col card-box">

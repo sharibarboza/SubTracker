@@ -123,15 +123,17 @@
     $scope.setSortOption = function(sort) {
       $scope.listLoaded = false;
 
-      $filter('sortSubs')(subFactory.getSubNames(), sort.value, subFactory.getAllSubs());
-      $scope.limit = $scope.initLimit;
-      var sortedList = sortFactory.getSorted(sort.value, $scope.limit);
+      $timeout(function() {
+        $filter('sortSubs')(subFactory.getSubNames(), sort.value, subFactory.getAllSubs());
+        $scope.limit = $scope.initLimit;
+        var sortedList = sortFactory.getSorted(sort.value, $scope.limit);
 
-      $scope.subList = subFactory.getSubs(sortedList);
-      $scope.sideList = sortedList;
-      sortFactory.setSubSort(sort);
-      $scope.selected = sort;
-      $scope.listLoaded = true;
+        $scope.subList = subFactory.getSubs(sortedList);
+        $scope.sideList = sortedList;
+        sortFactory.setSubSort(sort);
+        $scope.selected = sort;
+        $scope.listLoaded = true;
+      }, 200);
     };
 
     /*

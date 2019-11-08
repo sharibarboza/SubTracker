@@ -8,7 +8,7 @@
  * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .factory('filterPosts', ['moment', '$filter', function (moment, $filter) {
+  .factory('filterPosts', ['moment', '$filter', 'gilded', function (moment, $filter, gilded) {
 
     /*
      Contains all the categories to sort subreddits and to sort posts
@@ -67,25 +67,43 @@ angular.module('SubSnoopApp')
           return 0;
         }
       },
-      getData: function(data, filter, subreddit, sort, where, limit) {
-        var dataList;
-        if (checkExists(subreddit, where, filter)) {
-          if (checkExists(subreddit, where, filter, sort)) {
-            var entries = filteredLists[subreddit][where][filter][sort];
-            return entries.slice(0, limit);
-          }
-          var filteredObj = filteredLists[subreddit][where][filter];
-          var firstKey = Object.keys(filteredObj)[0];
-          dataList = filteredObj[firstKey];
-        } else {
-          dataList = filterData(data, filter);
+      ifExists: function(subreddit, filter, where) {
+        return checkExists(subreddit, where, filter);
+      },
+      getExistingData: function(subreddit, filter, where, sort, limit) {
+        if (checkExists(subreddit, where, filter, sort)) {
+          var entries = filteredLists[subreddit][where][filter][sort];
+          return entries.slice(0, limit);
         }
+        var filteredObj = filteredLists[subreddit][where][filter];
+        var firstKey = Object.keys(filteredObj)[0];
+        var dataList = filteredObj[firstKey];
 
         var sortedList = $filter('sortPosts')(dataList, sort, subreddit, where);
         addFiltered(filter, subreddit, sort, where, sortedList);
-        
-        return sortedList.slice(0, limit);
 
+        return sortedList.slice(0, limit);
+      },
+      getData: function(data, filter, subreddit, sort, where, limit) {
+        var dataList = filterData(data, where, filter);
+
+        var sortedList = $filter('sortPosts')(dataList, sort, subreddit, where);
+        addFiltered(filter, subreddit, sort, where, sortedList);
+
+        return sortedList.slice(0, limit);
+      },
+      getPoints: function(subreddit, where, filter) {
+        if (checkExists(subreddit, where, filter)) {
+          var data = filteredLists[subreddit][where][filter];
+          return [data.points, data.average];
+        }
+        return [0, 0];
+      },
+      getGildStats: function(subreddit, filter) {
+        if (checkExists(subreddit, 'gilds', filter)) {
+          var data = filteredLists[subreddit]['gilds'][filter];
+          return data.stats;
+        }
       }
     };
     return factory;
@@ -132,10 +150,64 @@ angular.module('SubSnoopApp')
         filteredLists[sub][where][filter][sort] = data;
       }
 
+      if (where === 'gilds') {
+        calculateGilded(data, sub, where, filter);
+      }
+
+      if (where !== 'gilds' && filter !== 'all') {
+        calculatePoints(sub, where, filter, data);
+      }
       numListsCached += 1;
     }
 
-    function filterData(data, filter) {
+    function calculateGilded(data, sub, where, filter) {
+      var commentPoints = 0;
+      var submitPoints = 0;
+      var numComments = 0;
+      var numSubmits = 0;
+
+      for (var i = 0; i < data.length; i++) {
+        var node = data[i];
+        if (node.type === 'comment') {
+          commentPoints += node.ups;
+          numComments += 1;
+        } else {
+          submitPoints += node.ups;
+          numSubmits += 1;
+        }
+      }
+
+      var stats = {
+        'commentPoints': commentPoints,
+        'submitPoints': submitPoints,
+        'numComments': numComments,
+        'numSubmits': numSubmits,
+        'commentAvg': $filter('average')(commentPoints, numComments, 0),
+        'submitAvg': $filter('average')(submitPoints, numSubmits, 0)
+      }
+
+      filteredLists[sub][where][filter]['stats'] = stats;
+    }
+
+    function calculatePoints(sub, where, filter, data) {
+      var points = 0;
+      var total = data.length;
+
+      for (var i = 0; i < total; i++) {
+        try {
+          var node = data[i];
+          points += node.ups;
+        } catch(e) {
+        }
+      }
+
+      filteredLists[sub][where][filter]['points'] = points;
+
+      var average = $filter('average')(points, total, 0);
+      filteredLists[sub][where][filter]['average'] = average;
+    }
+
+    function filterData(data, where, filter) {
       if (filter === 'all') {
         return data;
       }
@@ -152,6 +224,7 @@ angular.module('SubSnoopApp')
 
         dataList.push(node);
       }
+
       return dataList;
     }
 

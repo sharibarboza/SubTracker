@@ -8,7 +8,7 @@
  * Controller of the SubSnoopApp
  */
  angular.module('SubSnoopApp')
- .controller('MainSubsCtrl', ['$scope', '$rootScope', 'popularSubs', 'newSubs', 'moment', function ($scope, $rootScope, popularSubs, newSubs, moment) {
+ .controller('MainSubsCtrl', ['$scope', '$rootScope', 'popularSubs', 'newSubs', 'moment', '$timeout', function ($scope, $rootScope, popularSubs, newSubs, moment, $timeout) {
  	  $scope.year = moment().year();
     $rootScope.title = 'SubSnoop | Home';
 
@@ -18,6 +18,8 @@
     $scope.page = 'home';
 
     var status = popularSubs.getData();
+    newSubs.getData();
+
     status.then(function(response) {
       if (response.status == -1) {
         $scope.fetchedSubs = 0;
@@ -25,9 +27,9 @@
         $scope.fetchedSubs = 1;
       }
     });
-    newSubs.getData();
 
     // Display popular and new subreddits for front page
+
     $scope.popularSubs = popularSubs.getSubs();
     $scope.newSubs = newSubs.getSubs();
 }]);

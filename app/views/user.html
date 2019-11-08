@@ -140,15 +140,18 @@
               </div>
             </div>
 
-            <div align="center"><img ng-if="!listLoaded" class="loader" lazy-img="{{ '../images/103.gif' }}" /></div>
-            <div ng-if="listLoaded" ng-repeat="subreddit in subList | limitTo:limit" class="sub-card-box" id="sub-row">
+            <div ng-show="!listLoaded" align="center">
+              <img class="loader" ng-src="{{ '../images/103.gif' }}" />
+            </div>
+
+            <div ng-repeat="subreddit in subList | limitTo:limit" class="sub-card-box" id="sub-row">
               <a ng-href="#/{{ username }}/{{ subreddit.name }}/overview/"><div class="row prevRow">
                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 sub-cells" align="center">
                   <strong class="num-rank">{{ 1 + $index }}</strong>
                 </div>
                 <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 sub-cells no-left-pad">
                   <div class="row">
-                    <div class="col-lg-10 col-sm-10 no-right-pad sub-inner-row">
+                    <div class="col-lg-10 col-sm-10 col-xs-9 no-right-pad sub-inner-row">
                       <span class="sub-name white">r/{{ subreddit.name }}</span>&nbsp;&middot;&nbsp;<span class="light-grey" ng-init="seen=subreddit.recent_activity.created_utc * 1000"><time-ago from-time='{{ seen }}'></time-ago></span>
                       <div class="sub-font light-grey" style="margin-top: 5px;">
                         <span class="badge">
@@ -169,10 +172,9 @@
                           <span ng-if="subreddit.gilds.gid_3 > 0"><img class="gilded-icon" lazy-img="{{ '../images/platinum.png' }}"/>x{{ subreddit.gilds.gid_3 }}</span>
                         </span>
                       </div>
-
                     </div>
-                    <div class="col-lg-2 col-sm-2 hidden-xs no-left-pad sub-list-pts" align="right">
-                      <strong style="font-size: 17px;" ng-class="subreddit.total_ups > 0 ? 'green' : 'orange'"> {{ subreddit.total_ups | karma }}<span ng-class="subreddit.total_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+                    <div class="col-lg-2 col-sm-2 col-xs-3 no-left-pad sub-list-pts" align="right">
+                      <strong ng-class="subreddit.total_ups > 0 ? 'green' : 'orange'"> {{ subreddit.total_ups | karma }}<span ng-class="subreddit.total_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
                     </div>
                   </div>
                 </div>
@@ -181,7 +183,7 @@
             </div>
 
             <div ng-if="subList.length == 0" class="g-underline"></div>
-            <div ng-if="listLoaded && limit < subLength" class="g-underline" align="center">
+            <div ng-show="listLoaded && limit < subLength" class="g-underline" align="center">
               <button ng-click="loadMore()" class="btn gray-btn load-btn">Load More</button>
             </div>
           </div>
@@ -205,7 +207,7 @@
             <div ng-if="recentlyActive" class="middle-col-pad g-underline user-map-{{ username }}" id="mapchart-{{ username }}" style="padding-bottom: 0;">
               <user-map>
                 <div ng-if="!chartReady" align="center">
-                  <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
+                  <img class="loader" ng-src="{{ '../images/103.gif' }}" />
                 </div>
                 <div ng-if="chartReady" class="graph" ng-include src="'views/user-heatmap.html'"></div>
               </user-map>
@@ -214,7 +216,7 @@
             <div ng-if="recentlyActive" class="middle-col-pad g-underline" id="linechart-{{ username }}" style="padding-bottom: 0;">
               <user-line>
                 <div ng-if="!chartReady" align="center">
-                  <img class="loader" lazy-img="{{ '../images/103.gif' }}" />
+                  <img class="loader" ng-src="{{ '../images/103.gif' }}" />
                 </div>
                 <div ng-if="chartReady" class="graph" id="user-line-{{ username }}" ng-include src="'views/user-chart.html'"></div>
               </user-line>

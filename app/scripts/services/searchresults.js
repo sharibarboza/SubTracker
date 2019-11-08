@@ -8,7 +8,7 @@
  * Factory in the SubSnoopApp.
  */
 angular.module('SubSnoopApp')
-  .factory('searchResults', ['$filter', function ($filter) {
+  .factory('searchResults', ['$filter', 'submissions', function ($filter, submissions) {
     var searchInput = "";
     var newData = new Object();
 
@@ -81,6 +81,7 @@ angular.module('SubSnoopApp')
 
         if (where === 'submissions') {
           title = item.title;
+          var body = getBodyText(item);
         }
 
         /* Reset highlighted html */
@@ -109,6 +110,24 @@ angular.module('SubSnoopApp')
 
       return $filter('sortPosts')(dataList, 'newest');
     };
+
+    /*
+     Get the body text of a submission post
+    */
+    function getBodyText(item) {
+      var submitID = item.id;
+      try {
+        var info = submissions.getContent(submitID);
+      } catch(e) {
+        console.log(e);
+      }
+
+      if (info && 'selftext_html' in info) {
+        return info.selftext_html;
+      }
+
+      return null;
+    }
 
     /*
      Reset all highlighted data entries for a new search
