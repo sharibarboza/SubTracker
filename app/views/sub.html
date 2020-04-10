@@ -5,6 +5,7 @@
     <div ng-include src="'views/sidenav.html'"></div>
 
     <div class="banner-div" sticky-nav>
+      <back-top></back-top>
 
       <div class="toggle-nav" align="right" ng-controller="SidebarCtrl">
         <a href class="nav-link" ng-click="toggleRight()"><i class="fa fa-bars white"></i></a>
@@ -12,9 +13,9 @@
 
       <!-- User banner containing profile picture, and other user info -->
       <div class="row width-pad">
-        <div class="col-lg-3 hidden-md hidden-sm hidden-xs no-mobile no-left-pad">
-          <div class="fixed fixed-sides col-lg-3" style="width: 20vw;">
-            <div class="fixed-left">
+        <div class="col-lg-4 col-md-4 hidden-sm hidden-xs no-mobile no-left-pad">
+          <div class="fixed-sides left-col no-left-pad sidebar-outer">
+            <div class="fixed-left sidebar-inner" side-scroll>
               <div ng-include src="'views/brand.html'"></div>
 
               <div ng-controller="EntryLimitCtrl">
@@ -31,27 +32,33 @@
                 </form>
               </div>
               <br>
-              <div class="row no-margin">
-                <div class="col-sm-9 no-padding">
-                  <strong class="sub-name"><span class="white">u/{{ username }}</span></strong>
-                  <ul class="badge-list white" style="margin-bottom: 0;">
-                    <li><i class="fa fa-list"></i> <a ng-href="#/{{ username }}/subreddits/">Subreddit Rankings</a></li>
-                    <li><i class="fa fa-bar-chart"></i> <a ng-href="#/{{ username }}/statistics/">User Statistics</a></li>
-                    <li><i class="fa fa-search"></i> <a ng-href="#/{{ username }}/search/">Search Comments & Posts</a></li>
-                  </ul>
+              <div class="card-box">
+                <div class="headerRow side-pad">
+                  <strong class="side-headers">About This Subreddit</strong>
                 </div>
-                <div class="col-sm-3 no-padding" align="right"><a ng-href="#/{{ username }}/subreddits/">
-                  <img ng-if="user.subreddit" class="img-circle prev-img img-responsive side-logo" lazy-img="{{ user.subreddit.icon_img | escape }}">
-                  <img ng-if="!user.subreddit" class="img-circle prev-img img-responsive side-logo" lazy-img="{{ user.icon_img | escape }}">
-                </a></div>
+                <div class="card-box-content">
+                  <div ng-include src="'views/sub-about.html'"></div>
+                </div>
               </div>
 
-              <hr>
-              <div ng-include src="'views/side-badges.html'"></div>
+              <div ng-if="tab == 1" class="card-box">
+                <div class="headerRow side-pad">
+                  <strong class="side-headers">Statistics Overview</strong>
+                </div>
+                <div class="card-box-content">
+                  <div ng-include src="'views/sub-overview.html'"></div>
+                </div>
+              </div>
+
+              <div ng-include src="'views/comment-stats.html'"></div>
+              <div ng-include src="'views/post-stats.html'"></div>
+              <div ng-include src="'views/gild-stats.html'"></div>
+
+              <div ng-include src="'views/footer.html'"></div>
             </div>
           </div>
         </div>
-        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 middle-col" style="margin-bottom: 50px;">
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 middle-col" style="margin-bottom: 50px;">
           <div class="top-bar middle-bar" middle-bar>
             <strong style="display: inline;">
               <a ng-href="#/{{ username }}/subreddits/" class="white">{{ username }}</a> <span class="light-grey">/</span> <a ng-href="#/{{ username }}/{{ subreddit }}/overview/" class="white">{{ subreddit }}</a>
@@ -83,7 +90,7 @@
             </div>
           </div>
 
-          <div class="profile-bar">
+          <div class="profile-bar" ng-controller="UserStatsCtrl">
             <div align="right">
               <strong>
                 <strong style="font-size: 28px;">{{ sub.total_ups | karma }}</strong>
@@ -103,16 +110,19 @@
               <span class="light-grey">
                 <span class="fa fa-clock-o"></span> Last seen <time-ago from-time='{{ page == "user" ? lastPost * 1000 : latestPost * 1000 }}'></time-ago>
               </span>
-              <br><br>
-              <div ng-include src="'views/sub-about.html'"></div>
               <br>
+              <div ng-controller="BadgesCtrl" style="margin-top: 5px;">
+                <div ng-repeat="flair in badgeFlairs" style="display: inline;">
+                  <span class="badge badge-flair">{{ flair }}</span>
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Tab bar of navigation buttons, overviews, comments, and posts -->
           <div class="user-head-nav no-padding banner-pad sub-page" align="center" type="sub">
             <div class="row">
-              <div class="hidden-lg col-md-2 col-xs-2 tab-col">
+              <div class="hidden-lg hidden-md col-xs-2 tab-col">
                 <a ng-href="#/{{ username }}/subreddits/" class="white"><div class="post-tab">
                   <strong>
                     <span class="word-tab">Subreddits</span>
@@ -120,7 +130,7 @@
                   </strong>
                 </div></a>
               </div>
-              <div class="col-lg-3 col-md-2 col-xs-2 tab-col">
+              <div class="col-lg-3 col-md-3 col-xs-2 tab-col">
                 <div class="post-tab" ng-click="setTab(1)" ng-class="tab == 1 ? 'underline-tab' : 'empty-class'">
                   <strong>
                     <span class="word-tab">Overview</span>
@@ -128,7 +138,7 @@
                   </strong>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-2 col-xs-2 tab-col">
+              <div class="col-lg-3 col-md-3 col-xs-2 tab-col">
                 <div class="post-tab" ng-click="setTab(3)" ng-class="tab == 3 ? 'underline-tab' : 'empty-class'">
                   <strong>
                     <span class="word-tab">Comments</span>
@@ -136,7 +146,7 @@
                   </strong>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-2 col-xs-2 tab-col">
+              <div class="col-lg-3 col-md-3 col-xs-2 tab-col">
                 <div class="post-tab" ng-click="setTab(2)" ng-class="tab == 2 ? 'underline-tab' : 'empty-class'">
                   <strong>
                     <span class="word-tab">Posts</span>
@@ -144,7 +154,7 @@
                   </strong>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-2 col-xs-2 tab-col">
+              <div class="col-lg-3 col-md-3 col-xs-2 tab-col">
                 <div class="post-tab" ng-click="setTab(4)" ng-class="tab == 4 ? 'underline-tab' : 'empty-class'">
                   <strong>
                     <span class="word-tab">Gilded</span>
@@ -295,91 +305,6 @@
             </div>
           </div>
 
-        </div>
-        <div class="col-lg-3 hidden-md hidden-sm hidden-xs no-mobile">
-          <div class="fixed fixed-sides col-lg-3" style="margin-top: 15px;">
-            <div class="fixed-right">
-
-              <div ng-if="tab == 1" class="card-box">
-                <div class="headerRow side-pad">
-                  <strong class="side-headers">Statistics Overview</strong>
-                </div>
-                <div class="card-box-content">
-                  <div ng-include src="'views/sub-overview.html'"></div>
-                </div>
-              </div>
-
-              <div ng-if="tab == 3" class="card-box">
-                <div class="headerRow side-pad">
-                  <strong class="side-headers">{{ commentFilter.name }} Overview</strong>
-                </div>
-                <div class="card-box-content">
-                  <strong class="white">{{ numComments | number }} </strong><span class="light-grey"> <ng-pluralize count="numComments" when="{'1': 'Comment', 'other': 'Comments'}"></ng-pluralize></span>
-                  &nbsp;&nbsp;
-                  <strong class="white">Points: </strong>
-                  <strong ng-if="filterPoints[0] !== NaN" ng-class="filterPoints[0] > 0 ? 'green' : 'orange'">{{ filterPoints[0] | karma }}<span ng-class="filterPoints[0] > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
-                  <br><br>
-                  <div ng-if="filterPoints[1] !== NaN" class="light-grey">
-                    {{ filterPoints[1] | karma }} average <ng-pluralize count="filterPoints[1]" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per comment
-                  </div>
-                  <br>
-                  <button ng-controller="DataCtrl" class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
-                  <div ng-include src="'views/limit-msg.html'"></div>
-                </div>
-              </div>
-
-              <div ng-if="tab == 2" class="card-box">
-                <div class="headerRow side-pad">
-                  <strong class="side-headers">{{ submitFilter.name }} Overview</strong>
-                </div>
-                <div class="card-box-content">
-                  <strong class="white">{{ numSubmits | number }}</strong><span class="light-grey"> <ng-pluralize count="numSubmits" when="{'1': 'Post', 'other': 'Posts'}"></ng-pluralize></span>
-                  &nbsp;&nbsp;
-                  <strong class="white">Points: </strong>
-                  <strong ng-if="filterPoints[0] !== NaN" ng-class="filterPoints[0] > 0 ? 'green' : 'orange'">{{ filterPoints[0] | karma }}<span ng-class="filterPoints[0] > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
-                  <br><br>
-                  <div ng-if="filterPoints[1] !== NaN" class="light-grey">
-                    {{ filterPoints[1] | karma }} average <ng-pluralize count="filterPoints[1]" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per post
-                  </div>
-                  <br>
-                  <button ng-controller="DataCtrl" class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
-                  <div ng-include src="'views/limit-msg.html'"></div>
-                </div>
-              </div>
-
-              <div ng-if="tab == 4" class="card-box">
-                <div class="headerRow side-pad">
-                  <strong class="side-headers">{{ gildFilter.name }} Overview</strong>
-                </div>
-                <div class="card-box-content">
-                  <strong class="white">{{ gildData.numComments | number }} </strong><span class="light-grey"> <ng-pluralize count="gildData.numComments" when="{'1': 'Comment', 'other': 'Comments'}"></ng-pluralize></span>
-                  &nbsp;&nbsp;
-                  <strong class="white">{{ gildData.numSubmits | number }}</strong><span class="light-grey"> <ng-pluralize count="gildData.numSubmits" when="{'1': 'Post', 'other': 'Posts'}"></ng-pluralize></span>
-                  <br><br>
-                  <strong class="white">Comment Points: </strong>
-                  <strong ng-if="gildData.commentPoints !== NaN" ng-class="gildData.commentPoints > 0 ? 'green' : 'orange'">{{ gildData.commentPoints | karma }}<span ng-class="gildData.commentPoints > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
-                  <br>
-                  <strong class="white">Post Points: </strong>
-                  <strong ng-if="gildData.submitPoints !== NaN" ng-class="gildData.submitPoints > 0 ? 'green' : 'orange'">{{ gildData.submitPoints | karma }}<span ng-class="gildData.submitPoints > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
-                  <br>
-                  <div ng-if="gildData.commentAvg !== NaN" class="light-grey" style="margin-top: 8px;">
-                    {{ gildData.commentAvg | karma }} average <ng-pluralize count="gildData.commentAvg" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per comment
-                    <br>
-                    {{ gildData.submitAvg | karma }} average <ng-pluralize count="gildData.submitAvg" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per post
-                  </div>
-                  <br>
-                  <button ng-controller="DataCtrl" class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
-                  <div ng-include src="'views/limit-msg.html'"></div>
-                </div>
-              </div>
-
-              <div ng-include src="'views/prev-users.html'"></div>
-
-              <div class="no-mobile" align="center" style="position: relative;">
-                <back-top></back-top>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>

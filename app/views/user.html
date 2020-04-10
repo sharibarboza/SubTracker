@@ -17,6 +17,7 @@
     </div>
 
     <div ng-if="!noSubs" class="banner-div" sticky-nav>
+      <back-top></back-top>
 
       <div class="toggle-nav" align="right" ng-controller="SidebarCtrl" ng-click="openSide()">
         <a href class="nav-link" ng-click="toggleRight()"><i class="fa fa-bars white"></i></a>
@@ -24,9 +25,9 @@
 
       <!-- User banner containing profile picture, and other user info -->
       <div class="row width-pad">
-        <div class="col-lg-3 hidden-md hidden-sm hidden-xs no-mobile no-left-pad">
-          <div class="fixed fixed-sides col-lg-3 hidden-xs" style="width: 20vw;">
-            <div class="fixed-left">
+        <div class="col-lg-4 col-md-4 hidden-sm hidden-xs no-mobile no-left-pad">
+          <div class="fixed-sides left-col no-left-pad sidebar-outer">
+            <div class="fixed-left sidebar-inner" side-scroll>
               <div ng-include src="'views/brand.html'"></div>
 
               <div ng-controller="EntryLimitCtrl">
@@ -43,12 +44,22 @@
                 </form>
               </div>
               <br>
+              <div class="card-box">
+                <div class="headerRow side-pad">
+                  <strong class="side-headers">User Statistics Overview</strong>
+                </div>
+                <div class="card-box-content">
+                  <div ng-include src="'views/stats-overview.html'"></div>
+                </div>
+              </div>
               <div ng-include src="'views/side-badges.html'"></div>
+
+              <div ng-include src="'views/footer.html'"></div>
             </div>
           </div>
         </div>
 
-        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 middle-col" style="margin-bottom: 50px;">
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 middle-col" style="margin-bottom: 50px;">
           <div class="top-bar middle-bar" middle-bar>
             <strong style="display: inline;">
               <a ng-href="#/{{ username }}/subreddits/" class="white">{{ username }}</a>
@@ -118,8 +129,8 @@
           </div>
 
           <div ng-if="tab == 0">
-            <div class="row post-row middle-col-pad">
-              <div class="col-md-3 col-sm-3 col-xs-12 post-count no-right-pad" style="padding-left: 18px;">
+            <div class="row middle-col-pad post-row">
+              <div class="col-md-3 col-sm-3 col-xs-12 post-count no-right-pad">
                 <strong class="light-grey">Filter Subreddits</strong>
               </div>
               <div class="col-md-9 col-sm-9 col-xs-12 no-left-pad mobile-filters" align="right">
@@ -231,35 +242,6 @@
             <div ng-include src="'views/search.html'"></div>
           </div>
         </div>
-
-        <div class="col-lg-3 hidden-md hidden-sm hidden-xs no-mobile">
-          <div class="fixed fixed-sides col-lg-3 col-xs-hidden" style="margin-top: 15px;">
-            <div class="fixed-right">
-              <div ng-if="tab != 2" class="card-box">
-                <div class="headerRow side-pad">
-                  <strong class="side-headers">User Statistics Overview</strong>
-                </div>
-                <div class="card-box-content">
-                  <div ng-include src="'views/stats-overview.html'"></div>
-                </div>
-              </div>
-
-              <div ng-if="tab == 2" class="card-box">
-                <div class="headerRow side-pad">
-                  <strong class="side-headers">Filter Searched Results</strong>
-                </div>
-                <div ng-include src="'views/side-search.html'"></div>
-              </div>
-
-              <div ng-include src="'views/prev-users.html'"></div>
-
-              <div class="no-mobile" align="center" style="position: relative;">
-                <back-top></back-top>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>

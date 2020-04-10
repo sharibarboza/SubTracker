@@ -28,7 +28,7 @@ angular.module('SubSnoopApp')
           clear();
         }
 
-        if (!(subName in subs)) {
+        if (subData && !(subName in subs)) {
            subs[subName] = getChartData(subData);
         }
       },

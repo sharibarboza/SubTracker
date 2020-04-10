@@ -27,7 +27,6 @@ angular.module('SubSnoopApp')
 
         var topBtn = angular.element('.top-btn');
 
-
         if (attrs.type == "sub") {
           var listener = scope.$watch(function() { return angular.element('.bg-banner').is(':visible') }, function() {
             var banner = angular.element('.bg-banner');

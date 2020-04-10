@@ -1,11 +1,10 @@
 <div class="fixed-about">
-  <strong class="white"><i class="fa fa-calendar"></i> Created:</strong> <span class="light-grey" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></span>
-  &nbsp;&nbsp;&nbsp;
-  <br style="display: none" class="mobile-break">
-  <strong class="white"><i class="fa fa-user-plus" aria-hidden="true"></i> Subscribers: </strong><span class="light-grey">{{ subInfo.subscribers | number }}</span>
+  <strong class="green"><i class="fa fa-calendar"></i></strong> <strong class="white">Created:</strong> <span class="light-grey" ng-bind="subInfo.created_utc * 1000 | amDateFormat: 'MMMM Do, YYYY'"></span>
+  <br>
+  <strong class="green"><i class="fa fa-user-plus" aria-hidden="true"></i></strong> <strong class="white">Subscribers: </strong><span class="light-grey">{{ subInfo.subscribers | number }}</span>
 </div>
-<br>
-<div class="descript small-font" style="max-height: 29vh; color:#F5F5F5;">
+<div class="descript small-font" style="color:#F5F5F5;">
+  <br>
   <span ng-if="subInfo.public_description" ng-bind-html="subInfo.public_description_html | sanitize"></span>
-  <span ng-if="!subInfo.public_description">No description available.<span>
+  <span ng-if="!subInfo.public_description || subInfo.public_description.length < 2">No description available.<span>
 </div>

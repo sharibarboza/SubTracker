@@ -118,11 +118,6 @@ angular.module('SubSnoopApp')
             'name' : 'Most Gilded',
             'icon' : 'fa fa-star'
           },
-          'leastUpvoted' : {
-            'image' : null,
-            'name' : 'Least Upvoted',
-            'icon' : 'glyphicon glyphicon-arrow-down'
-          },
           'newestSub' : {
             'image' : null,
             'name' : 'Newest',
@@ -142,7 +137,6 @@ angular.module('SubSnoopApp')
 
         setBadge('mostUpvoted');
         setBadge('mostActive');
-        setBadge('leastUpvoted');
         setBadge('newestSub');
         setBadge('lastSeen');
 

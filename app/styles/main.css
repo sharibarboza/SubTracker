@@ -398,6 +398,8 @@ blockquote {
 
 .badge-list {
   line-height: 25px;
+  font-size: 14px;
+  padding-left: 10px;
 }
 
 .u-banner .sublink-badge {
@@ -587,6 +589,14 @@ blockquote {
   color: #ef5350 !important;
 }
 
+.search-buttons {
+  display: inline-block;
+}
+
+.search-buttons button {
+  margin-right: 5px;
+}
+
 .load-btn {
   margin: 10px 0;
 }
@@ -594,7 +604,7 @@ blockquote {
 .top-btn {
   position: fixed;
   bottom: 35px;
-  right: 13vw;
+  right: 2vw;
   z-index: 1000 !important;
   display: none;
   overflow: hidden;
@@ -631,7 +641,6 @@ blockquote {
 }
 
 .fixed-sides {
-  overflow-y: scroll;
   height: 100%;
 }
 
@@ -653,10 +662,6 @@ blockquote {
 
 .fixed-right {
   width: 80%;
-}
-
-.fixed-left {
-  width: 82%;
 }
 
 .card-box-content {
@@ -1528,6 +1533,7 @@ Navigation
   border-bottom: 1px solid #4B5054;
   line-height: 60px;
   padding: 0 18px;
+  width: inherit;
 }
 
 .middle-mobile-bar {
@@ -1976,6 +1982,10 @@ Subreddit Table
   font-weight: bolder;
 }
 
+.badge-name {
+  font-size: 15px;
+}
+
 .sub-list-pts {
   font-size: 17px;
 }
@@ -1993,7 +2003,7 @@ Subreddit Table
 }
 
 .sideRow:not(:last-child), .card-box-content:not(:last-child) {
-  border-bottom: 1px solid #4B5054;
+  border-bottom: 1px solid #29343D;
 }
 
 .sub-icon-list {
@@ -2547,16 +2557,10 @@ Footer
 
 /* Custom page footer */
 .footer {
-  color: white;
-  padding: 30px 0 30px 0;
-  font-size: 14px;
+  font-size: 13px;
   background-color: #1F2327;
-  font-weight: 500;
+  font-weight: 400;
   z-index: 1 !important;
-}
-
-.footer a {
-  color: white;
 }
 
 .footer a:hover {
@@ -2568,7 +2572,7 @@ Mobile
 ************************/
 
 /* Responsive: Portrait tablets and up */
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 992px) {
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
@@ -2581,10 +2585,11 @@ Mobile
   }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 767px) {
   #subreddits .table-header {
     display: none;
   }
+
   .no-mobile {
     display: none;
   }
@@ -2604,6 +2609,67 @@ Mobile
   }
 }
 
+@media screen and (max-width: 992px) {
+  .container {
+    width: 100% !important;
+  }
+
+  .middle-bar {
+    display: none;
+  }
+
+  .middle-mobile-bar {
+    display: block;
+  }
+
+  .form-control {
+    height: 34px;
+  }
+
+  .input-group-btn button {
+    height: 34px;
+    margin-top: 4px;
+  }
+
+  .mobile-circle {
+    display: block;
+    background-color: rgb(0, 0, 0, 0.5);
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    background-size: cover;
+    top: 120px;
+    left: 0px;
+  }
+
+  .profile-logo {
+    width: 130px;
+    height: 130px;
+    font-size: 60px;
+    padding: 18px;
+    position: absolute;
+    top: 120px;
+    left: 0px;
+    display: block;
+    border: 5px solid #fff;
+  }
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .banner-div .row {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .user-head-nav .col-xs-2 {
+    width: 20% !important;
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .user-side, .heatmap {
     overflow: scroll !important;
@@ -2612,6 +2678,16 @@ Mobile
   .sub-rows {
     position: static;
     left: 0;
+  }
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .post-row {
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .pie-box-left {
@@ -2634,28 +2710,6 @@ Mobile
 }
 
 @media screen and (min-width: 500px) and (max-width: 1200px) {
-  .mobile-circle {
-    display: block;
-    background-color: rgb(0, 0, 0, 0.5);
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    border: 5px solid #fff;
-    background-size: cover;
-  }
-
-  .banner-content {
-    padding-top: 35px;
-  }
-
-  .custom-banner .banner-content, .s-banner .banner-content {
-    padding-top: 55px;
-  }
-
-  .user-pad {
-    padding-top: 20px;
-  }
-
   .avg-box, .sub-page .mobile-circle {
     display: none;
   }
@@ -2679,46 +2733,12 @@ Mobile
   .word-cloud {
     height: 24vh !important;
   }
-
-  .sub-circle {
-    top: -125px;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .custom-banner .banner-content {
-    padding-top: 0px;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .s-banner .mobile-circle, .custom-banner .mobile-circle {
-
-  }
-}
-
-@media screen and (min-width: 992px) and (max-width: 1200px) {
-  #sub-panels {
-    padding: 15px 0 !important;
-  }
 }
 
 @media screen and (max-width: 1024px) {
   .navbar-default, #searchbar, .search-content .breadcrumb, #sub-panels {
     padding-left: 16px;
     padding-right: 16px;
-  }
-
-  .main-banner {
-    padding-top: 50px;
-    padding-bottom: 60px;
-  }
-
-  .user-banner {
-    margin-bottom: 0;
-    height: 190px;
-    background-position: 0% 0%;
-    padding-bottom: 20px;
   }
 
   .search-content {
@@ -2781,10 +2801,6 @@ Mobile
 @media screen and (max-width: 1024px) {
   .paginate {
     text-align: center;
-  }
-
-  .user-head-nav .col-xs-2 {
-    width: 20% !important;
   }
 
   #sub-panel-stats .span {
@@ -2908,13 +2924,6 @@ Mobile
 
   iframe, video {
     height: 30vh;
-  }
-
-  .sub-banner, .banner-div .row {
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: 0;
-    margin-right: 0;
   }
 
   #overview-table .col-sm-12, .sub-table, #table-head, .user-head-nav, .search-content,
@@ -3170,16 +3179,6 @@ Mobile
    }
  }
 
- @media screen and (max-width: 1200px) and (min-width: 1024px) {
-   .main-col {
-     padding: 0;
-   }
-   .width-pad, .banner-pad {
-     padding-left: 15%;
-     padding-right: 15%;
-   }
- }
-
  @media screen and (max-width: 1024px) {
    .content {
      padding-top: 0;
@@ -3192,15 +3191,6 @@ Mobile
    .sub-list-pts {
      padding-right: 0;
      font-size: 17px;
-   }
-
-   .form-control {
-     height: 34px;
-   }
-
-   .input-group-btn button {
-     height: 34px;
-     margin-top: 4px;
    }
 
    #sub-panels .card-box {
@@ -3329,30 +3319,6 @@ Mobile
      display: block !important;
    }
 
-   .mobile-circle {
-     display: block;
-     background-color: rgb(0, 0, 0, 0.5);
-     top: 60px;
-     left: -10px;
-     width: 130px;
-     height: 130px;
-     border-radius: 50%;
-     border: 5px solid #fff;
-     background-size: cover;
-   }
-
-   .profile-logo {
-     width: 130px;
-     height: 130px;
-     font-size: 60px;
-     padding: 18px;
-     position: absolute;
-     top: 60px;
-     left: -8px;
-     display: block;
-     border: 5px solid #fff;
-   }
-
   .mobile-row-stats {
     margin-top: 5px;
   }
@@ -3394,10 +3360,6 @@ Mobile
     padding-left: 15vw !important;
   }
 
-  .custom-banner, .s-banner, .short-banner, .u-banner {
-    height: 180px;
-  }
-
   .sub-card-box {
     padding-left: 18px;
     padding-right: 18px;
@@ -3423,14 +3385,6 @@ Mobile
     z-index: 2;
   }
 
-  .user-pad {
-    padding-top: 35px;
-  }
-
-  .custom-banner .banner-content {
-    padding-top: 35px;
-  }
-
   .sub-box {
     height: 100px;
   }
@@ -3450,11 +3404,6 @@ Mobile
 
   .underline-tab {
     border: none;
-  }
-
-  .post-row {
-    margin-left: 15px;
-    margin-right: 15px;
   }
 
   .post-count {
@@ -3494,20 +3443,12 @@ Mobile
     display: none;
   }
 
-  .middle-bar {
-    display: none;
-  }
-
   .banner-subtitle {
     font-size: 15px;
   }
 
   .mobile-break {
     display: block !important;
-  }
-
-  .mobile-filters {
-    padding-left: 18px;
   }
 
   .post-count {
@@ -3522,10 +3463,6 @@ Mobile
 
   .footer {
     padding: 30px 15px;
-  }
-
-  .middle-mobile-bar {
-    display: block;
   }
 
   .comment-div {
@@ -3546,7 +3483,7 @@ Mobile
 
   .mobile-filters {
     text-align: left;
-    padding-left: 18px;
+    padding-left: 15px;
   }
 
   .top-brand {
@@ -3573,20 +3510,6 @@ Mobile
   }
 }
 
-@media screen and (max-width: 1024px) and (min-width: 767px) {
-  .custom-banner, .s-banner, .short-banner, .u-banner {
-    height: 300px;
-  }
-
-  .mobile-circle {
-    top: 180px;
-  }
-
-  .profile-logo, .s-banner .mobile-circle {
-    top: 130px;
-  }
-}
-
 @media screen and (max-width: 350px) {
   .banner-badge {
     padding-left: 10px !important;
@@ -3606,5 +3529,43 @@ Mobile
 @media screen and (max-height: 500px) {
   .mobile-circle {
     top: 10px;
+  }
+}
+
+@media screen and (min-width: 993px) {
+  .width-pad {
+    padding-left: 15% !important;
+    padding-right: 10% !important;
+  }
+
+  .col-lg-4 {
+    width: 30% !important;
+  }
+
+  .col-lg-8 {
+    width: 60% !important;
+    margin-left: 2% !important;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1300px) {
+  .width-pad {
+    padding-left: 9% !important;
+    padding-right: 7% !important;
+  }
+
+  .col-md-4 {
+    width: 30% !important;
+  }
+
+  .col-md-8 {
+    width: 60% !important;
+    margin-left: 1% !important;
+  }
+}
+
+@media screen and (max-height: 500px) {
+  .mobile-circle, .profile-logo {
+    top: 120px;
   }
 }

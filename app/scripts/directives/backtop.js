@@ -13,7 +13,7 @@ angular.module('SubSnoopApp')
      Jump back to top of page with a 'Back to Top' link and up-arrow
     */
     return {
-      template: '<div class="btn gray-btn top-btn" ng-click="backTop()"><i class="fa fa-arrow-up" aria-hidden="true"></i> Back to top</div>',
+      template: '<div class="btn gray-btn top-btn" ng-click="backTop()"><i class="fa fa-arrow-up" aria-hidden="true"></i></div>',
       restrict: 'E',
       controller: ['$scope', '$window', function($scope, $window) {
         $scope.backTop = function() {

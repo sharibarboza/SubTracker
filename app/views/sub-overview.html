@@ -8,9 +8,9 @@
 <strong class="white">Post Points: </strong>
 <strong ng-class="sub.submission_ups > 0 ? 'green' : 'orange'">{{ sub.submission_ups | karma }}<span ng-class="sub.submission_ups > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
 <div class="light-grey" style="margin-top: 8px;">
-  {{ sub.avg_comments | karma }} average <ng-pluralize count="sub.avg_comments" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per comment
+  <span class="white">{{ sub.avg_comments | karma }}</span> average <ng-pluralize count="sub.avg_comments" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per comment
   <br>
-  {{ sub.avg_submissions | karma }} average <ng-pluralize count="sub.avg_submissions" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per post
+  <span class="white">{{ sub.avg_submissions | karma }}</span> average <ng-pluralize count="sub.avg_submissions" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per post
 </div>
 <br>
 <button ng-controller="DataCtrl" class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>

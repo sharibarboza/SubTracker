@@ -1,0 +1,18 @@
+<div ng-if="tab == 2" class="card-box">
+  <div class="headerRow side-pad">
+    <strong class="side-headers">{{ submitFilter.name }} Overview</strong>
+  </div>
+  <div class="card-box-content">
+    <strong class="white">{{ numSubmits | number }}</strong><span class="light-grey"> <ng-pluralize count="numSubmits" when="{'1': 'Post', 'other': 'Posts'}"></ng-pluralize></span>
+    &nbsp;&nbsp;
+    <strong class="white">Points: </strong>
+    <strong ng-if="filterPoints[0] !== NaN" ng-class="filterPoints[0] > 0 ? 'green' : 'orange'">{{ filterPoints[0] | karma }}<span ng-class="filterPoints[0] > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+    <br>
+    <div ng-if="filterPoints[1] !== NaN" class="light-grey">
+      <span class="white">{{ filterPoints[1] | karma }}</span> average <ng-pluralize count="filterPoints[1]" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per post
+    </div>
+    <br>
+    <button ng-controller="DataCtrl" class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
+    <div ng-include src="'views/limit-msg.html'"></div>
+  </div>
+</div>

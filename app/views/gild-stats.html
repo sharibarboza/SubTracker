@@ -1,0 +1,25 @@
+<div ng-if="tab == 4" class="card-box">
+  <div class="headerRow side-pad">
+    <strong class="side-headers">{{ gildFilter.name }} Overview</strong>
+  </div>
+  <div class="card-box-content">
+    <strong class="white">{{ gildData.numComments | number }} </strong><span class="light-grey"> <ng-pluralize count="gildData.numComments" when="{'1': 'Comment', 'other': 'Comments'}"></ng-pluralize></span>
+    &nbsp;&nbsp;
+    <strong class="white">{{ gildData.numSubmits | number }}</strong><span class="light-grey"> <ng-pluralize count="gildData.numSubmits" when="{'1': 'Post', 'other': 'Posts'}"></ng-pluralize></span>
+    <br><br>
+    <strong class="white">Comment Points: </strong>
+    <strong ng-if="gildData.commentPoints !== NaN" ng-class="gildData.commentPoints > 0 ? 'green' : 'orange'">{{ gildData.commentPoints | karma }}<span ng-class="gildData.commentPoints > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+    <br>
+    <strong class="white">Post Points: </strong>
+    <strong ng-if="gildData.submitPoints !== NaN" ng-class="gildData.submitPoints > 0 ? 'green' : 'orange'">{{ gildData.submitPoints | karma }}<span ng-class="gildData.submitPoints > 0 ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down'"></span></strong>
+    <br>
+    <div ng-if="gildData.commentAvg !== NaN" class="light-grey" style="margin-top: 8px;">
+      <span class="white">{{ gildData.commentAvg | karma }}</span> average <ng-pluralize count="gildData.commentAvg" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per comment
+      <br>
+      <span class="white">{{ gildData.submitAvg | karma }}</span> average <ng-pluralize count="gildData.submitAvg" when="{'1': 'point', 'other': 'points'}"></ng-pluralize> per post
+    </div>
+    <br>
+    <button ng-controller="DataCtrl" class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
+    <div ng-include src="'views/limit-msg.html'"></div>
+  </div>
+</div>

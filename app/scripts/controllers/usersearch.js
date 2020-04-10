@@ -129,7 +129,7 @@ angular.module('SubSnoopApp')
       $timeout(function() {
         resetFilters();
         $scope.origResults = searchResults.getData($scope.searchInput, $scope.entries);
-        $scope.hasResults = Object.keys($scope.origResults).length > 0;
+        $scope.hasResults = Object.keys($scope.origResults['data']).length > 0;
         $scope.filterResults(1);
         $scope.searching = false;
       }, 200);

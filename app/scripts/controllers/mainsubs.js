@@ -9,7 +9,6 @@
  */
  angular.module('SubSnoopApp')
  .controller('MainSubsCtrl', ['$scope', '$rootScope', 'popularSubs', 'newSubs', 'moment', '$timeout', function ($scope, $rootScope, popularSubs, newSubs, moment, $timeout) {
- 	  $scope.year = moment().year();
     $rootScope.title = 'SubSnoop | Home';
 
     // Main will determine whether to display the search bar in the nav

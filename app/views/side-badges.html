@@ -1,8 +1,12 @@
-<div class="no-mobile" ng-controller="UserStatsCtrl">
-  <div ng-repeat="(sub, data) in sideBadges" class="row no-margin" style="margin-bottom: 1vh;">
+<div class="no-mobile card-box" ng-controller="UserStatsCtrl">
+  <div class="headerRow side-pad">
+    <strong class="side-headers">Notable Subreddits</strong>
+  </div>
+
+  <div ng-repeat="(sub, data) in sideBadges" class="row no-margin sideRow">
     <a ng-href="#/{{ username }}/{{ sub }}/overview/"><div>
       <div class="col-sm-9 no-padding">
-        <strong class="sub-name"><span class="white">r/{{ sub }}</span></strong>
+        <strong class="badge-name"><span class="white">r/{{ sub }}</span></strong>
         <ul class="badge-list">
           <li ng-repeat="point in data" class="light-grey">
             <span align="center"><span class="{{ point.icon }}"></span></span>&nbsp;{{ point.name }}
@@ -14,5 +18,8 @@
         <default-logo ng-if="icons[sub] == '' || icons[sub] == null" sub="{{ sub }}" page="{{ page }}"></default-logo>
       </div>
     </div></a>
+  </div>
+  <div class="side-pad" ng-controller="DataCtrl">
+    <a href="https://old.reddit.com/user/{{ username }}/gilded/" target="_blank"><span class="fa fa-trophy"></span> Rewards Received (Gilded)</a>
   </div>
 </div>

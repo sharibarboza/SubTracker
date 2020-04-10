@@ -19,6 +19,11 @@
   <div ng-if="results.len == 0">
     <span class="light-grey">{{ noResults }}</span>
   </div>
+  <div ng-if="hasResults">
+    <br>
+    <div ng-include src="'views/side-search.html'"></div>
+  </div>
+
 </div>
 
 <div ng-show="searching" align="center" class="g-underline">
@@ -26,7 +31,6 @@
 </div>
 
 <div class="row no-margin" ng-if="resultList.length" id="results">
-
   <div class="no-right-pad" id="results-table">
 
     <div ng-repeat="sub in resultList" class="search-body list-card-box result-underline" ng-if="results.data[sub].comments.length || results.data[sub].submissions.length">
