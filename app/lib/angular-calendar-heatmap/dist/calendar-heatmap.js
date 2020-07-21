@@ -72,7 +72,16 @@ angular.module('g1b.calendar-heatmap', []).
             return element[0].clientWidth;
           }, function ( w ) {
             if ( !w ) { return; }
-            width = w < max_width ? max_width : w;
+            var windowWidth = $window.innerWidth;
+
+            if (windowWidth <= 600) {
+              width = max_width;
+            } else if (windowWidth <= 1024) {
+              width = windowWidth;
+            } else {
+              width = w;
+            }
+
             item_size = (width / getNumberOfWeeks()) + 0.5;
             height = label_padding_height + 7 * (item_size + gutter * height_pad);
             svg.attr({'width': width, 'height': height});

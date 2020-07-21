@@ -73,12 +73,12 @@
 
           <div ng-include src="'views/mobile-bar.html'"></div>
 
-          <div ng-if="subInfo.banner_img == '' || subInfo.banner_img == null" class="short-banner">
+          <div ng-if="subInfo.banner_background_image == '' || subInfo.banner_background_image == null" class="short-banner">
             <div ng-include src="'views/default-banner.html'"></div>
           </div>
 
-          <div ng-if="subInfo.banner_img != '' && subInfo.banner_img != null">
-            <div class="custom-banner column-pad" lazy-img="{{ subInfo.banner_img | escape }}">
+          <div ng-if="subInfo.banner_background_image != '' && subInfo.banner_background_image != null">
+            <div class="custom-banner column-pad" lazy-img="{{ subInfo.banner_background_image | escape }}">
               <div class="banner-content">
                 <div class="mobile-avatar row">
                   <div class="col-md-6 col-md-push-3">

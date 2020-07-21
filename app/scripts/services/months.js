@@ -24,7 +24,7 @@ angular.module('SubSnoopApp')
     }
 
     /*
-     Matches term with the searchlist and returns the filtered array
+     Returns the labels for the months
     */
     var service = {
       getLabels: function() {

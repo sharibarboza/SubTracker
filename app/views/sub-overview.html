@@ -15,9 +15,3 @@
 <br>
 <button ng-controller="DataCtrl" class="btn gray-btn" ng-click="refreshData()"><span class="fa fa-refresh"></span> &nbsp;Refresh Data</button>
 <div ng-include src="'views/limit-msg.html'"></div>
-<div class="mobile-only" ng-controller="BadgesCtrl" style="margin-bottom: 5px;">
-  <br>
-  <div ng-repeat="flair in badgeFlairs" style="display: inline;">
-    <span class="badge badge-flair">{{ flair }}</span>
-  </div>
-</div>

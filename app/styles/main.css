@@ -594,7 +594,7 @@ blockquote {
 }
 
 .search-buttons button {
-  margin-right: 5px;
+  margin-right: 3px;
 }
 
 .load-btn {
@@ -1142,7 +1142,7 @@ Content
 }
 
 .default-banner {
-  height: 210px;
+  height: 150px;
   color: white;
   background-image: url('../images/default-bg.jpg');
   background-size: cover;
@@ -1155,7 +1155,7 @@ Content
 }
 
 .custom-banner {
-  height: 210px;
+  height: 150px;
   position: relative;
   color: white;
   background-image: url('../images/default-bg.jpg');
@@ -1235,12 +1235,12 @@ Content
 
 .mobile-circle {
   position: absolute;
-  top: 110px;
+  top: 80px;
   left: 5px;
   display: block;
   background-color: rgb(0, 0, 0, 0.5);
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   border: 5px solid #fff;
   background-size: cover;
@@ -1283,13 +1283,13 @@ Content
 }
 
 .profile-logo {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   font-size: 60px;
-  padding: 30px;
+  padding: 12px;
   position: absolute;
-  top: 110px;
-  left: 0px;
+  top: 80px;
+  left: 5px;
   display: block;
   border: 5px solid #fff;
 }
@@ -2639,7 +2639,7 @@ Mobile
     border-radius: 50%;
     border: 5px solid #fff;
     background-size: cover;
-    top: 120px;
+    top: 70px;
     left: 0px;
   }
 
@@ -2649,8 +2649,8 @@ Mobile
     font-size: 60px;
     padding: 18px;
     position: absolute;
-    top: 120px;
-    left: 0px;
+    top: 70px;
+    left: -8px;
     display: block;
     border: 5px solid #fff;
   }
@@ -2667,6 +2667,11 @@ Mobile
 
   .user-head-nav .col-xs-2 {
     width: 20% !important;
+  }
+
+  #sub-panel-stats [class*='col-'] {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
@@ -3498,6 +3503,27 @@ Mobile
   #sub-row, .num-rank, .sub-name, .sub-list-pts {
     font-size: 14px !important;
   }
+
+  #sub-panels .col-lg-6, .panel-col .sideRow, .panel-list md-card-title {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .input-group-btn button {
+    margin-top: 0;
+  }
+
+  #search-strip .input-group-btn button {
+    margin-top: 2px;
+  }
+
+  .post-tab {
+    font-size: 15px;
+  }
+
+  .main-banner {
+    padding-top: 50px;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -3533,9 +3559,13 @@ Mobile
 }
 
 @media screen and (min-width: 993px) {
-  .width-pad {
+  .banner-div .width-pad {
     padding-left: 15% !important;
     padding-right: 10% !important;
+  }
+
+  .header .width-pad {
+    padding-left: 5% !important;
   }
 
   .col-lg-4 {
@@ -3566,6 +3596,6 @@ Mobile
 
 @media screen and (max-height: 500px) {
   .mobile-circle, .profile-logo {
-    top: 120px;
+    top: 70px;
   }
 }

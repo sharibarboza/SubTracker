@@ -13,7 +13,8 @@
     var pages = 10;
     var username;
     var promise = null;
-    var before = moment().utc();
+    var commentBefore = moment().utc();
+    var submitBefore = moment().utc();
     var done = false;
     var subLength = 0;
     var defaultSortedArray = [];
@@ -44,6 +45,7 @@
     var numSaved = 5;
 
     var i = 0;
+    var callback = null;
 
     /*
      User interface for sub factory
@@ -254,7 +256,7 @@
 
       // Set previous users in local storage
       try {
-        setPrevUsers(user_response);
+        //setPrevUsers(user_response);
       } catch(error) {
         console.log(error);
       }
@@ -319,6 +321,7 @@
       if (response.subreddit) {
         obj.subreddit = {};
         obj.subreddit.icon_img = response.subreddit.icon_img;
+        obj.subreddit.banner_img = response.subreddit.banner_img;
       }
       obj.comment_karma = response.comment_karma;
       obj.link_karma = response.link_karma;
@@ -331,7 +334,8 @@
     */
     function resetData() {
       promise = null;
-      before = moment().utc();
+      commentBefore = moment().utc();
+      submitBefore = moment().utc();
       done = false;
       subLength = 0;
       defaultSortedArray = [];
@@ -361,6 +365,7 @@
       topSub = null;
 
       i = 0;
+      callback = null;
 
       sortFactory.clearSorted();
       filterPosts.clearFiltered();
@@ -381,21 +386,55 @@
     */
     function promiseChain(where) {
       var promise = callAPI(where);
-      promise = getPromise(where, promise, null);
-
-      return promise;
+      return getPromise(where, promise, null);
     }
 
     /*
      Make the http request to the PushShift API using HTTP GET request.
     */
     function callAPI(where) {
-      //var url = 'https://api.reddit.com/user/'+username+'/'+where+'.json?limit=100&after='+after;
-      //var call = $http.get(url);
-      var url = 'https://api.pushshift.io/reddit/search/'+where+'/?sort=desc&size=500&author='+username+'&before='+before;
-      var call = $http.get(url);
+      return $q(function(resolve, reject) {
+        setTimeout(function() {
+          var before;
+          if (where == 'comment') {
+            before = commentBefore;
+          } else {
+            before = submitBefore;
+          }
 
-      return call;
+          var url = 'https://api.pushshift.io/reddit/search/'+where+'/?sort=desc&size=100&author='+username+'&before='+before;
+
+          var config = {
+            method: 'GET',
+            url: url
+          }
+
+          resolve($http(config));
+        }, 1050);
+      });
+    }
+
+    /*
+     Get the before value, which is used to mark the UTC date of the
+     last comment or submission fetched from the API.
+    */
+    function getBefore(where) {
+      if (where === 'comment') {
+        return commentBefore;
+      } else {
+        return submitBefore;
+      }
+    }
+
+    /*
+     Set the before value.
+    */
+    function setBefore(where, value) {
+      if (where === 'comment') {
+        commentBefore = value;
+      } else {
+        submitBefore = value;
+      }
     }
 
     /*
@@ -406,10 +445,12 @@
         if (response) {
           var data = response.data.data;
           var data_len = data.length;
+          var before = getBefore(where);
 
           if (data.length > 0) {
             prevData = getDataList(where, data, data_len);
           } else {
+            setBefore(where, null);
             before = null;
           }
 
@@ -442,9 +483,9 @@
       var promises;
 
       if (where === 'comment') {
-        promises = pushData('comments', data_list, data_len, 't1_');
+        promises = pushData('comment', data_list, data_len, 't1_');
       } else {
-        promises = pushData('submits', data_list, data_len, 't3_');
+        promises = pushData('submit', data_list, data_len, 't3_');
       }
 
       var data = $q.all(promises).then(function(response) {
@@ -487,12 +528,12 @@
       for (var i = 0; i < data_len; i++) {
         var item = data_list[i];
 
-        if (where === 'comments') {
+        if (where === 'comment') {
           if (limit === 'All' || numComments < limit) {
             commentsList.push(item);
             numComments += 1;
           } else {
-            before = null;
+            commentBefore = null;
             return;
           }
         } else {
@@ -500,14 +541,14 @@
             submissionsList.push(item);
             numSubmits += 1;
           } else {
-            before = null;
+            submitBefore = null;
             return;
           }
         }
 
         // Set before variable
         if (i == (data_len - 1)) {
-          before = item.created_utc;
+          setBefore(where, item.created_utc)
         }
 
         var id = prefix + item.id;

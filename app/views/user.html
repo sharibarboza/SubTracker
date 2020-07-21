@@ -73,12 +73,23 @@
 
           <div ng-include src="'views/mobile-bar.html'"></div>
 
-          <div class="default-banner u-banner column-pad user-pad">
+          <div ng-if="redditor.subreddit.banner_img == '' || redditor.subreddit.banner_img == null" class="default-banner u-banner column-pad user-pad">
             <div class="banner-content">
               <div class="mobile-avatar row">
                 <div class="col-md-6 col-md-push-3">
-                  <div ng-if="redditor.subreddit" class="mobile-circle" style="background-image: url({{ redditor.subreddit.icon_img | escape }});"></div>
-                  <div ng-if="!redditor.subreddit" class="mobile-circle" style="background-image: url({{ redditor.icon_img }});"></div>
+                  <div ng-include src="'views/user-logo.html'"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div ng-if="redditor.subreddit.banner_img != '' && redditor.subreddit.banner_img != null">
+            <div class="custom-banner column-pad" lazy-img="{{ redditor.subreddit.banner_img | escape }}">
+              <div class="banner-content">
+                <div class="mobile-avatar row">
+                  <div class="col-md-6 col-md-push-3">
+                    <div ng-include src="'views/user-logo.html'"></div>
+                  </div>
                 </div>
               </div>
             </div>

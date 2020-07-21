@@ -17,6 +17,7 @@ angular.module('SubSnoopApp')
     */
     var factory = {
       getData: function () {
+        subreddits = [];
         return $http.get(url).then(function(response) {
           var data;
 

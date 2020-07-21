@@ -41,7 +41,7 @@ angular.module('SubSnoopApp')
           if (window_width < 700) {
             scope_chart = setChartConfig(300);
           } else {
-            scope_chart = setChartConfig(310);
+            scope_chart = setChartConfig(260);
           }
           return scope_chart;
         }
@@ -59,7 +59,7 @@ angular.module('SubSnoopApp')
             labelPadding: 35,
             duration: 0,
             margin: {
-              top: 50, right: 70, bottom: -50, left: 70
+              top: 50, right: 50, bottom: -50, left: 50
             }
           };
         };
