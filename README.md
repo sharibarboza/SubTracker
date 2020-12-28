@@ -1,6 +1,6 @@
-# SubSnoop
+# SubTracker
 
-SubSnoop is a web app built with AngularJS that uses the Reddit API to group a user's comments and submissions by subreddit. The site is located [here](https://subreddit-tracker.web.app/#/).
+SubTracker is a web app built with AngularJS that uses the Reddit API to group a user's comments and submissions by subreddit. The site is located [here](https://subreddit-tracker.web.app/#/).
 
 On a user's main page, you can sort a user's active subreddits by a number of categories, such as *most recent activity*, *most upvotes*, *most submissions*, and more.
 
@@ -23,4 +23,4 @@ Application will be served at [http://localhost:3000/](http://localhost:3000/)
 The build will be stored in the /dist directory.
 
 ---
-SubSnoop is not affiliated with [Reddit, Inc.](https://www.reddit.com) and does not require the user to be signed into a Reddit account.
+SubTracker is not affiliated with [Reddit, Inc.](https://www.reddit.com) and does not require the user to be signed into a Reddit account.
